@@ -93,6 +93,12 @@ module.exports = {
         order: ['script', 'template', 'style'],
       },
     ],
-
+    "vue/html-indent": ["error", type, {
+        "attribute": 1,
+        "baseIndent": 1,
+        "closeBracket": 0,
+        "alignAttributesVertically": true,
+        "ignores": []
+    }],
   },
 }
