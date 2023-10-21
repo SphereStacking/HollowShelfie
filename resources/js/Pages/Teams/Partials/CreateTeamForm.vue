@@ -1,10 +1,10 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import FormSection from '@/Jetstream/FormSection.vue';
+import InputError from '@/Jetstream/InputError.vue';
+import InputLabel from '@/Jetstream/InputLabel.vue';
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
+import TextInput from '@/Jetstream/TextInput.vue';
 
 const form = useForm({
   name: '',
