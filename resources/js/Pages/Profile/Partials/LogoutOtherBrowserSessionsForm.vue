@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Components/ActionMessage.vue';
-import ActionSection from '@/Components/ActionSection.vue';
-import DialogModal from '@/Components/DialogModal.vue';
-import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import ActionMessage from '@/Jetstream/ActionMessage.vue';
+import ActionSection from '@/Jetstream/ActionSection.vue';
+import DialogModal from '@/Jetstream/DialogModal.vue';
+import InputError from '@/Jetstream/InputError.vue';
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
+import SecondaryButton from '@/Jetstream/SecondaryButton.vue';
+import TextInput from '@/Jetstream/TextInput.vue';
 
 defineProps({
   sessions: Array,

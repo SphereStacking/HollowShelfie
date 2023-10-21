@@ -1,14 +1,14 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { router, useForm, usePage } from '@inertiajs/vue3';
-import ActionSection from '@/Components/ActionSection.vue';
-import ConfirmsPassword from '@/Components/ConfirmsPassword.vue';
-import DangerButton from '@/Components/DangerButton.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import ActionSection from '@/Jetstream/ActionSection.vue';
+import ConfirmsPassword from '@/Jetstream/ConfirmsPassword.vue';
+import DangerButton from '@/Jetstream/DangerButton.vue';
+import InputError from '@/Jetstream/InputError.vue';
+import InputLabel from '@/Jetstream/InputLabel.vue';
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
+import SecondaryButton from '@/Jetstream/SecondaryButton.vue';
+import TextInput from '@/Jetstream/TextInput.vue';
 
 const props = defineProps({
   requiresConfirmation: Boolean,
