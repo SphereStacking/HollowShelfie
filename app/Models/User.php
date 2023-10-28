@@ -58,4 +58,16 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //
+    public function like_events()
+    {
+        return $this->belongsToMany(Event::class,'event_user_like');
+    }
+
+    public function good_events()
+    {
+        return $this->belongsToMany(Event::class,'event_user_good');
+    }
+
 }

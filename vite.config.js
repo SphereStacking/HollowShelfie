@@ -26,13 +26,8 @@ export default defineConfig({
       dirs: ['resources/js'],
       resolvers: [
         (name) => {
-          if (name=="Icon")
+          if (name == "Icon")
             return { name, from: '@iconify/vue' }
-        },
-        // inertiajs-vueのComponent resolver
-        (name) => {
-          if (name.match(/^[A-Z]/))
-            return { name, from: '@inertiajs/vue3' }
         },
       ],
     }),
