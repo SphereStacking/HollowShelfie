@@ -1,5 +1,6 @@
 <script setup>
-import PerformerLink from './DataTableComponents/PerformerLink.vue'; // 上で作成したコンポーネントをインポート
+import PerformerLink from './DataTableComponents/PerformerLink.vue';
+import PerformerImg from './DataTableComponents/PerformerImg.vue';
 
 
 const props = defineProps({
@@ -23,6 +24,7 @@ const props = defineProps({
 // コンポーネントのマッピング
 const componentsMap = {
   link: PerformerLink,
+  Img: PerformerImg,
 };
 
 const resolveComponent = (template) => {

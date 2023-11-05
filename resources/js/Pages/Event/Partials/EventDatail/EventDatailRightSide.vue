@@ -22,7 +22,7 @@ const props = defineProps({
 //   { id: 1, name: 'ほげ太郎', img: '', links: ['x', 'booth', 'soundcloud'], oneWord: 'ほげ~~~' },
 //   { id: 1, name: 'ふが次郎', img: '', links: ['x',], oneWord: 'ふがふがぁ！！' }
 // ]
-const organizers = props.event.team_organizers;
+// const organizers = props.event.team_organizers;
 
 // const organizers = props.event.user_organizers;
 </script>

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
 return [
-
-    'previous' => '<',
-    'next'     => '>',
-
+    'next'     => '次へ &raquo;',
+    'previous' => '&laquo; 前へ',
 ];

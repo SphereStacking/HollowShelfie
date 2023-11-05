@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TeamLogoController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\PerformerController;
 
@@ -41,6 +42,10 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('/credits', function () {
+    return Inertia::render('Credits/Index');
+})->name('credits');
+
 // Sample CRUD operations
 // Route::get('/sample', [SampleController::class, 'index'])->name('sample.index');
 // Route::get('/sample/create', [SampleController::class, 'create'])->name('sample.create');
@@ -58,6 +63,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/organizer/{organizer}/show', [OrganizerController::class, 'show'])->name('organizer.show');
     Route::get('/performer/{performer}/show', [PerformerController::class, 'show'])->name('performer.show');
+    Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
+    Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
+
 
     // Event CRUD operations
     Route::get('/event', [EventController::class, 'index'])->name('event.index');
