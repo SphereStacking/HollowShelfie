@@ -19,6 +19,7 @@ const image_flyers = [
   file3,
 ]
 const columDefs = [
+  { headerName: '', field: 'img', template: 'Img' },
   { headerName: '出演者', field: 'name', template: 'link' },
   { headerName: '時間', field: 'pivot.performance_time' },
 ]

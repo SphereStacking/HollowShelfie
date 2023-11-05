@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Team;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+
+class TeamLogoController extends Controller
+{
+    /**
+     * Update the current Team's logo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request ,Team $team)
+    {
+        Log::debug('update');
+        if (isset($request['logo'])) {
+            $team->updateTeamLogo($request['logo']);
+            Log::debug('updateTeamLogo');
+        }else{
+            Log::debug('hoge');
+        }
+        return back(303)->with('status', 'team-logo-updated');
+    }
+
+    /**
+     * Delete the current Team's logo.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Team $team)
+    {
+        $team->deleteTeamLogo();
+
+        return back(303)->with('status', 'team-logo-deleted');
+    }
+}

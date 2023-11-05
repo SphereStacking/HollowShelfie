@@ -7,11 +7,12 @@ use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
+use App\Traits\TeamLogo;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
-
+    use TeamLogo;
     /**
      * The attributes that should be cast.
      *
@@ -42,6 +43,14 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'team_logo_url',
+    ];
 
     public function organized_events()
     {
