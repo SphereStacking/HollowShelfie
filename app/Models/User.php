@@ -62,12 +62,18 @@ class User extends Authenticatable
     //
     public function like_events()
     {
-        return $this->belongsToMany(Event::class,'event_user_like');
+        return $this->belongsToMany(Event::class, 'event_user_like');
     }
 
+    // GroupModel が複数のイベントを主催している場合
     public function good_events()
     {
-        return $this->belongsToMany(Event::class,'event_user_good');
+        return $this->belongsToMany(Event::class, 'event_user_good');
     }
 
+    // UserModel が複数のイベントを主催している場合
+    public function organized_events()
+    {
+        return $this->morphedByMany(EventModel::class, 'organizable');
+    }
 }

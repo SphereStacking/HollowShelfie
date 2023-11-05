@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
             $table->string('name');
             $table->string('type');  // type 列を追加
             $table->unsignedBigInteger('fileable_id'); // ポリモーフィック関連
             $table->string('fileable_type'); // ポリモーフィック関連
-            $table->timestamps();
         });
     }
 

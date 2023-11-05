@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Enums\EventStatus;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\Services\FileService;
 use Laravel\Jetstream\Features;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -36,16 +37,25 @@ class EventFactory extends Factory
 
         // 開始時間から2時間後を終了時間とする
         $endDateTime = Carbon::instance($dateTime)->addHours(2)->format('Ymd\THis\Z');
-
         return [
             'user_id' => User::inRandomOrder()->first()->id,
-            'organizer_id' => User::inRandomOrder()->first()->id,
-            'title' => $this->faker->sentence,
-            'location' => $this->faker->address,
+            'title' => $this->faker->text(100),
             'start_date' => $formattedDateTime,
             'end_date' => $endDateTime,
             'description' => $this->faker->paragraph,
             'status' => Arr::random(EventStatus::getAllStatuses()),
         ];
+    }
+
+    /**
+     * Indicate that the event should have a file.
+     *
+     * @return $this
+     */
+    public function withFile()
+    {
+        return $this->afterCreating(function (Event $event) {
+            $event->files()->save(File::factory()->make());
+        });
     }
 }

@@ -1,6 +1,21 @@
 <script setup>
 import { useForm, Link, router } from '@inertiajs/vue3';
 
+import file1 from './Partials/LXIX_Design_224-4.png'
+import file2 from './Partials/LXIX_Design_225-5.png'
+import file3 from './Partials/LXIX_Design_196-4.png'
+
+const image_flyers = [
+  file1,
+  file2,
+  file3,
+  file1,
+  file2,
+  file3,
+  file1,
+  file2,
+  file3,
+]
 const props = defineProps({
   // publicRelationsEvents: {
   //   type: Array,
@@ -45,6 +60,7 @@ const getEvetnListSection = (section) => {
       </h2>
     </template>
     <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
+      <CarouselActiveClasses :images="image_flyers"></CarouselActiveClasses>
       <!-- <EventListIndex title="プロモーション" :events="props.publicRelationsEvents">
         <template #header>
           <BtnPrimary @click="getEvetnListSection('pr')">show more!</BtnPrimary>

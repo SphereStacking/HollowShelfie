@@ -12,16 +12,33 @@ class Event extends Model
 {
     use HasFactory;
 
+    /**
+     * @var array 可変の属性
+     */
     protected $fillable = ['title', 'description'];
+    /**
+     * @var array 可変の属性
+     */
     protected $appends = [
         'organizer', 'organizer_id', 'formatted_date_time', 'status_labl', 'tags',
-        'is_like', 'is_good'
-
+        'is_like', 'is_good', 'category_name', 'instances',
     ];
+
+    /**
+     * イベントのオーガナイザーIDを取得
+     *
+     * @return int
+     */
     public function getOrganizerIdAttribute()
     {
         return $this->user->id;
     }
+
+    /**
+     * イベントのオーガナイザー名を取得
+     *
+     * @return string
+     */
     public function getOrganizerAttribute()
     {
         // TODO: 作成したユーザーがオーガナイザーとは限らない。
@@ -29,23 +46,58 @@ class Event extends Model
         return $this->user->name;
     }
 
+    /**
+     * イベントのタグ名を取得
+     *
+     * @return array
+     */
     public function getTagsAttribute()
     {
         // タグのnameプロパティだけを配列にして返す
         return $this->tags()->pluck('name')->toArray();
     }
 
+    /**
+     * ユーザーがイベントを"like"しているか確認
+     *
+     * @return bool
+     */
     public function getIsLikeAttribute()
     {
         return Auth::user()->like_events->contains($this->id);
     }
 
+    /**
+     * ユーザーがイベントを"good"しているか確認
+     *
+     * @return bool
+     */
     public function getIsGoodAttribute()
     {
         return Auth::user()->good_events->contains($this->id);
     }
 
+    /**
+     * 関連付けられているカテゴリの中から最初の名前を返す
+     *
+     * @return string|null
+     */
+    public function getCategoryNameAttribute()
+    {
+        return $this->categories->first() ? $this->categories->first()->name : null;
+    }
 
+    /**
+     * 関連付けられているインスタンスの中から最初の名前を返す
+     *
+     * @return string|null
+     */
+    public function getInstancesAttribute()
+    {
+        return $this->instances()->get();
+    }
+
+    //表示用に時刻のデータをformatして返す
     public function getFormattedDateTimeAttribute()
     {
         // 日付と時刻のデータを取得
@@ -57,10 +109,11 @@ class Event extends Model
         $formattedStartTime = date('H:i', strtotime($startDate));
         $formattedEndTime = date('H:i', strtotime($endDate));
 
-        // フォーマットした日付と時刻を結合して返す
+        // フォーマットしでた日付と時刻を結合して返す
         return $formattedDate . ' ' . $formattedStartTime . '~' . $formattedEndTime;
     }
 
+    // ステータスのlabelを返す
     public function getStatusLablAttribute()
     {
         return EventStatus::getStatusLabel($this->status);
@@ -79,20 +132,6 @@ class Event extends Model
         return $query;
     }
 
-    //
-    public function scopeSection($query, $section)
-    {
-        if ($section == 'new') {
-            return $query->orderBy('created_at', 'asc');
-        }
-        if ($section == 'new') {
-            return $query->orderBy('created_at', 'asc');
-        }
-        if ($section == 'new') {
-            return $query->orderBy('created_at', 'asc');
-        }
-    }
-
     //イベントを作成したユーザー
     public function user()
     {
@@ -105,6 +144,11 @@ class Event extends Model
         return $this->belongsTo(User::class, 'organizer_id');
     }
 
+    //イベントに紐づくinstance
+    public function instances()
+    {
+        return $this->hasMany(Instance::class);
+    }
 
     //♡をしたusers
     public function like_users()
@@ -118,7 +162,7 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'event_user_good');
     }
 
-    //
+    //紐づくcategoryを返す。
     public function categories()
     {
         return $this->belongsToMany(Category::class);
@@ -130,20 +174,39 @@ class Event extends Model
         return $this->morphMany(File::class, 'fileable');
     }
 
+    //Eventに紐づくタグ
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    //Eventに紐づくUser(Performer)
+    public function performers()
+    {
+        // Pivotでstart_timeとend_timeを取得
+        return $this->belongsToMany(User::class, 'event_user_performer')
+            ->using(EventUserPerformer::class)
+            ->withPivot('start_time', 'end_time');
+    }
+
+    // EventModel が複数のユーザーやグループによって主催されている場合
+    // このイベントのユーザー主催者を取得する
+    public function user_organizers()
+    {
+        return $this->morphedByMany(User::class, 'event_organizable');
+    }
+
+    // このイベントのグループ主催者を取得する
+    public function team_organizers()
+    {
+        return $this->morphedByMany(Team::class, 'event_organizable');
+    }
+
     public function schedules()
     {
         return $this->hasMany(EventSchedule::class);
     }
 
-    public function performers()
-    {
-        return $this->hasMany(Performer::class);
-    }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
 
     public function userEvents()
     {

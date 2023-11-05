@@ -33,12 +33,12 @@ class EventService
     }
 
     //イベントを作成する。
-    public function storeEvent($attributes, $uploadedFile)
+    public function storeEvent($attributes, $uploadedFiles)
     {
         $event = Event::create($attributes)->get();
         // ファイルアップロードのロジックはFileServiceに委譲
-        if ($uploadedFile) {
-            $this->fileService->uploadFile($uploadedFile, $event);
+        foreach ($uploadedFiles as $file) {
+            $this->fileService->uploadFile($file, $event);
         }
         return Event::create($attributes);
     }
@@ -47,20 +47,34 @@ class EventService
     public function getEventList($section, $tags = null, $paginate = 10)
     {
 
-        $popularTags = $this->getPopularTagNames();
+        $trendTags = $this->getTrendTagNames();
         $events = $this->getSectionedQuery($section)
             ->filterByTags($tags)
             ->paginate($paginate);
         return [
-            'trendTags' => $popularTags,
+            'trendTags' => $trendTags,
             'events' => $events
         ];
     }
 
+    // 引数で渡されたイベントと似たイベント抽出する。
+    public function getrelatedEvent($event)
+    {
+        // TODO:いったん新しいのでよいかも
+        return $this->getNewEventsQuery()->take(4)->get();
+    }
+    // 引数で渡されたイベントと似たイベント抽出する。
+    public function getRecommendEvent()
+    {
+        // TODO:いったん新しいのでよいかも
+        return $this->getNewEventsQuery()->take(4)->get();
+    }
+
+
 
     //人気のタグを探して取得し
     //nameだけを抽出して返す。
-    private function getPopularTagNames()
+    public function getTrendTagNames()
     {
         $popularTagIds = EventTag::popularTags()
             ->limit(4)
