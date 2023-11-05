@@ -41,4 +41,10 @@ class Team extends JetstreamTeam
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+
+    public function organized_events()
+    {
+        return $this->morphedByMany(EventModel::class, 'organizable');
+    }
 }

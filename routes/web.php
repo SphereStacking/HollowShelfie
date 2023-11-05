@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\OrganizerController;
+use App\Http\Controllers\PerformerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,7 @@ use App\Http\Controllers\OrganizerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/phpinfo', function () {
     phpinfo();
 });
@@ -55,6 +57,7 @@ Route::middleware([
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/organizer/{organizer}/show', [OrganizerController::class, 'show'])->name('organizer.show');
+    Route::get('/performer/{performer}/show', [PerformerController::class, 'show'])->name('performer.show');
 
     // Event CRUD operations
     Route::get('/event', [EventController::class, 'index'])->name('event.index');
@@ -72,6 +75,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // Event List
     Route::get('/event/list', [EventController::class, 'list'])->name('event.list.index');
+
+    Route::get('/event/timeline', [EventController::class, 'timeline'])->name('event.timeline.show');
 });
 
 // Route::get('/information', [InformationController::class, 'index'])->name('information.index');

@@ -140,9 +140,9 @@ const toggleGood = () => {
           <Icon v-if="!event.is_like" icon="line-md:heart" class="text-xl" @click="toggleLike" />
           <Icon v-if="event.is_like" icon="line-md:heart-filled" class="text-xl text-pink-400" @click="toggleLike" />
         </div>
-        <div>
+        <DropDownSnsShare>
           <Icon icon="material-symbols:share" class="text-xl" />
-        </div>
+        </DropDownSnsShare>
       </div>
     </div>
 

@@ -38,6 +38,7 @@ class EventController extends Controller
             $this->eventService->getSectionEvents()
         );
     }
+
     /**
      * 全てのイベントを表示。
      *
@@ -48,11 +49,28 @@ class EventController extends Controller
     {
         $section = $request->input('section');
         $tags = $request->input('tags');
-        $per_page
-            = $request->input('per_page', 24);
+        $per_page = $request->input('per_page', 24);
 
         return Inertia::render(
             'Event/List/Index',
+            $this->eventService->getEventList($section, $tags, $per_page)
+        );
+    }
+
+    /**
+     * イベントをタイムライン表示する。
+     *
+     * @param Request $request
+     * @return \Inertia\Response
+     */
+    public function timeline(Request $request)
+    {
+        $section = $request->input('section');
+        $tags = $request->input('tags');
+        $per_page = $request->input('per_page', 24);
+
+        return Inertia::render(
+            'Event/Timeline',
             $this->eventService->getEventList($section, $tags, $per_page)
         );
     }
@@ -127,7 +145,9 @@ class EventController extends Controller
     public function show(Event $event)
     {
         return Inertia::render('Event/Show', [
-            'event' => $event,
+            'event' => $event->load(['performers', 'user_organizers', 'team_organizers']),
+            'recommendEvents' => $this->eventService->getRecommendEvent(),
+            'trendTags' => $this->eventService->getTrendTagNames()
         ]);
     }
 
