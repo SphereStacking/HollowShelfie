@@ -30,13 +30,13 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
     Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware]))], function () {
         // User & Profile...
-        Route::get('/user/profile', [UserProfileController::class, 'show'])
+        Route::get('/account/profile', [UserProfileController::class, 'show'])
             ->name('profile.show');
 
-        Route::delete('/user/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
+        Route::delete('/account/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
             ->name('other-browser-sessions.destroy');
 
-        Route::delete('/user/profile-photo', [ProfilePhotoController::class, 'destroy'])
+        Route::delete('/account/profile-photo', [ProfilePhotoController::class, 'destroy'])
             ->name('current-user-photo.destroy');
 
         if (Jetstream::hasAccountDeletionFeatures()) {
@@ -47,10 +47,10 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::group(['middleware' => 'verified'], function () {
             // API...
             if (Jetstream::hasApiFeatures()) {
-                Route::get('/user/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
-                Route::post('/user/api-tokens', [ApiTokenController::class, 'store'])->name('api-tokens.store');
-                Route::put('/user/api-tokens/{token}', [ApiTokenController::class, 'update'])->name('api-tokens.update');
-                Route::delete('/user/api-tokens/{token}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
+                Route::get('/account/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
+                Route::post('/account/api-tokens', [ApiTokenController::class, 'store'])->name('api-tokens.store');
+                Route::put('/account/api-tokens/{token}', [ApiTokenController::class, 'update'])->name('api-tokens.update');
+                Route::delete('/account/api-tokens/{token}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
             }
 
             // Teams...
