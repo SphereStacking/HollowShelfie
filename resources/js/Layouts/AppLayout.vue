@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { Head, Link, router ,usePage} from '@inertiajs/vue3';
 import ApplicationMark from '@/Jetstream/ApplicationMark.vue';
 import Banner from '@/Jetstream/Banner.vue';
 import Dropdown from '@/Jetstream/Dropdown.vue';
@@ -37,14 +37,16 @@ const themes = [
   "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business",
   "acid", "lemonade", "night", "coffee", "winter",
 ]
+const page=usePage()
+const auth_user = page.props.auth.user ?? null
+const isTeam = auth_user.current_team != null
+
+console.log(page)
 
 </script>
 
 <template>
   <div>
-    <!-- TODO: デバック用-->
-    {{ console.log($page) }}
-
     <Head :title="title" />
 
     <Banner />
@@ -86,8 +88,7 @@ const themes = [
                     <span class="inline-flex rounded-md">
                       <button type="button"
                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                        {{ $page.props.auth.user.current_team.name }}
-
+                          {{ auth_user.current_team ? auth_user.current_team.name:'チームを作成してみよう！' }}
                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                           viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round"
@@ -104,7 +105,7 @@ const themes = [
                         Manage Team
                       </div>
                       <!-- Team Settings -->
-                      <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team)">
+                      <DropdownLink v-if="isTeam" :href="route('teams.show', auth_user.current_team)">
                         Team Settings
                       </DropdownLink>
 
@@ -113,18 +114,18 @@ const themes = [
                       </DropdownLink>
 
                       <!-- Team Switcher -->
-                      <template v-if="$page.props.auth.user.all_teams.length > 1">
+                      <template v-if="auth_user.all_teams.length > 1">
                         <div class="border-t border-gray-200" />
 
                         <div class="block px-4 py-2 text-xs text-gray-400">
                           Switch Teams
                         </div>
 
-                        <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                        <template v-for="team in auth_user.all_teams" :key="team.id">
                           <form @submit.prevent="switchToTeam(team)">
                             <DropdownLink as="button">
                               <div class="flex items-center">
-                                <svg v-if="team.id == $page.props.auth.user.current_team_id"
+                                <svg v-if="team.id == auth_user.current_team_id"
                                   class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none"
                                   viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round"
@@ -148,14 +149,14 @@ const themes = [
                   <template #trigger>
                     <button v-if="$page.props.jetstream.managesProfilePhotos"
                       class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                      <img class="h-8 w-8 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url"
-                        :alt="$page.props.auth.user.name">
+                      <img class="h-8 w-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                        :alt="auth_user.name">
                     </button>
 
                     <span v-else class="inline-flex rounded-md">
                       <button type="button"
                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                        {{ $page.props.auth.user.name }}
+                        {{ auth_user.name }}
 
                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                           viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -220,16 +221,16 @@ const themes = [
           <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
               <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
-                <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url"
-                  :alt="$page.props.auth.user.name">
+                <img class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                  :alt="auth_user.name">
               </div>
 
               <div>
                 <div class="font-medium text-base text-gray-800">
-                  {{ $page.props.auth.user.name }}
+                  {{ auth_user.name }}
                 </div>
                 <div class="font-medium text-sm text-gray-500">
-                  {{ $page.props.auth.user.email }}
+                  {{ auth_user.email }}
                 </div>
               </div>
             </div>
@@ -260,7 +261,7 @@ const themes = [
                 </div>
 
                 <!-- Team Settings -->
-                <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)"
+                <ResponsiveNavLink v-if="isTeam" :href="route('teams.show', auth_user.current_team)"
                   :active="route().current('teams.show')">
                   Team Settings
                 </ResponsiveNavLink>
@@ -271,18 +272,18 @@ const themes = [
                 </ResponsiveNavLink>
 
                 <!-- Team Switcher -->
-                <template v-if="$page.props.auth.user.all_teams.length > 1">
+                <template v-if="auth_user.all_teams.length > 1">
                   <div class="border-t border-gray-200" />
 
                   <div class="block px-4 py-2 text-xs text-gray-400">
                     Switch Teams
                   </div>
 
-                  <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
+                  <template v-for="team in auth_user.all_teams" :key="team.id">
                     <form @submit.prevent="switchToTeam(team)">
                       <ResponsiveNavLink as="button">
                         <div class="flex items-center">
-                          <svg v-if="team.id == $page.props.auth.user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
+                          <svg v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
