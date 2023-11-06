@@ -40,7 +40,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
             ->name('current-user-photo.destroy');
 
         if (Jetstream::hasAccountDeletionFeatures()) {
-            Route::delete('/user', [CurrentUserController::class, 'destroy'])
+            Route::delete('/account', [CurrentUserController::class, 'destroy'])
                 ->name('current-user.destroy');
         }
 
