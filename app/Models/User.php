@@ -57,8 +57,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url','links'
     ];
+
+    /**
+     * 関連付けられているlink
+     *
+     * @return string|null
+     */
+    public function getLinksAttribute()
+    {
+        return $this->links()->get();
+    }
 
     //
     public function like_events()
@@ -72,9 +82,17 @@ class User extends Authenticatable
         return $this->belongsToMany(Event::class, 'event_user_good');
     }
 
-    // UserModel が複数のイベントを主催している場合
-    public function organized_events()
+    /**
+     * このUserのイベントオーガナイザー取得
+     */
+    public function event_organizers()
     {
-        return $this->morphedByMany(EventModel::class, 'organizable');
+        return $this->morphMany(EventOrganizer::class, 'event_organizeble');
+    }
+
+    //リンク
+    public function links()
+    {
+        return $this->morphMany(Link::class, 'linkable');
     }
 }

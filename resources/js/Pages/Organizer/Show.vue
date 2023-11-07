@@ -17,6 +17,7 @@ defineEmits(
       </h2>
     </template>
     {{ organizer }}
+
   </AppLayout>
 </template>
 <style lang="">

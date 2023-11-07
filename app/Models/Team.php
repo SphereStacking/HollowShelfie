@@ -49,11 +49,30 @@ class Team extends JetstreamTeam
      * @var array<int, string>
      */
     protected $appends = [
-        'team_logo_url',
+        'team_logo_url','links'
     ];
 
-    public function organized_events()
+    /**
+     * 関連付けられているlink
+     *
+     * @return string|null
+     */
+    public function getLinksAttribute()
     {
-        return $this->morphedByMany(EventModel::class, 'organizable');
+        return $this->links()->get();
+    }
+
+    /**
+     * このTeamのイベントオーガナイザー取得
+     */
+    public function event_organizers()
+    {
+        return $this->morphMany(EventOrganizer::class, 'event_organizeble');
+    }
+
+    //リンク
+    public function links()
+    {
+        return $this->morphMany(Link::class, 'linkable');
     }
 }

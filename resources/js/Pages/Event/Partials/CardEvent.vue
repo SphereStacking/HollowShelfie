@@ -32,10 +32,6 @@ const event = reactive({
   tags: props.event.tags ?? ['hoge', 'fuga']
 });
 
-const serchTag = (tagName) => {
-  router.get(route('event.list.index'), { tags: [tagName] }, { replace: true, preserveState: true })
-}
-
 // props.eventの変更を監視し、値が変化した場合のみeventにコピー
 watch(() => props.event, (newEvent, oldEvent) => {
   for (const key in newEvent) {
@@ -151,11 +147,8 @@ const toggleGood = () => {
       <h2 class="card-title h-20">
         {{ event.title }}
       </h2>
-      <div class="flex flex-wrap">
-        <div v-for="name in event.tags" :key="name" @click="serchTag(name)"
-          class="badge badge-ghost badge-md mr-1 hover:badge-outline">
-          {{ name }}
-        </div>
+      <div class="flex flex-wrap gap-0.5">
+        <LinkBadges :route="route('event.list.index')" :tags="event.tags"></LinkBadges>
       </div>
       <div clas="flex flex-col">
         <div class="flex flex-row gap-1">

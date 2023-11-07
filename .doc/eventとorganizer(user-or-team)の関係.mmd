@@ -1,0 +1,34 @@
+erDiagram
+    event ||--o{ event_organizers : creates
+    event_organizers ||--|| users : a
+    event_organizers ||--|| teams : a
+
+    event {
+        int id PK "Primary key"
+        string title "Event title"
+        string description "Event description"
+        datetime start_date "Start date and time"
+        datetime end_date "End date and time"
+        int status "Event status"
+    }
+
+    event_organizers {
+        int id PK "Primary key"
+        string event_id
+        int event_organizeble_id "user_id or team_id"
+        string event_organizeble_type " user or team"
+    }
+
+    users {
+        int id PK
+        string name
+        string email
+    }
+
+    teams {
+        int id PK
+        string name
+        string email
+    }
+
+

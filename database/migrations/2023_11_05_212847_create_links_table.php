@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_organizers', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('event_id');
-            $table->morphs('event_organizeble');
+            $table->string('link');
+            $table->string('label');
+            $table->morphs('linkable');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_organizers');
+        Schema::dropIfExists('links');
     }
 };

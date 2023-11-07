@@ -16,12 +16,23 @@ const props = defineProps({
 defineEmits(
   ['click']
 )
-
+//データ整形
 const performers = props.event.performers
 const tags = props.event.tags
 const event = props.event
 const trendTags = props.trendTags
-
+const organizers = props.event.organizers.map(organizer => {
+  return {
+    name: organizer.event_organizeble.name,
+    image_url: organizer.event_organizeble.profile_photo_url ?? organizer.event_organizeble.team_logo_url,
+    links: organizer.event_organizeble.links.map(link => {
+      return {
+        label: link.label,
+        link: link.link
+      }
+    })
+  }
+});
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -40,8 +51,8 @@ const trendTags = props.trendTags
           <EventDatailMain :tags="tags" :event="event" class="w-full"></EventDatailMain>
         </div>
         <div class="lg:w-3/12 w-full mx-auto">
-          <EventDatailRightSide class="sticky top-12" :trendTags="trendTags" aria-labelledby="sidebar-right"
-            :recommendEvents="recommendEvents">
+          <EventDatailRightSide class="sticky top-12" :organizers="organizers" :trendTags="trendTags"
+            aria-labelledby="sidebar-right" :recommendEvents="recommendEvents">
           </EventDatailRightSide>
         </div>
       </div>

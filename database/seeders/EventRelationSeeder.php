@@ -10,6 +10,7 @@ use App\Models\Event;
 use App\Models\Category;
 use App\Models\Instance;
 use Illuminate\Support\Arr;
+use App\Models\EventOrganizer;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +42,7 @@ class EventRelationSeeder extends Seeder
 
             //--------------------------------------------------------
             // Performerをランダムに紐づける
-            $this->attachRandomModelsPivot($event, 'performers', User::class, $count * 2, function ($event) {
+            $this->attachRandomModelsPivot($event, 'performers', User::class, $count, function ($event) {
                 $date = Carbon::parse($event->start_date);
                 $startTime = (clone $date)->addHours(rand(0, 1));
                 $endTime = (clone $startTime)->addMinutes(rand(30, 60));
@@ -53,12 +54,17 @@ class EventRelationSeeder extends Seeder
 
             //--------------------------------------------------------
             // ランダムなユーザーを主催者として追加
+            $organizers=[];
             for ($i = 0; $i < $count; $i++) {
                 $modelClass = rand(0, 1) ? User::class : Team::class;
-                $organizersData[] = $this->createOrganizerData($event->id, $modelClass);
+                $organizerData = $this->createOrganizerData($event->id, $modelClass);
+                // $organizerData が null でない場合にのみ、$organizersData に追加する
+                if ($organizerData !== null) {
+                    $organizers[] = new EventOrganizer($organizerData);;
+                }
             }
             // データベースに主催者データを一括挿入
-            DB::table('event_organizables')->insert($organizersData);
+            $event->organizers()->saveMany($organizers);
 
             //--------------------------------------------------------
             // EventTagをランダムに紐づける
@@ -111,10 +117,14 @@ class EventRelationSeeder extends Seeder
     private function createOrganizerData($eventId, $modelClass)
     {
         $modelInstance = $modelClass::inRandomOrder()->first();
+        if (is_null($modelInstance)) {
+            // レコードが見つからない場合はnullを返す
+            return null;
+        }
         return [
             'event_id' => $eventId,
-            'event_organizable_id' => $modelInstance->id,
-            'event_organizable_type' => $modelClass
+            'event_organizeble_id' => $modelInstance->id,
+            'event_organizeble_type' => get_class($modelInstance)
         ];
     }
 }

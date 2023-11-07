@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamLogoController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\PerformerController;
@@ -58,14 +59,20 @@ Route::get('/credits', function () {
 // Route::resourceはつかはない。
 // ルートとメソッドの管理がしにくい。
 
+Route::get('/user/{user}', [ProfileController::class, 'userProfileShow'])
+    ->name('user.profile.show');
+
+Route::get('/team/{team}', [ProfileController::class, 'teamProfileShow'])
+    ->name('team.profile.show');
+
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
 
     Route::get('/organizer/{organizer}/show', [OrganizerController::class, 'show'])->name('organizer.show');
     Route::get('/performer/{performer}/show', [PerformerController::class, 'show'])->name('performer.show');
     Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
-
 
     // Event CRUD operations
     Route::get('/event', [EventController::class, 'index'])->name('event.index');

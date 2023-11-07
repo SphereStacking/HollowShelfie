@@ -41,7 +41,7 @@ const page=usePage()
 const auth_user = page.props.auth.user ?? null
 const isTeam = auth_user.current_team != null
 
-console.log(page)
+console.log(page.props)
 
 </script>
 
