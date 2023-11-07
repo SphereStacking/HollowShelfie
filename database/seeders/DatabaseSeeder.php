@@ -10,6 +10,8 @@ use App\Models\Event;
 use App\Models\EventTag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Database\Seeders\TeamRelationSeeder;
+use Database\Seeders\UserRelationSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,21 +21,27 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $isTruncate = true;
-
+        $this->call([
+            // AdminUserSeeder::class,
+        ]);
         if ($isTruncate) {
             DB::table('seed_flags')->truncate();
 
             User::where('id', '<>', 1)->delete();
-            DB::table('events')->truncate();
-            DB::table('tags')->truncate();
-            DB::table('event_tag')->truncate();
-            DB::table('event_user_like')->truncate();
-            DB::table('event_user_good')->truncate();
+
             DB::table('categories')->truncate();
             DB::table('category_event')->truncate();
-            DB::table('instances')->truncate();
+            DB::table('event_organizers')->truncate();
+            DB::table('event_tag')->truncate();
+            DB::table('event_user_good')->truncate();
+            DB::table('event_user_like')->truncate();
             DB::table('event_user_performer')->truncate();
-            DB::table('seed_flags')->truncate();
+            DB::table('events')->truncate();
+            DB::table('instance_types')->truncate();
+            DB::table('instances')->truncate();
+            DB::table('links')->truncate();
+
+            DB::table('tags')->truncate();
         }
         if (User::count() < 10) {
             User::factory(10)->create();
@@ -50,7 +58,9 @@ class DatabaseSeeder extends Seeder
         //
         Event::factory(100)->create();
         $this->call([
-            EventRelationSeeder::class
+            EventRelationSeeder::class,
+            TeamRelationSeeder::class,
+            UserRelationSeeder::class
         ]);
     }
 }

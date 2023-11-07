@@ -3,7 +3,7 @@
 import { useForm, Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
-  event: {
+  organizers: {
     type: Object,
     required: true
   },
@@ -17,14 +17,6 @@ const props = defineProps({
   }
 })
 
-//organizerも1人ではないよね。
-// const organizers = [
-//   { id: 1, name: 'ほげ太郎', img: '', links: ['x', 'booth', 'soundcloud'], oneWord: 'ほげ~~~' },
-//   { id: 1, name: 'ふが次郎', img: '', links: ['x',], oneWord: 'ふがふがぁ！！' }
-// ]
-// const organizers = props.event.team_organizers;
-
-// const organizers = props.event.user_organizers;
 </script>
 
 <template>
@@ -45,14 +37,13 @@ const props = defineProps({
           <h4 class="font-bold uppercase ">人気のタグ</h4>
         </template>
         <template #content>
-          <div class="flex flex-wrap gap-1">
-            <div v-for="tag in trendTags" class="badge">{{ tag }}</div>
+          <div class="flex flex-wrap gap-0.5">
+            <LinkBadges :route="route('event.list.index')" :tags="trendTags"></LinkBadges>
           </div>
         </template>
       </Card>
       <!-- 関連記事 -->
       <Card class="w-full">
-        <figure><img src="/images/stock/photo-1635805737707-575885ab0820.jpg" alt="Movie" /></figure>
         <template #title>
           関連イベント
         </template>

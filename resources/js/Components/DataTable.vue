@@ -1,6 +1,7 @@
 <script setup>
 import PerformerLink from './DataTableComponents/PerformerLink.vue';
 import PerformerImg from './DataTableComponents/PerformerImg.vue';
+import PerformerExtLinks from './DataTableComponents/PerformerExtLinks.vue';
 
 
 const props = defineProps({
@@ -25,6 +26,7 @@ const props = defineProps({
 const componentsMap = {
   link: PerformerLink,
   Img: PerformerImg,
+  ExtLinks: PerformerExtLinks,
 };
 
 const resolveComponent = (template) => {

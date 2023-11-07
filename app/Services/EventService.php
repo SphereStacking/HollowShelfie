@@ -47,14 +47,9 @@ class EventService
     public function getEventList($section, $tags = null, $paginate = 10)
     {
 
-        $trendTags = $this->getTrendTagNames();
-        $events = $this->getSectionedQuery($section)
+        return $this->getSectionedQuery($section)
             ->filterByTags($tags)
             ->paginate($paginate);
-        return [
-            'trendTags' => $trendTags,
-            'events' => $events
-        ];
     }
 
     // 引数で渡されたイベントと似たイベント抽出する。

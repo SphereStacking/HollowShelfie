@@ -52,8 +52,10 @@ class EventController extends Controller
         $per_page = $request->input('per_page', 24);
 
         return Inertia::render(
-            'Event/List/Index',
-            $this->eventService->getEventList($section, $tags, $per_page)
+            'Event/List/Index',[
+                'trendTags' => $this->eventService->getTrendTagNames(),
+                'events' => $this->eventService->getEventList($section, $tags, $per_page)
+            ]
         );
     }
 
@@ -142,10 +144,10 @@ class EventController extends Controller
      * @param Event $event
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(Event $event)
+    public function show($id)
     {
         return Inertia::render('Event/Show', [
-            'event' => $event->load(['performers', 'user_organizers', 'team_organizers']),
+            'event' => Event::with(['performers', 'organizers.event_organizeble'])->find($id),
             'recommendEvents' => $this->eventService->getRecommendEvent(),
             'trendTags' => $this->eventService->getTrendTagNames()
         ]);

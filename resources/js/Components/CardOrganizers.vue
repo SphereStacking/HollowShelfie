@@ -16,11 +16,11 @@ const props = defineProps({
         オーガナイザー
       </h2>
       <div class=" flex flex-col gap-2 items-center">
-        <template v-for="(organizer, index ) in organizers">
+        <template v-for="(organizer, index ) in props.organizers">
           <div class="card card-compact bg-base-300 w-full">
             <div class="card-body gap-0.5">
               <dl class="avatar">
-                <dt><img :src="organizer.img" /></dt>
+                <dt  class="h-48 mx-auto "><img :src="organizer.image_url" class="rounded-md" /></dt>
               </dl>
               <dl>
                 <dt class="text-sm font-bold text-gray-900 uppercase ">name</dt>
@@ -31,23 +31,17 @@ const props = defineProps({
                 </dd>
               </dl>
               <dl>
-                <dt class="text-sm font-bold text-gray-900 uppercase ">on word</dt>
-                <dd class="m-2">
-                  <p>{{ organizer.oneWord }}</p>
-                </dd>
-              </dl>
-              <dl>
                 <dt class=" text-sm font-bold text-gray-900 uppercase ">Links</dt>
-                <dd v-for="(link, index ) in organizer.links" class="ml-2 text-sm text-gray-500  hover:underline">
-                  <a href='#' class="flex flex-row items-center gap-1">
+                <dd v-for="(item, index ) in organizer.links" class="ml-2 text-sm text-gray-500  hover:underline">
+                  <a href='item.link' class="flex flex-row items-center gap-0.5">
                     <Icon icon="ph:link-bold"></Icon>
-                    {{ link }}
+                    {{ item.label }}
                   </a>
                 </dd>
               </dl>
             </div>
           </div>
-          <Icon v-if="index !== organizers.length - 1" icon="oi:x" class="h-10 w-10" />
+          <Icon v-if="index !== props.organizers.length - 1" icon="oi:x" class="h-10 w-10" />
         </template>
       </div>
     </div>

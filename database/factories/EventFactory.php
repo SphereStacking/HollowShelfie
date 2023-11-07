@@ -42,7 +42,7 @@ class EventFactory extends Factory
             'title' => $this->faker->text(100),
             'start_date' => $formattedDateTime,
             'end_date' => $endDateTime,
-            'description' => $this->faker->paragraph,
+            'description' => $this->faker->paragraphs(5, true),
             'status' => Arr::random(EventStatus::getAllStatuses()),
         ];
     }

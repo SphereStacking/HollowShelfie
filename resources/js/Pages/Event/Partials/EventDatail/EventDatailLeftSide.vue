@@ -19,16 +19,12 @@ const image_flyers = [
   file3,
 ]
 const columDefs = [
-  { headerName: '', field: 'img', template: 'Img' },
+  { headerName: '', field: '', template: 'Img' },
   { headerName: '出演者', field: 'name', template: 'link' },
+  { headerName: 'リンク', field: '', template: 'ExtLinks' },
   { headerName: '時間', field: 'pivot.performance_time' },
 ]
 const rowData = props.performers
-// [
-//   { id: 1, performer: 'ほげ太郎', tags: 'House,Progressive House', time: '19:00~21:00' },
-//   { id: 2, performer: 'ふが次郎', tags: 'Trance,Techno', time: '21:00~22:00' },
-//   { id: 3, performer: 'ぴよ三郎', tags: 'Deep House', time: '22:00~23:00' },
-// ]
 </script>
 
 <template>

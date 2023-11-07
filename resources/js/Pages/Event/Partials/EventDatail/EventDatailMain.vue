@@ -27,14 +27,14 @@ const date = props.event ?? '?'
     </template>
     <template #content>
       <div class="flex gap-2">
-        <div v-for="tag in tags" class="badge">{{ tag }}</div>
+        <LinkBadges :route="route('event.list.index')" :tags="tags"></LinkBadges>
       </div>
       <div class=" prose lg:prose-xl">
         <h1> {{ props.event.title }}</h1>
 
         {{ props.event.description }}
 
-        {{ props.event }}
+        <!-- {{ props.event }} -->
       </div>
     </template>
   </CardArticle>

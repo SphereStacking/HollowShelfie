@@ -7,5 +7,5 @@ const profile_photo_url = props.data.profile_photo_url
 </script>
 
 <template>
-  <img :src="profile_photo_url" class="h-24" />
+  <img :src="profile_photo_url" class="h-24 rounded-md" />
 </template>

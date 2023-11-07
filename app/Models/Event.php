@@ -16,11 +16,12 @@ class Event extends Model
      * @var array 可変の属性
      */
     protected $fillable = ['title', 'description'];
+
     /**
      * @var array 可変の属性
      */
     protected $appends = [
-        'organizer', 'organizer_id', 'formatted_date_time', 'status_labl', 'tags',
+        'created_user', 'formatted_date_time', 'status_labl', 'tags',
         'is_like', 'is_good', 'category_name', 'instances',
     ];
 
@@ -39,10 +40,8 @@ class Event extends Model
      *
      * @return string
      */
-    public function getOrganizerAttribute()
+    public function getCreatedUserAttribute()
     {
-        // TODO: 作成したユーザーがオーガナイザーとは限らない。
-        // return $this->organizer->name;
         return $this->user->name;
     }
 
@@ -138,12 +137,6 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    //イベントを作成したユーザー
-    public function organizer()
-    {
-        return $this->belongsTo(User::class, 'organizer_id');
-    }
-
     //イベントに紐づくinstance
     public function instances()
     {
@@ -189,23 +182,18 @@ class Event extends Model
             ->withPivot('start_time', 'end_time');
     }
 
-    // EventModel が複数のユーザーやグループによって主催されている場合
-    // このイベントのユーザー主催者を取得する
-    public function user_organizers()
+    public function organizers()
     {
-        return $this->morphedByMany(User::class, 'event_organizable');
+        return $this->hasMany(EventOrganizer::class);
     }
 
-    // このイベントのグループ主催者を取得する
-    public function team_organizers()
-    {
-        return $this->morphedByMany(Team::class, 'event_organizable');
-    }
 
     public function schedules()
     {
         return $this->hasMany(EventSchedule::class);
     }
+
+
 
 
     public function userEvents()
