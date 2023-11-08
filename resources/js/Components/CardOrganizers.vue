@@ -20,7 +20,7 @@ const props = defineProps({
           <div class="card card-compact bg-base-300 w-full">
             <div class="card-body gap-0.5">
               <dl class="avatar">
-                <dt class="h-48 mx-auto "><img :src="organizer.image_url" class="rounded-md" /></dt>
+                <dt class="h-48 mx-auto "><img :src="organizer.imag_url" class="rounded-md" /></dt>
               </dl>
               <dl>
                 <dt class="text-sm font-bold text-gray-900 uppercase ">name</dt>

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_user_performer', function (Blueprint $table) {
+        Schema::create('time_table_performers', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('event_id');
-            $table->timestamp('start_time')->nullable();
-            $table->timestamp('end_time')->nullable();
+            $table->timestamps();
+            $table->integer('event_time_table_id');
+            $table->morphs('performable'); // パフォーマーのモデルのクラス名
         });
     }
 
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_user_performer');
+        Schema::dropIfExists('time_table_performers');
     }
 };

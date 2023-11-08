@@ -2,6 +2,8 @@
 <script setup>
 import { v4 as uuidv4 } from 'uuid';
 import { useForm, Link, router } from '@inertiajs/vue3';
+import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
 
 const props = defineProps({
   event: {
@@ -9,12 +11,9 @@ const props = defineProps({
     required: true
   },
 })
-const isGoodform = useForm({
+const form = useForm({
   is_like: false,
   is_good: false,
-});
-const isLikeform = useForm({
-  is_like: false,
 });
 const event = reactive({
   id: props.event.id ?? '',
@@ -48,6 +47,7 @@ const state = reactive({
 import file1 from './LXIX_Design_224-4.png'
 import file2 from './LXIX_Design_225-5.png'
 import file3 from './LXIX_Design_196-4.png'
+import { previousTuesday } from 'date-fns';
 
 const image_flyers = [
   file1,
@@ -55,18 +55,10 @@ const image_flyers = [
   file3,
 ]
 
-const getPrevIndex = (index) => {
-  return index == 0 ? image_flyers.length - 1 : index - 1
-}
-const getNextIndex = (index) => {
-  return index == image_flyers.length - 1 ? 0 : index + 1
-}
 const toggleLike = () => {
-  console.log('hogeeeee');
-  form.post(route('event.like.toggle', { event: event.id })), {
+  form.post(route('event.like.toggle', event.id)), {
     preserveScroll: true,
     onSuccess: (data) => {
-      console.log('fugggaaa');
       console.log(data);
     },
   };
@@ -74,10 +66,6 @@ const toggleLike = () => {
 
 const toggleGood = () => {
   state.goodRotated = true
-  form.put(route('teams.update', props.team), {
-    errorBag: 'updateTeamName',
-    preserveScroll: true,
-  });
   form.post(route('event.good.toggle', { event: event.id })), {
     preserveScroll: true,
     onSuccess: () => {
@@ -94,21 +82,15 @@ const toggleGood = () => {
 
 <template>
   <div class="card card-compact bg-base-100 shadow-xl">
-    <div class="carousel w-full">
-      <template v-for="(image, index) in image_flyers" :key="index">
-        <div :id="'item' + event.id + index" class="carousel-item relative w-full">
-          <img :src="image" class="w-full">
-          <div class="absolute inset-x-0 top-1/2 flex h-full -translate-y-1/2 justify-between">
-            <a :href="'#item' + event.id + getPrevIndex(index)" class="h-full w-full "></a>
-            <a :href="'#item' + event.id + getNextIndex(index)" class="h-full w-full "></a>
-          </div>
-        </div>
+    <Carousel :autoplay="5000" :wrap-around="true" class="flex flex-col">
+      <Slide v-for="image in image_flyers" :key="slide">
+        <img class="carousel__item" :src="image">
+      </Slide>
+
+      <template #addons>
+        <Pagination />
       </template>
-    </div>
-    <div class="flex flex-row mt-0.5">
-      <a v-for="(image, index) in image_flyers" :key="index" :href="'#item' + event.id + index"
-        class="h-3 w-full mx-1 rounded-lg bg-lime-300"></a>
-    </div>
+    </Carousel>
     <div class="flex w-full justify-between gap-2 pt-2">
       <div class="ml-2 flex  justify-start gap-2">
         <div class="badge gap-2" :class="{

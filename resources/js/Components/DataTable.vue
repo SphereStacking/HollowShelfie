@@ -2,7 +2,7 @@
 import PerformerLink from './DataTableComponents/PerformerLink.vue';
 import PerformerImg from './DataTableComponents/PerformerImg.vue';
 import PerformerExtLinks from './DataTableComponents/PerformerExtLinks.vue';
-
+import Performers from './DataTableComponents/Performers.vue';
 
 const props = defineProps({
   columDefs: Array,
@@ -27,6 +27,7 @@ const componentsMap = {
   link: PerformerLink,
   Img: PerformerImg,
   ExtLinks: PerformerExtLinks,
+  Performers: Performers
 };
 
 const resolveComponent = (template) => {
