@@ -11,8 +11,10 @@ use App\Models\Category;
 use App\Models\Instance;
 use Illuminate\Support\Arr;
 use App\Models\EventOrganizer;
+use App\Models\EventTimeTable;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\TimeTablePerformers;
 use Illuminate\Support\Facades\Log;
 
 class EventRelationSeeder extends Seeder
@@ -42,19 +44,30 @@ class EventRelationSeeder extends Seeder
 
             //--------------------------------------------------------
             // Performerをランダムに紐づける
-            $this->attachRandomModelsPivot($event, 'performers', User::class, $count, function ($event) {
-                $date = Carbon::parse($event->start_date);
-                $startTime = (clone $date)->addHours(rand(0, 1));
-                $endTime = (clone $startTime)->addMinutes(rand(30, 60));
-                return [
-                    'start_time' => $startTime->format('Y-m-d H:i:s'),
-                    'end_time' => $endTime->format('Y-m-d H:i:s')
-                ];
-            });
+            // $this->attachRandomModelsPivot($event, 'performers', User::class, $count, function ($event) {
+            //     $date = Carbon::parse($event->start_date);
+            //     $startTime = (clone $date)->addHours(rand(0, 1));
+            //     $endTime = (clone $startTime)->addMinutes(rand(30, 60));
+            //     return [
+            //         'start_time' => $startTime->format('Y-m-d H:i:s'),
+            //         'end_time' => $endTime->format('Y-m-d H:i:s')
+            //     ];
+            // });
+
+            // ランダムでrand(2 ,4)で複数のタイムテーブルを作成
+            for ($i = 0; $i < rand(2, 4); $i++) {
+                $eventTimeTable = EventTimeTable::factory()->create([
+                    'event_id' => $event->id,
+                ]);
+                // TimeTablePerformersはrand(1 ,2)の範囲で作成
+                TimeTablePerformers::factory()->count(rand(1, 2))->create([
+                    'event_time_table_id' => $eventTimeTable->id,
+                ]);
+            }
 
             //--------------------------------------------------------
             // ランダムなユーザーを主催者として追加
-            $organizers=[];
+            $organizers = [];
             for ($i = 0; $i < $count; $i++) {
                 $modelClass = rand(0, 1) ? User::class : Team::class;
                 $organizerData = $this->createOrganizerData($event->id, $modelClass);

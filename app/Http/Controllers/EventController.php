@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Resources\EventShowJsonResource;
 
 
 class EventController extends Controller
@@ -52,7 +53,8 @@ class EventController extends Controller
         $per_page = $request->input('per_page', 24);
 
         return Inertia::render(
-            'Event/List/Index',[
+            'Event/List/Index',
+            [
                 'trendTags' => $this->eventService->getTrendTagNames(),
                 'events' => $this->eventService->getEventList($section, $tags, $per_page)
             ]
@@ -147,7 +149,7 @@ class EventController extends Controller
     public function show($id)
     {
         return Inertia::render('Event/Show', [
-            'event' => Event::with(['performers', 'organizers.event_organizeble'])->find($id),
+            'event' => new EventShowJsonResource($this->eventService->getShowEvent($id)),
             'recommendEvents' => $this->eventService->getRecommendEvent(),
             'trendTags' => $this->eventService->getTrendTagNames()
         ]);
