@@ -9,9 +9,9 @@ const props = defineProps({
   },
 })
 
-import file1 from '../LXIX_Design_224-4.png'
-import file2 from '../LXIX_Design_225-5.png'
-import file3 from '../LXIX_Design_196-4.png'
+import file1 from '@/Components/LXIX_Design_224-4.png'
+import file2 from '@/Components/LXIX_Design_225-5.png'
+import file3 from '@/Components/LXIX_Design_196-4.png'
 
 const image_flyers = [
   file1,

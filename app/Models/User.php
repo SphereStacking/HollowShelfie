@@ -83,7 +83,7 @@ class User extends Authenticatable
     }
 
     /**
-     * このUserのイベントオーガナイザー取得
+     * このUserがオーガナイザーしているイベントを取得
      */
     public function event_organizers()
     {
@@ -118,5 +118,11 @@ class User extends Authenticatable
     public function followingsCount()
     {
         return $this->followings()->count();
+    }
+
+    // 認証してるユーザーがフォローしているがどうか
+    public function isFollowed()
+    {
+        return $this->followers()->where('user_id', auth()->id())->exists();
     }
 }

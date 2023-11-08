@@ -28,7 +28,6 @@ class EventService
             'highlightEvents' => $this->getSectionedQuery('highlight')->take(4)->get(),
             'recentEvents' => $this->getSectionedQuery('recent')->take(4)->get(),
             'myLikeEvents' => $this->getSectionedQuery('mylike')->take(4)->get(),
-            'myOrganizerEvents' => $this->getSectionedQuery('myorganizer')->take(4)->get(),
         ];
     }
 
@@ -103,19 +102,11 @@ class EventService
                 return $this->getRecentEventsQuery();
             case 'mylike':
                 return $this->getMyLikeEventsQuery();
-            case 'myorganizer':
-                return $this->getMyOrganizerEventsQuery();
             default:
                 return $this->getNewEventsQuery();
         }
     }
 
-
-    // public function getPublicRelationsEvents()
-    // {
-    //     return Event::where('status', [EventStatus::PUBLISHED,])
-    //         ->orderBy('created_at', 'asc');
-    // }
     private function getPublishedEventsQuery()
     {
         return Event::where('status', [EventStatus::ONGOING, EventStatus::UPCOMING, EventStatus::CLOSED]);
@@ -148,10 +139,5 @@ class EventService
             ->whereHas('like_users', function ($query) {
                 $query->where('user_id', Auth::user()->id);
             });
-    }
-
-    private function getMyOrganizerEventsQuery()
-    {
-        return Event::where('user_id', Auth::user()->id);
     }
 }

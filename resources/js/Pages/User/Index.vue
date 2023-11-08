@@ -5,13 +5,12 @@ const props = defineProps({
     required: true
   },
 })
-defineEmits(
-  ['click']
-)
-const profile = props.profile
-const about = props.profile
-const history = props.profile
-const header = props.profile
+
+const dataile = props.profile.dataile
+const authUser = props.profile.auth_user
+const logs = props.profile.logs
+const events = props.profile.events
+
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -19,48 +18,24 @@ const header = props.profile
       <h2 class="text-xl font-semibold leading-tight text-neutral">
       </h2>
     </template>
-    <Profile :header="header" :about="about" :profile="profile" :history="history" class="max-w-7xl mx-auto my-6">
-    </Profile>
 
-    <!-- <div class="mx-auto mt-10 flex max-w-7xl gap-5">
-      <ol class="relative border-l border-gray-200 dark:border-gray-700">
-        <li class="mb-10 ml-4">
-          <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
-          </div>
-          <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">February 2022</time>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Application UI code in Tailwind CSS</h3>
-          <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Get access to over 20+ pages including a
-            dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.</p>
-          <a href="#"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Learn
-            more <svg class="w-3 h-3 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9" />
-            </svg>
-          </a>
-        </li>
-        <li class="mb-10 ml-4">
-          <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
-          </div>
-          <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">March 2022</time>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Marketing UI design in Figma</h3>
-          <p class="text-base font-normal text-gray-500 dark:text-gray-400">All of the pages and components are first
-            designed in Figma and we keep a parity between the two versions even as we update the project.</p>
-        </li>
-        <li class="ml-4">
-          <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
-          </div>
-          <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">April 2022</time>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">E-Commerce UI code in Tailwind CSS</h3>
-          <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and
-            interactive elements built on top of Tailwind CSS.</p>
-        </li>
-      </ol>
-    </div> -->
+    <div class="max-w-7xl mx-auto my-6">
+      <ProfileHeader :name="dataile.name" :header_photo_url="dataile.photo_url" :followersCount="dataile.followers_count"
+        :badges="dataile.badges" :isFollowed="authUser.is_followed">
+      </ProfileHeader>
+      <div class="mt-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+        <div class="w-full flex flex-col 2xl:w-1/3">
+          <ProfileDatail class="flex-1 p-4" :name="dataile.name" :join_at="dataile.join_at" :location="dataile.location"
+            :languages="dataile.languages" :links="dataile.links"></ProfileDatail>
+          <HistoryTimeLine class="flex-1 mt-4 p-4" :histories="logs"></HistoryTimeLine>
+        </div>
+        <ProfileBio :content="dataile.bio"></ProfileBio>
+      </div>
+      <CardShowMoreEvents section="organized" title="主催" :events="events.organized" class="mt-4"> </CardShowMoreEvents>
+      <CardShowMoreEvents section="performered" title="出演" :events="events.performered" class="mt-4">
+      </CardShowMoreEvents>
+    </div>
+
   </AppLayout>
 </template>
 <style lang="">

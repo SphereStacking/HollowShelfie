@@ -31,7 +31,7 @@ const props = defineProps({
       </div>
     </div>
     <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
-      <EventListIndex title="イベント" :events="props.events.data">
+      <CardEventList title="イベント" :events="props.events.data">
         <template #header>
           <BtnPagination :prevPageUrl="props.events.prev_page_url" :nextPageUrl="props.events.links"
             :links="events.links" />
@@ -40,7 +40,7 @@ const props = defineProps({
           <BtnPagination :prevPageUrl="props.events.prev_page_url" :nextPageUrl="props.events.links"
             :links="events.links" />
         </template>
-      </EventListIndex>
+      </CardEventList>
     </div>
   </AppLayout>
 </template>

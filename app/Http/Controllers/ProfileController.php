@@ -33,8 +33,9 @@ class ProfileController extends Controller
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
         return Inertia::render('User/Index', [
-            'profile_jr' => new UserPublicProfileJsonResource($this->userService->getPublishProfile($id)),
-            'profile' => $this->userService->getPublishProfile($id)
+            'profile' => new UserPublicProfileJsonResource(
+                $this->userService->getPublishProfile($id),
+            ),
         ]);
     }
 

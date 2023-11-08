@@ -1,9 +1,8 @@
 <script setup>
-import { useForm, Link, router } from '@inertiajs/vue3';
 
-import file1 from './Partials/LXIX_Design_224-4.png'
-import file2 from './Partials/LXIX_Design_225-5.png'
-import file3 from './Partials/LXIX_Design_196-4.png'
+import file1 from '@/Components/Partials/LXIX_Design_224-4.png'
+import file2 from '@/Components/Partials/LXIX_Design_225-5.png'
+import file3 from '@/Components/Partials/LXIX_Design_196-4.png'
 
 const image_flyers = [
   file1,
@@ -33,10 +32,6 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  myOrganizerEvents: {
-    type: Array,
-    required: true
-  },
   ongoingEvents: {
     type: Array,
     required: true
@@ -61,41 +56,16 @@ const getEvetnListSection = (section) => {
     </template>
     <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
       <CarouselActiveClasses :images="image_flyers"></CarouselActiveClasses>
-      <!-- <EventListIndex title="プロモーション" :events="props.publicRelationsEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('pr')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex> -->
-      <EventListIndex title="注目" :events="props.highlightEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('highlight')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex>
-      <EventListIndex title="新規" :events="props.newEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('new')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex>
-      <EventListIndex title="開催中" :events="props.ongoingEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('ongoing')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex>
-      <EventListIndex title="直近" :events="props.recentEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('recent')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex>
-      <EventListIndex title="すき！" :events="props.myLikeEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('mylike')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex>
-      <EventListIndex title="主催" :events="props.myOrganizerEvents">
-        <template #header>
-          <BtnPrimary @click="getEvetnListSection('myorganizer')">show more!</BtnPrimary>
-        </template>
-      </EventListIndex>
+      <CardShowMoreEvents section="highlight" title="注目" :events="props.highlightEvents">
+      </CardShowMoreEvents>
+      <CardShowMoreEvents section="new" title="新規" :events="props.newEvents">
+      </CardShowMoreEvents>
+      <CardShowMoreEvents section="ongoing" title="開催中" :events="props.ongoingEvents">
+      </CardShowMoreEvents>
+      <CardShowMoreEvents section="recent" title="直近" :events="props.recentEvents">
+      </CardShowMoreEvents>
+      <CardShowMoreEvents section="mylike" title="すき！" :events="props.myLikeEvents">
+      </CardShowMoreEvents>
     </div>
   </AppLayout>
 </template>
