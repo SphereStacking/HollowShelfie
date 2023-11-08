@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             DB::table('event_tag')->truncate();
             DB::table('event_user_good')->truncate();
             DB::table('event_user_like')->truncate();
-            DB::table('event_user_performer')->truncate();
+            DB::table('event_time_table')->truncate();
             DB::table('events')->truncate();
             DB::table('instance_types')->truncate();
             DB::table('instances')->truncate();

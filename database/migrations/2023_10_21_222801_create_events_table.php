@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->text('title');
-            $table->integer('user_id');
+            $table->integer('event_create_user_id');
             $table->timestamp('start_date');
             $table->timestamp('end_date');
             $table->text('description');
