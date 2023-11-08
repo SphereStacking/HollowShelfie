@@ -36,11 +36,9 @@ const props = defineProps({
         <template #title>
           <h4 class="font-bold uppercase ">人気のタグ</h4>
         </template>
-        <template #content>
-          <div class="flex flex-wrap gap-0.5">
-            <LinkBadges :route="route('event.list.index')" :tags="trendTags"></LinkBadges>
-          </div>
-        </template>
+        <div class="flex flex-wrap gap-0.5">
+          <LinkBadges :route="route('event.list.index')" :tags="trendTags"></LinkBadges>
+        </div>
       </Card>
       <!-- 関連記事 -->
       <Card class="w-full">
@@ -58,10 +56,8 @@ const props = defineProps({
         <template #title>
           スポンサー
         </template>
-        <template #content>
-          <p>誰もいないよ😿</p>
-          <p>まってるよ！</p>
-        </template>
+        <p>誰もいないよ😿</p>
+        <p>まってるよ！</p>
       </Card>
     </div>
   </aside>

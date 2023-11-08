@@ -1,0 +1,45 @@
+erDiagram
+
+
+    event ||--o{ time_table : a
+    time_table ||--o{ time_table_performers : a
+    time_table_performers ||--|| users : a
+    time_table_performers ||--|| teams : a
+
+    event {
+        int id PK "Primary key"
+        string title "Event title"
+        string description "Event description"
+        datetime start_date "Event Start date and time"
+        datetime end_date "Event End date and time"
+        int status "Event status"
+    }
+
+    time_table{
+        int id PK "Primary key"
+        int event_id
+        string description "Event description"
+        datetime start_date "perfornce Start date and time"
+        datetime end_date "perfornce End date and time"
+    }
+
+    time_table_performers {
+        int id PK "Primary key"
+        int time_table_id
+
+        int event_performeble_id "user_id or team_id"
+        string event_performeble_type " user or team"
+    }
+
+    users {
+        int id PK
+        string name
+        string email
+    }
+
+    teams {
+        int id PK
+        string name
+        string email
+    }
+

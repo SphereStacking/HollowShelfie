@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\TeamService;
 use App\Services\UserService;
+use App\Http\Resources\UserPublicProfileJsonResource;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,7 @@ class ProfileController extends Controller
     }
 
     //
-        /**
+    /**
      * ユーザーのプロファイルを表示します。
      *
      * @param  \App\Models\User  $user
@@ -32,6 +33,7 @@ class ProfileController extends Controller
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
         return Inertia::render('User/Index', [
+            'profile_jr' => new UserPublicProfileJsonResource($this->userService->getPublishProfile($id)),
             'profile' => $this->userService->getPublishProfile($id)
         ]);
     }
@@ -46,8 +48,8 @@ class ProfileController extends Controller
     {
         // Team モデルのルートモデルバインディングを使用してチームを取得
         // チームプロファイルのビューを返す
-        return Inertia::render('PublishProfile/Team', [
-            'profile'=> $this->teamService->getPublishProfile($id)
+        return Inertia::render('Team/Index', [
+            'profile' => $this->teamService->getPublishProfile($id)
         ]);
     }
 }

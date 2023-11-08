@@ -18,19 +18,17 @@ const slideTo = (val) => {
 
 <template>
   <Card>
-    <template #content>
-      <Carousel :items-to-show="1" :wrap-around="false" v-model="currentSlide">
-        <Slide v-for="slide in props.images" :key="slide">
-          <img :src="slide" alt="image" class="carousel__item" />
-        </Slide>
-      </Carousel>
+    <Carousel :items-to-show="1" :wrap-around="false" v-model="currentSlide">
+      <Slide v-for="slide in props.images" :key="slide">
+        <img :src="slide" alt="image" class="carousel__item" />
+      </Slide>
+    </Carousel>
 
-      <Carousel :items-to-show="4" :wrap-around="true" v-model="currentSlide" ref="carousel">
-        <Slide v-for="(slide, index) in props.images" :key="index">
-          <img :src="slide" alt="image" class="carousel__item" @click="slideTo(index - 1)" />
-        </Slide>
-      </Carousel>
-    </template>
+    <Carousel :items-to-show="4" :wrap-around="true" v-model="currentSlide" ref="carousel">
+      <Slide v-for="(slide, index) in props.images" :key="index">
+        <img :src="slide" alt="image" class="carousel__item" @click="slideTo(index - 1)" />
+      </Slide>
+    </Carousel>
   </Card>
 </template>
 

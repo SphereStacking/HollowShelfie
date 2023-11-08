@@ -192,12 +192,4 @@ class Event extends Model
     {
         return $this->hasMany(EventSchedule::class);
     }
-
-
-
-
-    public function userEvents()
-    {
-        return $this->hasMany(UserEvent::class);
-    }
 }
