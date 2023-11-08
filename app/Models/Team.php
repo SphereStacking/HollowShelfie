@@ -49,7 +49,7 @@ class Team extends JetstreamTeam
      * @var array<int, string>
      */
     protected $appends = [
-        'team_logo_url','links'
+        'team_logo_url', 'links'
     ];
 
     /**
@@ -74,5 +74,16 @@ class Team extends JetstreamTeam
     public function links()
     {
         return $this->morphMany(Link::class, 'linkable');
+    }
+
+    //フォロー機能 Teamをfollowしている人
+    public function followers()
+    {
+        return $this->morphToMany(User::class, 'followable', 'follows')->withTimestamps();
+    }
+    // チームのフォロワー数を取得する
+    public function followersCount()
+    {
+        return $this->followers()->count();
     }
 }
