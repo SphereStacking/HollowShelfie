@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   profile: {
-    type: String,
+    type: Object,
     required: true
   },
 })

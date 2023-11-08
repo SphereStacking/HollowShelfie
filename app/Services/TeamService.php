@@ -21,6 +21,9 @@ class TeamService
     //公開情報を取得する
     public function getPublishProfile($id)
     {
-        return Team::with('events')->find($id);
+        return Team::with([
+            'links',          // ユーザーに関連するリンク
+            'event_organizers' // ユーザーがオーガナイザーとなっているイベント
+        ])->find($id);
     }
 }

@@ -26,12 +26,12 @@ const date = props.event ?? '?'
       </div>
     </template>
     <template #content>
-      <div class="flex gap-2">
+      <div class="flex">
+        <button class="btn btn-primary btn-sm rounded-md mr-1">Small</button>
         <LinkBadges :route="route('event.list.index')" :tags="tags"></LinkBadges>
       </div>
       <div class=" prose lg:prose-xl">
         <h1> {{ props.event.title }}</h1>
-
         {{ props.event.description }}
 
         <!-- {{ props.event }} -->

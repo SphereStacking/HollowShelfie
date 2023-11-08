@@ -22,11 +22,9 @@ class UserService
     public function getPublishProfile($id)
     {
         return User::with([
-                'links',          // ユーザーに関連するリンク
-                'like_events',    // ユーザーが「いいね」したイベント
-                'good_events',    // ユーザーが「良い」と評価したイベント
-                'event_organizers' // ユーザーがオーガナイザーとなっているイベント
-            ])
+            'links',          // ユーザーに関連するリンク
+            'event_organizers' // ユーザーがオーガナイザーとなっているイベント
+        ])
             ->find($id);
     }
 }

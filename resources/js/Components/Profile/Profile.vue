@@ -1,28 +1,41 @@
 <script setup>
 const props = defineProps({
   profile: {
-    type: String,
+    type: Object,
+    required: true
+  },
+  about: {
+    type: Object,
+    required: true
+  },
+  history: {
+    type: Object,
+    required: true
+  },
+  header: {
+    type: Object,
     required: true
   },
 })
 defineEmits(
   ['click']
 )
-const profile = props.profile
-const about = props.profile
-const history = props.profile
-const header = props.profile
+
 </script>
 <template>
-  <AppLayout title="Dashboard">
-    <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-neutral">
-      </h2>
-    </template>
-    <Profile :header="header" :about="about" :profile="profile" :history="history" class="max-w-7xl mx-auto my-6">
-    </Profile>
+  <div>
+    <ProfileHeader :header="header"></ProfileHeader>
+    <div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+      <div class="w-full flex flex-col 2xl:w-1/3">
+        <ProfileDatail class="flex-1 p-4" :profile="profile"></ProfileDatail>
+        <HistoryTimeLine class="flex-1 mt-4 p-4" :history="history"></HistoryTimeLine>
+      </div>
+      <ProfileBio :about="about"></ProfileBio>
+    </div>
+    <ScheduledEvent></ScheduledEvent>
+  </div>
 
-    <!-- <div class="mx-auto mt-10 flex max-w-7xl gap-5">
+  <!-- <div class="mx-auto mt-10 flex max-w-7xl gap-5">
       <ol class="relative border-l border-gray-200 dark:border-gray-700">
         <li class="mb-10 ml-4">
           <div
@@ -61,7 +74,6 @@ const header = props.profile
         </li>
       </ol>
     </div> -->
-  </AppLayout>
 </template>
 <style lang="">
 

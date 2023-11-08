@@ -15,14 +15,10 @@ class TeamLogoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request ,Team $team)
+    public function update(Request $request, Team $team)
     {
-        Log::debug('update');
         if (isset($request['logo'])) {
             $team->updateTeamLogo($request['logo']);
-            Log::debug('updateTeamLogo');
-        }else{
-            Log::debug('hoge');
         }
         return back(303)->with('status', 'team-logo-updated');
     }

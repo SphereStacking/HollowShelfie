@@ -6,7 +6,7 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  route:{
+  route: {
     type: String,
     required: true
   }
@@ -19,12 +19,11 @@ const serchTag = (tagName) => {
 </script>
 
 <template>
-<div>
-  <div v-for="tag in props.tags" :key="name" @click="serchTag(tag)"
-    class="badge badge-ghost badge-md mr-1 hover:badge-outline">
-    {{ tag }}
+  <div>
+    <div v-for="tag in props.tags" :key="name" @click="serchTag(tag)" class="btn btn-secondary btn-sm rounded-md mr-1 ">
+      {{ tag }}
+    </div>
   </div>
-</div>
 </template>
 
 <style lang="">

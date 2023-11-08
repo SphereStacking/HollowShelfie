@@ -90,6 +90,7 @@ class User extends Authenticatable
         return $this->morphMany(EventOrganizer::class, 'event_organizeble');
     }
 
+
     //リンク
     public function links()
     {
