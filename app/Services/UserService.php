@@ -21,10 +21,17 @@ class UserService
     // Userの公開情報を返す
     public function getPublishProfile($id)
     {
-        return User::with([
-            'links',          // ユーザーに関連するリンク
-            'event_organizers' // ユーザーがオーガナイザーとなっているイベント
-        ])
-            ->find($id);
+        $user = User::find($id);
+        $user->load('links');
+
+        $user->events_organized = $user->event_organizers()
+            ->whereHas('event', function ($query) {
+                $query->whereIn('status', [EventStatus::ONGOING, EventStatus::UPCOMING]);
+            })
+            ->with('event')
+            ->take(4)
+            ->get()
+            ->pluck('event');
+        return $user;
     }
 }

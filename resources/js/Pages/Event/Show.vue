@@ -24,6 +24,10 @@ const trendTags = props.trendTags
 const organizers = props.event.organizers.map(organizer => {
   return {
     name: organizer.event_organizeble.name,
+    profile_url: organizer.event_organizeble_type == 'App\\Models\\Team'
+      ? route('team.profile.show', organizer.event_organizeble.id)
+      : route('user.profile.show', organizer.event_organizeble.id)
+    ,
     image_url: organizer.event_organizeble.profile_photo_url ?? organizer.event_organizeble.team_logo_url,
     links: organizer.event_organizeble.links.map(link => {
       return {

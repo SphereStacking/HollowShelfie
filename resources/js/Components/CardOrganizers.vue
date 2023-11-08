@@ -20,23 +20,26 @@ const props = defineProps({
           <div class="card card-compact bg-base-300 w-full">
             <div class="card-body gap-0.5">
               <dl class="avatar">
-                <dt  class="h-48 mx-auto "><img :src="organizer.image_url" class="rounded-md" /></dt>
+                <dt class="h-48 mx-auto "><img :src="organizer.image_url" class="rounded-md" /></dt>
               </dl>
               <dl>
                 <dt class="text-sm font-bold text-gray-900 uppercase ">name</dt>
                 <dd class="ml-2">
-                  <a href='#' class="flex flex-row items-center gap-1">
+                  <a :href='organizer.profile_url' class="link flex flex-row items-center gap-1">
                     {{ organizer.name }}
                   </a>
                 </dd>
               </dl>
               <dl>
-                <dt class=" text-sm font-bold text-gray-900 uppercase ">Links</dt>
-                <dd v-for="(item, index ) in organizer.links" class="ml-2 text-sm text-gray-500  hover:underline">
-                  <a href='item.link' class="flex flex-row items-center gap-0.5">
-                    <Icon icon="ph:link-bold"></Icon>
-                    {{ item.label }}
-                  </a>
+                <dt class="text-sm font-bold text-gray-900 uppercase ">Links</dt>
+                <dd class="flex ml-2 text-sm text-gray-500 ">
+                  <template v-for="(item, index) in organizer.links">
+                    <a href='item.link' class="link flex flex-row items-center gap-0.5">
+                      <Icon icon="ph:link-bold"></Icon>
+                      {{ item.label }}
+                    </a>
+                  </template>
+
                 </dd>
               </dl>
             </div>
