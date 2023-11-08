@@ -57,7 +57,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url','links'
+        'profile_photo_url', 'links'
     ];
 
     /**
@@ -95,5 +95,28 @@ class User extends Authenticatable
     public function links()
     {
         return $this->morphMany(Link::class, 'linkable');
+    }
+
+    //フォロー機能 Userがフォローしている人
+    public function follows()
+    {
+        return $this->morphToMany(User::class, 'followable', 'follows', 'user_id', 'followable_id');
+    }
+
+    //フォロー機能 Userをfollowしている人
+    public function followers()
+    {
+        return $this->morphToMany(User::class, 'followable', 'follows')->withTimestamps();
+    }
+    // ユーザーのフォロワー数を取得する
+    public function followersCount()
+    {
+        return $this->followers()->count();
+    }
+
+    // このユーザーがフォローしている人数を取得する
+    public function followingsCount()
+    {
+        return $this->followings()->count();
     }
 }
