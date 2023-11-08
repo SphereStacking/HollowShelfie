@@ -26,23 +26,13 @@ class Event extends Model
     ];
 
     /**
-     * イベントのオーガナイザーIDを取得
-     *
-     * @return int
-     */
-    public function getOrganizerIdAttribute()
-    {
-        return $this->user->id;
-    }
-
-    /**
      * イベントのオーガナイザー名を取得
      *
      * @return string
      */
     public function getCreatedUserAttribute()
     {
-        return $this->user->name;
+        return $this->event_create_user->name;
     }
 
     /**
@@ -132,9 +122,9 @@ class Event extends Model
     }
 
     //イベントを作成したユーザー
-    public function user()
+    public function event_create_user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'event_create_user_id');
     }
 
     //イベントに紐づくinstance
@@ -173,13 +163,18 @@ class Event extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    //Eventに紐づくUser(Performer)
-    public function performers()
+    // //Eventに紐づくUser(Performer)
+    // public function performers()
+    // {
+    //     // Pivotでstart_timeとend_timeを取得
+    //     return $this->belongsToMany(User::class, 'event_user_performer')
+    //         ->using(EventUserPerformer::class)
+    //         ->withPivot('start_time', 'end_time');
+    // }
+
+    public function event_time_tables()
     {
-        // Pivotでstart_timeとend_timeを取得
-        return $this->belongsToMany(User::class, 'event_user_performer')
-            ->using(EventUserPerformer::class)
-            ->withPivot('start_time', 'end_time');
+        return $this->hasMany(EventTimeTable::class);
     }
 
     public function organizers()

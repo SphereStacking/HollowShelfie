@@ -3,7 +3,7 @@
 import { useForm, Link, router } from '@inertiajs/vue3';
 
 const props = defineProps({
-  performers: {
+  time_table: {
     type: Array,
     required: true
   },
@@ -19,12 +19,10 @@ const image_flyers = [
   file3,
 ]
 const columDefs = [
-  { headerName: '', field: '', template: 'Img' },
-  { headerName: '出演者', field: 'name', template: 'link' },
-  { headerName: 'リンク', field: '', template: 'ExtLinks' },
-  { headerName: '時間', field: 'pivot.performance_time' },
+  { headerName: '出演者', template: 'Performers' },
+  { headerName: '', field: 'description', },
+  { headerName: '時間', field: 'performance_time' },
 ]
-const rowData = props.performers
 </script>
 
 <template>
@@ -33,7 +31,7 @@ const rowData = props.performers
       <h3 id="sidebar-left" class="sr-only">Sidebar</h3>
       <CarouselGallery :images=image_flyers></CarouselGallery>
 
-      <DataTable :colum-defs="columDefs" :row-data="rowData" class="mt-4" />
+      <DataTable :colum-defs="columDefs" :row-data="time_table" class="mt-4" />
     </div>
 
   </aside>

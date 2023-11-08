@@ -42,6 +42,16 @@ class EventService
         return Event::create($attributes);
     }
 
+    //イベントを取得する。
+    public function getShowEvent($id)
+    {
+        $event = Event::with([
+            'organizers.event_organizeble',
+            'event_time_tables.performers.performable' // UserまたはTeamのデータも併せて取得
+        ])->find($id);
+        return $event;
+    }
+
     // /Event/Listのindexページの要素を返す
     public function getEventList($section, $tags = null, $paginate = 10)
     {
