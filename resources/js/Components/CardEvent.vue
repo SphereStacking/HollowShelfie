@@ -15,31 +15,6 @@ const form = useForm({
   is_like: false,
   is_good: false,
 });
-const event = reactive({
-  id: props.event.id ?? '',
-  organizer: props.event.organizer ?? 'hoge',
-  organizer_id: props.event.organizer_id ?? 1,
-  location: props.event.location ?? 'すふぃあの家',
-  title: props.event.title ?? 'ほぉおおぉぉおおげ',
-  status: props.event.status ?? 'piyo',
-  status_labl: props.event.status_labl ?? 'ぴよ',
-  is_like: props.event.is_like ?? false,
-  is_good: props.event.is_good ?? false,
-  formatted_date_time: props.event.formatted_date_time ?? 'hoge年fu月ga日',
-  start_time: props.event.start_time ?? 'hh:mm',
-  end_time: props.event.end_time ?? 'hh:mm',
-  tags: props.event.tags ?? ['hoge', 'fuga']
-});
-
-// props.eventの変更を監視し、値が変化した場合のみeventにコピー
-watch(() => props.event, (newEvent, oldEvent) => {
-  for (const key in newEvent) {
-    if (event.hasOwnProperty(key) && newEvent[key] !== oldEvent[key]) {
-      event[key] = newEvent[key];
-    }
-  }
-}, { deep: true });
-
 
 const state = reactive({
   goodRotated: false,
@@ -56,7 +31,7 @@ const image_flyers = [
 ]
 
 const toggleLike = () => {
-  form.post(route('event.like.toggle', event.id)), {
+  form.post(route('event.like.toggle', props.event.id)), {
     preserveScroll: true,
     onSuccess: (data) => {
       console.log(data);
@@ -66,7 +41,7 @@ const toggleLike = () => {
 
 const toggleGood = () => {
   state.goodRotated = true
-  form.post(route('event.good.toggle', { event: event.id })), {
+  form.post(route('event.good.toggle', props.event.id)), {
     preserveScroll: true,
     onSuccess: () => {
     },
@@ -82,30 +57,11 @@ const toggleGood = () => {
 
 <template>
   <div class="card card-compact bg-base-100 shadow-xl">
-    <Carousel :autoplay="5000" :wrap-around="true" class="flex flex-col">
-      <Slide v-for="image in image_flyers" :key="slide">
-        <img class="carousel__item" :src="image">
-      </Slide>
-
-      <template #addons>
-        <Pagination />
-      </template>
-    </Carousel>
-    <div class="flex w-full justify-between gap-2 pt-2">
-      <div class="ml-2 flex  justify-start gap-2">
-        <div class="badge gap-2" :class="{
-          'badge-neutral': event.status == 'draft',
-          'badge-error': event.status == 'canceled',
-          'badge-neutral': event.status == 'published',
-          'badge-success': event.status == 'ongoing',
-          'badge-error': event.status == 'deleted',
-          'badge-info': event.status == 'closed',
-        }">
-          {{ event.status_labl }}
-        </div>
-
+    <div class="flex justify-between mt-2 mx-2">
+      <div>
+        <badgeEventStatus :status='event.status' :label='event.status_label'>
+        </badgeEventStatus>
       </div>
-
       <div class="mr-2 flex justify-end gap-2">
         <div>
           <Icon v-if="event.is_good" icon="material-symbols:thumb-up-rounded"
@@ -123,42 +79,24 @@ const toggleGood = () => {
         </DropDownSnsShare>
       </div>
     </div>
+    <div class="flex justify-between mt-1 mx-2">
+      <div class="w-20">{{ event.category_name }}</div>
+      <div>{{ event.title }}</div>
+    </div>
+    <Carousel :autoplay="5000" :wrap-around="true" class="flex flex-col" pauseAutoplayOnHover>
+      <Slide v-for="(image, index) in image_flyers" :key="index">
+        <img class="carousel__item" :src="image">
+      </Slide>
 
-    <div class="card-body ">
-
-      <h2 class="card-title h-20">
-        {{ event.title }}
-      </h2>
-      <div class="flex flex-wrap gap-0.5">
-        <LinkBadges :route="route('event.list.index')" :tags="event.tags"></LinkBadges>
-      </div>
-      <div clas="flex flex-col">
-        <div class="flex flex-row gap-1">
-          <Icon icon="line-md:calendar" class=" text-xl" />
-          <CalendarEventCreate title="帆毛" :dates="[]" details="ほげ" location="HOGE">
-            <BtnLink> {{ event.formatted_date_time }}</BtnLink>
-          </CalendarEventCreate>
-        </div>
-
-        <div class="flex flex-row gap-1">
-          <Icon icon="line-md:map-marker" class="text-xl w-8" />
-          <p class="truncate whitespace-nowrap">
-            {{ event.location }}
-          </p>
-        </div>
-
-
-        <div class="flex flex-row justify-between">
-          <div class="flex flex-row gap-1">
-            <Icon icon="line-md:account" class="text-xl" />
-            <Link :href="route('organizer.show', event.organizer_id)" class="btn btn-link btn-active btn-xs px-0">
-            {{ event.organizer }}</Link>
-          </div>
-          <Link :href="route('event.show', event.id)" class="btn btn-link btn-active btn-xs px-0">Read more➡</Link>
-        </div>
-      </div>
-
-
+      <template #addons>
+        <Pagination />
+      </template>
+    </Carousel>
+    <div class="flex flex-row  justify-around mb-2">
+      <Icon icon="line-md:map-marker" class="text-xl w-8" />
+      <Icon icon="line-md:calendar" class=" text-xl" />
+      <Icon icon="line-md:account" class="text-xl" />
+      <Link :href="route('event.show', event.id)" class="btn btn-link btn-active btn-xs px-0">Read more➡</Link>
     </div>
   </div>
 </template>

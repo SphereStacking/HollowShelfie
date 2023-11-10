@@ -11,13 +11,26 @@ class EventTimeTable extends Model
 {
     use HasFactory;
 
-    // モデルの配列やJSON出力に含めるアクセサ属性を指定
-    // protected $appends = ['performance_time'];
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'performance_time'
+    ];
+
+
 
     protected $casts = [
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
+
+    public function getPerformanceTimeAttribute()
+    {
+        return $this->start_date->format('H:i') . ' ~ ' . $this->end_date->format('H:i');
+    }
 
     public function event()
     {

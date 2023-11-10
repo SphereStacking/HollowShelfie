@@ -20,7 +20,6 @@ const image_flyers = [
 ]
 const columDefs = [
   { headerName: '出演者', template: 'Performers' },
-  { headerName: '', field: 'description', },
   { headerName: '時間', field: 'performance_time' },
 ]
 </script>

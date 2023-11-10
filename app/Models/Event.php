@@ -21,7 +21,7 @@ class Event extends Model
      * @var array 可変の属性
      */
     protected $appends = [
-        'created_user', 'formatted_date_time', 'status_labl', 'tags',
+        'created_user', 'formatted_date_time', 'status_label', 'tags',
         'is_like', 'is_good', 'category_name', 'instances',
     ];
 
@@ -94,7 +94,7 @@ class Event extends Model
         $endDate = $this->end_date;
 
         // Y年m月d日 H:i~H:i 形式に変換
-        $formattedDate = date('Y年m月d日', strtotime($startDate));
+        $formattedDate = date('y/m/d', strtotime($startDate));
         $formattedStartTime = date('H:i', strtotime($startDate));
         $formattedEndTime = date('H:i', strtotime($endDate));
 
@@ -103,7 +103,7 @@ class Event extends Model
     }
 
     // ステータスのlabelを返す
-    public function getStatusLablAttribute()
+    public function getStatusLabelAttribute()
     {
         return EventStatus::getStatusLabel($this->status);
     }

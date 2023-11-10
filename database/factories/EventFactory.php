@@ -39,7 +39,7 @@ class EventFactory extends Factory
         $endDateTime = Carbon::instance($dateTime)->addHours(2)->format('Ymd\THis\Z');
         return [
             'event_create_user_id' => User::inRandomOrder()->first()->id,
-            'title' => $this->faker->text(100),
+            'title' => $this->faker->text(20),
             'start_date' => $formattedDateTime,
             'end_date' => $endDateTime,
             'description' => $this->faker->paragraphs(5, true),

@@ -19,18 +19,6 @@ class EventService
         $this->fileService = $fileService;
     }
 
-    // /Eventのindexページの要素を返す
-    public function getSectionEvents()
-    {
-        return [
-            'newEvents' => $this->getSectionedQuery('new')->take(4)->get(),
-            'ongoingEvents' => $this->getSectionedQuery('ongoing')->take(4)->get(),
-            'highlightEvents' => $this->getSectionedQuery('highlight')->take(4)->get(),
-            'recentEvents' => $this->getSectionedQuery('recent')->take(4)->get(),
-            'myLikeEvents' => $this->getSectionedQuery('mylike')->take(4)->get(),
-        ];
-    }
-
     //イベントを作成する。
     public function storeEvent($attributes, $uploadedFiles)
     {

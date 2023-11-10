@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Resources\EventsJsonResource;
 use App\Http\Resources\EventShowJsonResource;
 
 
@@ -36,7 +37,13 @@ class EventController extends Controller
     {
         return Inertia::render(
             'Event/Index',
-            $this->eventService->getSectionEvents()
+            [
+                'newEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('new')->take(4)->get()),
+                'ongoingEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('ongoing')->take(4)->get()),
+                'highlightEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('highlight')->take(4)->get()),
+                'recentEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('recent')->take(4)->get()),
+                'myLikeEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('mylike')->take(4)->get()),
+            ]
         );
     }
 

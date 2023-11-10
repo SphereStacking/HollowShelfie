@@ -27,7 +27,7 @@ class EventTimeTableFactory extends Factory
     {
         return [
             'event_id' => Event::inRandomOrder()->first()->id,
-            'description' => $this->faker->paragraph,
+            'description' =>  $this->faker->text(10),
             'start_date' => $this->faker->dateTimeBetween('+1 week', '+1 month'),
             'end_date' => $this->faker->dateTimeBetween('+1 month', '+2 months')
         ];

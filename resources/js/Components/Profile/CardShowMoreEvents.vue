@@ -33,7 +33,7 @@ const getEvetnListSection = (section) => {
       </div>
     </template>
     <div class=" w-full grid grid-cols-4 gap-6 my-2">
-      <CardEvent v-for="(item, index) in events" :key="index" :event="item" />
+      <CardEvent v-for="(item, index) in events" :key="index" :event="item" scroll-region />
     </div>
   </Card>
 </template>
