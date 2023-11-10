@@ -22,7 +22,8 @@ class EventShowJsonResource extends JsonResource
             'description' => $this->description,
             'category_name' => $this->category_name,
             'tags' =>  $this->tags,
-            'status_labl' => $this->status_labl,
+            'status' => $this->status,
+            'status_label' => $this->status_label,
             'create_user' => $this->event_create_user,
             'formatted_date_time' => $this->formatted_date_time,
             'organizers' => $this->organizers->map(function ($organizeble) {
@@ -50,7 +51,7 @@ class EventShowJsonResource extends JsonResource
                     'description' => $time_table->description,
                     'start_date' => $time_table->start_date,
                     'end_date' => $time_table->end_date,
-                    'performance_time' => $time_table->start_date . $time_table->end_date,
+                    'performance_time' => $time_table->performance_time,
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [
                             'id' => $performer->performable->id,

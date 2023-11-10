@@ -2,11 +2,11 @@
 import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
-  tags: {
+  status: {
     type: Array,
     required: true
   },
-  route: {
+  label: {
     type: String,
     required: true
   }
@@ -19,11 +19,13 @@ const serchTag = (tagName) => {
 </script>
 
 <template>
-  <div>
-    <div v-for="(tag, index) in props.tags" :key="index" @click="serchTag(tag)"
-      class="badge badge-secondary badge-xs rounded-md mr-1 ">
-      {{ tag }}
-    </div>
+  <div class="badge badge-md" :class="{
+    'badge-neutral': status == 'draft',
+    'badge-info': status == 'upcoming' || status == 'closed',
+    'badge-error': status == 'canceled' || status == 'deleted',
+    'badge-success': status == 'ongoing',
+  }">
+    {{ label }}
   </div>
 </template>
 
