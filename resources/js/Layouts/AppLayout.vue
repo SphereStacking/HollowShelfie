@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link, router ,usePage} from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import ApplicationMark from '@/Jetstream/ApplicationMark.vue';
 import Banner from '@/Jetstream/Banner.vue';
 import Dropdown from '@/Jetstream/Dropdown.vue';
@@ -37,7 +37,7 @@ const themes = [
   "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business",
   "acid", "lemonade", "night", "coffee", "winter",
 ]
-const page=usePage()
+const page = usePage()
 const auth_user = page.props.auth.user ?? null
 const isTeam = auth_user.current_team != null
 
@@ -47,11 +47,12 @@ console.log(page.props)
 
 <template>
   <div>
+
     <Head :title="title" />
 
     <Banner />
 
-    <div class="min-h-screenbg-base-100">
+    <div class="min-h-screenbg-base-100 pb-4">
       <nav class="bg-base border-b border-gray-100">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -88,7 +89,7 @@ console.log(page.props)
                     <span class="inline-flex rounded-md">
                       <button type="button"
                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                          {{ auth_user.current_team ? auth_user.current_team.name:'チームを作成してみよう！' }}
+                        {{ auth_user.current_team ? auth_user.current_team.name : 'チームを作成してみよう！' }}
                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                           viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round"
@@ -125,9 +126,9 @@ console.log(page.props)
                           <form @submit.prevent="switchToTeam(team)">
                             <DropdownLink as="button">
                               <div class="flex items-center">
-                                <svg v-if="team.id == auth_user.current_team_id"
-                                  class="mr-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <svg v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
+                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                  stroke="currentColor">
                                   <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -221,8 +222,7 @@ console.log(page.props)
           <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
               <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
-                <img class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
-                  :alt="auth_user.name">
+                <img class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url" :alt="auth_user.name">
               </div>
 
               <div>
@@ -313,5 +313,6 @@ console.log(page.props)
         <slot />
       </main>
     </div>
+    <Footer />
   </div>
 </template>
