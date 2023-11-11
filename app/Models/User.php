@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\SocialAccount;
+use Laravel\Jetstream\HasTeams;
+use App\Traits\UserProfilePhoto;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
-use Laravel\Sanctum\HasApiTokens;
-use App\Traits\UserProfilePhoto;
 
 class User extends Authenticatable
 {
@@ -68,6 +69,12 @@ class User extends Authenticatable
     public function getLinksAttribute()
     {
         return $this->links()->get();
+    }
+
+    //外部認証アカウントリレーション
+    public function social_accounts()
+    {
+        return $this->hasMany(SocialAccount::class);
     }
 
     //
