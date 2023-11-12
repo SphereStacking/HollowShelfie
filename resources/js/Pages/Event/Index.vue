@@ -55,7 +55,6 @@ const getEvetnListSection = (section) => {
       </h2>
     </template>
     <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
-      <CarouselActiveClasses :images="image_flyers"></CarouselActiveClasses>
       <CardShowMoreEvents section="highlight" title="注目" :events="props.highlightEvents">
       </CardShowMoreEvents>
       <CardShowMoreEvents section="new" title="新規" :events="props.newEvents">

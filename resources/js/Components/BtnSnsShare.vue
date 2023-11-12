@@ -44,7 +44,7 @@ const share = (platform) => {
         <Icon icon="ri:twitter-x-fill" class="text-xl" />
       </a>
     </li>
-    <li>
+    <!-- <li>
       <a @click="share('facebook')" class="btn btn-xs">
         <Icon icon="ri:facebook-fill" color="#1877F2" class="text-xl" />
       </a>
@@ -63,7 +63,7 @@ const share = (platform) => {
       <a @click="share('reddit')" class="btn btn-xs">
         <Icon icon="ri:reddit-line" color="orangered" class="text-xl" />
       </a>
-    </li>
+    </li> -->
   </ul>
 </template>
 <style lang="">
