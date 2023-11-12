@@ -12,7 +12,7 @@ const props = defineProps({
   },
 })
 const form = useForm({
-  is_like: false,
+  is_bookmark: false,
   is_good: false,
 });
 
@@ -30,8 +30,8 @@ const image_flyers = [
   file3,
 ]
 
-const toggleLike = () => {
-  form.post(route('event.like.toggle', props.event.id)), {
+const toggleBookmark = () => {
+  form.post(route('event.bookmark.toggle', props.event.id)), {
     preserveScroll: true,
     onSuccess: (data) => {
       console.log(data);
@@ -64,15 +64,17 @@ const toggleGood = () => {
       </div>
       <div class="mr-2 flex justify-end gap-2">
         <div>
-          <Icon v-if="event.is_good" icon="material-symbols:thumb-up-rounded"
+          <Icon v-if="event.auth_user.is_good" icon="material-symbols:thumb-up-rounded"
             class="rotate-0  text-xl text-pink-400 transition duration-200" :class="{ '-rotate-90': state.goodRotated }"
             @click="toggleGood" />
-          <Icon v-if="!event.is_good" icon="material-symbols:thumb-up-outline-rounded" class="text-xl"
+          <Icon v-if="!event.auth_user.is_good" icon="material-symbols:thumb-up-outline-rounded" class="text-xl"
             @click="toggleGood" />
         </div>
         <div>
-          <Icon v-if="!event.is_like" icon="line-md:heart" class="text-xl" @click="toggleLike" />
-          <Icon v-if="event.is_like" icon="line-md:heart-filled" class="text-xl text-pink-400" @click="toggleLike" />
+          <Icon v-if="!event.auth_user.is_bookmark" icon="line-md:clipboard-check-to-clipboard-transition" class="text-xl"
+            @click="toggleBookmark" />
+          <Icon v-if="event.auth_user.is_bookmark" icon="line-md:clipboard-check-twotone" class="text-xl text-pink-400"
+            @click="toggleBookmark" />
         </div>
         <DropDownSnsShare>
           <Icon icon="material-symbols:share" class="text-xl" />

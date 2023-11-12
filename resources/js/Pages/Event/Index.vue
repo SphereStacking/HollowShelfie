@@ -28,7 +28,7 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  myLikeEvents: {
+  myBookmarkEvents: {
     type: Array,
     required: true
   },
@@ -63,7 +63,7 @@ const getEvetnListSection = (section) => {
       </CardShowMoreEvents>
       <CardShowMoreEvents section="recent" title="直近" :events="props.recentEvents">
       </CardShowMoreEvents>
-      <CardShowMoreEvents section="mylike" title="すき！" :events="props.myLikeEvents">
+      <CardShowMoreEvents section="mybookmark" title="すき！" :events="props.myBookmarkEvents">
       </CardShowMoreEvents>
     </div>
   </AppLayout>
