@@ -81,7 +81,7 @@ class EventShowJsonResource extends JsonResource
             }),
             'auth_user' => [
                 'is_good' => $this->is_good,
-                'is_like' => $this->is_like,
+                'is_bookmark' => $this->is_bookmark,
             ],
 
         ];

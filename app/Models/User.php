@@ -78,9 +78,9 @@ class User extends Authenticatable
     }
 
     //
-    public function like_events()
+    public function bookmark_events()
     {
-        return $this->belongsToMany(Event::class, 'event_user_like');
+        return $this->belongsToMany(Event::class, 'event_user_bookmark');
     }
 
     // GroupModel が複数のイベントを主催している場合

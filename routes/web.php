@@ -83,10 +83,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::put('/event/{event}', [EventController::class, 'update'])->name('event.update'); // Update existing event
     // Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy'); // Delete event
 
-    // Event "Good" and "Like" operation
+    // Event "Good" and "Bookmark" operation
 
     Route::post('/event/{event}/good/toggle', [EventController::class, 'toggleEventGood'])->name('event.good.toggle');
-    Route::post('/event/{event}/like/toggle', [EventController::class, 'toggleEventLike'])->name('event.like.toggle');
+    Route::post('/event/{event}/bookmark/toggle', [EventController::class, 'toggleEventBookmark'])->name('event.bookmark.toggle');
 
     // Event List
     Route::get('/event/list', [EventController::class, 'list'])->name('event.list.index');

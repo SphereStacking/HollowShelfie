@@ -53,7 +53,7 @@ class EventsJsonResource extends JsonResource
                 }),
                 'auth_user' => [
                     'is_good' => $item->is_good,
-                    'is_like' => $item->is_like,
+                    'is_bookmark' => $item->is_bookmark,
                 ],
             ];
         });
