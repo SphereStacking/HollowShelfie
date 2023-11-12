@@ -31,8 +31,8 @@ class EventRelationSeeder extends Seeder
             $this->attachRandomModels($event, 'tags', Tag::class, $count);
 
             //--------------------------------------------------------
-            // ユーザーをランダムに「like」として紐づける
-            $this->attachRandomModels($event, 'like_users', User::class, $count * 4);
+            // ユーザーをランダムに「bookmark」として紐づける
+            $this->attachRandomModels($event, 'bookmark_users', User::class, $count * 4);
 
             //--------------------------------------------------------
             // ユーザーをランダムに「good」として紐づける

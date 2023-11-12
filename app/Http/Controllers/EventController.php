@@ -42,7 +42,7 @@ class EventController extends Controller
                 'ongoingEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('ongoing')->take(4)->get()),
                 'highlightEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('highlight')->take(4)->get()),
                 'recentEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('recent')->take(4)->get()),
-                'myLikeEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('mylike')->take(4)->get()),
+                'myBookmarkEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('mybookmark')->take(4)->get()),
             ]
         );
     }
@@ -210,12 +210,12 @@ class EventController extends Controller
      * @param Event $event
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function toggleEventLike(Event $event)
+    public function toggleEventBookmark(Event $event)
     {
         $user = Auth::user();
-        if ($user->like_events->contains($event->id)) {
+        if ($user->bookmark_events->contains($event->id)) {
             // いいねを取り消す
-            $user->like_events()->detach($event->id);
+            $user->bookmark_events()->detach($event->id);
             return Redirect::back()->with([
                 'status' => 'success',
                 'message' => 'イベントにいいねしました。'
@@ -223,7 +223,7 @@ class EventController extends Controller
         }
 
         // イベントに「いいね」を追加
-        $user->like_events()->attach($event->id);
+        $user->bookmark_events()->attach($event->id);
         return Redirect::back()->with([
             'status' => 'success',
             'message' => 'イベントにいいねしました。'
