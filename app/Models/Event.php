@@ -22,7 +22,7 @@ class Event extends Model
      */
     protected $appends = [
         'created_user', 'formatted_date_time', 'status_label', 'tags',
-        'is_like', 'is_good', 'category_name', 'instances',
+        'is_bookmark', 'is_good', 'category_name', 'instances',
     ];
 
     /**
@@ -47,13 +47,13 @@ class Event extends Model
     }
 
     /**
-     * ユーザーがイベントを"like"しているか確認
+     * ユーザーがイベントを"bookmark"しているか確認
      *
      * @return bool
      */
-    public function getIsLikeAttribute()
+    public function getIsBookmarkAttribute()
     {
-        return Auth::user()->like_events->contains($this->id);
+        return Auth::user()->bookmark_events->contains($this->id);
     }
 
     /**
@@ -134,9 +134,9 @@ class Event extends Model
     }
 
     //♡をしたusers
-    public function like_users()
+    public function bookmark_users()
     {
-        return $this->belongsToMany(User::class, 'event_user_like');
+        return $this->belongsToMany(User::class, 'event_user_bookmark');
     }
 
     //👍をしたusers

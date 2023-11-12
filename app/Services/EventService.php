@@ -98,8 +98,8 @@ class EventService
                 return $this->getHighlightEventsQuery();
             case 'recent':
                 return $this->getRecentEventsQuery();
-            case 'mylike':
-                return $this->getMyLikeEventsQuery();
+            case 'mybookmark':
+                return $this->getMyBookmarkEventsQuery();
             default:
                 return $this->getNewEventsQuery();
         }
@@ -131,10 +131,10 @@ class EventService
         return Event::where('status', [EventStatus::UPCOMING]);
     }
 
-    private function getMyLikeEventsQuery()
+    private function getMyBookmarkEventsQuery()
     {
         return Event::whereIn('status', [EventStatus::ONGOING, EventStatus::UPCOMING])
-            ->whereHas('like_users', function ($query) {
+            ->whereHas('bookmark_users', function ($query) {
                 $query->where('user_id', Auth::user()->id);
             });
     }
