@@ -56,7 +56,7 @@ const toggleGood = () => {
 </script>
 
 <template>
-  <div class="card card-compact bg-base-100 shadow-xl">
+  <div class="card card-compact bg-neutral shadow-xl">
     <div class="flex justify-between mt-2 mx-2">
       <div>
         <badgeEventStatus :status='event.status' :label='event.status_label'>

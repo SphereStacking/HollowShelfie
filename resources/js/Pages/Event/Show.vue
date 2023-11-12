@@ -32,11 +32,11 @@ const organizers = props.event.organizers
     </template>
     <div class="pt-6 pb-8 lg:pb-16">
       <div class="flex lg:flex-row flex-col px-4 gap-4">
-        <div class="lg:w-4/12 w-full mx-auto">
+        <div class="lg:w-3/12 w-full mx-auto">
           <EventDatailLeftSide :time_table="time_table" class="sticky top-12" aria-labelledby="sidebar-left">
           </EventDatailLeftSide>
         </div>
-        <div class="lg:w-5/12 w-full mx-auto">
+        <div class="lg:w-6/12 w-full mx-auto">
           <EventDatailMain :created_at="event.created_at" :start_date="event.created_at" :end_date="event.created_at"
             :tags="tags" :title="event.title" :description="event.description" class="w-full">
           </EventDatailMain>
