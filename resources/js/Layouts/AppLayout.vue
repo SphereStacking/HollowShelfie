@@ -39,8 +39,9 @@ const themes = [
 ]
 const page = usePage()
 const auth_user = page.props.auth.user ?? null
-const isTeam = auth_user.current_team != null
-
+// const isTeam = auth_user.current_team != null
+const isLogin = ref(page.props.auth.user !== null);
+console.log(isLogin)
 console.log(page.props)
 
 </script>
@@ -56,35 +57,51 @@ console.log(page.props)
       <nav class="bg-base border-b border-gray-100">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-16">
+          <div class="flex justify-between h-10">
             <div class="flex">
               <!-- Logo -->
               <div class="shrink-0 flex items-center">
-                <Link :href="route('dashboard')">
+                <Link :href="route('home')">
                 <ApplicationMark class="block h-9 w-auto" />
                 </Link>
               </div>
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                  Dashboard
+                <NavLink :href="route('home')" :active="route().current('home')">
+                  home
                 </NavLink>
+                <NavLink :href="route('event.index')" :active="route().current('event')">
+                  Events
+                </NavLink>
+                <!-- <NavLink :href="route('home')" :active="route().current('articles')">
+                  Articles
+                </NavLink> -->
               </div>
             </div>
-            <!-- TODO: テーマ変更 位置はあとからfix -->
-            <div class="dropdown dropdown-bottom">
-              <label tabindex="0" class="btn m-1">theme</label>
-              <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                <li v-for="(theme, index) in themes" :key="index">
-                  <a herf="#" :data-set-theme="theme" data-act-class="ACTIVECLASS">{{ theme }}</a>
-                </li>
-              </ul>
-            </div>
+
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-              <div class="ml-3 relative">
+              <!-- TODO: テーマ変更 位置はあとからfix -->
+              <div class="dropdown dropdown-bottom">
+                <label tabindex="0" class="btn m-1 btn-sm">theme</label>
+                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                  <li v-for="(theme, index) in themes" :key="index">
+                    <a herf="#" :data-set-theme="theme" data-act-class="ACTIVECLASS">{{ theme }}</a>
+                  </li>
+                </ul>
+              </div>
+              <div v-if="!isLogin">
+                <Link :href="route('login')" class="btn  btn-sm">
+                ログイン
+                </Link>
+                <Link :href="route('register')" class="ml-4 btn  btn-sm">
+                登録
+                </Link>
+              </div>
+
+              <div v-if="isLogin" class="ml-3 relative">
                 <!-- Teams Dropdown -->
-                <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                <Dropdown align="right" width="60">
                   <template #trigger>
                     <span class="inline-flex rounded-md">
                       <button type="button"
@@ -145,26 +162,14 @@ console.log(page.props)
               </div>
 
               <!-- Settings Dropdown -->
-              <div class="ml-3 relative">
+              <div v-if="isLogin" class="ml-3 relative">
                 <Dropdown align="right" width="48">
                   <template #trigger>
-                    <button v-if="$page.props.jetstream.managesProfilePhotos"
+                    <button
                       class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                       <img class="h-8 w-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
                         :alt="auth_user.name">
                     </button>
-
-                    <span v-else class="inline-flex rounded-md">
-                      <button type="button"
-                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                        {{ auth_user.name }}
-
-                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                        </svg>
-                      </button>
-                    </span>
                   </template>
 
                   <template #content>
@@ -192,6 +197,7 @@ console.log(page.props)
                   </template>
                 </Dropdown>
               </div>
+
             </div>
 
             <!-- Hamburger -->
@@ -213,7 +219,7 @@ console.log(page.props)
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
           <div class="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+            <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
               Dashboard
             </ResponsiveNavLink>
           </div>
@@ -221,18 +227,21 @@ console.log(page.props)
           <!-- Responsive Settings Options -->
           <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
-              <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
-                <img class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url" :alt="auth_user.name">
-              </div>
+              <template v-if="isLogin">
+                <div class="shrink-0 mr-3">
+                  <img class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                    :alt="auth_user.name">
+                </div>
 
-              <div>
-                <div class="font-medium text-base text-gray-800">
-                  {{ auth_user.name }}
+                <div>
+                  <div class="font-medium text-base text-gray-800">
+                    {{ auth_user.name }}
+                  </div>
+                  <div class="font-medium text-sm text-gray-500">
+                    {{ auth_user.email }}
+                  </div>
                 </div>
-                <div class="font-medium text-sm text-gray-500">
-                  {{ auth_user.email }}
-                </div>
-              </div>
+              </template>
             </div>
 
             <div class="mt-3 space-y-1">
@@ -253,7 +262,7 @@ console.log(page.props)
               </form>
 
               <!-- Team Management -->
-              <template v-if="$page.props.jetstream.hasTeamFeatures">
+              <template v-if="isLogin">
                 <div class="border-t border-gray-200" />
 
                 <div class="block px-4 py-2 text-xs text-gray-400">
@@ -303,7 +312,7 @@ console.log(page.props)
 
       <!-- Page Heading -->
       <header v-if="$slots.header" class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
           <slot name="header" />
         </div>
       </header>
