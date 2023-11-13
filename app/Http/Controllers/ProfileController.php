@@ -39,6 +39,14 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function adminProfileShow()
+    {
+        return Inertia::render('Home', [
+            'adminUser' => new UserPublicProfileJsonResource(
+                $this->userService->getPublishProfile(1),
+            ),
+        ]);
+    }
     /**
      * チームのプロファイルを表示します。
      *
