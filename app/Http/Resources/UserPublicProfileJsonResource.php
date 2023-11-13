@@ -18,6 +18,7 @@ class UserPublicProfileJsonResource extends JsonResource
             'dataile' => [
                 'name' => $this->name,
                 'photo_url' => $this->profile_photo_url,
+                'profile_url' => route('user.profile.show', $this->id),
                 'join_at' => $this->created_at,
                 'location' => 'TODO',
                 'languages' => ['jp', 'kr'],
