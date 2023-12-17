@@ -28,7 +28,7 @@ const isFollowedBtnOver = ref()
 </script>
 <template>
   <Card class="">
-    <template #top>
+    <template #header>
       <figure>
         <img src="https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg" class="">
       </figure>

@@ -1,10 +1,14 @@
 <script setup>
-import { eachHourOfInterval, eachDayOfInterval, startOfDay, endOfDay, format, getMinutes, getSeconds } from 'date-fns';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(duration);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 // propsを受け取る
 const { events, dateSpan } = defineProps(['events', 'dateSpan']);
-
-
 
 const currentTimeLeftMarginRem = ref()
 const currentTimeColumn = ref()
@@ -19,14 +23,13 @@ const COLUMNS_PER_HOUR = 4;
 const msToHours = (ms) => ms / MS_PER_HOUR;
 const logOutput = (date) => console.log(date)
 
-
 const columnNum = () => {
   // 開始日時と終了日時をDateオブジェクトに変換
-  const startDate = new Date(dateSpan.start_date);
-  const endDate = new Date(dateSpan.end_date);
+  const startDate = dayjs(dateSpan.start_date);
+  const endDate = dayjs(dateSpan.end_date);
 
   // 日付と時間の差をミリ秒で計算
-  const differenceInMilliseconds = endDate - startDate;
+  const differenceInMilliseconds = endDate.diff(startDate);
 
   // ミリ秒を時間に変換（1時間 = 3600000ミリ秒）
   const differenceInHours = differenceInMilliseconds / MS_PER_HOUR;
@@ -38,18 +41,18 @@ const columnNum = () => {
 
 // 列位置を計算
 const calculateGridColumnStart = (start_date) => {
-  const startDate = new Date(start_date);
-  const baseDate = new Date(dateSpan.start_date);
-  const startCol = msToHours(startDate - baseDate) * COLUMNS_PER_HOUR; // ユーティリティ関数と定数を使用
+  const startDate = dayjs(start_date);
+  const baseDate = dayjs(dateSpan.start_date);
+  const startCol = msToHours(startDate.diff(baseDate)) * COLUMNS_PER_HOUR; // ユーティリティ関数と定数を使用
 
   return startCol + 1;
 };
 
 // 列のスパンを計算
 const calculateGridColumnSpan = (start_date, end_date) => {
-  const startDate = new Date(start_date);
-  const endDate = new Date(end_date);
-  const differenceInMilliseconds = endDate - startDate;
+  const startDate = dayjs(start_date);
+  const endDate = dayjs(end_date);
+  const differenceInMilliseconds = endDate.diff(startDate);
   const differenceInHours = msToHours(differenceInMilliseconds); // ユーティリティ関数を使用
   const numberOfColumns = differenceInHours * COLUMNS_PER_HOUR; // 定数を使用
 
@@ -64,22 +67,26 @@ const calculateGridPosition = (start_date, end_date) => {
   return `${startCol} / span ${span}`
 };
 const formattedDates = () => {
-  const startDate = new Date(dateSpan.start_date);
-  const endDate = new Date(dateSpan.end_date);
-  const allDates = eachDayOfInterval({ start: startDate, end: endDate });
-  // ISO形式（"YYYY-MM-DD"）に変換
-  return allDates.map((date) => format(date, 'yyyy-MM-dd'));
+  const startDate = dayjs(dateSpan.start_date);
+  const endDate = dayjs(dateSpan.end_date);
+  const allDates = [];
+  let currentDate = startDate;
+  while (currentDate.isBefore(endDate) || currentDate.isSame(endDate)) {
+    allDates.push(currentDate.format('YYYY-MM-DD'));
+    currentDate = currentDate.add(1, 'day');
+  }
+  return allDates;
 }
 const calculateCurrentTimeColumn = (now) => {
-  const baseDate = new Date(dateSpan.start_date);
-  const startCol = msToHours(now - baseDate) * COLUMNS_PER_HOUR;
+  const baseDate = dayjs(dateSpan.start_date);
+  const startCol = msToHours(now.diff(baseDate)) * COLUMNS_PER_HOUR;
   return Math.floor(startCol) + 1;
 };
 
 const calculateMarginInRem = (now) => {
   // 現在の分と秒を取得
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
+  const minutes = now.minute();
+  const seconds = now.second();
 
   // 1時間（col-span-4）あたりのrem値
   const remPerHour = 2 * 4; // 8rem
@@ -91,30 +98,20 @@ const calculateMarginInRem = (now) => {
 }
 
 const updateTickBar = () => {
-  const now = new Date();
+  const now = dayjs();
   currentTimeLeftMarginRem.value = calculateMarginInRem(now)
   currentTimeColumn.value = calculateCurrentTimeColumn(now);
 }
 
-
-// eventsが変更されたときにupdateDateSpanを実行
-watch(events, logOutput(events), { immediate: true });
-
-onBeforeMount(() => {
-  updateTickBar()
-})
-onMounted(() => {
-  // 1秒ごとにcurrentTimeColumnを更新
-  const interval = setInterval(() => {
-    updateTickBar()
-  }, 3000);
-
-  // コンポーネントがアンマウントされたときにタイマーをクリア
-  onUnmounted(() => {
-    clearInterval(interval);
-  });
+// eventsが変更されたときやdateSpanが変更されたときに再計算する
+watch([events, dateSpan], () => {
+  updateTickBar();
 });
 
+// 1秒ごとに現在時刻のバーを更新する
+setInterval(() => {
+  updateTickBar();
+}, 1000);
 </script>
 <template>
   <div class="overflow-hidden flex flex-col overflow-x-auto">

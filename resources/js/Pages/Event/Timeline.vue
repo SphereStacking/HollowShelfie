@@ -50,7 +50,6 @@ const events = [
     </template>
     <div class="max-w-7xl mx-auto pt-4">
       <div class="flex flex-row gap-2 items-center">
-        <PickerDateRange></PickerDateRange>
         <SelectMulti></SelectMulti>
         <BtnInfo @click="search">search</BtnInfo>
       </div>

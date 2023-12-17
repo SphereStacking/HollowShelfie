@@ -12,14 +12,10 @@ const props = defineProps({
   }
 })
 
-const serchTag = (tagName) => {
-  router.get(props.route, { tags: [tagName] }, { replace: true, preserveState: true })
-}
-
 </script>
 
 <template>
-  <div class="badge badge-md" :class="{
+  <div class="badge badge-xs" :class="{
     'badge-neutral': status == 'draft',
     'badge-info': status == 'upcoming' || status == 'closed',
     'badge-error': status == 'canceled' || status == 'deleted',

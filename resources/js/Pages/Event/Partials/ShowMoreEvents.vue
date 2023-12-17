@@ -20,20 +20,18 @@ defineEmits(
 )
 
 const getEvetnListSection = (section) => {
-  router.get(route('event.list.index'), { section }, { replace: true, preserveState: true })
+  router.get(route('event.search.index'), { section }, { replace: true, preserveState: true })
 }
 
 </script>
 <template>
-  <Card>
-    <template #title>
-      <div class="flex items-center justify-between w-full">
-        <h4 class="text-xl text-gray-900 font-bold">{{ title }}</h4>
-        <BtnPrimary @click="getEvetnListSection(section)">show more!</BtnPrimary>
-      </div>
-    </template>
-    <div class=" w-full grid grid-cols-4 gap-6 my-2">
+  <div class="mx-2">
+    <div class="flex items-center justify-between w-full">
+      <h4 class="text-xl font-bold">{{ title }}</h4>
+    </div>
+    <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-6 my-2">
       <CardEvent v-for="(item, index) in events" :key="index" :event="item" scroll-region />
     </div>
-  </Card>
+    <BtnPrimary @click="getEvetnListSection(section)">show more!</BtnPrimary>
+  </div>
 </template>

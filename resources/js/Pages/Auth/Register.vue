@@ -67,9 +67,9 @@ const submit = () => {
 
             <div class="ml-2">
               I agree to the <a target="_blank" :href="route('legal', 'terms-of-service')"
-                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terms
+                class="underline text-sm  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Terms
                 of Service</a> and <a target="_blank" :href="route('legal', 'privacy-policy')"
-                class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Privacy
+                class="underline text-sm  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Privacy
                 Policy</a>
             </div>
           </div>
@@ -79,7 +79,7 @@ const submit = () => {
 
       <div class="flex items-center justify-end mt-4">
         <Link :href="route('login')"
-          class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          class="underline text-sm  rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ">
         Already registered?
         </Link>
 
@@ -88,8 +88,12 @@ const submit = () => {
         </PrimaryButton>
       </div>
     </form>
-    <div class="mt-2 flex justify-center">
+    <div class="mt-2 flex justify-center flex-col">
+      <div class="divider">OR</div>
       <SocialLogin></SocialLogin>
+      <div class="mt-2">Already have account?
+        <Link :href="route('login')" class="link">Sign in</Link>
+      </div>
     </div>
   </AuthenticationCard>
 </template>

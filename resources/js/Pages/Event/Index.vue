@@ -43,28 +43,32 @@ const props = defineProps({
 })
 
 const getEvetnListSection = (section) => {
-  router.get(route('event.list.index'), { section }, { replace: true, preserveState: true })
+  router.get(route('event.search.index'), { section }, { replace: true, preserveState: true })
 }
 </script>
 
 <template>
   <AppLayout title="Dashboard">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-neutral">
+      <h2 class="text-xl font-semibold leading-tight ">
         イベント
       </h2>
     </template>
-    <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
-      <CardShowMoreEvents section="highlight" title="注目" :events="props.highlightEvents">
-      </CardShowMoreEvents>
-      <CardShowMoreEvents section="new" title="新規" :events="props.newEvents">
-      </CardShowMoreEvents>
-      <CardShowMoreEvents section="ongoing" title="開催中" :events="props.ongoingEvents">
-      </CardShowMoreEvents>
-      <CardShowMoreEvents section="recent" title="直近" :events="props.recentEvents">
-      </CardShowMoreEvents>
-      <CardShowMoreEvents section="mybookmark" title="すき！" :events="props.myBookmarkEvents">
-      </CardShowMoreEvents>
+    <div class="mx-auto mt-2 flex max-w-7xl flex-col gap-2">
+      <ShowMoreEvents section="highlight" title="注目" :events="props.highlightEvents">
+      </ShowMoreEvents>
+      <div class="divider"></div>
+      <ShowMoreEvents section="new" title="新規" :events="props.newEvents">
+      </ShowMoreEvents>
+      <div class="divider"></div>
+      <ShowMoreEvents section="ongoing" title="開催中" :events="props.ongoingEvents">
+      </ShowMoreEvents>
+      <div class="divider"></div>
+      <ShowMoreEvents section="recent" title="直近" :events="props.recentEvents">
+      </ShowMoreEvents>
+      <div class="divider"></div>
+      <ShowMoreEvents section="mybookmark" title="すき！" :events="props.myBookmarkEvents">
+      </ShowMoreEvents>
     </div>
   </AppLayout>
 </template>

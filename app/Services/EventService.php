@@ -2,21 +2,28 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\Tag;
 use Inertia\Inertia;
 use App\Models\Event;
 use App\Models\EventTag;
 use App\Enums\EventStatus;
-use Illuminate\Support\Facades\Auth;
 use App\Services\FileService;
+use App\Services\ViewCountService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class EventService
 {
-    protected $fileService;
+    protected FileService  $fileService;
+    protected ViewCountService $viewCountService;
 
-    public function __construct(FileService $fileService)
-    {
+    public function __construct(
+        FileService $fileService,
+        ViewCountService $viewCountService
+    ) {
         $this->fileService = $fileService;
+        $this->viewCountService = $viewCountService;
     }
 
     //イベントを作成する。
@@ -37,13 +44,13 @@ class EventService
             'organizers.event_organizeble',
             'event_time_tables.performers.performable' // UserまたはTeamのデータも併せて取得
         ])->find($id);
+        $this->viewCountService->incrementCount($event);
         return $event;
     }
 
     // /Event/Listのindexページの要素を返す
     public function getEventList($section, $tags = null, $paginate = 10)
     {
-
         return $this->getSectionedQuery($section)
             ->filterByTags($tags)
             ->paginate($paginate);
@@ -128,11 +135,19 @@ class EventService
 
     private function getRecentEventsQuery()
     {
-        return Event::where('status', [EventStatus::UPCOMING]);
+        return Event::where('status', [EventStatus::UPCOMING])
+            ->where('start_date', '>=', Carbon::now())
+            ->orderBy('start_date', 'asc');
     }
 
     private function getMyBookmarkEventsQuery()
     {
+        $user = Auth::user();
+
+        if (!$user) {
+            return Event::query(); // ログインしていない場合は空のクエリを返す
+        }
+
         return Event::whereIn('status', [EventStatus::ONGOING, EventStatus::UPCOMING])
             ->whereHas('bookmark_users', function ($query) {
                 $query->where('user_id', Auth::user()->id);

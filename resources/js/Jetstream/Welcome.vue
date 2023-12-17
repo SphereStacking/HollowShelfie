@@ -4,6 +4,7 @@ import { usePage, Link } from '@inertiajs/vue3';
 const page = usePage()
 const appName = page.props.config.appName ?? null
 const adminUser = page.props.adminUser ?? null
+
 </script>
 
 <template>
@@ -75,5 +76,6 @@ const adminUser = page.props.adminUser ?? null
         <img :src="adminUser.dataile.photo_url" class="h-40 rounded-md">
       </div>
     </Card>
+
   </div>
 </template>

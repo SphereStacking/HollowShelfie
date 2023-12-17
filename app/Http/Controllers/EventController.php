@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Tag;
 use Inertia\Inertia;
 use App\Models\Event;
+use App\Models\Category;
 use App\Enums\EventStatus;
 use Illuminate\Http\Request;
 use App\Services\EventService;
@@ -14,6 +15,7 @@ use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\EventsJsonResource;
+use App\Http\Resources\EventListJsonResource;
 use App\Http\Resources\EventShowJsonResource;
 
 
@@ -38,32 +40,11 @@ class EventController extends Controller
         return Inertia::render(
             'Event/Index',
             [
-                'newEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('new')->take(4)->get()),
-                'ongoingEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('ongoing')->take(4)->get()),
-                'highlightEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('highlight')->take(4)->get()),
-                'recentEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('recent')->take(4)->get()),
-                'myBookmarkEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('mybookmark')->take(4)->get()),
-            ]
-        );
-    }
-
-    /**
-     * 全てのイベントを表示。
-     *
-     * @param Request $request
-     * @return \Inertia\Response
-     */
-    public function list(Request $request)
-    {
-        $section = $request->input('section');
-        $tags = $request->input('tags');
-        $per_page = $request->input('per_page', 24);
-
-        return Inertia::render(
-            'Event/List/Index',
-            [
-                'trendTags' => $this->eventService->getTrendTagNames(),
-                'events' => $this->eventService->getEventList($section, $tags, $per_page)
+                'newEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('new')->take(12)->get()),
+                'ongoingEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('ongoing')->take(12)->get()),
+                'highlightEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('highlight')->take(12)->get()),
+                'recentEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('recent')->take(12)->get()),
+                'myBookmarkEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('mybookmark')->take(12)->get()),
             ]
         );
     }

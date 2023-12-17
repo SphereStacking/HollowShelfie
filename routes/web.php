@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeamLogoController;
 use App\Http\Controllers\OrganizerController;
@@ -59,6 +60,12 @@ Route::get('/user/{user}', [ProfileController::class, 'userProfileShow'])
 Route::get('/team/{team}', [ProfileController::class, 'teamProfileShow'])
     ->name('team.profile.show');
 
+// Event CRUD operations
+Route::get('/event', [EventController::class, 'index'])->name('event.index');
+
+// Event CRUD operations
+Route::get('/event/search', [SearchController::class, 'index'])->name('event.search.index');
+
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
@@ -67,8 +74,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
 
-    // Event CRUD operations
-    Route::get('/event', [EventController::class, 'index'])->name('event.index');
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
     Route::get('/event/{event}/show', [EventController::class, 'show'])->name('event.show');
@@ -80,9 +85,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::post('/event/{event}/good/toggle', [EventController::class, 'toggleEventGood'])->name('event.good.toggle');
     Route::post('/event/{event}/bookmark/toggle', [EventController::class, 'toggleEventBookmark'])->name('event.bookmark.toggle');
-
-    // Event List
-    Route::get('/event/list', [EventController::class, 'list'])->name('event.list.index');
 
     Route::get('/event/timeline', [EventController::class, 'timeline'])->name('event.timeline.show');
 });
