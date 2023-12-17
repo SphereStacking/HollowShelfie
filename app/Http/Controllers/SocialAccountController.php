@@ -31,6 +31,6 @@ class SocialAccountController extends Controller
 
         Auth::login($user, true);
 
-        return Inertia::render('Dashboard', []);
+        return Inertia::render('Home', []);
     }
 }

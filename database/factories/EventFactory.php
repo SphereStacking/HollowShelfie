@@ -32,7 +32,7 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-        $dateTime = $this->faker->dateTimeThisMonth;
+        $dateTime = $this->faker->dateTimeBetween('-1 month', '+1 month');
         $formattedDateTime = Carbon::instance($dateTime)->format('Ymd\THis\Z');
 
         // 開始時間から2時間後を終了時間とする

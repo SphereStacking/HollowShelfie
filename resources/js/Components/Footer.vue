@@ -29,7 +29,7 @@ const pages = {
 
 </script>
 <template>
-  <footer class="p-4  bg-base-content text-white text-center space-y-4">
+  <footer class="p-4 bg-base-300 text-center space-y-4">
     <div class="grid grid-cols-2 gap-2  md:grid-cols-5 md:gap-20 max-w-4xl mx-auto">
       <ApplicationMark class="h-14 sm:col-span-1 col-span-2"></ApplicationMark>
       <div v-for="(links, section) in pages" :key="section" class="text-left">

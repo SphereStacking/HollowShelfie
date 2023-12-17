@@ -43,27 +43,26 @@ const columDefs = [
 </script>
 
 <template>
-  <CardForm>
+  <Card>
     <template #title>
       イベント作成！
     </template>
-    <template #content>
-      <InputTextLabel v-model="form.title" label="タイトル" :error="form.errors.title" help="イベントのタイトルを設定してください" />
-      <InputTextareaLabel v-model="form.description" label="こんなイベントを開催する！" :error="form.errors.description"
-        help="イベントの概要などを詳しく記入してください" />
-      <InputTextLabel v-model="form.location_label" label="ラベルの" :error="form.errors.title" help="リンクを" />
-      <InputTextLabel v-model="form.location_link" label="URL" :error="form.errors.title" help="開催場所のURLを記載してください！" />
 
-      <InputTextLabel v-model="form.date" label="開催日" type="date" :error="form.errors.date" help="イベントの開催日を設定してください" />
-      <InputTextLabel v-model="serchPerformer" label="演者を探す！" help="イベントの出演者を選択してください">
-        <template #right>
-          <BtnSecondary id="addPerformer" @click="addPerformer(serchPerformer)">
-            よろしく頼む ＞人＜
-          </BtnSecondary>
-        </template>
-      </InputTextLabel>
-      <DataTable :colum-defs="columDefs" :row-data="form.performers" />
-    </template>
+    <InputTextLabel v-model="form.title" label="タイトル" :error="form.errors.title" help="イベントのタイトルを設定してください" />
+    <InputTextareaLabel v-model="form.description" label="こんなイベントを開催する！" :error="form.errors.description"
+      help="イベントの概要などを詳しく記入してください" />
+    <InputTextLabel v-model="form.location_label" label="ラベルの" :error="form.errors.title" help="リンクを" />
+    <InputTextLabel v-model="form.location_link" label="URL" :error="form.errors.title" help="開催場所のURLを記載してください！" />
+
+    <InputTextLabel v-model="form.date" label="開催日" type="date" :error="form.errors.date" help="イベントの開催日を設定してください" />
+    <InputTextLabel v-model="serchPerformer" label="演者を探す！" help="イベントの出演者を選択してください">
+      <template #right>
+        <BtnSecondary id="addPerformer" @click="addPerformer(serchPerformer)">
+          よろしく頼む ＞人＜
+        </BtnSecondary>
+      </template>
+    </InputTextLabel>
+    <DataTable :colum-defs="columDefs" :row-data="form.performers" />
     <template #actions>
       <BtnInfo @click="createEvent">
         下書き
@@ -72,5 +71,5 @@ const columDefs = [
         作成！
       </BtnSuccess>
     </template>
-  </CardForm>
+  </Card>
 </template>

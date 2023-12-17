@@ -1,6 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
+const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -10,12 +11,17 @@ export default {
     './storage/framework/views/*.php',
     './resources/views/**/*.blade.php',
     './resources/js/**/*.vue',
+    "./node_modules/vue-tailwind-datepicker/**/*.js",
   ],
 
   theme: {
     extend: {
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        "vtd-primary": colors.sky, // Light mode Datepicker color
+        "vtd-secondary": colors.gray, // Dark mode Datepicker color
       },
     },
   },
@@ -25,8 +31,41 @@ export default {
     require('daisyui'),
   ],
   daisyui: {
-    themes: true, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-    darkTheme: 'cupcake', // name of one of the included themes for dark mode
+    themes: [
+      {
+        mytheme: {
+          "color-scheme": "dark",
+          "primary": "#9FE88D",
+          "secondary": "#FF7D5C",
+          "accent": "#C792E9",
+          "neutral": "#B2CCD6",
+          "neutral-content": "#1c212b",
+          "base-100": "#2A303C",
+          "base-200": "#242933",
+          "base-300": "#20252E",
+          "base-content": "#B2CCD6",
+          "info": "#28ebff",
+          "success": "#62efbd",
+          "warning": "#efd057",
+          "error": "#ffae9b",
+        },
+      },
+      'dim',
+      'nord',
+      'light',
+      'dark',
+      'cupcake',
+      'emerald',
+      'garden',
+      'pastel',
+      'wireframe',
+      'cmyk',
+      'lemonade',
+      'night',
+      'winter',
+    ],
+    // themes: true, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: 'dim', // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes

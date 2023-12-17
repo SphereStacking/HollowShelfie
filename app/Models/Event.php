@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
-use DateTime;
 use App\Enums\EventStatus;
+use Laravel\Scout\Searchable;
+use App\Models\Traits\EventScopes;
+use App\Models\Traits\EventGetters;
+use App\Models\Traits\EventSetters;
+use Illuminate\Support\Facades\Log;
+use App\Models\Traits\EventRelations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 
 class Event extends Model
 {
     use HasFactory;
+    use Searchable;
+
+    use EventGetters;
+    use EventSetters;
+    use EventScopes;
+    use EventRelations;
 
     /**
      * @var array 可変の属性
@@ -21,170 +31,71 @@ class Event extends Model
      * @var array 可変の属性
      */
     protected $appends = [
-        'created_user', 'formatted_date_time', 'status_label', 'tags',
-        'is_bookmark', 'is_good', 'category_name', 'instances',
+        'created_user', 'status_label', 'tags',
+        'is_bookmark', 'is_good', 'category_name', 'instances', 'good_count',
+        'short_good_count', 'event_timeline_status'
     ];
 
+
     /**
-     * イベントのオーガナイザー名を取得
+     * モデルの"booting"メソッド
      *
-     * @return string
+     * @return void
      */
-    public function getCreatedUserAttribute()
+    protected static function boot()
     {
-        return $this->event_create_user->name;
+        parent::boot();
+        static::saving(function ($model) {
+            if (
+                !in_array(EventStatus::getStatus($model->status), [
+                    EventStatus::DRAFT, EventStatus::DELETED
+                ]) &&
+                $model->published_at == null
+            ) {
+                $model->published_at = now();
+            }
+        });
+    }
+
+
+    /**
+     * ビューとのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphManｊy
+     */
+    public function view()
+    {
+        return $this->morphOne(View::class, 'viewable');
     }
 
     /**
-     * イベントのタグ名を取得
+     * MeiliSearch 検索可能な配列に変換します。
      *
      * @return array
      */
-    public function getTagsAttribute()
+    public function toSearchableArray()
     {
-        // タグのnameプロパティだけを配列にして返す
-        return $this->tags()->pluck('name')->toArray();
-    }
-
-    /**
-     * ユーザーがイベントを"bookmark"しているか確認
-     *
-     * @return bool
-     */
-    public function getIsBookmarkAttribute()
-    {
-        return Auth::user()->bookmark_events->contains($this->id);
-    }
-
-    /**
-     * ユーザーがイベントを"good"しているか確認
-     *
-     * @return bool
-     */
-    public function getIsGoodAttribute()
-    {
-        return Auth::user()->good_events->contains($this->id);
-    }
-
-    /**
-     * 関連付けられているカテゴリの中から最初の名前を返す
-     *
-     * @return string|null
-     */
-    public function getCategoryNameAttribute()
-    {
-        return $this->categories->first() ? $this->categories->first()->name : null;
-    }
-
-    /**
-     * 関連付けられているインスタンスの中から最初の名前を返す
-     *
-     * @return string|null
-     */
-    public function getInstancesAttribute()
-    {
-        return $this->instances()->get();
-    }
-
-    //表示用に時刻のデータをformatして返す
-    public function getFormattedDateTimeAttribute()
-    {
-        // 日付と時刻のデータを取得
-        $startDate = $this->start_date;
-        $endDate = $this->end_date;
-
-        // Y年m月d日 H:i~H:i 形式に変換
-        $formattedDate = date('y/m/d', strtotime($startDate));
-        $formattedStartTime = date('H:i', strtotime($startDate));
-        $formattedEndTime = date('H:i', strtotime($endDate));
-
-        // フォーマットしでた日付と時刻を結合して返す
-        return $formattedDate . ' ' . $formattedStartTime . '~' . $formattedEndTime;
-    }
-
-    // ステータスのlabelを返す
-    public function getStatusLabelAttribute()
-    {
-        return EventStatus::getStatusLabel($this->status);
-    }
-
-
-    // タグに基づいてフィルタするクエリスコープ
-    public function scopeFilterByTags($query, $tags)
-    {
-        if ($tags) {
-            // タグの名前で絞り込む
-            $query->whereHas('tags', function ($query) use ($tags) {
-                $query->whereIn('name', $tags);
-            });
-        }
-        return $query;
-    }
-
-    //イベントを作成したユーザー
-    public function event_create_user()
-    {
-        return $this->belongsTo(User::class, 'event_create_user_id');
-    }
-
-    //イベントに紐づくinstance
-    public function instances()
-    {
-        return $this->hasMany(Instance::class);
-    }
-
-    //♡をしたusers
-    public function bookmark_users()
-    {
-        return $this->belongsToMany(User::class, 'event_user_bookmark');
-    }
-
-    //👍をしたusers
-    public function good_users()
-    {
-        return $this->belongsToMany(User::class, 'event_user_good');
-    }
-
-    //紐づくcategoryを返す。
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
-    //紐づくファイル。
-    public function files()
-    {
-        return $this->morphMany(File::class, 'fileable');
-    }
-
-    //Eventに紐づくタグ
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class);
-    }
-
-    // //Eventに紐づくUser(Performer)
-    // public function performers()
-    // {
-    //     // Pivotでstart_timeとend_timeを取得
-    //     return $this->belongsToMany(User::class, 'event_user_performer')
-    //         ->using(EventUserPerformer::class)
-    //         ->withPivot('start_time', 'end_time');
-    // }
-
-    public function event_time_tables()
-    {
-        return $this->hasMany(EventTimeTable::class);
-    }
-
-    public function organizers()
-    {
-        return $this->hasMany(EventOrganizer::class);
-    }
-
-
-    public function schedules()
-    {
-        return $this->hasMany(EventSchedule::class);
+        $array = $this->only(
+            [
+                'id',
+                'title',
+                'start_date',
+                'end_date',
+                'description',
+                'status',
+                'published_at',
+                'creted_user',
+                'status_label',
+            ]
+        );
+        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        $array['instances'] = $this->instances()->get()->map(function ($instance) {
+            return [
+                'location' => $instance->location,
+                'instance_type_name' => $instance->instance_type_name,
+            ];
+        })->toArray();
+        $array['categories'] = $this->categories()->get()->pluck('name')->toArray();
+        return $array;
     }
 }

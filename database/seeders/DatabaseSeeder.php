@@ -42,5 +42,7 @@ class DatabaseSeeder extends Seeder
             TeamRelationSeeder::class,
             UserRelationSeeder::class
         ]);
+
+        Artisan::call('scout:import', ['model' => 'App\\Models\\Event']);
     }
 }

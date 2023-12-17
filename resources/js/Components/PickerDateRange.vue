@@ -1,26 +1,13 @@
 <script setup>
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css';
+import VueTailwindDatepicker from "vue-tailwind-datepicker";
 
-// propsとemitsを定義
-const { date: initialDate } = defineProps(['date']);
-const emit = defineEmits();
-
-// 初期値として受け取ったdateをセット
-const date = ref(initialDate);
-
-// dateが変更されたらemitする
-const updateDate = (newDate) => {
-  date.value = newDate;
-  emit('update:date', newDate);
-};
-
-// ブラウザのロケールを取得
-const locale = ref(navigator.language.slice(0, 2));
+const dateValue = ref([]);
+const formatter = ref({
+  date: "YYYY-MM-DD",
+  month: "MM",
+});
 </script>
 
 <template>
-  <VueDatePicker :locale="locale" :model-value="date" @update:model-value="updateDate" range auto-apply
-    :enable-time-picker="false">
-  </VueDatePicker>
+  <vue-tailwind-datepicker i18n="ja" :formatter="formatter" v-model="dateValue" dark />
 </template>

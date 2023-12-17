@@ -21,7 +21,7 @@ const props = defineProps({
 
 <template>
   <div class="join">
-    <Link v-for="(link, index) in links" :key="index" class="join-item btn" :href="link.url"
+    <Link v-for="(link, index) in links" :key="index" class="join-item btn btn-sm" :href="link.url"
       :class="{ 'btn-active': link.active }">
     {{ link.label }}
     </Link>

@@ -9,6 +9,9 @@ import NavLink from '@/Jetstream/NavLink.vue';
 import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
 import { themeChange } from 'theme-change'
 
+const page = usePage()
+console.log(page.props)
+
 defineProps({
   title: String,
 });
@@ -32,18 +35,16 @@ onMounted(() => {
 })
 
 const themes = [
-  "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro",
-  "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel",
-  "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business",
-  "acid", "lemonade", "night", "coffee", "winter",
+  'mytheme', "dim", "nord", "light", "dark", "cupcake", "emerald",
+  "garden", "pastel",
+  "wireframe", "cmyk",
+  "lemonade", "night", "winter",
 ]
-const page = usePage()
-const auth_user = page.props.auth.user ?? null
-// const isTeam = auth_user.current_team != null
-const isLogin = ref(page.props.auth.user !== null);
-console.log(isLogin)
-console.log(page.props)
 
+
+const auth_user = ref(page.props.auth.user ?? null);
+const isTeam = ref(auth_user.value?.current_team != null);
+const isLogin = ref(auth_user.value !== null);
 </script>
 
 <template>
@@ -53,8 +54,8 @@ console.log(page.props)
 
     <Banner />
 
-    <div class="min-h-screenbg-base-100 pb-4">
-      <nav class="bg-base border-b border-gray-100">
+    <div class="min-h-screen bg-base-100 pb-4">
+      <nav class="bg-base-100 shadow  ">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between h-10">
@@ -69,10 +70,13 @@ console.log(page.props)
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink :href="route('home')" :active="route().current('home')">
-                  home
+                  ホーム
                 </NavLink>
-                <NavLink :href="route('event.index')" :active="route().current('event')">
-                  Events
+                <NavLink :href="route('event.index')" :active="route().current('event.index')">
+                  イベント
+                </NavLink>
+                <NavLink :href="route('event.timeline.show')" :active="route().current('event.timeline.show')">
+                  タイムライン
                 </NavLink>
                 <!-- <NavLink :href="route('home')" :active="route().current('articles')">
                   Articles
@@ -80,7 +84,10 @@ console.log(page.props)
               </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden sm:flex sm:items-center sm:ml-6 sm:gap-2">
+              <a class="btn btn-sm" :href="route('event.search.index')">
+                <Icon icon="mdi:magnify" class="text-sm mx-2"></Icon>
+              </a>
               <!-- TODO: テーマ変更 位置はあとからfix -->
               <div class="dropdown dropdown-bottom">
                 <label tabindex="0" class="btn m-1 btn-sm">theme</label>
@@ -90,22 +97,21 @@ console.log(page.props)
                   </li>
                 </ul>
               </div>
-              <div v-if="!isLogin">
+              <template v-if="!isLogin">
                 <Link :href="route('login')" class="btn  btn-sm">
                 ログイン
                 </Link>
-                <Link :href="route('register')" class="ml-4 btn  btn-sm">
+                <Link :href="route('register')" class="btn  btn-sm">
                 登録
                 </Link>
-              </div>
+              </template>
 
-              <div v-if="isLogin" class="ml-3 relative">
+              <div v-if="isLogin" class="relative">
                 <!-- Teams Dropdown -->
                 <Dropdown align="right" width="60">
                   <template #trigger>
                     <span class="inline-flex rounded-md">
-                      <button type="button"
-                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                      <button type="button" class="btn btn-sm">
                         {{ auth_user.current_team ? auth_user.current_team.name : 'チームを作成してみよう！' }}
                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                           viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -162,7 +168,7 @@ console.log(page.props)
               </div>
 
               <!-- Settings Dropdown -->
-              <div v-if="isLogin" class="ml-3 relative">
+              <div v-if="isLogin" class="relative">
                 <Dropdown align="right" width="48">
                   <template #trigger>
                     <button
@@ -174,7 +180,7 @@ console.log(page.props)
 
                   <template #content>
                     <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">
+                    <div class="block px-4 py-2 text-xs ">
                       Manage Account
                     </div>
 
@@ -311,14 +317,13 @@ console.log(page.props)
       </nav>
 
       <!-- Page Heading -->
-      <header v-if="$slots.header" class="bg-white shadow">
+      <header v-if="$slots.header" class="shadow">
         <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
           <slot name="header" />
         </div>
       </header>
-
       <!-- Page Content -->
-      <main>
+      <main class="px-4 sm:px-6 lg:px-8 mt-4">
         <slot />
       </main>
     </div>

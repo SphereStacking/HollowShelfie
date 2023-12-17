@@ -24,8 +24,11 @@ class EventsJsonResource extends JsonResource
                 'category_name' => $item->category_name,
                 'tags' =>  $item->tags,
                 'status' => $item->status,
-                'status_label' => $item->status_label,                'status_label' => $item->status_label,
-                'formatted_date_time' => $item->formatted_date_time,
+                'status_label' => $item->status_label,
+                'status_label' => $item->status_label,
+                'good_count' => $item->good_count,
+                'short_good_count' => $item->short_good_count,
+                'event_timeline_status' => $item->event_timeline_status,
                 'organizers' => $item->organizers->map(function ($organizeble) {
                     return [
                         'profile_url' =>  $organizeble->event_organizeble_type === User::class
@@ -48,7 +51,7 @@ class EventsJsonResource extends JsonResource
                 'instances' => $item->instances->map(function ($instance) {
                     return [
                         'instance_type' => $instance->instance_type_name,
-                        'location' => $instance->link,
+                        'location' => $instance->location,
                     ];
                 }),
                 'auth_user' => [

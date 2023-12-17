@@ -1,16 +1,14 @@
 <script setup>
 defineProps({
-
-})
-defineEmits(
-  ['click']
-)
+  type: {
+    type: String,
+    default: 'button',
+  },
+});
 </script>
-<template>
-  <BtnBase class="btn btn-primary btn-active" @click="$emit('click')">
-    <slot></slot>
-  </BtnBase>
-</template>
-<style lang="">
 
-</style>
+<template>
+  <button :type="type" class="btn btn-primary btn-sm ">
+    <slot />
+  </button>
+</template>

@@ -25,7 +25,13 @@ class EventShowJsonResource extends JsonResource
             'status' => $this->status,
             'status_label' => $this->status_label,
             'create_user' => $this->event_create_user,
-            'formatted_date_time' => $this->formatted_date_time,
+            'event_timeline_status' => $this->event_timeline_status,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'formatted_start_date' => $this->getFormattedStartDateAttribute(),
+            'formatted_end_date' => $this->getFormattedEndDateAttribute(),
+            'good_count' => $this->good_count,
+            'short_good_count' => $this->short_good_count,
             'organizers' => $this->organizers->map(function ($organizeble) {
                 return [
                     'profile_url' =>  $organizeble->event_organizeble_type === User::class
@@ -55,7 +61,7 @@ class EventShowJsonResource extends JsonResource
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [
                             'id' => $performer->performable->id,
-                            'profile_url' => $performer->performable->performable_type === User::class
+                            'profile_url' => $performer->performable_type === User::class
                                 ? route('user.profile.show', $performer->performable->id)
                                 : route('team.profile.show', $performer->performable->id),
                             'name' => $performer->performable->name,
@@ -76,7 +82,7 @@ class EventShowJsonResource extends JsonResource
             'instances' => $this->instances->map(function ($instance) {
                 return [
                     'instance_type' => $instance->instance_type_name,
-                    'location' => $instance->link,
+                    'location' => $instance->location,
                 ];
             }),
             'auth_user' => [
