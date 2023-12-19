@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Enums\EventStatus;
 use Laravel\Scout\Searchable;
 use App\Models\Traits\EventScopes;
@@ -58,14 +59,11 @@ class Event extends Model
     }
 
 
-    /**
-     * ビューとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphManｊy
-     */
-    public function view()
+
+
+    public function searchable(): bool
     {
-        return $this->morphOne(View::class, 'viewable');
+        return $this->published_at != null;
     }
 
     /**
@@ -79,15 +77,16 @@ class Event extends Model
             [
                 'id',
                 'title',
-                'start_date',
-                'end_date',
                 'description',
                 'status',
-                'published_at',
                 'creted_user',
                 'status_label',
+                'good_count',
             ]
         );
+        $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;
+        $array['start_date'] =  $this->published_at ? Carbon::parse($this->start_date)->getTimestamp() : null;
+        $array['end_date'] =  $this->published_at ? Carbon::parse($this->end_date)->getTimestamp() : null;
         $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
         $array['instances'] = $this->instances()->get()->map(function ($instance) {
             return [
@@ -96,6 +95,31 @@ class Event extends Model
             ];
         })->toArray();
         $array['categories'] = $this->categories()->get()->pluck('name')->toArray();
+        // $array['performers'] = $this->performers()->get()->pluck('name')->toArray();
+        $array['organizers'] = $this->organizers->pluck('event_organizeble.name')->toArray();
+
+        $array['performers'] = $this->event_time_tables->flatMap(function ($time_table) {
+            return $time_table->performers->pluck('performable.name');
+        });
         return $array;
+    }
+
+    public static function getSearchFilterAttributes(): array
+    {
+        return [
+            'id',
+            // 'title',
+            // 'start_date',
+            // 'end_date',
+            // 'description',
+            // 'status',
+            // 'published_at',
+            // 'creted_user',
+            // 'status_label',
+            // 'tags.name',
+            // 'instances.*.location',
+            // 'instances.*.instance_type_name',
+            // 'categories.*',
+        ];
     }
 }

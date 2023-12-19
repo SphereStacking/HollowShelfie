@@ -67,7 +67,7 @@ const filterMaps = [
   { type: 'category', label: 'category' },
   { type: 'date', label: 'date' },
   { type: 'status', label: 'status' },
-  { type: 'tag', label: 'Tags' },
+  { type: 'tag', label: 'tags' },
   { type: 'other', label: 'other' }
 ]
 
@@ -155,6 +155,7 @@ onMounted(() => {
         include: condition.include,
       });
     });
+    isOpenFilter.value = true;
   }
   if (queryParams.value.t) {
     text.value = queryParams.value.t;
