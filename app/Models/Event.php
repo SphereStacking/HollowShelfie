@@ -103,23 +103,4 @@ class Event extends Model
         });
         return $array;
     }
-
-    public static function getSearchFilterAttributes(): array
-    {
-        return [
-            'id',
-            // 'title',
-            // 'start_date',
-            // 'end_date',
-            // 'description',
-            // 'status',
-            // 'published_at',
-            // 'creted_user',
-            // 'status_label',
-            // 'tags.name',
-            // 'instances.*.location',
-            // 'instances.*.instance_type_name',
-            // 'categories.*',
-        ];
-    }
 }
