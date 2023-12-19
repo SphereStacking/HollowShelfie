@@ -28,6 +28,24 @@ trait EventScopes
     }
 
     /**
+     * Scout用の公開中のイベントを取得するスコープ
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithStatusPublishedForScout($query)
+    {
+        return $query->whereIn(
+            'status',
+            [
+                EventStatus::ONGOING->name,
+                EventStatus::UPCOMING->name,
+                EventStatus::CLOSED->name
+            ]
+        );
+    }
+
+    /**
      * 新しいイベントを取得するスコープ
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -39,6 +57,16 @@ trait EventScopes
     }
 
     /**
+     * Scout用 良い評価の多いイベントを取得するスコープ
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrderByGoodUserCountForScout($query)
+    {
+        return $query->orderBy('good_count', 'desc');
+    }
+    /**
      * 良い評価の多いイベントを取得するスコープ
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -48,7 +76,6 @@ trait EventScopes
     {
         return $query->withCount('good_users')->orderBy('good_users_count', 'desc');
     }
-
 
     /**
      *閲覧数なイベントを取得するスコープ

@@ -44,9 +44,9 @@ const executeSearch = () => {
 };
 
 onMounted(() => {
-  const query = usePage().props.ziggy.query;
-  if (query.order) {
-    order.value = orderMaps.find(orderItem => orderItem.type === query.order);
+  const queryParams = usePage().props.ziggy.query;
+  if (queryParams.o) {
+    order.value = orderMaps.find(orderItem => orderItem.type === queryParams.o);
   }
 });
 
@@ -67,7 +67,7 @@ onMounted(() => {
     <div class="mx-auto flex max-w-7xl flex-col gap-5">
       <div class="flex flex-row  justify-between">
         <div class="">
-          {{ events.pagination.total }} 件
+          {{ events.pagination.to }} / {{ events.pagination.total }}
         </div>
         <div class=" flex flex-row gap-2">
           <BtnPagination :prevPageUrl="props.events.pagination.prev_page_url" :nextPageUrl="props.events.pagination.links"
@@ -89,7 +89,6 @@ onMounted(() => {
             </ul>
           </div>
         </div>
-
       </div>
       <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-6 my-2">
         <CardEvent v-for="(item, index) in props.events.data" :key="index" :event="item" scroll-region />

@@ -31,9 +31,15 @@ const events = props.profile.events
         </div>
         <ProfileBio :content="dataile.bio"></ProfileBio>
       </div>
-      <CardShowMoreEvents section="organized" title="主催" :events="events.organized" class="mt-4"> </CardShowMoreEvents>
-      <CardShowMoreEvents section="performered" title="出演" :events="events.performered" class="mt-4">
-      </CardShowMoreEvents>
+      <div class="mx-2">
+        <div class="flex items-center justify-between w-full">
+          <h4 class="text-xl font-bold">{{ title }}</h4>
+        </div>
+        <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-6 my-2">
+          <CardEvent v-for="(item, index) in events.organized" :key="index" :event="item" scroll-region />
+        </div>
+        <BtnPrimary @click="getEvetnListSection(section)">show more!</BtnPrimary>
+      </div>
     </div>
 
   </AppLayout>

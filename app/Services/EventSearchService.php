@@ -46,7 +46,7 @@ class EventSearchService
     public function getPublishedEventSearch(EventSearchParams $params)
     {
 
-        $query = Event::search($params->text);
+        $query = Event::query();
         $queryParams = [];
 
         foreach ($params->queryParams as $item) {

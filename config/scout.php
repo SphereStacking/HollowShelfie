@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Event;
+
 return [
 
     /*
@@ -133,9 +135,26 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
-            // 'users' => [
-            //     'filterableAttributes'=> ['id', 'name', 'email'],
-            // ],
+            Event::class => [
+                'filterableAttributes' => [
+                    'id',
+                    'title',
+                    'description',
+                    'published_at',
+                    'start_date',
+                    'status',
+                    'status_label',
+                    'tags',
+                    'instances.*.location',
+                    'instances.*.instance_type_name',
+                    'categories',
+                    'good_count'
+                ],
+                'sortableAttributes' => [
+                    'good_count',
+                    'published_at'
+                ],
+            ],
         ],
     ],
 

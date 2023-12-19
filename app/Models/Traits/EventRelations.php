@@ -117,4 +117,14 @@ trait EventRelations
     {
         return $this->hasMany(EventSchedule::class);
     }
+
+    /**
+     * ビューとのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphManｊy
+     */
+    public function view()
+    {
+        return $this->morphOne(View::class, 'viewable');
+    }
 }
