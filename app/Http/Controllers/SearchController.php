@@ -38,10 +38,10 @@ class SearchController extends Controller
     public function event(SearchRequest $request)
     {
         $EventSearchParams = new EventSearchParams(
-            $request->input('t', ''),
-            $request->input('q', []),
-            $request->input('paginate', 32),
-            $request->input('o', 'new'),
+            $request->input('t', null),
+            $request->input('q', null),
+            $request->input('paginate', null),
+            $request->input('o', null),
         );
         Log::debug($EventSearchParams);
         return Inertia::render(
@@ -57,14 +57,16 @@ class SearchController extends Controller
             ]
         );
     }
-    public function performer(SearchRequest $request)
+    public function user(SearchRequest $request)
     {
         $EventSearchParams = new EventSearchParams(
-            $request->input('t', ''),
-            $request->input('q', []),
-            $request->input('paginate', 32),
-            $request->input('o', 'new'),
+            $request->input('t', null),
+            $request->input('q', null),
+            $request->input('paginate', null),
+            $request->input('o', null),
         );
+
+
         return Inertia::render(
             'Search/Performer',
             [

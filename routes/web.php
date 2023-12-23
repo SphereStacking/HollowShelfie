@@ -54,19 +54,19 @@ Route::get('/credits', function () {
 })->name('credits');
 
 
-Route::get('/user/{user}', [ProfileController::class, 'userProfileShow'])
+Route::get('/user/{user}', [ProfileController::class, 'user'])
     ->name('user.profile.show');
 
-Route::get('/team/{team}', [ProfileController::class, 'teamProfileShow'])
+Route::get('/team/{team}', [ProfileController::class, 'team'])
     ->name('team.profile.show');
 
-// Event CRUD operations
-Route::get('/event', [EventController::class, 'index'])->name('event.index');
+Route::get('/event', [EventController::class, 'index'])
+    ->name('event.index');
 
-// Event CRUD operations
-Route::get('/event/search', [SearchController::class, 'event'])->name('event.search.index');
-// Event CRUD operations
-Route::get('/performer/search', [SearchController::class, 'performer'])->name('event.performer.index');
+Route::get('/event/search', [SearchController::class, 'event'])
+    ->name('event.search.index');
+Route::get('/user/search', [SearchController::class, 'user'])
+    ->name('user.search.index');
 
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {

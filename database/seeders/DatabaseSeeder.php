@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             InitCategorySeeder::class,
             InitTagSeeder::class,
             InitInstanceTypeSeeder::class,
+            InitBadgeSeeder::class,
         ]);
 
         User::factory(10)->create();
@@ -40,7 +41,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EventRelationSeeder::class,
             TeamRelationSeeder::class,
-            UserRelationSeeder::class
+            UserRelationSeeder::class,
+            UserBadgeSeeder::class,
         ]);
 
         Artisan::call('scout:import', ['model' => 'App\\Models\\Event']);
