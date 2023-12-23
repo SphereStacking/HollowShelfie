@@ -16,12 +16,11 @@ class UserPublicProfileJsonResource extends JsonResource
     {
         return [
             'dataile' => [
+                'id' => $this->id,
                 'name' => $this->name,
                 'photo_url' => $this->profile_photo_url,
                 'profile_url' => route('user.profile.show', $this->id),
-                'join_at' => $this->created_at,
                 'location' => 'TODO',
-                'languages' => ['jp', 'kr'],
                 'links' => $this->links->map(function ($link) {
                     return [
                         'label' => $link->label,
@@ -29,35 +28,17 @@ class UserPublicProfileJsonResource extends JsonResource
                     ];
                 }),
                 'followers_count' => $this->followersCount(),
-                'bio' => 'TODO',
-                'badges' => ['official'],
+                'content' => 'hogegegege',
+                'badges' => $this->badges->map(function ($badge) {
+                    return [
+                        'name' => $badge->name,
+                        'icon_class' => $badge->icon_class,
+                    ];
+                }),
             ],
             'auth_user' => [
-                'is_followed' => false,
+                'is_followed' => $this->is_followed,
             ],
-            'events' => [
-                'organized' => $this->events_organized,
-                'performered' => [],
-            ],
-            'logs' => [
-                [
-                    'description' => '出演 DJ [Concert in Tokyo]',
-                    'time' => '1 days ago'
-                ],
-                [
-                    'description' => '出演 VL [Concert in Tokyo]',
-                    'time' => '2 days ago'
-                ],
-                [
-                    'description' => '主催 LJ [Charity Event]',
-                    'time' => '3 days ago'
-                ],
-                [
-                    'description' => '運営 雑用 [Art Exhibition]',
-                    'time' => '20 days ago'
-                ],
-            ],
-
         ];
     }
 }
