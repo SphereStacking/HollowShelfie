@@ -35,3 +35,4 @@ const getEvetnListSection = (section) => {
     <BtnPrimary @click="getEvetnListSection(section)">show more!</BtnPrimary>
   </div>
 </template>
+"http://localhost/user/search?q%5B0%5D%5Binclude%5D=and&q%5B0%5D%5Btype%5D=user&q%5B0%5D%5Bvalue%5D=%E4%BA%95%E9%AB%98%20%E9%99%BD%E5%AD%90&paginate=4&o=new"
