@@ -27,36 +27,28 @@ const image_flyers = [
 ]
 
 const toggleBookmark = () => {
-  form.post(route('event.bookmark.toggle', props.event.id)), {
+  form.post(route('event.bookmark.toggle', props.event.id), {
     preserveScroll: true,
     onSuccess: (data) => {
       console.log(data);
     },
-  };
+  });
 }
 
 const toggleGood = () => {
-  form.post(route('event.good.toggle', props.event.id)), {
+  form.post(route('event.good.toggle', props.event.id), {
     preserveScroll: true,
     onSuccess: () => {
     },
     onFinish: () => {
-
     }
-  };
+  });
 }
-
-const activeContent = ref('');
-const toggleContent = (content) => {
-  console.log(content)
-  activeContent.value = activeContent.value === content ? '' : content;
-}
-const is_good = props.event.auth_user.is_good
 </script>
 
 <template>
   <div
-    class=" card card-compact bg-base-200 hover:bg-base-100 border-transparent border hover:border-base-300 transition-all duration-200 hover:-translate-y-1">
+    class=" card card-compact bg-base-200 hover:bg-base-100 border-transparent border hover:border-base-300 transition-all duration-200 hover:-translate-y-1 shadow-2xl">
     <div class="flex justify-between mt-2 mx-2">
       <div class="badge badge-primary">{{ event.category_name }}</div>
       <div class="font-bold whitespace-nowrap truncate  text-xs">
@@ -76,8 +68,8 @@ const is_good = props.event.auth_user.is_good
     </div>
     <div class="flex justify-between my-2 mx-2">
       <div class="flex gap-1">
-        <BtnSwapBookmark @click="toggleBookmark" :check="event.auth_user.is_bookmark"></BtnSwapBookmark>
-        <BtnSwapGood @click="toggleGood" :check="event.auth_user.is_good" :count="event.short_good_count" showCount>
+        <BtnSwapBookmark @click="toggleBookmark" :check="event.auth_user?.is_bookmark"></BtnSwapBookmark>
+        <BtnSwapGood @click="toggleGood" :check="event.auth_user?.is_good" :count="event.short_good_count" showCount>
         </BtnSwapGood>
       </div>
       <div></div>

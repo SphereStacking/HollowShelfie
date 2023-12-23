@@ -18,11 +18,15 @@ use App\Http\Controllers\FollowController;
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     // ユーザーをフォロー
-    Route::post('/users/{user}/follow', [FollowController::class, 'followUser'])->name('users.follow');
+    Route::post('/users/{user}/follow', [FollowController::class, 'followUser'])
+        ->name('users.follow');
     // チームjをフォロー
-    Route::post('/teams/{team}/follow', [FollowController::class, 'followTeam'])->name('teams.follow');
+    Route::post('/teams/{team}/follow', [FollowController::class, 'followTeam'])
+        ->name('teams.follow');
     // ユーザーのフォロー解除
-    Route::delete('/users/{user}/unfollow', [FollowController::class, 'unfollowUser'])->name('users.unfollow');
+    Route::delete('/users/{user}/unfollow', [FollowController::class, 'unfollowUser'])
+        ->name('users.unfollow');
     // チームのフォロー解除
-    Route::delete('/teams/{team}/unfollow', [FollowController::class, 'unfollowTeam'])->name('teams.unfollow');
+    Route::delete('/teams/{team}/unfollow', [FollowController::class, 'unfollowTeam'])
+        ->name('teams.unfollow');
 });
