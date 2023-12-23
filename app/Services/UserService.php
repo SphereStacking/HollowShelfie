@@ -25,19 +25,11 @@ class UserService
     }
 
     // Userの公開情報を返す
-    public function getPublishProfile($id)
+    public function getPublishProfile($id): User
     {
         $user = User::find($id);
-        $EventSearchParams = new EventSearchParams(
-            '',
-            [['include' => 'and', 'type' => 'user', 'value' => $user->name]],
-            4,
-            'new',
-        );
-        $user = User::find($id);
         $user->load('links');
-        $user->events = $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams);
-        Log::debug($user->events);
+        $user->is_followed = $user->isFollowed();
         return $user;
     }
 }
