@@ -15,12 +15,12 @@ class EventSearchParams extends Params
 
     public function __construct(
         ?string $text = '',
-        array $queryParams = [],
+        ?array $queryParams = [],
         ?int $paginate = null,
         ?string $order = null
     ) {
         $this->text = $text ?? '';
-        $this->queryParams = $queryParams;
+        $this->queryParams = $queryParams ?? [];
         $this->paginate = $paginate ?? $this->defaultPaginate;
         $this->order = $order ?? $this->defaultOrder;
     }
