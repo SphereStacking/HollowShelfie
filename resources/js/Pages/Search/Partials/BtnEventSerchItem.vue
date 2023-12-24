@@ -36,13 +36,13 @@ const getButtonClassForType = (type) => buttonClassMapping[type] || '';
 </script>
 
 <template>
-  <span class="btn btn-xs cursor-pointer inline-flex items-center rounded-full text-sm font-medium group"
+  <span class="btn btn-xs rounded-md cursor-pointer inline-flex items-center  text-sm font-medium group"
     :class="getButtonClassForType(type)">
     <template v-if="isIcon && isClose">
       <div class="relative">
-        <IconSerchItemType v-if="isIcon" :type="type"
+        <IconTypeMapper v-if="isIcon" :type="type"
           class="absolute top-0 left-0 text-lg transition-all duration-300 opacity-100 group-hover:opacity-0 ">
-        </IconSerchItemType>
+        </IconTypeMapper>
         <Icon icon="mdi:close"
           class="absolute top-0 left-0 text-lg transition-all duration-300 opacity-0 group-hover:opacity-100 -rotate-90 group-hover:rotate-0"
           @click="removeCondition">
@@ -53,11 +53,10 @@ const getButtonClassForType = (type) => buttonClassMapping[type] || '';
       </div>
     </template>
     <template v-else>
-      <IconSerchItemType v-if="isIcon" :type="type" class="text-lg"></IconSerchItemType>
+      <IconTypeMapper v-if="isIcon" :type="type" class="text-lg"></IconTypeMapper>
       <Icon v-if="isClose" icon="line-md:close-small" class="text-lg" @click="removeCondition">
       </Icon>
       {{ value }}
     </template>
-
   </span>
 </template>
