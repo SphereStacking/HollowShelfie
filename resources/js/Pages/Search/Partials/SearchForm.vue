@@ -195,7 +195,7 @@ onMounted(() => {
             <button class="btn btn-xs btn-ghost p-0">
               <Icon :icon="includeLabels[item.include].icon" class='text-xl' @click="cycleSearchCondition(index)" />
             </button>
-            <span>:</span>
+            <span class="mx-0.5">:</span>
             <BtnEventSerchItem :key="index" :type="item.type" :value="item.value" isClose isIcon
               @remove="removeCondition(index)">
             </BtnEventSerchItem>

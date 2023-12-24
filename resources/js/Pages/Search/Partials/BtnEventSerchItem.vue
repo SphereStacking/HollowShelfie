@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
   value: {
@@ -16,6 +17,9 @@ const props = defineProps({
   isIcon: {
     type: Boolean,
   },
+  isNavigate: {
+    type: Boolean,
+  },
 });
 
 const emit = defineEmits(['remove']);
@@ -23,10 +27,20 @@ const removeCondition = () => {
   emit('remove');
 };
 
+const navigateToType = () => {
+  if (props.isNavigate) {
+    console.log('hoge')
+    router.visit(
+      route('event.search.index',
+        { t: '', q: [{ include: 'and', type: props.type, value: props.value }], o: '', }
+      )
+    );
+  }
+};
 </script>
 
 <template>
-  <BtnConditionTypeMapper :type="type">
+  <BtnConditionTypeMapper :type="type" @click="navigateToType()">
     <template v-if="isIcon && isClose">
       <div class="relative">
         <IconTypeMapper v-if="isIcon" :type="type"
