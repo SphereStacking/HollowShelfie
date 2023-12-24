@@ -1,5 +1,4 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
   event: {
@@ -29,15 +28,13 @@ const instances = props.event.instances
 import file1 from '@/Components/LXIX_Design_224-4.png'
 import file2 from '@/Components/LXIX_Design_225-5.png'
 import file3 from '@/Components/LXIX_Design_196-4.png'
+import IconTypeMapper from '@/Components/IconTypeMapper.vue';
 
 const image_flyers = [
   file1,
   file2,
   file3,
 ]
-const serchTag = (tagName) => {
-  router.get(route('event.search.index'), { tags: [tagName] }, { replace: true, preserveState: true })
-}
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -85,16 +82,15 @@ const serchTag = (tagName) => {
 
       <div class=" flex flex-row gap-1 lg:col-span-7 w-full mx-auto lg:row-start-2 lg:col-start-1">
         <div class="flex gap-1 items-center ">
-          <Icon icon="mdi:shape" class="text-xl"></Icon>
-          <button class="btn btn-primary btn-xs rounded-md mr-1 grow">{{ event.category_name }}</button>
+          <IconTypeMapper type="category" class="text-xl"></IconTypeMapper>
+          <BtnEventSerchItem :value="event.category_name" type="category" isNavigate></BtnEventSerchItem>
         </div>
         <div class="flex flex-row gap-1 items-center">
           <div class="flex gap-1 rounded-md items-center  mr-auto">
-            <Icon icon="mdi:tag" class="text-xl"></Icon>
-            <button v-for="(tag, index) in event.tags" :key="index" @click="serchTag(tag)"
-              class="btn btn-secondary btn-xs rounded-md ">
-              {{ tag }}
-            </button>
+            <IconTypeMapper type="tag" class="text-xl"></IconTypeMapper>
+            <template v-for="(tag, index) in event.tags" :key="index">
+              <BtnEventSerchItem :value="tag" type="tag" isNavigate></BtnEventSerchItem>
+            </template>
           </div>
         </div>
       </div>

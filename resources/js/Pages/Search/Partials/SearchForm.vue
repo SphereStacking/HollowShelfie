@@ -195,7 +195,7 @@ onMounted(() => {
             <button class="btn btn-xs btn-ghost p-0">
               <Icon :icon="includeLabels[item.include].icon" class='text-xl' @click="cycleSearchCondition(index)" />
             </button>
-            <span>:</span>
+            <span class="mx-0.5">:</span>
             <BtnEventSerchItem :key="index" :type="item.type" :value="item.value" isClose isIcon
               @remove="removeCondition(index)">
             </BtnEventSerchItem>
@@ -208,7 +208,7 @@ onMounted(() => {
             <div class="menu bg-base-200  w-full rounded-box">
               <button v-for=" item  in  filterMaps " class="btn justify-start"
                 :class="{ 'btn-primary': selectFilterType == item.type }" @click="selectFilterType = item.type">
-                <IconSerchItemType :type='item.type'></IconSerchItemType>
+                <IconTypeMapper :type='item.type'></IconTypeMapper>
                 {{ item.label }}
               </button>
             </div>
@@ -292,7 +292,7 @@ onMounted(() => {
               <TransitionSlideUp :isShow="selectFilterType == 'other'">
                 <div class="flex flex-col gap-1">
                   <div class="flex flex-row gap-1">
-                    <IconSerchItemType type='instance' class="text-xl"></IconSerchItemType>
+                    <IconTypeMapper type='instance' class="text-xl"></IconTypeMapper>
                     instance
                   </div>
                   <div class="flex gap-1">
@@ -301,7 +301,7 @@ onMounted(() => {
                     </BtnEventSerchItem>
                   </div>
                   <div class="flex flex-row gap-1">
-                    <IconSerchItemType type='user' class="text-xl"></IconSerchItemType>
+                    <IconTypeMapper type='user' class="text-xl"></IconTypeMapper>
                     user
                   </div>
                   <div class="join w-full">
@@ -313,7 +313,7 @@ onMounted(() => {
                     </button>
                   </div>
                   <div class="flex flex-row gap-1">
-                    <IconSerchItemType type='more' class="text-xl"></IconSerchItemType>
+                    <IconTypeMapper type='more' class="text-xl"></IconTypeMapper>
                     more
                   </div>
                   <div class="flex gap-1">

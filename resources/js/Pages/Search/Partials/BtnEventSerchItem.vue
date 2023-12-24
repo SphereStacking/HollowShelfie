@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const props = defineProps({
   value: {
@@ -16,6 +17,9 @@ const props = defineProps({
   isIcon: {
     type: Boolean,
   },
+  isNavigate: {
+    type: Boolean,
+  },
 });
 
 const emit = defineEmits(['remove']);
@@ -23,26 +27,25 @@ const removeCondition = () => {
   emit('remove');
 };
 
-const buttonClassMapping = {
-  category: 'btn-primary',
-  tag: 'btn-secondary',
-  user: 'btn-info',
-  status: 'btn-neutral btn-outline',
-  date: 'btn-info',
-  title: 'btn-accent',
+const navigateToType = () => {
+  if (props.isNavigate) {
+    console.log('hoge')
+    router.visit(
+      route('event.search.index',
+        { t: '', q: [{ include: 'and', type: props.type, value: props.value }], o: '', }
+      )
+    );
+  }
 };
-
-const getButtonClassForType = (type) => buttonClassMapping[type] || '';
 </script>
 
 <template>
-  <span class="btn btn-xs cursor-pointer inline-flex items-center rounded-full text-sm font-medium group"
-    :class="getButtonClassForType(type)">
+  <BtnConditionTypeMapper :type="type" @click="navigateToType()">
     <template v-if="isIcon && isClose">
       <div class="relative">
-        <IconSerchItemType v-if="isIcon" :type="type"
+        <IconTypeMapper v-if="isIcon" :type="type"
           class="absolute top-0 left-0 text-lg transition-all duration-300 opacity-100 group-hover:opacity-0 ">
-        </IconSerchItemType>
+        </IconTypeMapper>
         <Icon icon="mdi:close"
           class="absolute top-0 left-0 text-lg transition-all duration-300 opacity-0 group-hover:opacity-100 -rotate-90 group-hover:rotate-0"
           @click="removeCondition">
@@ -58,6 +61,5 @@ const getButtonClassForType = (type) => buttonClassMapping[type] || '';
       </Icon>
       {{ value }}
     </template>
-
-  </span>
+  </BtnConditionTypeMapper>
 </template>
