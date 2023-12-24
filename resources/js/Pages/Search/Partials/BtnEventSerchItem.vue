@@ -23,21 +23,10 @@ const removeCondition = () => {
   emit('remove');
 };
 
-const buttonClassMapping = {
-  category: 'btn-primary',
-  tag: 'btn-secondary',
-  user: 'btn-info',
-  status: 'btn-neutral btn-outline',
-  date: 'btn-info',
-  title: 'btn-accent',
-};
-
-const getButtonClassForType = (type) => buttonClassMapping[type] || '';
 </script>
 
 <template>
-  <span class="btn btn-xs rounded-md cursor-pointer inline-flex items-center  text-sm font-medium group"
-    :class="getButtonClassForType(type)">
+  <BtnConditionTypeMapper :type="type">
     <template v-if="isIcon && isClose">
       <div class="relative">
         <IconTypeMapper v-if="isIcon" :type="type"
@@ -53,10 +42,10 @@ const getButtonClassForType = (type) => buttonClassMapping[type] || '';
       </div>
     </template>
     <template v-else>
-      <IconTypeMapper v-if="isIcon" :type="type" class="text-lg"></IconTypeMapper>
+      <IconSerchItemType v-if="isIcon" :type="type" class="text-lg"></IconSerchItemType>
       <Icon v-if="isClose" icon="line-md:close-small" class="text-lg" @click="removeCondition">
       </Icon>
       {{ value }}
     </template>
-  </span>
+  </BtnConditionTypeMapper>
 </template>

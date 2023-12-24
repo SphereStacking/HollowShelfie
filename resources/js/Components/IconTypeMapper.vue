@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
+import { ItemsConfig } from '@/config';
 
 const props = defineProps({
   type: {
@@ -8,19 +9,7 @@ const props = defineProps({
   },
 });
 
-const iconTypes = {
-  'category': 'mdi:shape',
-  'tag': 'mdi:tag',
-  'title': 'mdi:subtitles-outline',
-  'user': 'mdi:account',
-  'status': 'mdi:alarm-light',
-  'instance': 'mdi:map-marker',
-  'date': 'mdi:calendar',
-  'other': 'mdi:dots-hexagon',
-  'default': ''
-};
-
-const getIconForType = (type) => iconTypes[type] || iconTypes['default'];
+const getIconForType = (type) => ItemsConfig[type]?.icon || ItemsConfig.default.icon;
 </script>
 
 <template>
