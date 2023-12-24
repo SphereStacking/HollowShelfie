@@ -22,7 +22,6 @@ use App\Http\Resources\EventShowJsonResource;
 class EventController extends Controller
 {
     protected $eventService;
-    protected $eventTagService;
 
     public function __construct(
         EventService $eventService,
