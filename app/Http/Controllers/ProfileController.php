@@ -77,13 +77,4 @@ class ProfileController extends Controller
             'profile' => $this->teamService->getPublishProfile($id)
         ]);
     }
-
-    public function adminProfileShow()
-    {
-        return Inertia::render('Home', [
-            'adminUser' => new UserPublicProfileJsonResource(
-                $this->userService->getPublishProfile(1),
-            ),
-        ]);
-    }
 }
