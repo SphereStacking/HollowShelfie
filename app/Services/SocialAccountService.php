@@ -7,8 +7,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+/**
+ * ソーシャルアカウントサービスクラス
+ */
 class SocialAccountService
 {
+    /**
+     * プロバイダーへリダイレクト
+     *
+     * @param string $provider
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function redirectToProvider($provider)
     {
         $allowedProviders = ['google', 'discord'];
@@ -21,22 +30,20 @@ class SocialAccountService
         return Socialite::driver($provider)->redirect();
     }
 
+    /**
+     * ユーザーを作成または取得
+     *
+     * @param string $provider
+     * @return array
+     */
     public function createOrGetUser($provider)
     {
         $extUser = Socialite::driver($provider)->user();
-
-        $user = User::firstOrCreate([
-            'email' => $extUser->getEmail()
-        ], [
-            'name' => $extUser->getName(),
-            'password' => Hash::make(Str::random(24))
-        ]);
-
-        $user->social_accounts()->firstOrCreate([
-            'provider' => $provider,
-            'provider_id' => $extUser->getId()
-        ]);
-
-        return $user;
+        $user = User::firstOrCreate(
+            ['email' => $extUser->getEmail()],
+            ['name' => $extUser->getName(), 'password' => Hash::make(Str::random(24))]
+        );
+        $isNew = $user->wasRecentlyCreated;
+        return compact('user', 'isNew');
     }
 }
