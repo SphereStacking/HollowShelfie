@@ -91,10 +91,9 @@ const serchTag = (tagName) => {
         <div class="flex flex-row gap-1 items-center">
           <div class="flex gap-1 rounded-md items-center  mr-auto">
             <Icon icon="mdi:tag" class="text-xl"></Icon>
-            <button v-for="(tag, index) in event.tags" :key="index" @click="serchTag(tag)"
-              class="btn btn-secondary btn-xs rounded-md ">
-              {{ tag }}
-            </button>
+            <template v-for="(tag, index) in event.tags" :key="index">
+              <BtnEventSerchItem :value="tag" type="tag" @click="serchTag(tag)"></BtnEventSerchItem>
+            </template>
           </div>
         </div>
       </div>
