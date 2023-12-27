@@ -16,9 +16,9 @@ class EventTag extends Pivot
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopePopularTags()
+    public function scopePopularTags($query)
     {
-        return EventTag::select('tag_id')
+        return $query->select('tag_id')
             ->selectRaw('count(*) as count')
             ->groupBy('tag_id')
             ->orderByDesc('count');
