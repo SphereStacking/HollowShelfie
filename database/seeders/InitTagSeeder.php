@@ -26,7 +26,12 @@ class InitTagSeeder extends AbstractOnceSeeder
             'クトゥルフ',
             '雑談',
             'V睡',
-            '☁寝落もちもち☁',
+            '舞台',
+            '演劇',
+            'パーティクル',
+            'マダミス',
+            '異文化交流',
+            'visitor案内',
         ];
         foreach ($InitCategories as $category) {
             Tag::create(['name' => $category]);

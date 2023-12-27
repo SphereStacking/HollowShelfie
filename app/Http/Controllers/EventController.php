@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Enums\EventStatus;
 use Illuminate\Http\Request;
 use App\Services\EventService;
+use App\Params\EventSearchParams;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Auth;
@@ -17,17 +18,19 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\EventsJsonResource;
 use App\Http\Resources\EventListJsonResource;
 use App\Http\Resources\EventShowJsonResource;
-
+use App\Services\EventMeilisearchService;
 
 class EventController extends Controller
 {
     protected $eventService;
-    protected $eventTagService;
+    protected $eventMeilisearchService;
 
     public function __construct(
         EventService $eventService,
+        EventMeilisearchService $eventMeilisearchService
     ) {
         $this->eventService = $eventService;
+        $this->eventMeilisearchService = $eventMeilisearchService;
     }
 
     /**
@@ -37,15 +40,10 @@ class EventController extends Controller
      */
     public function index()
     {
+
         return Inertia::render(
             'Event/Index',
-            [
-                'newEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('new')->take(12)->get()),
-                'ongoingEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('ongoing')->take(12)->get()),
-                'highlightEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('highlight')->take(12)->get()),
-                'recentEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('recent')->take(12)->get()),
-                'myBookmarkEvents' => new EventsJsonResource($this->eventService->getSectionedQuery('mybookmark')->take(12)->get()),
-            ]
+            []
         );
     }
 

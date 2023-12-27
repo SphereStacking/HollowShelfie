@@ -3,10 +3,11 @@
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\TeamLogoController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\PerformerController;
@@ -47,7 +48,11 @@ Route::get('/phpinfo', function () {
 //     ]);
 // });
 
-Route::get('/', [ProfileController::class, 'adminProfileShow'])->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index']);
+Route::get('/welcome', [WelcomeController::class, 'welcome'])
+    ->name('welcome');
 
 Route::get('/credits', function () {
     return Inertia::render('Credits/Index');

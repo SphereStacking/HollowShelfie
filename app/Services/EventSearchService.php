@@ -35,8 +35,6 @@ class EventSearchService
         'trend' => 'orderByTrendiness', // TODO:いつかやろうね
     ];
 
-
-
     /**
      * 公開イベント検索を取得
      *

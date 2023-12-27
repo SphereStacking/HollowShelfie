@@ -44,11 +44,15 @@ const toggleGood = () => {
     }
   });
 }
+const randomColor = computed(() => {
+  const colors = ['blue', 'green', 'red', 'yellow', 'indigo', 'purple', 'pink'];
+  return colors[Math.floor(Math.random() * colors.length)];
+});
 </script>
 
 <template>
   <div
-    class=" card card-compact bg-base-200 hover:bg-base-100 border-transparent border hover:border-base-300 transition-all duration-200 hover:-translate-y-1 shadow-2xl">
+    class=" card card-compact bg-base-200 hover:bg-base-100 border-transparent border hover:border-base-300 transition-all duration-200 hover:-translate-y-1 shadow-xl shadow-blue-500/50 hover:shadow-green-300/50  ">
     <div class="flex justify-between mt-2 mx-2">
       <div class="badge badge-primary">{{ event.category_name }}</div>
       <div class="font-bold whitespace-nowrap truncate  text-xs">
