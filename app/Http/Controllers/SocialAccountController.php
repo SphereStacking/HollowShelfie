@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use App\Services\SocialAccountService;
+use App\Http\Resources\UserPublicProfileJsonResource;
 
 class SocialAccountController extends Controller
 {
     protected $socialAccountService;
+    protected $userService;
 
-    public function __construct(SocialAccountService $socialAccountService)
-    {
+
+    public function __construct(
+        SocialAccountService $socialAccountService,
+        UserService $userService,
+    ) {
         $this->socialAccountService = $socialAccountService;
+        $this->userService = $userService;
     }
 
     public function redirectToProvider($provider)
@@ -23,14 +30,16 @@ class SocialAccountController extends Controller
 
     public function handleProviderCallback($provider)
     {
-        $user = $this->socialAccountService->createOrGetUser($provider);
-        if (!$user) {
-            // ユーザーがnullの場合のエラーハンドリング
+        $result = $this->socialAccountService->createOrGetUser($provider);
+
+        if (!$result['user']) {
             return redirect()->route('login')->with('error', 'Failed to authenticate with the social account.');
         }
 
-        Auth::login($user, true);
+        Auth::login($result['user'], true);
 
-        return Inertia::render('Home', []);
+        return $result['isNew']
+            ? redirect()->route('welcome')
+            : redirect()->route('home');
     }
 }
