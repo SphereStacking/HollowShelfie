@@ -20,6 +20,14 @@ const props = defineProps({
   isNavigate: {
     type: Boolean,
   },
+  queryValueSetter: {
+    type: Function,
+    default: function (value) { return value; }
+  },
+  buttonTextSetter: {
+    type: Function,
+    default: function (value) { return value; }
+  },
 });
 
 const emit = defineEmits(['remove']);
@@ -29,10 +37,13 @@ const removeCondition = () => {
 
 const navigateToType = () => {
   if (props.isNavigate) {
-    console.log('hoge')
+    console.log(props.queryValueSetter)
+    console.log(props.queryValueSetter(props.value))
+    const value = props.queryValueSetter(props.value)
+    console.log(value)
     router.visit(
       route('event.search.index',
-        { t: '', q: [{ include: 'and', type: props.type, value: props.value }], o: '', }
+        { t: '', q: [{ include: 'and', type: props.type, value: value.toString() }], o: '', }
       )
     );
   }
@@ -51,7 +62,7 @@ const navigateToType = () => {
           @click="removeCondition">
         </Icon>
         <div class="pl-6">
-          {{ value }}
+          {{ buttonTextSetter(value) }}
         </div>
       </div>
     </template>
@@ -59,7 +70,7 @@ const navigateToType = () => {
       <IconSerchItemType v-if="isIcon" :type="type" class="text-lg"></IconSerchItemType>
       <Icon v-if="isClose" icon="line-md:close-small" class="text-lg" @click="removeCondition">
       </Icon>
-      {{ value }}
+      {{ buttonTextSetter(value) }}
     </template>
   </BtnConditionTypeMapper>
 </template>
