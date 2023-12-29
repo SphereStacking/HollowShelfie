@@ -56,7 +56,24 @@ const getEventShow = (event) => {
     }
   })
 }
+const toggleBookmark = () => {
+  form.post(route('event.bookmark.toggle', props.event.id), {
+    preserveScroll: true,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+}
 
+const toggleGood = () => {
+  form.post(route('event.good.toggle', props.event.id), {
+    preserveScroll: true,
+    onSuccess: () => {
+    },
+    onFinish: () => {
+    }
+  });
+}
 </script >
 
 <template>
@@ -76,9 +93,18 @@ const getEventShow = (event) => {
         <div class="carousel__item hero  bg-base-200 rounded-md ">
           <div class="hero-content flex-col lg:flex-row">
             <img :src="file1" class="max-w-sm shadow-2xl h-80" />
-            <div>
-              <h1 class="text-5xl font-bold">{{ event.title }}</h1>
+            <div class="flex flex-col gap-2 items-start">
+              <div class="flex flex-row justify-between w-full">
+                <div>{{ event.event_timeline_status }}</div>
+                <div class="flex gap-1">
+                  <BtnSwapBookmark @click="toggleBookmark" :check="event.auth_user?.is_bookmark"></BtnSwapBookmark>
+                  <BtnSwapGood @click="toggleGood" :check="event.auth_user?.is_good" :count="event.short_good_count"
+                    showCount>
+                  </BtnSwapGood>
+                </div>
+              </div>
 
+              <h1 class="text-5xl font-bold">{{ event.title }}</h1>
               <div class=" flex flex-row gap-1 lg:col-span-7 w-full mx-auto lg:row-start-2 lg:col-start-1">
                 <!-- category -->
                 <div class="flex gap-1 items-center ">
@@ -124,7 +150,7 @@ const getEventShow = (event) => {
                 </div>
               </div>
               <!-- <p class="py-6">{{ event.description }}</p> -->
-              <button class=" btn btn-primary w-full mt-10" @click="getEventShow(event)">show more!</button>
+              <button class=" btn btn-primary w-full btn-sm" @click="getEventShow(event)">show more!</button>
             </div>
           </div>
         </div>
