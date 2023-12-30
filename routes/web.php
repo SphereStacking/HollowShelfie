@@ -11,6 +11,8 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\TeamLogoController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\PerformerController;
+use App\Http\Controllers\EventGoodController;
+use App\Http\Controllers\EventBookmarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,10 +90,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // Route::put('/event/{event}', [EventController::class, 'update'])->name('event.update'); // Update existing event
     // Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy'); // Delete event
 
-    // Event "Good" and "Bookmark" operation
-
-    Route::post('/event/{event}/good/toggle', [EventController::class, 'toggleEventGood'])->name('event.good.toggle');
-    Route::post('/event/{event}/bookmark/toggle', [EventController::class, 'toggleEventBookmark'])->name('event.bookmark.toggle');
+    Route::post('/event/{event}/good', [EventGoodController::class, 'store'])->name('event.good');
+    Route::delete('/event/{event}/good', [EventGoodController::class, 'destroy'])->name('event.ungood');
+    Route::post('/event/{event}/bookmark', [EventBookmarkController::class, 'store'])->name('event.bookmark');
+    Route::delete('/event/{event}/bookmark', [EventBookmarkController::class, 'destroy'])->name('event.unbookmark');
 
     Route::get('/event/timeline', [EventController::class, 'timeline'])->name('event.timeline.show');
 });
