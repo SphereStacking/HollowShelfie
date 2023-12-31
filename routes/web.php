@@ -9,8 +9,6 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\TeamLogoController;
-use App\Http\Controllers\OrganizerController;
-use App\Http\Controllers\PerformerController;
 use App\Http\Controllers\EventGoodController;
 use App\Http\Controllers\EventBookmarkController;
 
@@ -78,8 +76,6 @@ Route::get('/user/search', [SearchController::class, 'user'])
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
-    Route::get('/organizer/{organizer}/show', [OrganizerController::class, 'show'])->name('organizer.show');
-    Route::get('/performer/{performer}/show', [PerformerController::class, 'show'])->name('performer.show');
     Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
 
