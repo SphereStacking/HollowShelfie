@@ -1,9 +1,8 @@
 
 <script setup>
-import { v4 as uuidv4 } from 'uuid';
-import { useForm, Link, router } from '@inertiajs/vue3';
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
+import { Link, router } from '@inertiajs/vue3';
+import { Carousel, Slide } from 'vue3-carousel';
+import 'vue3-carousel/dist/carousel.css';
 
 const props = defineProps({
   event: {
@@ -11,14 +10,10 @@ const props = defineProps({
     required: true
   },
 })
-const form = useForm({
-  is_bookmark: false,
-  is_good: false,
-});
 
-import file1 from './LXIX_Design_224-4.png'
-import file2 from './LXIX_Design_225-5.png'
-import file3 from './LXIX_Design_196-4.png'
+import file3 from './LXIX_Design_196-4.png';
+import file1 from './LXIX_Design_224-4.png';
+import file2 from './LXIX_Design_225-5.png';
 
 const image_flyers = [
   file1,
@@ -27,22 +22,43 @@ const image_flyers = [
 ]
 
 const toggleBookmark = () => {
-  form.post(route('event.bookmark.toggle', props.event.id), {
-    preserveScroll: true,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
+  if (props.event.auth_user?.is_bookmark) {
+    router.visit(
+      route('event.unbookmark', props.event.id),
+      {
+        method: 'delete',
+        preserveScroll: true,
+      }
+    )
+  }else{
+    router.visit(
+      route('event.bookmark', props.event.id),
+      {
+        method: 'post',
+        preserveScroll: true,
+      }
+    )
+  }
 }
 
 const toggleGood = () => {
-  form.post(route('event.good.toggle', props.event.id), {
-    preserveScroll: true,
-    onSuccess: () => {
-    },
-    onFinish: () => {
-    }
-  });
+  if (props.event.auth_user?.is_good) {
+    router.visit(
+      route('event.ungood', props.event.id),
+      {
+        method: 'delete',
+        preserveScroll: true,
+      }
+    )
+  }else{
+    router.visit(
+      route('event.good', props.event.id),
+      {
+        method: 'post',
+        preserveScroll: true,
+      }
+    )
+  }
 }
 const randomColor = computed(() => {
   const colors = ['blue', 'green', 'red', 'yellow', 'indigo', 'purple', 'pink'];

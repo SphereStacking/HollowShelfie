@@ -2,21 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\Tag;
 use Inertia\Inertia;
 use App\Models\Event;
-use App\Models\Category;
-use App\Enums\EventStatus;
 use Illuminate\Http\Request;
 use App\Services\EventService;
-use App\Params\EventSearchParams;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EventRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use App\Http\Resources\EventsJsonResource;
-use App\Http\Resources\EventListJsonResource;
 use App\Http\Resources\EventShowJsonResource;
 use App\Services\EventMeilisearchService;
 
@@ -157,55 +147,4 @@ class EventController extends Controller
         ]);
     }
 
-    /**
-     * 指定したイベントの「いいね」状態を切り替え。
-     *
-     * @param Event $event
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function toggleEventGood(Event $event)
-    {
-        $user = Auth::user();
-        if ($user->good_events->contains($event->id)) {
-            // いいねを取り消す
-            $user->good_events()->detach($event->id);
-            return Redirect::back()->with([
-                'status' => 'success',
-                'message' => 'イベントのいいねを取り消しました。'
-            ]);
-        }
-
-        // イベントに「いいね」を追加
-        $user->good_events()->attach($event->id);
-        return Redirect::back()->with([
-            'status' => 'success',
-            'message' => 'イベントにいいねしました。'
-        ]);
-    }
-
-    /**
-     * 指定したイベントの「ライク」状態を切り替え。
-     *
-     * @param Event $event
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function toggleEventBookmark(Event $event)
-    {
-        $user = Auth::user();
-        if ($user->bookmark_events->contains($event->id)) {
-            // いいねを取り消す
-            $user->bookmark_events()->detach($event->id);
-            return Redirect::back()->with([
-                'status' => 'success',
-                'message' => 'イベントにいいねしました。'
-            ]);
-        }
-
-        // イベントに「いいね」を追加
-        $user->bookmark_events()->attach($event->id);
-        return Redirect::back()->with([
-            'status' => 'success',
-            'message' => 'イベントにいいねしました。'
-        ]);
-    }
 }
