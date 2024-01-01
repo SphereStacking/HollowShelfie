@@ -7,7 +7,6 @@ namespace Database\Seeders;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Event;
-use App\Models\EventTag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
@@ -42,7 +41,6 @@ class DatabaseSeeder extends Seeder
             EventRelationSeeder::class,
             TeamRelationSeeder::class,
             UserRelationSeeder::class,
-            UserBadgeSeeder::class,
         ]);
 
         Artisan::call('scout:import', ['model' => 'App\\Models\\Event']);

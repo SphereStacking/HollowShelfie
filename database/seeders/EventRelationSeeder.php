@@ -26,10 +26,9 @@ class EventRelationSeeder extends Seeder
     {
         Event::all()->each(function ($event) {
             $count = rand(1, 4);
-            //--------------------------------------------------------
+
             // タグをランダムに紐づける
             $this->attachRandomModels($event, 'tags', Tag::class, $count);
-
             //--------------------------------------------------------
             // ユーザーをランダムに「bookmark」として紐づける
             $this->attachRandomModels($event, 'bookmark_users', User::class, $count * 4);
@@ -79,10 +78,6 @@ class EventRelationSeeder extends Seeder
             // データベースに主催者データを一括挿入
             $event->organizers()->saveMany($organizers);
 
-            //--------------------------------------------------------
-            // EventTagをランダムに紐づける
-            // インスタンスをランダムに紐づける
-            $event->instances()->saveMany(Instance::factory()->count($count)->make());
         });
     }
 
