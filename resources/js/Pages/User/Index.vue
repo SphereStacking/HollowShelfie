@@ -55,6 +55,16 @@ onBeforeMount(() => {
   }, 500)
 });
 
+const getButtonText = (event) => {
+  return `${event.name}`
+}
+const querySetter = (value,type) => {
+  console.log(value )
+  return [
+    { include: 'and', type: 'user', value: props.profile.dataile.name },
+    { include: 'and', type: type.toString(), value: value.name },
+  ];
+}
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -113,11 +123,22 @@ onBeforeMount(() => {
                 <div class="parse w-full bg-base-300 rounded-lg h-full p-2">
                   {{ dataile.content }}
                 </div>
+                <div>
+                  <div class="flex flex-row gap-1 items-center">
+                    <div class="flex gap-1 rounded-md items-center  mr-auto">
+                      <IconTypeMapper type="tag" class="text-xl"></IconTypeMapper>
+                      <template v-for="(tag, index) in dataile.tags" :key="index">
+                        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="querySetter" :value="tag" type="tag" isNavigate></BtnEventSerchItem>
+                      </template>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </Card>
+
       <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-6 my-2">
         <CardEvent v-for="(item, index) in props.events.data" :key="index" :event="item" scroll-region />
       </div>

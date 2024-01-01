@@ -55,7 +55,6 @@ const getButtonText = (event) => {
 const urlSetter = (event) => {
   return event.name
 }
-getButtonText
 
 const eventItems = ref([])
 eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'mdi:door-open' })
@@ -95,7 +94,7 @@ const slides = [
           <IconTypeMapper type="category"></IconTypeMapper>
           Category
         </div>
-        <BtnEventSerchItem :buttonTextSetter="getButtonText" :queryValueSetter="urlSetter"
+        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="urlSetter"
           v-for="(category) in trendCategories" :value="category" type="category" isNavigate :key="category.id">
         </BtnEventSerchItem>
       </div>
@@ -105,7 +104,7 @@ const slides = [
           tag
         </div>
 
-        <BtnEventSerchItem :buttonTextSetter="getButtonText" :queryValueSetter="urlSetter" v-for="(tag) in trendTags"
+        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="urlSetter" v-for="(tag) in trendTags"
           :value="tag" type="tag" isNavigate :key="tag.id"></BtnEventSerchItem>
       </div>
 
