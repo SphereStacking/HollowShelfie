@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Models\Link;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Badge;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Instance;
@@ -24,10 +25,16 @@ class TeamRelationSeeder extends Seeder
     {
         Team::all()->each(function ($team) {
             $count = rand(1, 4);
-
             //--------------------------------------------------------
             $links = Link::factory($count)->make();
             $team->links()->saveMany($links);
+            //--------------------------------------------------------
+            // ユーザーにランダムに「badge」を紐づける
+            $this->attachRandomModels($team, 'badges', Badge::class, $count);
+            //--------------------------------------------------------
+            // タグをランダムに紐づける
+            $this->attachRandomModels($team, 'tags', Tag::class, $count*2);
+
         });
     }
 

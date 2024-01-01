@@ -84,8 +84,10 @@ const querySetter = (value,type) => {
                   class='absolute bottom-0 bg-accent origin-center  transition-all duration-700  rounded-lg -inset-x-2 -inset-y-2  '
                   :class="isMounted ? ' w-52 h-52' : ' h-0 w-0 rotate-12  '">
                 </div>
-                <div class="h-48 w-48">
-                  <img :src="dataile.photo_url" class="absolute h-full mx-auto rounded-lg shadow-2xl bg-base-300" />
+                <div class="avatar">
+                  <div class="h-48 w-48">
+                    <img :src="dataile.photo_url" class="absolute h-full mx-auto rounded-lg shadow-2xl bg-base-300" />
+                  </div>
                 </div>
               </div>
               <div class="flex flex-col pt-10 w-full">
