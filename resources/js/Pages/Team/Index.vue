@@ -1,17 +1,70 @@
 <script setup>
+import { router, Link } from '@inertiajs/vue3';
 const props = defineProps({
   profile: {
     type: Object,
     required: true
   },
+  events: {
+    type: Array,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  },
 })
-defineEmits(
-  ['click']
-)
-const profile = props.profile
-const about = props.profile
-const history = props.profile
-const header = props.profile
+
+
+const dataile = props.profile.dataile
+const authUser = ref({})
+const isFollowedBtnOver = ref()
+
+authUser.value = props.profile.auth_user
+
+watch(authUser, (newVal, oldVal) => {
+  console.log('authUser has changed', newVal, oldVal)
+})
+
+const follow = () => {
+  if (!authUser.value.is_followed) {
+    router.visit(route('users.follow', dataile.id), {
+      method: 'post',
+      preserveState: false,
+      preserveScroll: true,
+      onSuccess: (result) => {
+        console.log(result)
+      }
+    })
+  } else {
+    router.visit(route('users.unfollow', dataile.id), {
+      method: 'delete',
+      preserveState: false,
+      preserveScroll: true,
+      onSuccess: (result) => {
+        console.log(result)
+      }
+    })
+  }
+}
+
+const isMounted = ref(false)
+onBeforeMount(() => {
+  setTimeout(() => {
+    isMounted.value = true
+  }, 500)
+});
+
+const getButtonText = (event) => {
+  return `${event.name}`
+}
+const querySetter = (value,type) => {
+  console.log(value )
+  return [
+    { include: 'and', type: 'user', value: props.profile.dataile.name },
+    { include: 'and', type: type.toString(), value: value.name },
+  ];
+}
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -19,48 +72,84 @@ const header = props.profile
       <h2 class="text-xl font-semibold leading-tight text-neutral">
       </h2>
     </template>
-    <Profile :header="header" :about="about" :profile="profile" :history="history" class="max-w-7xl mx-auto my-6">
-    </Profile>
+    <div class="max-w-7xl mx-auto my-6 flex flex-col gap-4">
+      <Card class="mt-10">
+        <template #header>
+        </template>
+        <div class="flex flex-col items-center -mt-10">
+          <div class="hero">
+            <div class="relative flex gap-10 w-full flex-col lg:flex-row">
+              <div class=" group">
+                <div
+                  class='absolute bottom-0 bg-accent origin-center  transition-all duration-700  rounded-lg -inset-x-2 -inset-y-2  '
+                  :class="isMounted ? ' w-52 h-52' : ' h-0 w-0 rotate-12  '">
+                </div>
+                <div class="avatar">
+                  <div class="h-48 w-48">
+                    <img :src="dataile.photo_url" class="absolute h-full mx-auto rounded-lg shadow-2xl bg-base-300" />
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col pt-10 w-full">
+                <div class="flex flex-row justify-between">
+                  <p class="text-2xl font-bold  text-center lg:text-left">{{ dataile.name }}</p>
+                  <div class="flex items-end gap-4">
+                    <button class="btn btn-circle btn-sm btn-primary">
+                      <Icon icon="line-md:bell" class="text-xl"></Icon>
+                    </button>
+                    <button
+                      :class="authUser.is_followed ? 'btn  btn-sm btn-success hover:btn-error' : 'btn  btn-sm btn-outline hover:btn-success'"
+                      @mouseover="isFollowedBtnOver = true" @mouseleave="isFollowedBtnOver = false" @click="follow">
+                      <Icon
+                        :icon="authUser.is_followed ? isFollowedBtnOver ? 'line-md:account-remove' : 'line-md:account-small' : 'line-md:account-add'"
+                        class="text-xl"></Icon>
+                      {{ authUser.is_followed ? isFollowedBtnOver ? ' Un Follow' : 'Followed' : 'Follow' }}
+                      <div class="badge">{{ dataile.followers_count }}</div>
+                    </button>
+                    <button class="btn btn-neutral btn-sm flex flex-row ">
+                      <Icon icon="line-md:email" class="text-xl"></Icon>
+                      Connect
+                    </button>
+                  </div>
+                </div>
+                <div class="flex flex-row justify-between">
+                  <div class="flex items-center py-2">
+                    <LinkExts class="flex gap-1" :links="dataile.links"></LinkExts>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <template v-for="badge in dataile.badges">
+                      <Icon :icon="badge.icon_class" class="text-xl"></Icon>
+                    </template>
+                  </div>
+                </div>
+                <div class="parse w-full bg-base-300 rounded-lg h-full p-2">
+                  {{ dataile.content }}
+                </div>
+                <div>
+                  <div class="flex flex-row gap-1 items-center">
+                    <div class="flex gap-1 rounded-md items-center  mr-auto">
+                      <IconTypeMapper type="tag" class="text-xl"></IconTypeMapper>
+                      <template v-for="(tag, index) in dataile.tags" :key="index">
+                        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="querySetter" :value="tag" type="tag" isNavigate></BtnEventSerchItem>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
 
-    <!-- <div class="mx-auto mt-10 flex max-w-7xl gap-5">
-      <ol class="relative border-l border-gray-200 dark:border-gray-700">
-        <li class="mb-10 ml-4">
-          <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
-          </div>
-          <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">February 2022</time>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Application UI code in Tailwind CSS</h3>
-          <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">Get access to over 20+ pages including a
-            dashboard layout, charts, kanban board, calendar, and pre-order E-commerce & Marketing pages.</p>
-          <a href="#"
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Learn
-            more <svg class="w-3 h-3 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 14 10">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M1 5h12m0 0L9 1m4 4L9 9" />
-            </svg>
-          </a>
-        </li>
-        <li class="mb-10 ml-4">
-          <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
-          </div>
-          <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">March 2022</time>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Marketing UI design in Figma</h3>
-          <p class="text-base font-normal text-gray-500 dark:text-gray-400">All of the pages and components are first
-            designed in Figma and we keep a parity between the two versions even as we update the project.</p>
-        </li>
-        <li class="ml-4">
-          <div
-            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700">
-          </div>
-          <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">April 2022</time>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">E-Commerce UI code in Tailwind CSS</h3>
-          <p class="text-base font-normal text-gray-500 dark:text-gray-400">Get started with dozens of web components and
-            interactive elements built on top of Tailwind CSS.</p>
-        </li>
-      </ol>
-    </div> -->
+      <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-6 my-2">
+        <CardEvent v-for="(item, index) in props.events.data" :key="index" :event="item" scroll-region />
+      </div>
+
+
+      <Link :href="url" method="get" class=" btn btn-primary btn-sm">show more!
+      </Link>
+
+    </div>
   </AppLayout>
 </template>
 <style lang="">
