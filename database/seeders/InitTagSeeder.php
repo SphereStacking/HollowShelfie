@@ -13,7 +13,7 @@ class InitTagSeeder extends AbstractOnceSeeder
      */
     public function runOnce(): void
     {
-        $InitCategories = [
+        $InitTags = [
             'DJ',
             'VJ',
             'House',
@@ -33,8 +33,8 @@ class InitTagSeeder extends AbstractOnceSeeder
             '異文化交流',
             'visitor案内',
         ];
-        foreach ($InitCategories as $category) {
-            Tag::create(['name' => $category]);
+        foreach ($InitTags as $tag) {
+            Tag::create(['name' => $tag]);
         }
     }
 }

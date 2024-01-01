@@ -5,7 +5,6 @@ namespace Database\Factories;
 use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Event;
-use App\Models\EventTag;
 use App\Models\Instance;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
