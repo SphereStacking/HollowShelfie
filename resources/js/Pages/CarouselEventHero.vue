@@ -56,24 +56,6 @@ const getEventShow = (event) => {
     }
   })
 }
-const toggleBookmark = () => {
-  form.post(route('event.bookmark.toggle', props.event.id), {
-    preserveScroll: true,
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  });
-}
-
-const toggleGood = () => {
-  form.post(route('event.good.toggle', props.event.id), {
-    preserveScroll: true,
-    onSuccess: () => {
-    },
-    onFinish: () => {
-    }
-  });
-}
 </script >
 
 <template>
@@ -97,10 +79,9 @@ const toggleGood = () => {
               <div class="flex flex-row justify-between w-full">
                 <div>{{ event.event_timeline_status }}</div>
                 <div class="flex gap-1">
-                  <BtnSwapBookmark @click="toggleBookmark" :check="event.auth_user?.is_bookmark"></BtnSwapBookmark>
-                  <BtnSwapGood @click="toggleGood" :check="event.auth_user?.is_good" :count="event.short_good_count"
-                    showCount>
-                  </BtnSwapGood>
+                  <BtnSwapEventBookmark :eventId="event.id" :check="event.auth_user?.is_bookmark"></BtnSwapEventBookmark>
+                  <BtnSwapEventGood :eventId="event.id" :check="event.auth_user?.is_good" :count="event.short_good_count" showCount>
+                  </BtnSwapEventGood>
                 </div>
               </div>
 
