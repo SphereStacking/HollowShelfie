@@ -4,23 +4,27 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Event;
+use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Http\Requests\EventRequest;
-use App\Http\Resources\EventShowJsonResource;
 use App\Services\EventMeilisearchService;
+use App\Http\Resources\EventShowJsonResource;
 
 class EventController extends Controller
 {
     protected $eventService;
     protected $eventMeilisearchService;
+    protected $tagService;
 
     public function __construct(
         EventService $eventService,
-        EventMeilisearchService $eventMeilisearchService
+        EventMeilisearchService $eventMeilisearchService,
+        TagService $tagService
     ) {
         $this->eventService = $eventService;
         $this->eventMeilisearchService = $eventMeilisearchService;
+        $this->tagService = $tagService;
     }
 
     /**
@@ -127,7 +131,7 @@ class EventController extends Controller
         return Inertia::render('Event/Show', [
             'event' => new EventShowJsonResource($this->eventService->getShowEvent($id)),
             'recommendEvents' => $this->eventService->getRecommendEvent(),
-            'trendTags' => $this->eventService->getTrendTagNames()
+            'trendTags' => $this->tagService->getTrendTagNames()
         ]);
     }
 

@@ -6,7 +6,6 @@ use App\Models\Tag;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Event;
-use App\Models\EventTag;
 use App\Enums\EventStatus;
 use App\Services\FileService;
 use App\Params\EventSearchParams;
@@ -29,6 +28,7 @@ class UserService
     {
         $user = User::find($id);
         $user->load('links');
+        $user->load('tags');
         $user->is_followed = $user->isFollowed();
         return $user;
     }

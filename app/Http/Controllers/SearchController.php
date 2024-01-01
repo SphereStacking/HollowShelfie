@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Category;
 use App\Enums\EventStatus;
 use App\Models\InstanceType;
+use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Params\EventSearchParams;
@@ -23,15 +24,18 @@ class SearchController extends Controller
     protected $eventService;
     protected $eventSearchService;
     protected $eventMeilisearchService;
+    protected $tagService;
 
     public function __construct(
         EventService $eventService,
         EventSearchService $eventSearchService,
-        EventMeilisearchService  $eventMeilisearchService
+        EventMeilisearchService  $eventMeilisearchService,
+        TagService $tagService
     ) {
         $this->eventService = $eventService;
         $this->eventSearchService = $eventSearchService;
         $this->eventMeilisearchService = $eventMeilisearchService;
+        $this->tagService = $tagService;
     }
 
 
@@ -47,7 +51,7 @@ class SearchController extends Controller
         return Inertia::render(
             'Search/Event',
             [
-                'trendTags' => $this->eventService->getTrendTagNames(),
+                'trendTags' => $this->tagService->getTrendTagNames(),
                 'events' => new EventListJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
@@ -70,7 +74,7 @@ class SearchController extends Controller
         return Inertia::render(
             'Search/Performer',
             [
-                'trendTags' => $this->eventService->getTrendTagNames(),
+                'trendTags' => $this->tagService->getTrendTagNames(),
                 'events' => new EventListJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),

@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Models\Link;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Badge;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Instance;
@@ -28,6 +29,14 @@ class UserRelationSeeder extends Seeder
             //--------------------------------------------------------
             $links = Link::factory($count)->make();
             $user->links()->saveMany($links);
+
+            //--------------------------------------------------------
+            // ユーザーにランダムに「badge」を紐づける
+            $this->attachRandomModels($user, 'badges', Badge::class, $count);
+
+            //--------------------------------------------------------
+            // タグをランダムに紐づける
+            $this->attachRandomModels($user, 'tags', Tag::class, $count*2);
         });
     }
 
@@ -44,7 +53,6 @@ class UserRelationSeeder extends Seeder
         $id = $modelClass::inRandomOrder()->limit($count)->pluck('id');
         $model->$relationMethod()->syncWithoutDetaching($id);
     }
-
     /**
      * ランダムなモデルをイベントに紐づける。際にpivotデータを紐づける。
      *
