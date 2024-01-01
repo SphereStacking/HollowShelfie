@@ -1,0 +1,51 @@
+<script setup>
+import { router } from '@inertiajs/vue3';
+
+const props = defineProps({
+  check: {
+    type: Boolean,
+    required: true
+  },
+  eventId: {
+    type: Number,
+    required: true
+  },
+})
+
+const removeUrl = route('event.unbookmark', props.eventId);
+const addUrl = route('event.bookmark', props.eventId);
+
+
+const isCheck = ref(props.check);
+
+const toggle = () => {
+  if (props.check) {
+    router.visit(
+      removeUrl,
+      {
+        method: 'delete',
+        preserveScroll: true,
+      }
+    )
+  }else{
+    router.visit(
+      addUrl,
+      {
+        method: 'post',
+        preserveScroll: true,
+      }
+    )
+  }
+}
+
+</script>
+<template>
+  <BtnSwapBookmark
+    @click="toggle"
+    :check="isCheck"
+    >
+  </BtnSwapBookmark>
+</template>
+<style lang="">
+
+</style>
