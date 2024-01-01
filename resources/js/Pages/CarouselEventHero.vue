@@ -142,10 +142,10 @@ const toggleGood = () => {
                   <div>performers</div>
                 </div>
                 <div class="flex flex-wrap rounded-xl bg-base-200 w-full p-2 gap-1">
-                  <a v-for="(organizer, index ) in event.organizers" :href='organizer.profile_url'
+                  <a v-for="(performer, index ) in event.performers" :href='performer.profile_url'
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
-                    :data-tip="organizer.name">
-                    <img :src="organizer.imag_url" />
+                    :data-tip="performer.name">
+                    <img :src="performer.image_url" />
                   </a>
                 </div>
               </div>

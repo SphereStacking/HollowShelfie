@@ -52,10 +52,11 @@ const props = defineProps({
 const getButtonText = (event) => {
   return `${event.name} (${event.count})`
 }
-const urlSetter = (event) => {
-  return event.name
+const querySetter = (value,type) => {
+  return [
+    { include: 'and', type: type, value: value.name },
+  ];
 }
-
 const eventItems = ref([])
 eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'mdi:door-open' })
 eventItems.value.push({ url: props.recentEventsUrl, events: props.recentEvents, title: 'Recent', icon: 'mdi:timelapse' })
@@ -94,7 +95,7 @@ const slides = [
           <IconTypeMapper type="category"></IconTypeMapper>
           Category
         </div>
-        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="urlSetter"
+        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="querySetter"
           v-for="(category) in trendCategories" :value="category" type="category" isNavigate :key="category.id">
         </BtnEventSerchItem>
       </div>
@@ -104,7 +105,7 @@ const slides = [
           tag
         </div>
 
-        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="urlSetter" v-for="(tag) in trendTags"
+        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="querySetter" v-for="(tag) in trendTags"
           :value="tag" type="tag" isNavigate :key="tag.id"></BtnEventSerchItem>
       </div>
 
