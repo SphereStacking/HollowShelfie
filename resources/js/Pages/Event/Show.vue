@@ -23,6 +23,8 @@ const time_table = props.event.time_table
 const tags = props.event.tags
 const event = props.event
 const organizers = props.event.organizers
+const performers = props.event.performers
+
 const instances = props.event.instances
 
 import file1 from '@/Components/LXIX_Design_224-4.png'
@@ -130,9 +132,9 @@ const image_flyers = [
             <div>performers</div>
           </div>
           <div class="flex rounded-xl bg-base-200 w-full p-2 justify-around">
-            <a v-for="(organizer, index ) in organizers" :href='organizer.profile_url'
-              class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="organizer.name">
-              <img :src="organizer.imag_url" />
+            <a v-for="(performer, index ) in performers" :href='performer.profile_url'
+              class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name">
+              <img :src="performer.image_url" />
             </a>
           </div>
         </div>
