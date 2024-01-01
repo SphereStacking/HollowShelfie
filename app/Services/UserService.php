@@ -28,6 +28,7 @@ class UserService
     {
         $user = User::find($id);
         $user->load('links');
+        $user->load('tags');
         $user->is_followed = $user->isFollowed();
         return $user;
     }
