@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\Tag;
 use Inertia\Inertia;
 use App\Models\Event;
-use App\Models\EventTag;
 use App\Enums\EventStatus;
 use App\Services\FileService;
 use App\Services\ViewCountService;
@@ -71,17 +70,6 @@ class EventService
 
 
 
-    //人気のタグを探して取得し
-    //nameだけを抽出して返す。
-    public function getTrendTagNames()
-    {
-        $popularTagIds = EventTag::popularTags()
-            ->limit(4)
-            ->pluck('tag_id');
-        return Tag::whereIn('id', $popularTagIds)->pluck('name');
-    }
-
-    //
     private function getSectionedEvents($section, $tags = null, $per_page = 12)
     {
         $maxPaginate = 120; // 許可する最大のページネーション数
