@@ -20,9 +20,13 @@ const props = defineProps({
   isNavigate: {
     type: Boolean,
   },
-  queryValueSetter: {
+  querySetter: {
     type: Function,
-    default: function (value) { return value; }
+    default: function (value,type) {
+      return [
+        { include: 'and', type: type.toString(), value: value.toString() },
+      ];
+    }
   },
   buttonTextSetter: {
     type: Function,
@@ -36,17 +40,13 @@ const removeCondition = () => {
 };
 
 const navigateToType = () => {
-  if (props.isNavigate) {
-    console.log(props.queryValueSetter)
-    console.log(props.queryValueSetter(props.value))
-    const value = props.queryValueSetter(props.value)
-    console.log(value)
-    router.visit(
-      route('event.search.index',
-        { t: '', q: [{ include: 'and', type: props.type, value: value.toString() }], o: '', }
-      )
-    );
-  }
+  if (!props.isNavigate) {return}
+  const value = props.querySetter(props.value,props.type)
+  router.visit(
+    route('event.search.index',
+      { t: '', q: value, o: '', }
+    )
+  );
 };
 </script>
 
