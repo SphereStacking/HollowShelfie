@@ -21,45 +21,7 @@ const image_flyers = [
   file3,
 ]
 
-const toggleBookmark = () => {
-  if (props.event.auth_user?.is_bookmark) {
-    router.visit(
-      route('event.unbookmark', props.event.id),
-      {
-        method: 'delete',
-        preserveScroll: true,
-      }
-    )
-  }else{
-    router.visit(
-      route('event.bookmark', props.event.id),
-      {
-        method: 'post',
-        preserveScroll: true,
-      }
-    )
-  }
-}
 
-const toggleGood = () => {
-  if (props.event.auth_user?.is_good) {
-    router.visit(
-      route('event.ungood', props.event.id),
-      {
-        method: 'delete',
-        preserveScroll: true,
-      }
-    )
-  }else{
-    router.visit(
-      route('event.good', props.event.id),
-      {
-        method: 'post',
-        preserveScroll: true,
-      }
-    )
-  }
-}
 const randomColor = computed(() => {
   const colors = ['blue', 'green', 'red', 'yellow', 'indigo', 'purple', 'pink'];
   return colors[Math.floor(Math.random() * colors.length)];
@@ -88,9 +50,9 @@ const randomColor = computed(() => {
     </div>
     <div class="flex justify-between my-2 mx-2">
       <div class="flex gap-1">
-        <BtnSwapBookmark @click="toggleBookmark" :check="event.auth_user?.is_bookmark"></BtnSwapBookmark>
-        <BtnSwapGood @click="toggleGood" :check="event.auth_user?.is_good" :count="event.short_good_count" showCount>
-        </BtnSwapGood>
+        <BtnSwapEventBookmark :eventId="event.id" :check="event.auth_user?.is_bookmark"></BtnSwapEventBookmark>
+        <BtnSwapEventGood :eventId="event.id" :check="event.auth_user?.is_good" :count="event.short_good_count" showCount>
+        </BtnSwapEventGood>
       </div>
       <div></div>
       <Link :href="route('event.show', event.id)" class="btn btn-link btn-active btn-xs text-md p-0 m-0">

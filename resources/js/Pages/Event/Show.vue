@@ -71,10 +71,9 @@ const image_flyers = [
                 </BadgeEventStatus>
               </div>
               <div class="flex gap-2 p-1 rounded-md items-center">
-                <BtnSwapBookmark @click="toggleBookmark" :check="event.auth_user.is_bookmark"></BtnSwapBookmark>
-                <BtnSwapGood @click="toggleGood" :check="event.auth_user.is_good" :count="event.short_good_count"
-                  showCount>
-                </BtnSwapGood>
+                <BtnSwapEventBookmark :eventId="event.id" :check="event.auth_user?.is_bookmark"></BtnSwapEventBookmark>
+                <BtnSwapEventGood :eventId="event.id" :check="event.auth_user?.is_good" :count="event.short_good_count" showCount>
+                </BtnSwapEventGood>
                 <Icon icon="mdi:share-variant" class="text-xl" />
               </div>
             </div>
