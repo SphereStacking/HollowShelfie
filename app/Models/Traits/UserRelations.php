@@ -132,4 +132,14 @@ trait UserRelations
     {
         return $this->morphToMany(Badge::class, 'badgeable');
     }
+
+    /**
+     * タグとのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }

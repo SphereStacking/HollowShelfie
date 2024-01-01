@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-//TODO: tagはポリモーフィックリレーションにしたがよいかも。。。
 class Tag extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = ['name'];
 
+    public function taggables()
+    {
+        return $this->hasMany(Taggable::class);
+    }
 
-    /**
-     * Get the events associated with the tag.
-     */
     public function events()
     {
-        return $this->belongsToMany(Event::class);
+        return $this->morphedByMany(Event::class, 'taggable');
     }
 }
