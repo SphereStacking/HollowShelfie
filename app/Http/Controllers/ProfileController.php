@@ -11,6 +11,8 @@ use App\Params\EventSearchParams;
 use App\Services\EventMeilisearchService;
 use App\Http\Resources\EventListJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
+use App\Http\Resources\TeamPublicProfileJsonResource;
+use App\Models\Team;
 
 class ProfileController extends Controller
 {
@@ -71,10 +73,29 @@ class ProfileController extends Controller
      */
     public function team($id)
     {
-        // Team モデルのルートモデルバインディングを使用してチームを取得
-        // チームプロファイルのビューを返す
+        // Team モデルのルートモデルバインディングを使用してユーザーを取得
+        // ユーザープロファイルのビューを返す
+        $team = Team::find($id);
+        $EventSearchParams = new EventSearchParams(
+            '',
+            [['include' => 'and', 'type' => 'user', 'value' => $team->name]],
+            12,
+            'new',
+        );
+
         return Inertia::render('Team/Index', [
-            'profile' => $this->teamService->getPublishProfile($id)
+            'profile' => new TeamPublicProfileJsonResource(
+                $this->teamService->getPublishProfile($id),
+            ),
+            'events' => new EventListJsonResource(
+                $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
+            ),
+            'url' => route('event.search.index', [
+                't' => $EventSearchParams->text,
+                'q' => $EventSearchParams->queryParams,
+                'paginate' => $EventSearchParams->getDefaultPaginate(),
+                'o' => $EventSearchParams->order,
+            ])
         ]);
     }
 }

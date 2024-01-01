@@ -86,4 +86,24 @@ class Team extends JetstreamTeam
     {
         return $this->followers()->count();
     }
+
+    /**
+     * バッジリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function badges()
+    {
+        return $this->morphToMany(Badge::class, 'badgeable');
+    }
+
+    /**
+     * タグとのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }
