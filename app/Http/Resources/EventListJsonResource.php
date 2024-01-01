@@ -64,6 +64,27 @@ class EventListJsonResource extends JsonResource
                             }),
                         ];
                     }),
+                    'performers'=> $item->event_time_tables->flatMap(function ($time_table) {
+                        return $time_table->performers->map(function ($performer) {
+                            return [
+                                'id' => $performer->performable->id,
+                                'profile_url' => $performer->performable_type === User::class
+                                    ? route('user.profile.show', $performer->performable->id)
+                                    : route('team.profile.show', $performer->performable->id),
+                                'name' => $performer->performable->name,
+                                'links' => $performer->performable->links->map(function ($link) {
+                                    return [
+                                        'label' => $link->label,
+                                        'link' => $link->link,
+                                    ];
+                                }),
+                                'type' => $performer->performable->performable_type,
+                                'image_url' => $performer->performable_type === User::class
+                                    ? $performer->performable->profile_photo_url
+                                    : $performer->performable->team_logo_url
+                            ];
+                        });
+                    }),
                     'instances' => $item->instances->map(function ($instance) {
                         return [
                             'instance_type' => $instance->instance_type_name,
