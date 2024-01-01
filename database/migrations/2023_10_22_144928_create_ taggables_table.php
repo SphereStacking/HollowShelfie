@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_tag', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table) {
             $table->id();
-            $table->integer('event_id');
-            $table->integer('tag_id');
+            $table->foreignId('tag_id')->constrained(); // 外部キー制約を追加
+            $table->morphs('taggable'); // ポリモーフィックリレーションのためのフィールドを追加
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_tag');
+        Schema::dropIfExists('taggables');
     }
 };
