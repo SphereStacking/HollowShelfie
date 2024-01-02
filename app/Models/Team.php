@@ -2,17 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\TeamLogo;
+use Laravel\Scout\Searchable;
+use App\Models\Traits\TeamRelations;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use App\Traits\TeamLogo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Team extends JetstreamTeam
 {
+    use TeamRelations;
+
     use HasFactory;
     use TeamLogo;
+    use Searchable;
+
     /**
      * The attributes that should be cast.
      *
@@ -52,6 +58,12 @@ class Team extends JetstreamTeam
         'team_logo_url', 'links'
     ];
 
+    // チームのフォロワー数を取得する
+    public function followersCount()
+    {
+        return $this->followers()->count();
+    }
+
     /**
      * 関連付けられているlink
      *
@@ -63,47 +75,20 @@ class Team extends JetstreamTeam
     }
 
     /**
-     * このTeamのイベントオーガナイザー取得
-     */
-    public function event_organizers()
-    {
-        return $this->morphMany(EventOrganizer::class, 'event_organizeble');
-    }
-
-    //リンク
-    public function links()
-    {
-        return $this->morphMany(Link::class, 'linkable');
-    }
-
-    //フォロー機能 Teamをfollowしている人
-    public function followers()
-    {
-        return $this->morphToMany(User::class, 'followable', 'follows')->withTimestamps();
-    }
-    // チームのフォロワー数を取得する
-    public function followersCount()
-    {
-        return $this->followers()->count();
-    }
-
-    /**
-     * バッジリレーション
+     * MeiliSearch 検索可能な配列に変換します。
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * @return array
      */
-    public function badges()
+    public function toSearchableArray()
     {
-        return $this->morphToMany(Badge::class, 'badgeable');
-    }
-
-    /**
-     * タグとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'taggable');
+        $array = $this->only(
+            [
+                'id',
+                'name',
+                'bio',
+            ]
+        );
+        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        return $array;
     }
 }
