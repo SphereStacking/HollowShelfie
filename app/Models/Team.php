@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\TeamLogo;
 use Laravel\Scout\Searchable;
+use App\Models\Traits\TeamRelations;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Team extends JetstreamTeam
 {
+    use TeamRelations;
+
     use HasFactory;
     use TeamLogo;
     use Searchable;
@@ -55,6 +58,12 @@ class Team extends JetstreamTeam
         'team_logo_url', 'links'
     ];
 
+    // チームのフォロワー数を取得する
+    public function followersCount()
+    {
+        return $this->followers()->count();
+    }
+
     /**
      * 関連付けられているlink
      *
@@ -63,51 +72,6 @@ class Team extends JetstreamTeam
     public function getLinksAttribute()
     {
         return $this->links()->get();
-    }
-
-    /**
-     * このTeamのイベントオーガナイザー取得
-     */
-    public function event_organizers()
-    {
-        return $this->morphMany(EventOrganizer::class, 'event_organizeble');
-    }
-
-    //リンク
-    public function links()
-    {
-        return $this->morphMany(Link::class, 'linkable');
-    }
-
-    //フォロー機能 Teamをfollowしている人
-    public function followers()
-    {
-        return $this->morphToMany(User::class, 'followable', 'follows')->withTimestamps();
-    }
-    // チームのフォロワー数を取得する
-    public function followersCount()
-    {
-        return $this->followers()->count();
-    }
-
-    /**
-     * バッジリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function badges()
-    {
-        return $this->morphToMany(Badge::class, 'badgeable');
-    }
-
-    /**
-     * タグとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**
