@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\TeamLogo;
+use Laravel\Scout\Searchable;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use App\Traits\TeamLogo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Team extends JetstreamTeam
 {
     use HasFactory;
     use TeamLogo;
+    use Searchable;
+
     /**
      * The attributes that should be cast.
      *
@@ -105,5 +108,23 @@ class Team extends JetstreamTeam
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * MeiliSearch 検索可能な配列に変換します。
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->only(
+            [
+                'id',
+                'name',
+                'bio',
+            ]
+        );
+        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        return $array;
     }
 }
