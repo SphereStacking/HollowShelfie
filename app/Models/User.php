@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Badge;
 use App\Models\SocialAccount;
+use Laravel\Scout\Searchable;
 use Laravel\Jetstream\HasTeams;
 use App\Traits\UserProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,6 +26,7 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
 
     use UserRelations;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -73,5 +75,23 @@ class User extends Authenticatable
     public function getLinksAttribute()
     {
         return $this->links()->get();
+    }
+
+    /**
+     * MeiliSearch 検索可能な配列に変換します。
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->only(
+            [
+                'id',
+                'name',
+                'bio',
+            ]
+        );
+        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        return $array;
     }
 }
