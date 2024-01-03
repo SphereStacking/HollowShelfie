@@ -27,6 +27,7 @@ class User extends Authenticatable
 
     use UserRelations;
     use Searchable;
+    use HasCustomIdentifiable;
 
     /**
      * The attributes that are mass assignable.
