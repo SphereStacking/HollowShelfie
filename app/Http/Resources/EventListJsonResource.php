@@ -47,12 +47,10 @@ class EventListJsonResource extends JsonResource
                     'event_timeline_status' => $item->event_timeline_status,
                     'organizers' => $item->organizers->map(function ($organizeble) {
                         return [
-                            'profile_url' =>  $organizeble->event_organizeble_type === User::class
-                                ? route('user.profile.show', $organizeble->event_organizeble_id)
-                                : route('team.profile.show', $organizeble->event_organizeble_id),
+                            'profile_url' =>  $organizeble->event_organizeble->profile_url,
                             'id' => $organizeble->event_organizeble_id,
                             'type' => $organizeble->event_organizeble_type,
-                            'imag_url' =>  $organizeble->event_organizeble_type === User::class
+                            'imag_url' => $organizeble->event_organizeble_type === User::class
                                 ? $organizeble->event_organizeble->profile_photo_url
                                 : $organizeble->event_organizeble->team_logo_url,
                             'name' => $organizeble->event_organizeble->name,
@@ -68,9 +66,7 @@ class EventListJsonResource extends JsonResource
                         return $time_table->performers->map(function ($performer) {
                             return [
                                 'id' => $performer->performable->id,
-                                'profile_url' => $performer->performable_type === User::class
-                                    ? route('user.profile.show', $performer->performable->id)
-                                    : route('team.profile.show', $performer->performable->id),
+                                'profile_url' => $performer->performable->profile_url,
                                 'name' => $performer->performable->name,
                                 'links' => $performer->performable->links->map(function ($link) {
                                     return [
