@@ -9,6 +9,7 @@ use Laravel\Jetstream\HasTeams;
 use App\Traits\UserProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\UserRelations;
+use App\Traits\HasCustomIdentifiable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -27,6 +28,7 @@ class User extends Authenticatable
 
     use UserRelations;
     use Searchable;
+    use HasCustomIdentifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,7 +66,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url', 'links',
+        'profile_photo_url', 'links', 'profile_url',
     ];
 
     /**
@@ -75,6 +77,11 @@ class User extends Authenticatable
     public function getLinksAttribute()
     {
         return $this->links()->get();
+    }
+
+    public function getProfileUrlAttribute()
+    {
+        return route('user.profile.show', $this->customIdentifiable->alias_name);
     }
 
     /**

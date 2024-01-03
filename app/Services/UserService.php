@@ -23,12 +23,10 @@ class UserService
         $this->eventMeilisearchService = $eventMeilisearchService;
     }
 
-    // Userの公開情報を返す
-    public function getPublishProfile($id): User
+    // 事前ロードする
+    public function preloadProfileData(User $user)
     {
-        $user = User::find($id);
-        $user->load('links');
-        $user->load('tags');
+        $user->load(['links', 'tags']);
         $user->is_followed = $user->isFollowed();
         return $user;
     }

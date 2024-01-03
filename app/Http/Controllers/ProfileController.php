@@ -37,11 +37,10 @@ class ProfileController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\View\View
      */
-    public function user($id)
+    public function user(User $user)
     {
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
-        $user = User::find($id);
         $EventSearchParams = new EventSearchParams(
             '',
             [['include' => 'and', 'type' => 'user', 'value' => $user->name]],
@@ -51,7 +50,7 @@ class ProfileController extends Controller
 
         return Inertia::render('User/Index', [
             'profile' => new UserPublicProfileJsonResource(
-                $this->userService->getPublishProfile($id),
+                $this->userService->preloadProfileData($user),
             ),
             'events' => new EventListJsonResource(
                 $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
@@ -71,11 +70,10 @@ class ProfileController extends Controller
      * @param  \App\Models\Team  $team
      * @return \Illuminate\View\View
      */
-    public function team($id)
+    public function team( Team $team)
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
-        $team = Team::find($id);
         $EventSearchParams = new EventSearchParams(
             '',
             [['include' => 'and', 'type' => 'user', 'value' => $team->name]],
@@ -85,7 +83,7 @@ class ProfileController extends Controller
 
         return Inertia::render('Team/Index', [
             'profile' => new TeamPublicProfileJsonResource(
-                $this->teamService->getPublishProfile($id),
+                $this->teamService->preloadProfileData($team),
             ),
             'events' => new EventListJsonResource(
                 $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)

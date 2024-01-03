@@ -59,11 +59,12 @@ Route::get('/credits', function () {
 })->name('credits');
 
 
-Route::get('/user/{user}', [ProfileController::class, 'user'])
-    ->name('user.profile.show');
+Route::get('/user/{user:alias_name}', [ProfileController::class, 'user'])
+->name('user.profile.show');
 
-Route::get('/team/{team}', [ProfileController::class, 'team'])
+Route::get('/team/{team:alias_name}', [ProfileController::class, 'team'])
     ->name('team.profile.show');
+
 
 Route::get('/event', [EventController::class, 'index'])
     ->name('event.index');

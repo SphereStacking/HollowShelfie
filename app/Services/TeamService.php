@@ -17,12 +17,11 @@ class TeamService
     {
     }
 
-    //公開情報を取得する
-    public function getPublishProfile($id)
+    // 事前ロードする
+    public function preloadProfileData(Team $team)
     {
-        return Team::with([
-            'links',          // ユーザーに関連するリンク
-            'event_organizers' // ユーザーがオーガナイザーとなっているイベント
-        ])->find($id);
+        $team->load(['links', 'event_organizers']);
+
+        return $team;
     }
 }
