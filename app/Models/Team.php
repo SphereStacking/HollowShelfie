@@ -18,6 +18,7 @@ class Team extends JetstreamTeam
     use HasFactory;
     use TeamLogo;
     use Searchable;
+    use HasCustomIdentifiable;
 
     /**
      * The attributes that should be cast.
