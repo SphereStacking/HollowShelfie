@@ -17,14 +17,21 @@ const addUrl = route('event.bookmark', props.eventId);
 
 
 const isCheck = ref(props.check);
-
+const isLock=ref(false);
 const toggle = () => {
+  if (isLock.value) {
+    return;
+  }
+  isLock.value = true;
   if (props.check) {
     router.visit(
       removeUrl,
       {
         method: 'delete',
         preserveScroll: true,
+        onFinish: () => {
+          isLock.value = false;
+        }
       }
     )
   }else{
@@ -33,6 +40,9 @@ const toggle = () => {
       {
         method: 'post',
         preserveScroll: true,
+        onFinish: () => {
+          isLock.value = false;
+        }
       }
     )
   }
