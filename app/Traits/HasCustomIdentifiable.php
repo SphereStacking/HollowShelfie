@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Rules\ReservedWord;
 use App\Models\CustomIdentifiable;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -130,6 +131,7 @@ trait HasCustomIdentifiable
         return [
             'alias_name' => [
                 'alpha_dash',
+                new ReservedWord(),
                 Rule::unique('custom_identifiables')->where(function ($query) use ($newAliasName) {
                     return $query->where('alias_name', $newAliasName)
                                  ->where('identifiable_type', get_class($this));
