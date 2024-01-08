@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class FollowController extends Controller
 {
-    //
+    /**
+     * 指定されたユーザーをフォローします。
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function followUser(User $user)
     {
-        auth()->user()->follows()->syncWithoutDetaching($user->id, ['followable_type' => User::class]);
+        $user->follow($user);
 
         return Redirect::back()->with([
             'status' => 'success',
@@ -20,20 +26,31 @@ class FollowController extends Controller
         ]);
     }
 
-    // ユーザーのフォロー解除
+    /**
+     * 指定されたユーザーのフォローを解除します。
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function unfollowUser(User $user)
     {
-        auth()->user()->follows()->detach($user->id, ['followable_type' => User::class]);
+        $user->unfollow($user);
+
         return Redirect::back()->with([
             'status' => 'success',
             'message' => "{$user->name}のフォローを解除しました。"
         ]);
     }
 
-
+    /**
+     * 指定されたチームをフォローします。
+     *
+     * @param  Team  $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function followTeam(Team $team)
     {
-        auth()->user()->follows()->syncWithoutDetaching($team->id, ['followable_type' => Team::class]);
+        $team->follow($team);
 
         return Redirect::back()->with([
             'status' => 'success',
@@ -41,12 +58,16 @@ class FollowController extends Controller
         ]);
     }
 
-
-
-    // チームのフォロー解除
+    /**
+     * 指定されたチームのフォローを解除します。
+     *
+     * @param  Team  $team
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function unfollowTeam(Team $team)
     {
-        auth()->user()->follows()->detach($team->id, ['followable_type' => Team::class]);
+        $team->unfollow($team);
+
         return Redirect::back()->with([
             'status' => 'success',
             'message' => "{$team->name}のフォローを解除しました。"
