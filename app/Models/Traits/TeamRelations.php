@@ -34,17 +34,6 @@ trait TeamRelations
     }
 
     /**
-     * フォロー機能 Teamをfollowしている人取得
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function followers()
-    {
-        return $this->morphToMany(User::class, 'followable', 'follows')->withTimestamps();
-    }
-
-
-    /**
      * バッジリレーション
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
