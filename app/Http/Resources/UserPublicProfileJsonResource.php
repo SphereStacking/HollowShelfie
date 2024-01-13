@@ -20,8 +20,8 @@ class UserPublicProfileJsonResource extends JsonResource
                 'screen_name' => $this->screen_name,
                 'name' => $this->name,
                 'photo_url' => $this->profile_photo_url,
-                'profile_url' => route('user.profile.show', $this->id),
-                'location' => 'TODO',
+                'profile_url' => $this->profile_url,
+                'location' => $this->location,
                 'links' => $this->links->map(function ($link) {
                     return [
                         'label' => $link->label,
