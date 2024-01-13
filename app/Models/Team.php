@@ -59,7 +59,7 @@ class Team extends JetstreamTeam
      * @var array<int, string>
      */
     protected $appends = [
-        'team_logo_url', 'links', 'profile_url'
+        'team_logo_url', 'links', 'profile_url','screen_name'
     ];
 
     public function getProfileUrlAttribute()
