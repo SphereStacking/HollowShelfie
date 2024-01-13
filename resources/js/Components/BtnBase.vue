@@ -10,7 +10,7 @@ defineEmits(
 )
 </script>
 <template>
-  <button :class="class" @click="$emit('click')">
+  <button>
     <slot></slot>
   </button>
 </template>

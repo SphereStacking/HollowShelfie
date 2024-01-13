@@ -32,9 +32,9 @@ const props = defineProps({
   <button class="btn btn-xs  px-1">
     <slot name="before"></slot>
     <label class="swap">
-      <input type="checkbox" v-model="props.check" class="hidden" />
+      <input v-model="props.check" type="checkbox" class="hidden">
       <Icon :icon="onIcon" class="swap-on text-lg transition duration-200 " :class="onColor" />
-      <Icon :icon="offIcon" class="text-lg swap-off text-base-content " :class="offColor" />
+      <Icon :icon="offIcon" class="swap-off text-lg text-base-content " :class="offColor" />
     </label>
     <slot name="after"></slot>
   </button>

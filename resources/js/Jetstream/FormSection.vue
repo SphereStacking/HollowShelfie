@@ -1,35 +1,37 @@
 <script setup>
-import { computed, useSlots } from 'vue';
-import SectionTitle from './SectionTitle.vue';
+import { computed, useSlots } from 'vue'
+import SectionTitle from './SectionTitle.vue'
 
-defineEmits(['submitted']);
+defineEmits(['submitted'])
 
-const hasActions = computed(() => !!useSlots().actions);
+const hasActions = computed(() => !!useSlots().actions)
 </script>
 
 <template>
   <div class="md:grid md:grid-cols-3 md:gap-6">
     <SectionTitle>
       <template #title>
-        <slot name="title" />
+        <slot name="title"></slot>
       </template>
       <template #description>
-        <slot name="description" />
+        <slot name="description"></slot>
       </template>
     </SectionTitle>
 
-    <div class="mt-5 md:mt-0 md:col-span-2">
+    <div class="mt-5 md:col-span-2 md:mt-0">
       <form @submit.prevent="$emit('submitted')">
-        <div class="px-4 py-5 bg-base-200 sm:p-6 shadow"
+        <div
+          class="bg-base-200 px-4 py-5 shadow sm:p-6"
           :class="hasActions ? 'sm:rounded-tl-md sm:rounded-tr-md' : 'sm:rounded-md'">
           <div class="grid grid-cols-6 gap-6">
-            <slot name="form" />
+            <slot name="form"></slot>
           </div>
         </div>
 
-        <div v-if="hasActions"
-          class="flex items-center justify-end px-4 py-3 bg-base-300 text-right sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-          <slot name="actions" />
+        <div
+          v-if="hasActions"
+          class="flex items-center justify-end bg-base-300 px-4 py-3 text-right shadow sm:rounded-b-md sm:px-6">
+          <slot name="actions"></slot>
         </div>
       </form>
     </div>

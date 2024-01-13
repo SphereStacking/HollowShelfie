@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
   nextPageUrl: {
@@ -18,12 +18,13 @@ const props = defineProps({
 
 </script>
 
-
 <template>
   <div class="join">
-    <Link v-for="(link, index) in links" :key="index" class="join-item btn btn-sm" :href="link.url"
+    <Link
+      v-for="(link, index) in links" :key="index" class="btn join-item btn-sm"
+      :href="link.url"
       :class="{ 'btn-active': link.active }">
-    {{ link.label }}
+      {{ link.label }}
     </Link>
   </div>
 </template>

@@ -9,13 +9,13 @@ const props = defineProps({
     required: true
   },
 })
-</script >
+</script>
 
 <template>
   <div>
-    <Carousel :itemsToShow="3.95" :wrapAround="true" :transition="500">
+    <Carousel :items-to-show="3.95" :wrap-around="true" :transition="500">
       <Slide v-for="(slide, index) in props.images" :key="index">
-        <img :src="slide" alt="image" class="carousel__item" />
+        <img :src="slide" alt="image" class="carousel__item">
       </Slide>
       <template #addons>
         <Navigation />

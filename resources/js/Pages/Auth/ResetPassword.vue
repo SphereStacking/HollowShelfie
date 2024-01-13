@@ -1,29 +1,29 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue';
-import InputError from '@/Jetstream/InputError.vue';
-import InputLabel from '@/Jetstream/InputLabel.vue';
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
-import TextInput from '@/Jetstream/TextInput.vue';
+import { Head, useForm } from '@inertiajs/vue3'
+import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import InputError from '@/Jetstream/InputError.vue'
+import InputLabel from '@/Jetstream/InputLabel.vue'
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
+import TextInput from '@/Jetstream/TextInput.vue'
 
 const props = defineProps({
   email: String,
   token: String,
-});
+})
 
 const form = useForm({
   token: props.token,
   email: props.email,
   password: '',
   password_confirmation: '',
-});
+})
 
 const submit = () => {
   form.post(route('password.update'), {
     onFinish: () => form.reset('password', 'password_confirmation'),
-  });
-};
+  })
+}
 </script>
 
 <template>
@@ -44,8 +44,7 @@ const submit = () => {
           class="mt-1 block w-full"
           required
           autofocus
-          autocomplete="username"
-        />
+          autocomplete="username" />
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
 
@@ -57,8 +56,7 @@ const submit = () => {
           type="password"
           class="mt-1 block w-full"
           required
-          autocomplete="new-password"
-        />
+          autocomplete="new-password" />
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
 
@@ -70,12 +68,11 @@ const submit = () => {
           type="password"
           class="mt-1 block w-full"
           required
-          autocomplete="new-password"
-        />
+          autocomplete="new-password" />
         <InputError class="mt-2" :message="form.errors.password_confirmation" />
       </div>
 
-      <div class="flex items-center justify-end mt-4">
+      <div class="mt-4 flex items-center justify-end">
         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           Reset Password
         </PrimaryButton>

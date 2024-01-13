@@ -1,5 +1,5 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   tags: {
@@ -20,8 +20,9 @@ const serchTag = (tagName) => {
 
 <template>
   <div>
-    <div v-for="(tag, index) in props.tags" :key="index" @click="serchTag(tag)"
-      class="badge badge-secondary badge-xs rounded-md mr-1 ">
+    <div
+      v-for="(tag, index) in props.tags" :key="index" class="badge badge-secondary badge-xs mr-1 rounded-md "
+      @click="serchTag(tag)">
       {{ tag }}
     </div>
   </div>

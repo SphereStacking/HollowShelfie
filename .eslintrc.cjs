@@ -29,6 +29,28 @@ module.exports = {
   'plugins': [
     'vue'
   ],
+  'globals': {
+    // Inertia
+    'route': 'readonly',
+    // Vue
+    'ref': 'readonly',
+    'reactive': 'readonly',
+    'computed': 'readonly',
+    'watch': 'readonly',
+    'watchEffect': 'readonly',
+    'toRefs': 'readonly',
+    'toRef': 'readonly',
+    'isRef': 'readonly',
+    'unref': 'readonly',
+    'nextTick': 'readonly',
+    'onBeforeMount': 'readonly',
+    'onMounted': 'readonly',
+    'onBeforeUpdate': 'readonly',
+    'onUpdated': 'readonly',
+    'onBeforeUnmount': 'readonly',
+    'onUnmounted': 'readonly',
+    'defineComponent': 'readonly',
+  },
   rules: {
     // タグの最後で改行しないで
     'vue/html-closing-bracket-newline': [2, { 'multiline': 'never' }],
@@ -82,9 +104,7 @@ module.exports = {
       'math': 'always'
     }],
 
-    'tailwindcss/no-custom-classname': ['warn', {
-      //Font Awesome iconをホワイトリストに登録
-      whitelist: ['fa[-a-zA-Z]*']
+    'tailwindcss/no-custom-classname': ['off', {
     }],
     //scriptタグを一番上に来るようにするルール
     'vue/component-tags-order': [
@@ -93,12 +113,13 @@ module.exports = {
         order: ['script', 'template', 'style'],
       },
     ],
-    "vue/html-indent": ["error", type, {
-        "attribute": 1,
-        "baseIndent": 1,
-        "closeBracket": 0,
-        "alignAttributesVertically": true,
-        "ignores": []
+    'vue/html-indent': ['error', 2, {
+      'attribute': 1,
+      'baseIndent': 1,
+      'closeBracket': 0,
+      'alignAttributesVertically': true,
+      'ignores': []
     }],
   },
 }
+

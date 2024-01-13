@@ -1,5 +1,5 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   status: {
@@ -15,12 +15,13 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="badge badge-xs" :class="{
-    'badge-neutral': status == 'draft',
-    'badge-info': status == 'upcoming' || status == 'closed',
-    'badge-error': status == 'canceled' || status == 'deleted',
-    'badge-success': status == 'ongoing',
-  }">
+  <div
+    class="badge badge-xs" :class="{
+      'badge-neutral': status == 'draft',
+      'badge-info': status == 'upcoming' || status == 'closed',
+      'badge-error': status == 'canceled' || status == 'deleted',
+      'badge-success': status == 'ongoing',
+    }">
     {{ label }}
   </div>
 </template>

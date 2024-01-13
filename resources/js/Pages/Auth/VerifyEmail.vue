@@ -1,21 +1,21 @@
 <script setup>
-import { computed } from 'vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue';
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
+import { computed } from 'vue'
+import { Head, Link, useForm } from '@inertiajs/vue3'
+import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
 
 const props = defineProps({
   status: String,
-});
+})
 
-const form = useForm({});
+const form = useForm({})
 
 const submit = () => {
-  form.post(route('verification.send'));
-};
+  form.post(route('verification.send'))
+}
 
-const verificationLinkSent = computed(() => props.status === 'verification-link-sent');
+const verificationLinkSent = computed(() => props.status === 'verification-link-sent')
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
       Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
     </div>
 
-    <div v-if="verificationLinkSent" class="mb-4 font-medium text-sm text-green-600">
+    <div v-if="verificationLinkSent" class="mb-4 text-sm font-medium text-green-600">
       A new verification link has been sent to the email address you provided in your profile settings.
     </div>
 
@@ -43,16 +43,15 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
         <div>
           <Link
             :href="route('profile.show')"
-            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Edit Profile</Link>
+            class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Edit Profile
+          </Link>
 
           <Link
             :href="route('logout')"
             method="post"
             as="button"
-            class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ml-2"
-          >
+            class="ml-2 rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             Log Out
           </Link>
         </div>

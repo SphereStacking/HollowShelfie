@@ -48,15 +48,16 @@ const events = [
         イベントタイムライン
       </h2>
     </template>
-    <div class="max-w-7xl mx-auto pt-4">
-      <div class="flex flex-row gap-2 items-center">
-        <SelectMulti></SelectMulti>
-        <BtnInfo @click="search">search</BtnInfo>
+    <div class="mx-auto max-w-7xl pt-4">
+      <div class="flex flex-row items-center gap-2">
+        <SelectMulti />
+        <BtnInfo @click="search">
+          search
+        </BtnInfo>
       </div>
-      <GanttTimeHoge :dateSpan="dateSpan" :events="events"></GanttTimeHoge>
+      <GanttTimeHoge :date-span="dateSpan" :events="events" />
     </div>
-
   </AppLayout>
 </template>
-<style >
+<style>
 </style>

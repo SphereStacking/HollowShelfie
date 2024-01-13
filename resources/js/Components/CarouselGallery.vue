@@ -30,31 +30,36 @@ const prev = () => {
     currentSlide.value = props.images.length - 1
   }
 }
-</script >
+</script>
 
 <template>
   <Card>
     <slot name="header"></slot>
-    <Carousel :items-to-show="1" :wrap-around="true" v-model="currentSlide" class="rounded-sm">
+    <Carousel
+      v-model="currentSlide" :items-to-show="1" :wrap-around="true"
+      class="rounded-sm">
       <Slide v-for="(slide, index) in props.images" :key="index">
-        <img :src="slide" alt="image" class="carousel__item " />
+        <img :src="slide" alt="image" class="carousel__item ">
       </Slide>
     </Carousel>
 
     <div class=" flex flex-row items-center gap-1">
       <button class="btn p-0" @click="next">
-        <Icon icon="mdi:chevron-left" class="text-4xl"></Icon>
+        <Icon icon="mdi:chevron-left" class="text-4xl" />
       </button>
-      <Carousel :items-to-show="4" :wrap-around="false" v-model="currentSlide" ref="carousel">
-        <Slide v-for="(slide, index) in props.images" :key="index" class="px-0.5 rounded-sm">
-          <img :src="slide" alt="image" class="carousel__item" @click="slideTo(index)" />
+      <Carousel
+        ref="carousel" v-model="currentSlide" :items-to-show="4"
+        :wrap-around="false">
+        <Slide v-for="(slide, index) in props.images" :key="index" class="rounded-sm px-0.5">
+          <img
+            :src="slide" alt="image" class="carousel__item"
+            @click="slideTo(index)">
         </Slide>
       </Carousel>
       <button class="btn p-0" @click="prev">
-        <Icon icon="mdi:chevron-right" class="text-4xl"></Icon>
+        <Icon icon="mdi:chevron-right" class="text-4xl" />
       </button>
     </div>
-
 
     <slot name="footer"></slot>
   </Card>

@@ -1,27 +1,27 @@
 <script setup>
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
-import ActionSection from '@/Jetstream/ActionSection.vue';
-import ConfirmationModal from '@/Jetstream/ConfirmationModal.vue';
-import DangerButton from '@/Jetstream/DangerButton.vue';
-import SecondaryButton from '@/Jetstream/SecondaryButton.vue';
+import { ref } from 'vue'
+import { useForm } from '@inertiajs/vue3'
+import ActionSection from '@/Jetstream/ActionSection.vue'
+import ConfirmationModal from '@/Jetstream/ConfirmationModal.vue'
+import DangerButton from '@/Jetstream/DangerButton.vue'
+import SecondaryButton from '@/Jetstream/SecondaryButton.vue'
 
 const props = defineProps({
   team: Object,
-});
+})
 
-const confirmingTeamDeletion = ref(false);
-const form = useForm({});
+const confirmingTeamDeletion = ref(false)
+const form = useForm({})
 
 const confirmTeamDeletion = () => {
-  confirmingTeamDeletion.value = true;
-};
+  confirmingTeamDeletion.value = true
+}
 
 const deleteTeam = () => {
   form.delete(route('teams.destroy', props.team), {
     errorBag: 'deleteTeam',
-  });
-};
+  })
+}
 </script>
 
 <template>
@@ -64,8 +64,7 @@ const deleteTeam = () => {
             class="ml-3"
             :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing"
-            @click="deleteTeam"
-          >
+            @click="deleteTeam">
             Delete Team
           </DangerButton>
         </template>

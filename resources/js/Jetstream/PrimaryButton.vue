@@ -4,11 +4,11 @@ defineProps({
     type: String,
     default: 'submit',
   },
-});
+})
 </script>
 
 <template>
   <button :type="type" class="btn btn-primary btn-sm">
-    <slot />
+    <slot></slot>
   </button>
 </template>
