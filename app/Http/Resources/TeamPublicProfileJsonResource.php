@@ -28,7 +28,7 @@ class TeamPublicProfileJsonResource extends JsonResource
                         'link' => $link->link,
                     ];
                 }),
-                'followers_count' => $this->followersCount(),
+                'followers_count' => $this->followers_count,
                 'content' => 'hogegegege',
                 'tags'=> $this->tags->map(function ($tag) {
                     return [

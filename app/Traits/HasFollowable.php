@@ -3,10 +3,21 @@ namespace App\Traits;
 
 use App\Models\User;
 use App\Models\Followable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 trait HasFollowable
 {
+
+    /**
+     * このモデルがフォローしているFollowableモデルのリレーションを返します。
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function follows()
+    {
+        return $this->hasMany(Followable::class, 'user_id');
+    }
 
     /**
      * モデルにフォロー機能を追加します。
@@ -15,21 +26,22 @@ trait HasFollowable
     {
         return $this->morphMany(Followable::class, 'followable');
     }
+
     /**
      * このモデルをフォローします。
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return mixed
      */
-    public function follow($model)
+    public function follow($followTarget)
     {
         if (!Auth::check()) {
             return;
         }
-        return $this->followables()->create([
-            'user_id' =>  Auth::user()->id,
-            'followable_id' => $model->getKey(),
-            'followable_type' => get_class($model)
+        return Followable::firstOrCreate([
+            'user_id' => $this->id,
+            'followable_id' => $followTarget->id,
+            'followable_type' => get_class($followTarget),
         ]);
     }
 
@@ -39,16 +51,14 @@ trait HasFollowable
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return mixed
      */
-    public function unfollow($model)
+    public function unfollow($unfollowTarget)
     {
         if (!Auth::check()) {
             return;
         }
-
-        return $this->followables()
-                    ->where('user_id', Auth::id())
-                    ->where('followable_id', $model->getKey())
-                    ->where('followable_type', get_class($model))
+        return Followable::where('user_id', $this->id)
+                    ->where('followable_id', $unfollowTarget->id)
+                    ->where('followable_type', get_class($unfollowTarget))
                     ->delete();
     }
 
@@ -88,7 +98,7 @@ trait HasFollowable
      *
      * @return bool
      */
-    public function isFollowed(): bool
+    public function isFollowedByCurrentUser(): bool
     {
         if (!auth()->check()) {
             return false;
@@ -99,4 +109,3 @@ trait HasFollowable
     }
 
 }
-
