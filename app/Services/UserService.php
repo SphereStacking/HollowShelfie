@@ -29,7 +29,7 @@ class UserService
     public function preloadProfileData(User $user)
     {
         $user->load(['links', 'tags']);
-        $user->is_followed = $user->isFollowedByCurrentUser();
+        $user->is_followed = auth()->user()->isFollowedByCurrentUser();
         $user->followers_count = $user->followersCount();
         return $user;
     }
