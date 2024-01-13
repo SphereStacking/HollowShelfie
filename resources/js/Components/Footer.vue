@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3'
 const page = usePage()
 const appName = page.props.config.appName ?? null
 const credit = page.props.config.credit ?? null
@@ -29,14 +29,16 @@ const pages = {
 
 </script>
 <template>
-  <footer class="p-4 bg-base-300 text-center space-y-4">
-    <div class="grid grid-cols-2 gap-2  md:grid-cols-5 md:gap-20 max-w-4xl mx-auto">
-      <ApplicationMark class="h-14 sm:col-span-1 col-span-2"></ApplicationMark>
+  <footer class="space-y-4 bg-base-300 p-4 text-center">
+    <div class="mx-auto grid max-w-4xl  grid-cols-2 gap-2 md:grid-cols-5 md:gap-20">
+      <ApplicationMark class="col-span-2 h-14 sm:col-span-1" />
       <div v-for="(links, section) in pages" :key="section" class="text-left">
-        <p class="font-bold text-lg">{{ section }}</p>
+        <p class="text-lg font-bold">
+          {{ section }}
+        </p>
         <ul class="list-none">
           <li v-for="link in links" :key="link.url">
-            <a :href="link.url" class="hover:underline text-sm" :target="link.target">{{ link.label }}</a>
+            <a :href="link.url" class="text-sm hover:underline" :target="link.target">{{ link.label }}</a>
           </li>
         </ul>
       </div>

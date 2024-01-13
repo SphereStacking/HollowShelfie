@@ -38,11 +38,11 @@ const share = (platform) => {
 
 </script>
 <template>
-  <div class="dropdown dropdown-bottom dropdown-end ">
+  <div class="dropdown dropdown-end dropdown-bottom ">
     <label tabindex="0">
       <slot></slot>
     </label>
-    <ul tabindex="0" class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box ">
+    <ul tabindex="0" class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-100 p-2 shadow ">
       <li>
         <a @click="share('twitter')">
           <Icon icon="ri:twitter-x-fill" class="text-xl" />

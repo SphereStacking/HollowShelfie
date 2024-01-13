@@ -1,28 +1,28 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue';
-import InputError from '@/Jetstream/InputError.vue';
-import InputLabel from '@/Jetstream/InputLabel.vue';
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
-import TextInput from '@/Jetstream/TextInput.vue';
+import { ref } from 'vue'
+import { Head, useForm } from '@inertiajs/vue3'
+import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import InputError from '@/Jetstream/InputError.vue'
+import InputLabel from '@/Jetstream/InputLabel.vue'
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
+import TextInput from '@/Jetstream/TextInput.vue'
 
 const form = useForm({
   password: '',
-});
+})
 
-const passwordInput = ref(null);
+const passwordInput = ref(null)
 
 const submit = () => {
   form.post(route('password.confirm'), {
     onFinish: () => {
-      form.reset();
+      form.reset()
 
-      passwordInput.value.focus();
+      passwordInput.value.focus()
     },
-  });
-};
+  })
+}
 </script>
 
 <template>
@@ -48,12 +48,11 @@ const submit = () => {
           class="mt-1 block w-full"
           required
           autocomplete="current-password"
-          autofocus
-        />
+          autofocus />
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
 
-      <div class="flex justify-end mt-4">
+      <div class="mt-4 flex justify-end">
         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           Confirm
         </PrimaryButton>

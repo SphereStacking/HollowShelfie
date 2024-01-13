@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   show: {
@@ -14,17 +14,19 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-});
+})
 const close = () => {
   this.$emit('close')
-};
+}
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close'])
 
 </script>
 <template>
-  <modal :show="show" :max-width="maxWidth" :closeable="closeable" @close="close">
-    <div class="py-4 px-6">
+  <modal
+    :show="show" :max-width="maxWidth" :closeable="closeable"
+    @close="close">
+    <div class="px-6 py-4">
       <div class="text-lg">
         <slot name="title"></slot>
       </div>
@@ -34,10 +36,9 @@ const emit = defineEmits(['close']);
       </div>
     </div>
 
-    <div class="py-4 px-6 text-right bg-gray-100">
+    <div class="bg-gray-100 px-6 py-4 text-right">
       <slot name="footer"></slot>
     </div>
   </modal>
 </template>
-
 

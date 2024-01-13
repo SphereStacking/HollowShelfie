@@ -1,6 +1,5 @@
 <script setup>
 
-
 const props = defineProps({
   // publicRelationsEvents: {
   //   type: Array,
@@ -19,7 +18,7 @@ const props = defineProps({
       </h2>
     </template>
     <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
-      <EventCreateFormCard></EventCreateFormCard>
+      <EventCreateFormCard />
     </div>
   </AppLayout>
 </template>
