@@ -26,6 +26,11 @@ trait HasCustomIdentifiable
         });
     }
 
+    public function getScreenNameAttribute()
+    {
+        return  $this->customIdentifiable->alias_name;
+    }
+
     /**
      * カスタムID属性を取得する
      *
