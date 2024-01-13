@@ -11,7 +11,7 @@ defineEmits(
 </script>
 <template>
   <BtnBase
-    :id="id" class="btn btn-info btn-outline"
+    :id="id" class="btn btn-outline btn-info"
     @click="$emit('click')">
     <slot></slot>
   </BtnBase>

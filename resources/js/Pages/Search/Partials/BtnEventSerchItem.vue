@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { ref } from 'vue'
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   value: {
@@ -22,54 +22,55 @@ const props = defineProps({
   },
   querySetter: {
     type: Function,
-    default: function (value,type) {
+    default: function (value, type) {
       return [
         { include: 'and', type: type.toString(), value: value.toString() },
-      ];
+      ]
     }
   },
   buttonTextSetter: {
     type: Function,
-    default: function (value) { return value; }
+    default: function (value) { return value }
   },
-});
+})
 
-const emit = defineEmits(['remove']);
+const emit = defineEmits(['remove'])
 const removeCondition = () => {
-  emit('remove');
-};
+  emit('remove')
+}
 
 const navigateToType = () => {
   if (!props.isNavigate) {return}
-  const value = props.querySetter(props.value,props.type)
+  const value = props.querySetter(props.value, props.type)
   router.visit(
     route('event.search.index',
       { t: '', q: value, o: '', }
     )
-  );
-};
+  )
+}
 </script>
 
 <template>
   <BtnConditionTypeMapper :type="type" @click="navigateToType()">
     <template v-if="isIcon && isClose">
       <div class="relative">
-        <IconTypeMapper v-if="isIcon" :type="type"
-          class="absolute top-0 left-0 text-lg transition-all duration-300 opacity-100 group-hover:opacity-0 ">
-        </IconTypeMapper>
-        <Icon icon="mdi:close"
-          class="absolute top-0 left-0 text-lg transition-all duration-300 opacity-0 group-hover:opacity-100 -rotate-90 group-hover:rotate-0"
-          @click="removeCondition">
-        </Icon>
+        <IconTypeMapper
+          v-if="isIcon" :type="type"
+          class="absolute left-0 top-0 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+        <Icon
+          icon="mdi:close"
+          class="absolute left-0 top-0 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100"
+          @click="removeCondition" />
         <div class="pl-6">
           {{ buttonTextSetter(value) }}
         </div>
       </div>
     </template>
     <template v-else>
-      <IconSerchItemType v-if="isIcon" :type="type" class="text-lg"></IconSerchItemType>
-      <Icon v-if="isClose" icon="line-md:close-small" class="text-lg" @click="removeCondition">
-      </Icon>
+      <IconSerchItemType v-if="isIcon" :type="type" class="text-lg" />
+      <Icon
+        v-if="isClose" icon="line-md:close-small" class="text-lg"
+        @click="removeCondition" />
       {{ buttonTextSetter(value) }}
     </template>
   </BtnConditionTypeMapper>

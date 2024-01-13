@@ -10,7 +10,6 @@
     <div class="card-body">
       <template v-if="$slots.title">
         <h2 class="card-title">
-
           <slot name="title"></slot>
         </h2>
       </template>
@@ -18,11 +17,9 @@
         <slot></slot>
       </template>
       <template v-if="$slots.actions">
-
         <div class="card-actions justify-end">
           <slot name="actions"></slot>
         </div>
-
       </template>
       <template v-if="$slots.footer">
         <slot name="footer"></slot>

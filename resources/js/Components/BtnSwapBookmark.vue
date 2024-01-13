@@ -1,5 +1,5 @@
 <script setup>
-import BtnSwapBase from './BtnSwapBase.vue';
+import BtnSwapBase from './BtnSwapBase.vue'
 
 const props = defineProps({
   check: {
@@ -15,9 +15,11 @@ const props = defineProps({
 })
 </script>
 <template>
-  <BtnSwapBase offIcon="mdi:bookmark-outline" onIcon="mdi:bookmark" :check="props.check">
+  <BtnSwapBase off-icon="mdi:bookmark-outline" on-icon="mdi:bookmark" :check="props.check">
     <template #after>
-      <div v-if="showCount" class="badge badge-xs">{{ count }}</div>
+      <div v-if="showCount" class="badge badge-xs">
+        {{ count }}
+      </div>
     </template>
   </BtnSwapBase>
 </template>

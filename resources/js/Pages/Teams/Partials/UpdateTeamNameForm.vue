@@ -1,27 +1,27 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
-import ActionMessage from '@/Jetstream/ActionMessage.vue';
-import FormSection from '@/Jetstream/FormSection.vue';
-import InputError from '@/Jetstream/InputError.vue';
-import InputLabel from '@/Jetstream/InputLabel.vue';
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
-import TextInput from '@/Jetstream/TextInput.vue';
+import { useForm } from '@inertiajs/vue3'
+import ActionMessage from '@/Jetstream/ActionMessage.vue'
+import FormSection from '@/Jetstream/FormSection.vue'
+import InputError from '@/Jetstream/InputError.vue'
+import InputLabel from '@/Jetstream/InputLabel.vue'
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
+import TextInput from '@/Jetstream/TextInput.vue'
 
 const props = defineProps({
   team: Object,
   permissions: Object,
-});
+})
 
 const form = useForm({
   name: props.team.name,
-});
+})
 
 const updateTeamName = () => {
   form.put(route('teams.update', props.team), {
     errorBag: 'updateTeamName',
     preserveScroll: true,
-  });
-};
+  })
+}
 </script>
 
 <template>
@@ -39,12 +39,14 @@ const updateTeamName = () => {
       <div class="col-span-6">
         <InputLabel value="Team Owner" />
 
-        <div class="flex items-center mt-2">
-          <img class="w-12 h-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
+        <div class="mt-2 flex items-center">
+          <img class="h-12 w-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
 
           <div class="ml-4 leading-tight">
-            <div class="text-gray-900">{{ team.owner.name }}</div>
-            <div class="text-gray-700 text-sm">
+            <div class="text-gray-900">
+              {{ team.owner.name }}
+            </div>
+            <div class="text-sm text-gray-700">
               {{ team.owner.email }}
             </div>
           </div>
@@ -55,7 +57,9 @@ const updateTeamName = () => {
       <div class="col-span-6 sm:col-span-4">
         <InputLabel for="name" value="Team Name" />
 
-        <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full"
+        <TextInput
+          id="name" v-model="form.name" type="text"
+          class="mt-1 block w-full"
           :disabled="!permissions.canUpdateTeam" />
 
         <InputError :message="form.errors.name" class="mt-2" />
