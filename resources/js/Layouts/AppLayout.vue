@@ -70,13 +70,12 @@ const isLogin = ref(auth_user.value !== null);
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <NavLink :href="route('home')" :active="route().current('home')">
-                  ホーム
+                  <IconTypeMapper type="home" class="mr-0.5 text-xl" />
+                  home
                 </NavLink>
-                <NavLink :href="route('event.index')" :active="route().current('event.index')">
-                  イベント
-                </NavLink>
-                <NavLink :href="route('event.timeline.show')" :active="route().current('event.timeline.show')">
-                  タイムライン
+                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                  <IconTypeMapper type="dashboard" class="mr-0.5 text-xl" />
+                  dashboard
                 </NavLink>
                 <!-- <NavLink :href="route('home')" :active="route().current('articles')">
                   Articles

@@ -151,4 +151,10 @@ class EventController extends Controller
         ]);
     }
 
+
+    public function recruiting()
+    {
+        return Inertia::render('Event/Recruiting');
+    }
+
 }
