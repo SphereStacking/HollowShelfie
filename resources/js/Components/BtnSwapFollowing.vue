@@ -1,5 +1,5 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
+import axios from 'axios'
 
 const props = defineProps({
   screenName: {
@@ -9,8 +9,7 @@ const props = defineProps({
   },
   count: {
     type: Number,
-    required: true,
-    default: 0
+    default: null
   },
   followRoute: {
     type: String,
@@ -25,44 +24,57 @@ const props = defineProps({
   isFollowed: {
     type: Boolean,
     required: true
-  }
+  },
 })
-
+const isFollowed = ref(props.isFollowed)
+const count = ref(props.count)
 const followUrl = route(props.followRoute, props.screenName)
 const unfollowUrl = route(props.unfollowRoute, props.screenName)
-
+const hasCount = computed(() => props.count == null)
 const isFollowedBtnOver = ref()
-const follow = () => {
-  if (!props.isFollowed) {
-    router.visit(followUrl, {
-      method: 'post',
-      preserveState: false,
-      preserveScroll: true,
-      onSuccess: (result) => {
-        console.log(result)
-      }
+
+const follow = async () => {
+  const url = isFollowed.value ? unfollowUrl : followUrl
+  const method = isFollowed.value ? 'delete' : 'post'
+
+  try {
+    const response = await axios({
+      method: method,
+      url: url,
     })
-  } else {
-    router.visit(unfollowUrl, {
-      method: 'delete',
-      preserveState: false,
-      preserveScroll: true,
-      onSuccess: (result) => {
-        console.log(result)
-      }
-    })
+
+    if (response.status >= 200 && response.status < 300) {
+      // レスポンスが正常な場合、dataを反映させる
+      count.value = response.data.followers_count
+      isFollowed.value = response.data.is_followed
+    }
+
+    console.log(response.data)
+  } catch (error) {
+    console.error('Error:', error)
   }
 }
+const buttonLabel = computed(() => {
+  if (isFollowed.value) {
+    return isFollowedBtnOver.value ? 'Unfollow' : 'Following'
+  } else {
+    return 'Follow'
+  }
+})
 </script>
 <template>
   <button
-    :class="isFollowed ? 'btn  btn-sm btn-success hover:btn-error' : 'btn  btn-sm btn-outline hover:btn-success'"
-    @mouseover="isFollowedBtnOver = true" @mouseleave="isFollowedBtnOver = false" @click="follow">
+    :class="[
+      isFollowed ? 'btn btn-success btn-sm hover:btn-error' : 'btn btn-outline btn-sm hover:btn-success',
+      hasCount ? 'w-32' : 'w-40',
+    ]"
+    @mouseover="isFollowedBtnOver = true" @mouseleave="isFollowedBtnOver = false"
+    @click="follow">
     <Icon
       :icon="isFollowed ? isFollowedBtnOver ? 'line-md:account-remove' : 'line-md:account-small' : 'line-md:account-add'"
       class="text-xl" />
-    {{ isFollowed ? isFollowedBtnOver ? ' Un Follow' : 'Followed' : 'Follow' }}
-    <div class="badge">
+    {{ buttonLabel }}
+    <div v-if="!hasCount" class="badge">
       {{ count }}
     </div>
   </button>
@@ -70,4 +82,3 @@ const follow = () => {
 <style lang="">
 
 </style>
-
