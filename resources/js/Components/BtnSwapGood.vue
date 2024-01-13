@@ -13,7 +13,7 @@ const props = defineProps({
 })
 </script>
 <template>
-  <BtnSwapBase onIcon="material-symbols:thumb-up-rounded" offIcon="material-symbols:thumb-up-outline-rounded"
+  <BtnSwapBase onIcon="mdi:thumb-up" offIcon="mdi:thumb-up-outline"
     :check="props.check">
     <template #after>
       <div v-if="showCount" class="badge badge-xs">{{ count }}</div>
