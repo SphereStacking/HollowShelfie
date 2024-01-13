@@ -30,7 +30,7 @@ defineProps({
       class="textarea textarea-bordered" placeholder="Bio"
       :value="modelValue" aria-describedby="input-help"
       @input="$emit('update:modelValue', $event.target.value)"></textarea>
-    <small :id="id+'help'" v-if="help!==null">{{ help }}</small>
+    <small v-if="help!==null" :id="id+'help'">{{ help }}</small>
   </div>
 </template>
 

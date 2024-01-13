@@ -1,40 +1,40 @@
 <script setup>
-import { nextTick, ref } from 'vue';
-import { Head, useForm } from '@inertiajs/vue3';
-import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue';
-import InputError from '@/Jetstream/InputError.vue';
-import InputLabel from '@/Jetstream/InputLabel.vue';
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
-import TextInput from '@/Jetstream/TextInput.vue';
+import { nextTick, ref } from 'vue'
+import { Head, useForm } from '@inertiajs/vue3'
+import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
+import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
+import InputError from '@/Jetstream/InputError.vue'
+import InputLabel from '@/Jetstream/InputLabel.vue'
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
+import TextInput from '@/Jetstream/TextInput.vue'
 
-const recovery = ref(false);
+const recovery = ref(false)
 
 const form = useForm({
   code: '',
   recovery_code: '',
-});
+})
 
-const recoveryCodeInput = ref(null);
-const codeInput = ref(null);
+const recoveryCodeInput = ref(null)
+const codeInput = ref(null)
 
 const toggleRecovery = async () => {
-  recovery.value ^= true;
+  recovery.value ^= true
 
-  await nextTick();
+  await nextTick()
 
   if (recovery.value) {
-    recoveryCodeInput.value.focus();
-    form.code = '';
+    recoveryCodeInput.value.focus()
+    form.code = ''
   } else {
-    codeInput.value.focus();
-    form.recovery_code = '';
+    codeInput.value.focus()
+    form.recovery_code = ''
   }
-};
+}
 
 const submit = () => {
-  form.post(route('two-factor.login'));
-};
+  form.post(route('two-factor.login'))
+}
 </script>
 
 <template>
@@ -66,8 +66,7 @@ const submit = () => {
           inputmode="numeric"
           class="mt-1 block w-full"
           autofocus
-          autocomplete="one-time-code"
-        />
+          autocomplete="one-time-code" />
         <InputError class="mt-2" :message="form.errors.code" />
       </div>
 
@@ -79,13 +78,12 @@ const submit = () => {
           v-model="form.recovery_code"
           type="text"
           class="mt-1 block w-full"
-          autocomplete="one-time-code"
-        />
+          autocomplete="one-time-code" />
         <InputError class="mt-2" :message="form.errors.recovery_code" />
       </div>
 
-      <div class="flex items-center justify-end mt-4">
-        <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer" @click.prevent="toggleRecovery">
+      <div class="mt-4 flex items-center justify-end">
+        <button type="button" class="cursor-pointer text-sm text-gray-600 underline hover:text-gray-900" @click.prevent="toggleRecovery">
           <template v-if="! recovery">
             Use a recovery code
           </template>

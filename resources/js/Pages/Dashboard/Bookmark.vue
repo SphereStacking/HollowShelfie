@@ -10,7 +10,7 @@ const order = ref('')
 
 const orderMaps = [
   { type: 'new', icon: 'mdi:new-box', label: 'new' },
-  { type: 'old', icon: 'mdi:alpha-o-box', label: 'old'  },
+  { type: 'old', icon: 'mdi:alpha-o-box', label: 'old' },
 ]
 </script>
 

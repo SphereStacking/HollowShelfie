@@ -1,6 +1,6 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
-import { usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   trendTags: {
@@ -40,15 +40,15 @@ const executeSearch = () => {
     route('event.search.index',
       { t: text.value, q: conditions.value, o: order.value.type, }
     )
-  );
-};
+  )
+}
 
 onMounted(() => {
-  const queryParams = usePage().props.ziggy.query;
+  const queryParams = usePage().props.ziggy.query
   if (queryParams.o) {
-    order.value = orderMaps.find(orderItem => orderItem.type === queryParams.o);
+    order.value = orderMaps.find(orderItem => orderItem.type === queryParams.o)
   }
-});
+})
 
 </script>
 
@@ -58,10 +58,11 @@ onMounted(() => {
       <h2 class="text-xl font-semibold leading-tight ">
       </h2>
     </template>
-    <div class="max-w-6xl flex flex-col gap-2 mx-auto">
-      <SearchForm v-model="conditions" v-model:text="text" :instanceTypes="instanceTypes" :statuses="statuses"
-        :categories="categories" :tags="trendTags" @executeSearch="executeSearch()">
-      </SearchForm>
+    <div class="mx-auto flex max-w-6xl flex-col gap-2">
+      <SearchForm
+        v-model="conditions" v-model:text="text" :instance-types="instanceTypes"
+        :statuses="statuses"
+        :categories="categories" :tags="trendTags" @execute-search="executeSearch()" />
     </div>
 
     <div class="mx-auto flex max-w-7xl flex-col gap-5">
@@ -70,19 +71,20 @@ onMounted(() => {
           {{ events.pagination.to }} / {{ events.pagination.total }}
         </div>
         <div class=" flex flex-row gap-2">
-          <BtnPagination :prevPageUrl="props.events.pagination.prev_page_url" :nextPageUrl="props.events.pagination.links"
+          <BtnPagination
+            :prev-page-url="props.events.pagination.prev_page_url" :next-page-url="props.events.pagination.links"
             :links="events.pagination.links" />
           <div class="dropdown dropdown-end ">
-            <div tabindex="0" class=" btn btn-sm  btn-neutral px-2 w-16 indicator">
-              <Icon icon="mdi:sort" class="text-xl transition-all"></Icon>
-              <div v-if="order.icon" class="indicator-item badge badge-info">
-                <Icon :icon="order.icon" class=" text-sm "></Icon>
+            <div tabindex="0" class=" btn indicator  btn-neutral btn-sm w-16 px-2">
+              <Icon icon="mdi:sort" class="text-xl transition-all" />
+              <div v-if="order.icon" class="badge indicator-item badge-info">
+                <Icon :icon="order.icon" class=" text-sm " />
               </div>
             </div>
-            <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-28">
+            <ul tabindex="0" class="menu dropdown-content z-[1] w-28 rounded-box bg-base-100 p-2 shadow">
               <li v-for="(orderItem, index) in orderMaps" :key="index" @click="order = orderItem; executeSearch()">
                 <div>
-                  <Icon :icon="orderItem.icon"></Icon>
+                  <Icon :icon="orderItem.icon" />
                   {{ orderItem.label }}
                 </div>
               </li>
@@ -90,15 +92,17 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-6 my-2">
-        <CardEvent v-for="(item, index) in props.events.data" :key="index" :event="item" scroll-region />
+      <div class="my-2 grid w-full grid-cols-2  gap-6 sm:grid-cols-3  md:grid-cols-4 xl:grid-cols-6">
+        <CardEvent
+          v-for="(item, index) in props.events.data" :key="index" :event="item"
+          scroll-region />
       </div>
       <div class="flex flex-row justify-center">
-        <BtnPagination :prevPageUrl="props.events.pagination.prev_page_url" :nextPageUrl="props.events.pagination.links"
+        <BtnPagination
+          :prev-page-url="props.events.pagination.prev_page_url" :next-page-url="props.events.pagination.links"
           :links="events.pagination.links" />
       </div>
     </div>
-
   </AppLayout>
 </template>
 

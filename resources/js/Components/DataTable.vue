@@ -1,13 +1,13 @@
 <script setup>
-import PerformerLink from './DataTableComponents/PerformerLink.vue';
-import PerformerImg from './DataTableComponents/PerformerImg.vue';
-import PerformerExtLinks from './DataTableComponents/PerformerExtLinks.vue';
-import Performers from './DataTableComponents/Performers.vue';
+import PerformerLink from './DataTableComponents/PerformerLink.vue'
+import PerformerImg from './DataTableComponents/PerformerImg.vue'
+import PerformerExtLinks from './DataTableComponents/PerformerExtLinks.vue'
+import Performers from './DataTableComponents/Performers.vue'
 
 const props = defineProps({
   columDefs: Array,
   rowData: Array
-});
+})
 
 // カラム定義と行データのデフォルト値（必要に応じて）
 // props.columDefs = ref([
@@ -28,19 +28,19 @@ const componentsMap = {
   Img: PerformerImg,
   ExtLinks: PerformerExtLinks,
   Performers: Performers
-};
+}
 
 const resolveComponent = (template) => {
   // コンポーネント名がマップに存在するか確認してから返す
-  return componentsMap[template] ? componentsMap[template] : null;
-};
+  return componentsMap[template] ? componentsMap[template] : null
+}
 // ネストされた値を取得する関数
 const getNestedValue = (obj, path, defaultValue = 'undefined') => {
-  return path.split('.').reduce((o, p) => (o ? o[p] : defaultValue), obj);
-};
+  return path.split('.').reduce((o, p) => o ? o[p] : defaultValue, obj)
+}
 </script>
 <template>
-  <div class="rounded-lg border-4 overflow-x-auto">
+  <div class="overflow-x-auto rounded-lg border-4">
     <table class="table table-md">
       <!-- head -->
       <thead>
@@ -54,7 +54,7 @@ const getNestedValue = (obj, path, defaultValue = 'undefined') => {
         <tr v-for="row in props.rowData || defaultRowData" :key="row.id">
           <td v-for="col in props.columDefs || defaultColumnDefs" :key="col.field">
             <!-- コンポーネントを動的にレンダリング -->
-            <component v-if="col.template" :is="resolveComponent(col.template)" :data="row" />
+            <component :is="resolveComponent(col.template)" v-if="col.template" :data="row" />
             <!-- テンプレートが指定されていない場合は通常のテキストを表示 -->
             <span v-else>
               {{ getNestedValue(row, col.field) }}

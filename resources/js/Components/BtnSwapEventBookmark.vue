@@ -1,5 +1,5 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   check: {
@@ -12,17 +12,16 @@ const props = defineProps({
   },
 })
 
-const removeUrl = route('event.unbookmark', props.eventId);
-const addUrl = route('event.bookmark', props.eventId);
+const removeUrl = route('event.unbookmark', props.eventId)
+const addUrl = route('event.bookmark', props.eventId)
 
-
-const isCheck = ref(props.check);
-const isLock=ref(false);
+const isCheck = ref(props.check)
+const isLock=ref(false)
 const toggle = () => {
   if (isLock.value) {
-    return;
+    return
   }
-  isLock.value = true;
+  isLock.value = true
   if (props.check) {
     router.visit(
       removeUrl,
@@ -30,18 +29,18 @@ const toggle = () => {
         method: 'delete',
         preserveScroll: true,
         onFinish: () => {
-          isLock.value = false;
+          isLock.value = false
         }
       }
     )
-  }else{
+  } else {
     router.visit(
       addUrl,
       {
         method: 'post',
         preserveScroll: true,
         onFinish: () => {
-          isLock.value = false;
+          isLock.value = false
         }
       }
     )
@@ -51,10 +50,8 @@ const toggle = () => {
 </script>
 <template>
   <BtnSwapBookmark
-    @click="toggle"
     :check="isCheck"
-    >
-  </BtnSwapBookmark>
+    @click="toggle" />
 </template>
 <style lang="">
 

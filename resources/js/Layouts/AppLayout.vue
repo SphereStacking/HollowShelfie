@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import ApplicationMark from '@/Jetstream/ApplicationMark.vue';
-import Banner from '@/Jetstream/Banner.vue';
-import Dropdown from '@/Jetstream/Dropdown.vue';
-import DropdownLink from '@/Jetstream/DropdownLink.vue';
-import NavLink from '@/Jetstream/NavLink.vue';
-import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
+import { ref } from 'vue'
+import { Head, Link, router, usePage } from '@inertiajs/vue3'
+import ApplicationMark from '@/Jetstream/ApplicationMark.vue'
+import Banner from '@/Jetstream/Banner.vue'
+import Dropdown from '@/Jetstream/Dropdown.vue'
+import DropdownLink from '@/Jetstream/DropdownLink.vue'
+import NavLink from '@/Jetstream/NavLink.vue'
+import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
 import { themeChange } from 'theme-change'
 
 const page = usePage()
@@ -14,42 +14,40 @@ console.log(page.props)
 
 defineProps({
   title: String,
-});
+})
 
-const showingNavigationDropdown = ref(false);
+const showingNavigationDropdown = ref(false)
 
 const switchToTeam = (team) => {
   router.put(route('current-team.update'), {
     team_id: team.id,
   }, {
     preserveState: false,
-  });
-};
+  })
+}
 
 const logout = () => {
-  router.post(route('logout'));
-};
+  router.post(route('logout'))
+}
 
 onMounted(() => {
   themeChange(false)
 })
 
 const themes = [
-  'mytheme', "dim", "nord", "light", "dark", "cupcake", "emerald",
-  "garden", "pastel",
-  "wireframe", "cmyk",
-  "lemonade", "night", "winter",
+  'mytheme', 'dim', 'nord', 'light', 'dark', 'cupcake', 'emerald',
+  'garden', 'pastel',
+  'wireframe', 'cmyk',
+  'lemonade', 'night', 'winter',
 ]
 
-
-const auth_user = ref(page.props.auth.user ?? null);
-const isTeam = ref(auth_user.value?.current_team != null);
-const isLogin = ref(auth_user.value !== null);
+const auth_user = ref(page.props.auth.user ?? null)
+const isTeam = ref(auth_user.value?.current_team != null)
+const isLogin = ref(auth_user.value !== null)
 </script>
 
 <template>
   <div>
-
     <Head :title="title" />
 
     <Banner />
@@ -57,13 +55,13 @@ const isLogin = ref(auth_user.value !== null);
     <div class="min-h-screen bg-base-100 pb-4">
       <nav class="bg-base-100 shadow  ">
         <!-- Primary Navigation Menu -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between h-10">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex h-10 justify-between">
             <div class="flex">
               <!-- Logo -->
-              <div class="shrink-0 flex items-center">
+              <div class="flex shrink-0 items-center">
                 <Link :href="route('home')">
-                <ApplicationMark class="block h-9 w-auto" />
+                  <ApplicationMark class="block h-9 w-auto" />
                 </Link>
               </div>
 
@@ -83,14 +81,14 @@ const isLogin = ref(auth_user.value !== null);
               </div>
             </div>
 
-            <div class="hidden sm:flex sm:items-center sm:ml-6 sm:gap-2">
+            <div class="hidden sm:ml-6 sm:flex sm:items-center sm:gap-2">
               <a class="btn btn-sm" :href="route('event.search.index')">
-                <Icon icon="mdi:magnify" class="text-sm mx-2"></Icon>
+                <Icon icon="mdi:magnify" class="mx-2 text-sm" />
               </a>
               <!-- TODO: テーマ変更 位置はあとからfix -->
               <div class="dropdown dropdown-bottom">
-                <label tabindex="0" class="btn m-1 btn-sm">theme</label>
-                <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <label tabindex="0" class="btn btn-sm m-1">theme</label>
+                <ul tabindex="0" class="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
                   <li v-for="(theme, index) in themes" :key="index">
                     <a herf="#" :data-set-theme="theme" data-act-class="ACTIVECLASS">{{ theme }}</a>
                   </li>
@@ -98,10 +96,10 @@ const isLogin = ref(auth_user.value !== null);
               </div>
               <template v-if="!isLogin">
                 <Link :href="route('login')" class="btn  btn-sm">
-                ログイン
+                  ログイン
                 </Link>
                 <Link :href="route('register')" class="btn  btn-sm">
-                登録
+                  登録
                 </Link>
               </template>
 
@@ -112,9 +110,11 @@ const isLogin = ref(auth_user.value !== null);
                     <span class="inline-flex rounded-md">
                       <button type="button" class="btn btn-sm">
                         {{ auth_user.current_team ? auth_user.current_team.name : 'チームを作成してみよう！' }}
-                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        <svg
+                          class="-mr-0.5 ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                           viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round"
+                          <path
+                            stroke-linecap="round" stroke-linejoin="round"
                             d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                         </svg>
                       </button>
@@ -138,7 +138,7 @@ const isLogin = ref(auth_user.value !== null);
 
                       <!-- Team Switcher -->
                       <template v-if="auth_user.all_teams.length > 1">
-                        <div class="border-t border-gray-200" />
+                        <div class="border-t border-gray-200"></div>
 
                         <div class="block px-4 py-2 text-xs text-gray-400">
                           Switch Teams
@@ -148,10 +148,13 @@ const isLogin = ref(auth_user.value !== null);
                           <form @submit.prevent="switchToTeam(team)">
                             <DropdownLink as="button">
                               <div class="flex items-center">
-                                <svg v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
-                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                <svg
+                                  v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
+                                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                  stroke-width="1.5"
                                   stroke="currentColor">
-                                  <path stroke-linecap="round" stroke-linejoin="round"
+                                  <path
+                                    stroke-linecap="round" stroke-linejoin="round"
                                     d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
 
@@ -171,8 +174,9 @@ const isLogin = ref(auth_user.value !== null);
                 <Dropdown align="right" width="48">
                   <template #trigger>
                     <button
-                      class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                      <img class="h-8 w-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                      class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
+                      <img
+                        class="h-8 w-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
                         :alt="auth_user.name">
                     </button>
                   </template>
@@ -191,7 +195,7 @@ const isLogin = ref(auth_user.value !== null);
                       API Tokens
                     </DropdownLink>
 
-                    <div class="border-t border-gray-200" />
+                    <div class="border-t border-gray-200"></div>
 
                     <!-- Authentication -->
                     <form @submit.prevent="logout">
@@ -202,19 +206,24 @@ const isLogin = ref(auth_user.value !== null);
                   </template>
                 </Dropdown>
               </div>
-
             </div>
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
               <button
-                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
                 @click="showingNavigationDropdown = !showingNavigationDropdown">
-                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path :class="{ 'hidden': showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }"
-                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                  <path :class="{ 'hidden': !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
-                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  class="h-6 w-6" stroke="currentColor" fill="none"
+                  viewBox="0 0 24 24">
+                  <path
+                    :class="{ 'hidden': showingNavigationDropdown, 'inline-flex': !showingNavigationDropdown }"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    :class="{ 'hidden': !showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -223,26 +232,27 @@ const isLogin = ref(auth_user.value !== null);
 
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
-          <div class="pt-2 pb-3 space-y-1">
+          <div class="space-y-1 pb-3 pt-2">
             <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
               Dashboard
             </ResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->
-          <div class="pt-4 pb-1 border-t border-gray-200">
+          <div class="border-t border-gray-200 pb-1 pt-4">
             <div class="flex items-center px-4">
               <template v-if="isLogin">
-                <div class="shrink-0 mr-3">
-                  <img class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                <div class="mr-3 shrink-0">
+                  <img
+                    class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
                     :alt="auth_user.name">
                 </div>
 
                 <div>
-                  <div class="font-medium text-base text-gray-800">
+                  <div class="text-base font-medium text-gray-800">
                     {{ auth_user.name }}
                   </div>
-                  <div class="font-medium text-sm text-gray-500">
+                  <div class="text-sm font-medium text-gray-500">
                     {{ auth_user.email }}
                   </div>
                 </div>
@@ -254,7 +264,8 @@ const isLogin = ref(auth_user.value !== null);
                 Profile
               </ResponsiveNavLink>
 
-              <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"
+              <ResponsiveNavLink
+                v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"
                 :active="route().current('api-tokens.index')">
                 API Tokens
               </ResponsiveNavLink>
@@ -268,26 +279,28 @@ const isLogin = ref(auth_user.value !== null);
 
               <!-- Team Management -->
               <template v-if="isLogin">
-                <div class="border-t border-gray-200" />
+                <div class="border-t border-gray-200"></div>
 
                 <div class="block px-4 py-2 text-xs text-gray-400">
                   Manage Team
                 </div>
 
                 <!-- Team Settings -->
-                <ResponsiveNavLink v-if="isTeam" :href="route('teams.show', auth_user.current_team)"
+                <ResponsiveNavLink
+                  v-if="isTeam" :href="route('teams.show', auth_user.current_team)"
                   :active="route().current('teams.show')">
                   Team Settings
                 </ResponsiveNavLink>
 
-                <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')"
+                <ResponsiveNavLink
+                  v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')"
                   :active="route().current('teams.create')">
                   Create New Team
                 </ResponsiveNavLink>
 
                 <!-- Team Switcher -->
                 <template v-if="auth_user.all_teams.length > 1">
-                  <div class="border-t border-gray-200" />
+                  <div class="border-t border-gray-200"></div>
 
                   <div class="block px-4 py-2 text-xs text-gray-400">
                     Switch Teams
@@ -297,10 +310,13 @@ const isLogin = ref(auth_user.value !== null);
                     <form @submit.prevent="switchToTeam(team)">
                       <ResponsiveNavLink as="button">
                         <div class="flex items-center">
-                          <svg v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                          <svg
+                            v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-green-400"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke-width="1.5"
                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
+                            <path
+                              stroke-linecap="round" stroke-linejoin="round"
                               d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           <div>{{ team.name }}</div>
@@ -317,13 +333,13 @@ const isLogin = ref(auth_user.value !== null);
 
       <!-- Page Heading -->
       <header v-if="$slots.header" class="shadow">
-        <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
-          <slot name="header" />
+        <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+          <slot name="header"></slot>
         </div>
       </header>
       <!-- Page Content -->
-      <main class="px-4 sm:px-6 lg:px-8 mt-4">
-        <slot />
+      <main class="mt-4 px-4 sm:px-6 lg:px-8">
+        <slot></slot>
       </main>
     </div>
     <Footer />

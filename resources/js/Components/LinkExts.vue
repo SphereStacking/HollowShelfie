@@ -1,13 +1,13 @@
 <script setup>
 defineProps({
   links: String
-});
+})
 </script>
 
 <template>
   <div>
-    <a class="link flex felx-row items-center gap-0.5" :href="item.link" v-for="item in links">
-      <Icon icon="ph:link-bold"></Icon>
+    <a v-for="item in links" class="felx-row link flex items-center gap-0.5" :href="item.link">
+      <Icon icon="ph:link-bold" />
       {{ item.label }}
     </a>
   </div>

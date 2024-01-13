@@ -25,7 +25,7 @@ const props = defineProps({
 const create = (type) => {
   let createurl = createCalendarEvent(type, props.title, props.dates, props.details, props.location)
   // 新しいタブで開く
-  window.open(createurl, '_blank');
+  window.open(createurl, '_blank')
 }
 
 </script>
@@ -34,7 +34,7 @@ const create = (type) => {
     <label tabindex="0">
       <slot></slot>
     </label>
-    <ul tabindex="0" class="menu dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box ">
+    <ul tabindex="0" class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-100 p-2 shadow ">
       <li>
         <a @click="create('google')">
           <Icon icon="bxl:google" class="text-xl" />

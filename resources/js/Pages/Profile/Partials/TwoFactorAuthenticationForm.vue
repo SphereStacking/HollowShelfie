@@ -1,44 +1,44 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
-import { router, useForm, usePage } from '@inertiajs/vue3';
-import ActionSection from '@/Jetstream/ActionSection.vue';
-import ConfirmsPassword from '@/Jetstream/ConfirmsPassword.vue';
-import DangerButton from '@/Jetstream/DangerButton.vue';
-import InputError from '@/Jetstream/InputError.vue';
-import InputLabel from '@/Jetstream/InputLabel.vue';
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue';
-import SecondaryButton from '@/Jetstream/SecondaryButton.vue';
-import TextInput from '@/Jetstream/TextInput.vue';
+import { ref, computed, watch } from 'vue'
+import { router, useForm, usePage } from '@inertiajs/vue3'
+import ActionSection from '@/Jetstream/ActionSection.vue'
+import ConfirmsPassword from '@/Jetstream/ConfirmsPassword.vue'
+import DangerButton from '@/Jetstream/DangerButton.vue'
+import InputError from '@/Jetstream/InputError.vue'
+import InputLabel from '@/Jetstream/InputLabel.vue'
+import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
+import SecondaryButton from '@/Jetstream/SecondaryButton.vue'
+import TextInput from '@/Jetstream/TextInput.vue'
 
 const props = defineProps({
   requiresConfirmation: Boolean,
-});
+})
 
-const page = usePage();
-const enabling = ref(false);
-const confirming = ref(false);
-const disabling = ref(false);
-const qrCode = ref(null);
-const setupKey = ref(null);
-const recoveryCodes = ref([]);
+const page = usePage()
+const enabling = ref(false)
+const confirming = ref(false)
+const disabling = ref(false)
+const qrCode = ref(null)
+const setupKey = ref(null)
+const recoveryCodes = ref([])
 
 const confirmationForm = useForm({
   code: '',
-});
+})
 
 const twoFactorEnabled = computed(
   () => !enabling.value && page.props.auth.user?.two_factor_enabled,
-);
+)
 
 watch(twoFactorEnabled, () => {
   if (!twoFactorEnabled.value) {
-    confirmationForm.reset();
-    confirmationForm.clearErrors();
+    confirmationForm.reset()
+    confirmationForm.clearErrors()
   }
-});
+})
 
 const enableTwoFactorAuthentication = () => {
-  enabling.value = true;
+  enabling.value = true
 
   router.post(route('two-factor.enable'), {}, {
     preserveScroll: true,
@@ -48,60 +48,60 @@ const enableTwoFactorAuthentication = () => {
       showRecoveryCodes(),
     ]),
     onFinish: () => {
-      enabling.value = false;
-      confirming.value = props.requiresConfirmation;
+      enabling.value = false
+      confirming.value = props.requiresConfirmation
     },
-  });
-};
+  })
+}
 
 const showQrCode = () => {
   return axios.get(route('two-factor.qr-code')).then(response => {
-    qrCode.value = response.data.svg;
-  });
-};
+    qrCode.value = response.data.svg
+  })
+}
 
 const showSetupKey = () => {
   return axios.get(route('two-factor.secret-key')).then(response => {
-    setupKey.value = response.data.secretKey;
-  });
+    setupKey.value = response.data.secretKey
+  })
 }
 
 const showRecoveryCodes = () => {
   return axios.get(route('two-factor.recovery-codes')).then(response => {
-    recoveryCodes.value = response.data;
-  });
-};
+    recoveryCodes.value = response.data
+  })
+}
 
 const confirmTwoFactorAuthentication = () => {
   confirmationForm.post(route('two-factor.confirm'), {
-    errorBag: "confirmTwoFactorAuthentication",
+    errorBag: 'confirmTwoFactorAuthentication',
     preserveScroll: true,
     preserveState: true,
     onSuccess: () => {
-      confirming.value = false;
-      qrCode.value = null;
-      setupKey.value = null;
+      confirming.value = false
+      qrCode.value = null
+      setupKey.value = null
     },
-  });
-};
+  })
+}
 
 const regenerateRecoveryCodes = () => {
   axios
     .post(route('two-factor.recovery-codes'))
-    .then(() => showRecoveryCodes());
-};
+    .then(() => showRecoveryCodes())
+}
 
 const disableTwoFactorAuthentication = () => {
-  disabling.value = true;
+  disabling.value = true
 
   router.delete(route('two-factor.disable'), {
     preserveScroll: true,
     onSuccess: () => {
-      disabling.value = false;
-      confirming.value = false;
+      disabling.value = false
+      confirming.value = false
     },
-  });
-};
+  })
+}
 </script>
 
 <template>
@@ -148,7 +148,7 @@ const disableTwoFactorAuthentication = () => {
             </p>
           </div>
 
-          <div class="mt-4 p-2 inline-block bg-base-100" v-html="qrCode" />
+          <div class="mt-4 inline-block bg-base-100 p-2" v-html="qrCode"></div>
 
           <div v-if="setupKey" class="mt-4 max-w-xl text-sm ">
             <p class="font-semibold">
@@ -159,8 +159,11 @@ const disableTwoFactorAuthentication = () => {
           <div v-if="confirming" class="mt-4">
             <InputLabel for="code" value="Code" />
 
-            <TextInput id="code" v-model="confirmationForm.code" type="text" name="code" class="block mt-1 w-1/2"
-              inputmode="numeric" autofocus autocomplete="one-time-code" @keyup.enter="confirmTwoFactorAuthentication" />
+            <TextInput
+              id="code" v-model="confirmationForm.code" type="text"
+              name="code" class="mt-1 block w-1/2"
+              inputmode="numeric" autofocus autocomplete="one-time-code"
+              @keyup.enter="confirmTwoFactorAuthentication" />
 
             <InputError :message="confirmationForm.errors.code" class="mt-2" />
           </div>
@@ -174,7 +177,7 @@ const disableTwoFactorAuthentication = () => {
             </p>
           </div>
 
-          <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 rounded-lg">
+          <div class="mt-4 grid max-w-xl gap-1 rounded-lg bg-gray-100 p-4 font-mono text-sm">
             <div v-for="code in recoveryCodes" :key="code">
               {{ code }}
             </div>
@@ -193,7 +196,9 @@ const disableTwoFactorAuthentication = () => {
 
         <div v-else>
           <ConfirmsPassword @confirmed="confirmTwoFactorAuthentication">
-            <PrimaryButton v-if="confirming" type="button" class="mr-3" :class="{ 'opacity-25': enabling }"
+            <PrimaryButton
+              v-if="confirming" type="button" class="mr-3"
+              :class="{ 'opacity-25': enabling }"
               :disabled="enabling">
               Confirm
             </PrimaryButton>

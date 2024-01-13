@@ -6,7 +6,7 @@ defineEmits(
 )
 </script>
 <template>
-  <BtnBase class="btn btn-warning btn-outline" @click="$emit('click')">
+  <BtnBase class="btn btn-outline btn-warning" @click="$emit('click')">
     <slot></slot>
   </BtnBase>
 </template>

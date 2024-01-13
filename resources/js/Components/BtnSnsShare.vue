@@ -40,7 +40,7 @@ const share = (platform) => {
 <template>
   <ul>
     <li>
-      <a @click="share('twitter')" class="btn btn-xs">
+      <a class="btn btn-xs" @click="share('twitter')">
         <Icon icon="ri:twitter-x-fill" class="text-xl" />
       </a>
     </li>
