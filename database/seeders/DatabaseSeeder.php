@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             InitBadgeSeeder::class,
         ]);
 
-        User::factory(10)->create();
+        User::factory(100)->create();
         Event::factory(100)->create();
         $this->call([
             EventRelationSeeder::class,
@@ -44,5 +44,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Artisan::call('scout:import', ['model' => 'App\\Models\\Event']);
+        Artisan::call('scout:import', ['model' => 'App\\Models\\User']);
+        Artisan::call('scout:import', ['model' => 'App\\Models\\Team']);
     }
 }
