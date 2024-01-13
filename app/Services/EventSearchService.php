@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Event;
 use App\Enums\EventStatus;
 use App\Params\EventSearchParams;
+use Illuminate\Support\Facades\Log;
 
 /**
  * イベント検索サービス
@@ -21,6 +22,8 @@ class EventSearchService
         'status' => StatusQueryParam::class,
         'tag' => TagQueryParam::class,
         'category' => CategoryQueryParam::class,
+        'isbookmark' => BookmarkQueryParam::class,
+        'isgood' => GoodQueryParam::class,
     ];
 
     /**
@@ -224,3 +227,33 @@ class CategoryQueryParam extends QueryParam implements IQueryParam
         return $value;
     }
 }
+
+/**
+ * ブックマーククエリパラメータクラス
+ */
+class BookmarkQueryParam extends QueryParam implements IQueryParam
+{
+    protected $relation = 'bookmark_users';
+    protected $column = 'user_id';
+
+    public function formatValue($value)
+    {
+        return auth()->user()->id;
+    }
+}
+
+
+/**
+ * グッドクエリパラメータクラス
+ */
+class GoodQueryParam extends QueryParam implements IQueryParam
+{
+    protected $relation = 'good_users';
+    protected $column = 'user_id';
+
+    public function formatValue($value)
+    {
+        return auth()->user()->id;
+    }
+}
+
