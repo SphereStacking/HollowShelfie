@@ -67,7 +67,7 @@ const navigateToType = () => {
       </div>
     </template>
     <template v-else>
-      <IconSerchItemType v-if="isIcon" :type="type" class="text-lg" />
+      <IconTypeMapper v-if="isIcon" :type="type" class="text-lg" />
       <Icon
         v-if="isClose" icon="line-md:close-small" class="text-lg"
         @click="removeCondition" />
