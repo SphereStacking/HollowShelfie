@@ -5,10 +5,12 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\TeamLogoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventGoodController;
 use App\Http\Controllers\EventBookmarkController;
 
@@ -50,7 +52,6 @@ Route::get('/phpinfo', function () {
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/home', [HomeController::class, 'index']);
 Route::get('/welcome', [WelcomeController::class, 'welcome'])
     ->name('welcome');
 
@@ -60,7 +61,7 @@ Route::get('/credits', function () {
 
 
 Route::get('/user/{user:alias_name}', [ProfileController::class, 'user'])
-->name('user.profile.show');
+    ->name('user.profile.show');
 
 Route::get('/team/{team:alias_name}', [ProfileController::class, 'team'])
     ->name('team.profile.show');
@@ -77,10 +78,20 @@ Route::get('/user/search', [SearchController::class, 'user'])
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/user/{user:alias_name}/bookmark', [EventBookmarkController::class, 'bookmark'])->name('dashboard.bookmark');
+    Route::get('/user/{user:alias_name}/good', [EventGoodController::class, 'good'])->name('user.good');
+    Route::get('/user/{user:alias_name}/follow', [FollowController::class, 'follow'])->name('user.follow');
+    Route::get('/user/{user:alias_name}/follower', [FollowController::class, 'follower'])->name('user.follower');
+
+
+
     Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
 
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+    Route::get('/event/recruiting', [EventController::class, 'recruiting'])->name('event.recruiting');
+
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
     Route::get('/event/{event}/show', [EventController::class, 'show'])->name('event.show');
     // Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit'); // Edit form
