@@ -1,16 +1,11 @@
 <script setup>
-import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
-import { Link } from '@inertiajs/vue3';
-import 'vue3-carousel/dist/carousel.css'
 
+import { Link } from '@inertiajs/vue3'
+import 'vue3-carousel/dist/carousel.css'
 
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
 const props = defineProps({
-  trendEvents: {
-    type: String,
-    required: true
-  },
   trendCategories: {
     type: Array,
     required: true
@@ -43,19 +38,15 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  myBookmarkEvents: {
-    type: Array,
-    required: true
-  },
 })
 
 const getButtonText = (event) => {
   return `${event.name} (${event.count})`
 }
-const querySetter = (value,type) => {
+const querySetter = (value, type) => {
   return [
     { include: 'and', type: type, value: value.name },
-  ];
+  ]
 }
 const eventItems = ref([])
 eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'mdi:door-open' })
@@ -88,43 +79,49 @@ const slides = [
     </template>
 
     <div class="mx-auto mt-5 flex max-w-7xl flex-col gap-10">
-      <CarouselBanner :slides="slides"></CarouselBanner>
+      <CarouselBanner :slides="slides" />
 
-      <div class="flex flex-wrap gap-2 justify-center">
-        <div class="divider divider-neutral divider-start mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper type="category"></IconTypeMapper>
+      <div class="flex flex-wrap justify-center gap-2">
+        <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
+          <IconTypeMapper type="category" />
           Category
         </div>
-        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="querySetter"
-          v-for="(category) in trendCategories" :value="category" type="category" isNavigate :key="category.id">
-        </BtnEventSerchItem>
+        <BtnEventSerchItem
+          v-for="(category) in trendCategories" :key="category.id"
+          :button-text-setter="getButtonText" :query-setter="querySetter" :value="category"
+          type="category" is-navigate />
       </div>
-      <div class="flex flex-wrap gap-2 justify-center">
-        <div class="divider divider-neutral divider-start mt-5 w-full text-3xl font-bold  ">
-          <IconTypeMapper type="tag"></IconTypeMapper>
+      <div class="flex flex-wrap justify-center gap-2">
+        <div class="divider divider-start  mt-5 w-full text-3xl font-bold  ">
+          <IconTypeMapper type="tag" />
           tag
         </div>
 
-        <BtnEventSerchItem :buttonTextSetter="getButtonText" :querySetter="querySetter" v-for="(tag) in trendTags"
-          :value="tag" type="tag" isNavigate :key="tag.id"></BtnEventSerchItem>
+        <BtnEventSerchItem
+          v-for="(tag) in trendTags" :key="tag.id" :button-text-setter="getButtonText"
+          :query-setter="querySetter" :value="tag" type="tag"
+          is-navigate />
       </div>
 
-
-      <div class="flex flex-col gap-5" v-for="items in eventItems">
-        <div class="divider divider-neutral divider-start mt-5 w-full text-3xl font-bold">
-          <Icon :icon="items.icon"></Icon>
-          <h4 class="font-bold">{{ items.title }}</h4>
+      <div v-for="(items, index) in eventItems" :key="index" class="flex flex-col gap-5">
+        <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
+          <Icon :icon="items.icon" />
+          <h4 class="font-bold">
+            {{ items.title }}
+          </h4>
         </div>
 
-        <CarouselEventHero :events="items.events"></CarouselEventHero>
+        <CarouselEventHero :events="items.events" />
 
-        <div class="w-full grid xl:grid-cols-6 md:grid-cols-4  sm:grid-cols-3 grid-cols-2  gap-10 ">
-          <CardEvent v-for="(event, index) in items.events" :key="index" :event="event" class=" min-h-48 " />
+        <div class="grid w-full grid-cols-2 gap-10  sm:grid-cols-3 md:grid-cols-4  xl:grid-cols-6 ">
+          <CardEvent
+            v-for="(event, index) in items.events" :key="index" :event="event"
+            class=" min-h-48 " />
         </div>
-        <Link class=" btn btn-neutral w-full mt-10" :href="items.url">show more!</Link>
+        <Link class=" btn btn-neutral mt-10 w-full" :href="items.url">
+          show more!
+        </Link>
       </div>
-
-
     </div>
   </AppLayout>
 </template>

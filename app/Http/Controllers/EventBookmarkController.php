@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Services\EventBookmarkService;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Resources\EventListJsonResource;
 
 class EventBookmarkController extends Controller
 {
@@ -17,6 +19,18 @@ class EventBookmarkController extends Controller
     public function __construct(EventBookmarkService $eventBookmarkService)
     {
         $this->eventBookmarkService = $eventBookmarkService;
+    }
+
+    public function bookmark()
+    {
+        return Inertia::render(
+            'Dashboard/Bookmark',
+            [
+                'events' => new EventListJsonResource(
+                    $this->eventBookmarkService->getBookmarkedEventsByUser(auth()->user())
+                ),
+            ]
+        );
     }
 
     public function store(Event $event)

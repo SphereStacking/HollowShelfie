@@ -18,35 +18,11 @@ const props = defineProps({
 
 const dataile = props.profile.dataile
 const authUser = ref({})
-const isFollowedBtnOver = ref()
-
 authUser.value = props.profile.auth_user
 
 watch(authUser, (newVal, oldVal) => {
   console.log('authUser has changed', newVal, oldVal)
 })
-
-const follow = () => {
-  if (!authUser.value.is_followed) {
-    router.visit(route('users.follow', dataile.id), {
-      method: 'post',
-      preserveState: false,
-      preserveScroll: true,
-      onSuccess: (result) => {
-        console.log(result)
-      }
-    })
-  } else {
-    router.visit(route('users.unfollow', dataile.id), {
-      method: 'delete',
-      preserveState: false,
-      preserveScroll: true,
-      onSuccess: (result) => {
-        console.log(result)
-      }
-    })
-  }
-}
 
 const isMounted = ref(false)
 onBeforeMount(() => {
@@ -97,15 +73,12 @@ const querySetter = (value,type) => {
                     <button class="btn btn-circle btn-sm btn-primary">
                       <Icon icon="line-md:bell" class="text-xl"></Icon>
                     </button>
-                    <button
-                      :class="authUser.is_followed ? 'btn  btn-sm btn-success hover:btn-error' : 'btn  btn-sm btn-outline hover:btn-success'"
-                      @mouseover="isFollowedBtnOver = true" @mouseleave="isFollowedBtnOver = false" @click="follow">
-                      <Icon
-                        :icon="authUser.is_followed ? isFollowedBtnOver ? 'line-md:account-remove' : 'line-md:account-small' : 'line-md:account-add'"
-                        class="text-xl"></Icon>
-                      {{ authUser.is_followed ? isFollowedBtnOver ? ' Un Follow' : 'Followed' : 'Follow' }}
-                      <div class="badge">{{ dataile.followers_count }}</div>
-                    </button>
+                    <BtnSwapFollowing
+                      :follow-route="'teams.follow'"
+                      :unfollow-route="'teams.unfollow'"
+                      :screen-name="dataile.screen_name"
+                      :count="dataile.followers_count"
+                      :is-followed="authUser.is_followed" />
                     <button class="btn btn-neutral btn-sm flex flex-row ">
                       <Icon icon="line-md:email" class="text-xl"></Icon>
                       Connect

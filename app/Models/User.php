@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Badge;
 use App\Models\SocialAccount;
+use App\Traits\HasFollowable;
 use Laravel\Scout\Searchable;
 use Laravel\Jetstream\HasTeams;
 use App\Traits\UserProfilePhoto;
@@ -29,6 +30,7 @@ class User extends Authenticatable
     use UserRelations;
     use Searchable;
     use HasCustomIdentifiable;
+    use HasFollowable;
 
     /**
      * The attributes that are mass assignable.
@@ -66,7 +68,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url', 'links', 'profile_url',
+        'profile_photo_url', 'links', 'profile_url','screen_name'
     ];
 
     /**

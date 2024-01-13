@@ -71,59 +71,6 @@ trait UserRelations
     }
 
     /**
-     * フォロー機能 Userがフォローしている人
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function follows()
-    {
-        return $this->morphToMany(User::class, 'followable', 'follows', 'user_id', 'followable_id');
-    }
-
-    /**
-     * フォロー機能 Userをfollowしている人
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function followers()
-    {
-        return $this->morphToMany(User::class, 'followable', 'follows')->withTimestamps();
-    }
-    /**
-     * ユーザーのフォロワー数を取得する
-     *
-     * @return int
-     */
-    public function followersCount()
-    {
-        return $this->followers()->count();
-    }
-
-    /**
-     * このユーザーがフォローしている人数を取得する
-     *
-     * @return int
-     */
-    public function followingsCount()
-    {
-        return $this->followings()->count();
-    }
-
-    /**
-     * 認証してるユーザーがフォローしているがどうか
-     * 認証されていなければ falseを返す
-     *
-     * @return bool
-     */
-    public function isFollowed()
-    {
-        if (!auth()->check()) {
-            return false;
-        }
-        return $this->followers()->where('user_id', auth()->id())->exists();
-    }
-
-    /**
      * バッジリレーション
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany

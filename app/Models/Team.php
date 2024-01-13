@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\TeamLogo;
+use App\Traits\HasFollowable;
 use Laravel\Scout\Searchable;
 use App\Models\Traits\TeamRelations;
 use App\Traits\HasCustomIdentifiable;
@@ -20,6 +21,7 @@ class Team extends JetstreamTeam
     use TeamLogo;
     use Searchable;
     use HasCustomIdentifiable;
+    use HasFollowable;
 
     /**
      * The attributes that should be cast.
@@ -57,18 +59,12 @@ class Team extends JetstreamTeam
      * @var array<int, string>
      */
     protected $appends = [
-        'team_logo_url', 'links', 'profile_url'
+        'team_logo_url', 'links', 'profile_url','screen_name'
     ];
 
     public function getProfileUrlAttribute()
     {
         return route('team.profile.show', $this->customIdentifiable->alias_name);
-    }
-
-    // チームのフォロワー数を取得する
-    public function followersCount()
-    {
-        return $this->followers()->count();
     }
 
     /**
