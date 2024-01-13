@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Event;
 use App\Services\EventGoodService;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\EventListJsonResource;
 
 /**
  * イベントに対する「いいね」を管理するコントローラー
@@ -17,6 +19,18 @@ class EventGoodController extends Controller
     public function __construct(EventGoodService $eventGoodService)
     {
         $this->eventGoodService = $eventGoodService;
+    }
+
+    public function good()
+    {
+        return Inertia::render(
+            'Dashboard/Good',
+            [
+                'events' => new EventListJsonResource(
+                    $this->eventGoodService->getGoodEventsByUser(auth()->user())
+                ),
+            ]
+        );
     }
 
     /**
