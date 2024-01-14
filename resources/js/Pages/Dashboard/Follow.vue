@@ -55,7 +55,6 @@ onMounted(() => {
       </h2>
     </template>
     <div class="flex w-1/2 flex-col gap-2">
-      <!-- {{ allFollows }} -->
       <div v-for="follow in allFollows" :key="follow.id">
         <div class="flex flex-row items-center gap-2">
           <div class="avatar">
@@ -73,11 +72,10 @@ onMounted(() => {
                   @{{ follow.followable.screen_name }}
                 </div>
               </div>
-
               <BtnSwapFollowing
-                :follow-route="'users.follow'"
-                :unfollow-route="'users.unfollow'"
-                :screen-name="follow.followable.screen_name"
+                :follow-route="route('follow')"
+                :unfollow-route="route('unfollow')"
+                :payload="{ id: follow.followable_id, type: follow.followable_type}"
                 :is-followed="follow.followable.auth_user.is_followed" />
             </div>
             <div>{{ follow.followable.bio }}</div>

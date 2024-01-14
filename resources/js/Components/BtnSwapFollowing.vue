@@ -2,15 +2,6 @@
 import axios from 'axios'
 
 const props = defineProps({
-  screenName: {
-    type: String,
-    required: true,
-    default: ''
-  },
-  count: {
-    type: Number,
-    default: null
-  },
   followRoute: {
     type: String,
     required: true,
@@ -21,6 +12,15 @@ const props = defineProps({
     required: true,
     default: ''
   },
+  payload: {
+    type: Object,
+    required: true,
+    default: () => ({})
+  },
+  count: {
+    type: Number,
+    default: null
+  },
   isFollowed: {
     type: Boolean,
     required: true
@@ -28,8 +28,8 @@ const props = defineProps({
 })
 const isFollowed = ref(props.isFollowed)
 const count = ref(props.count)
-const followUrl = route(props.followRoute, props.screenName)
-const unfollowUrl = route(props.unfollowRoute, props.screenName)
+const followUrl = props.followRoute
+const unfollowUrl = props.unfollowRoute
 const hasCount = computed(() => props.count == null)
 const isFollowedBtnOver = ref()
 
@@ -41,6 +41,7 @@ const follow = async () => {
     const response = await axios({
       method: method,
       url: url,
+      data: props.payload
     })
 
     if (response.status >= 200 && response.status < 300) {
