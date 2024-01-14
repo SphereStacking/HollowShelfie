@@ -21,12 +21,22 @@ class FollowController extends Controller
 
     protected $userService;
 
+    /**
+     * FollowControllerのコンストラクタ
+     *
+     * @param UserService $userService
+     */
     public function __construct(
         UserService $userService
     ) {
         $this->userService = $userService;
     }
 
+    /**
+     * フォロー中のユーザーを取得します。
+     *
+     * @return \Inertia\Response
+     */
     public function following()
     {
         return Inertia::render(
@@ -39,6 +49,11 @@ class FollowController extends Controller
         );
     }
 
+    /**
+     * フォロワーを取得します。
+     *
+     * @return \Inertia\Response
+     */
     public function follower()
     {
         return Inertia::render(
@@ -52,36 +67,23 @@ class FollowController extends Controller
     }
 
     /**
-     * レスポンスを生成します。
+     * 指定されたフォローリクエストに基づいてユーザーをフォローします。
      *
-     * @param  string  $message
+     * @param  FollowRequest  $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    private function generateResponse($message,$target)
-    {
-        if (request()->wantsJson()) {
-            // Ajaxリクエストの場合はJSONレスポンスを返す
-            return response()->json([
-                'status' => 'success',
-                'message' => $message,
-                'is_followed' => $target->isFollowedByCurrentUser(),
-                'followers_count' => $target->followersCount()
-            ]);
-        } else {
-            // それ以外の場合はInertiaレスポンス（またはリダイレクト）を返す
-            return Redirect::back()->with([
-                'status' => 'success',
-                'message' => $message
-            ]);
-        }
-    }
-
     public function follow(FollowRequest $request)
     {
         $result = $this->userService->followByFollowable(auth()->user(),$request->type,$request->id);
         return $this->generateResponse($result['message'] , $result['followed']);
     }
 
+    /**
+     * 指定されたフォローリクエストに基づいてユーザーのフォローを解除します。
+     *
+     * @param  FollowRequest  $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function unfollow(FollowRequest $request)
     {
         $result = $this->userService->unfollowByFollowable(auth()->user(), $request->type,$request->id);
@@ -136,6 +138,32 @@ class FollowController extends Controller
         $result =$this->userService->unfollow(auth()->user(),$team);
 
         return $this->generateResponse($result['message'] , $result['unfollowed']);
+    }
+
+
+    /**
+     * レスポンスを生成します。
+     *
+     * @param  string  $message
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    private function generateResponse($message,$target)
+    {
+        if (request()->wantsJson()) {
+            // Ajaxリクエストの場合はJSONレスポンスを返す
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'is_followed' => $target->isFollowedByCurrentUser(),
+                'followers_count' => $target->followersCount()
+            ]);
+        } else {
+            // それ以外の場合はInertiaレスポンス（またはリダイレクト）を返す
+            return Redirect::back()->with([
+                'status' => 'success',
+                'message' => $message
+            ]);
+        }
     }
 }
 
