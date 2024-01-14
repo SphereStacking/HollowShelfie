@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\FollowRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\FollowPaginatedResource;
 use App\Http\Resources\FollowablePaginatedResource;
@@ -25,7 +26,8 @@ class FollowController extends Controller
     ) {
         $this->userService = $userService;
     }
-    public function follow()
+
+    public function following()
     {
         return Inertia::render(
             'Dashboard/Follow',
@@ -74,6 +76,18 @@ class FollowController extends Controller
         }
     }
 
+    public function follow(FollowRequest $request)
+    {
+        $result = $this->userService->followByFollowable(auth()->user(),$request->type,$request->id);
+        return $this->generateResponse($result['message'] , $result['followed']);
+    }
+
+    public function unfollow(FollowRequest $request)
+    {
+        $result = $this->userService->unfollowByFollowable(auth()->user(), $request->type,$request->id);
+        return $this->generateResponse($result['message'] , $result['unfollowed']);
+    }
+
     /**
      * ユーザーをフォローします。
      *
@@ -82,11 +96,8 @@ class FollowController extends Controller
      */
     public function followUser(User $user)
     {
-        $authUser = auth()->user();
-        $authUser->follow($user);
-        $message = "{$authUser->name}さんが{$user->name}をフォローしました。";
-
-        return $this->generateResponse($message,$user);
+        $result = $this->userService->follow(auth()->user(),$user);
+        return $this->generateResponse($result['message'] , $result['followed']);
     }
 
     /**
@@ -97,11 +108,9 @@ class FollowController extends Controller
      */
     public function unfollowUser(User $user)
     {
-        $authUser = auth()->user();
-        $authUser->unfollow($user);
-        $message = "{$authUser->name}さんが{$user->name}のフォローを解除しました。";
+        $result = $this->userService->unfollow(auth()->user(),$user);
 
-        return $this->generateResponse($message,$user);
+        return $this->generateResponse($result['message'] , $result['unfollowed']);
     }
 
     /**
@@ -112,11 +121,8 @@ class FollowController extends Controller
      */
     public function followTeam(Team $team)
     {
-        $authUser = auth()->user();
-        $authUser->follow($team);
-        $message = "{$authUser->name}さんが{$team->name}をフォローしました。";
-
-        return $this->generateResponse($message,$team);
+        $result = $this->userService->follow(auth()->user(),$team);
+        return $this->generateResponse($result['message'] , $result['followed']);
     }
 
     /**
@@ -127,11 +133,9 @@ class FollowController extends Controller
      */
     public function unfollowTeam(Team $team)
     {
-        $authUser = auth()->user();
-        $authUser->unfollow($team);
-        $message = "{$authUser->name}さんが{$team->name}のフォローを解除しました。";
+        $result =$this->userService->unfollow(auth()->user(),$team);
 
-        return $this->generateResponse($message,$team);
+        return $this->generateResponse($result['message'] , $result['unfollowed']);
     }
 }
 
