@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\FollowRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\FollowPaginatedResource;
 use App\Http\Resources\FollowablePaginatedResource;
@@ -20,12 +21,23 @@ class FollowController extends Controller
 
     protected $userService;
 
+    /**
+     * FollowControllerのコンストラクタ
+     *
+     * @param UserService $userService
+     */
     public function __construct(
         UserService $userService
     ) {
         $this->userService = $userService;
     }
-    public function follow()
+
+    /**
+     * フォロー中のユーザーを取得します。
+     *
+     * @return \Inertia\Response
+     */
+    public function following()
     {
         return Inertia::render(
             'Dashboard/Follow',
@@ -37,6 +49,11 @@ class FollowController extends Controller
         );
     }
 
+    /**
+     * フォロワーを取得します。
+     *
+     * @return \Inertia\Response
+     */
     public function follower()
     {
         return Inertia::render(
@@ -48,6 +65,81 @@ class FollowController extends Controller
             ]
         );
     }
+
+    /**
+     * 指定されたフォローリクエストに基づいてユーザーをフォローします。
+     *
+     * @param  FollowRequest  $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function follow(FollowRequest $request)
+    {
+        $result = $this->userService->followByFollowable(auth()->user(),$request->type,$request->id);
+        return $this->generateResponse($result['message'] , $result['followed']);
+    }
+
+    /**
+     * 指定されたフォローリクエストに基づいてユーザーのフォローを解除します。
+     *
+     * @param  FollowRequest  $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function unfollow(FollowRequest $request)
+    {
+        $result = $this->userService->unfollowByFollowable(auth()->user(), $request->type,$request->id);
+        return $this->generateResponse($result['message'] , $result['unfollowed']);
+    }
+
+    /**
+     * ユーザーをフォローします。
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function followUser(User $user)
+    {
+        $result = $this->userService->follow(auth()->user(),$user);
+        return $this->generateResponse($result['message'] , $result['followed']);
+    }
+
+    /**
+     * 指定されたユーザーのフォローを解除します。
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function unfollowUser(User $user)
+    {
+        $result = $this->userService->unfollow(auth()->user(),$user);
+
+        return $this->generateResponse($result['message'] , $result['unfollowed']);
+    }
+
+    /**
+     * 指定されたチームをフォローします。
+     *
+     * @param  Team  $team
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function followTeam(Team $team)
+    {
+        $result = $this->userService->follow(auth()->user(),$team);
+        return $this->generateResponse($result['message'] , $result['followed']);
+    }
+
+    /**
+     * 指定されたチームのフォローを解除します。
+     *
+     * @param  Team  $team
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function unfollowTeam(Team $team)
+    {
+        $result =$this->userService->unfollow(auth()->user(),$team);
+
+        return $this->generateResponse($result['message'] , $result['unfollowed']);
+    }
+
 
     /**
      * レスポンスを生成します。
@@ -72,66 +164,6 @@ class FollowController extends Controller
                 'message' => $message
             ]);
         }
-    }
-
-    /**
-     * ユーザーをフォローします。
-     *
-     * @param  User  $user
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function followUser(User $user)
-    {
-        $authUser = auth()->user();
-        $authUser->follow($user);
-        $message = "{$authUser->name}さんが{$user->name}をフォローしました。";
-
-        return $this->generateResponse($message,$user);
-    }
-
-    /**
-     * 指定されたユーザーのフォローを解除します。
-     *
-     * @param  User  $user
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function unfollowUser(User $user)
-    {
-        $authUser = auth()->user();
-        $authUser->unfollow($user);
-        $message = "{$authUser->name}さんが{$user->name}のフォローを解除しました。";
-
-        return $this->generateResponse($message,$user);
-    }
-
-    /**
-     * 指定されたチームをフォローします。
-     *
-     * @param  Team  $team
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function followTeam(Team $team)
-    {
-        $authUser = auth()->user();
-        $authUser->follow($team);
-        $message = "{$authUser->name}さんが{$team->name}をフォローしました。";
-
-        return $this->generateResponse($message,$team);
-    }
-
-    /**
-     * 指定されたチームのフォローを解除します。
-     *
-     * @param  Team  $team
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function unfollowTeam(Team $team)
-    {
-        $authUser = auth()->user();
-        $authUser->unfollow($team);
-        $message = "{$authUser->name}さんが{$team->name}のフォローを解除しました。";
-
-        return $this->generateResponse($message,$team);
     }
 }
 

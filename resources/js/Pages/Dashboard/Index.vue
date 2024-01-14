@@ -27,7 +27,7 @@ const dashboardItems = [
   { category: 'search', iconType: 'team', title: 'チームを探す(仮)', url: '#', buttonText: 'go' },
   { category: 'search', iconType: 'user', title: 'ユーザーを探す(仮)', url: '#', buttonText: 'go' },
   { category: 'search', iconType: 'recruiting', title: '募集を探す(仮)', url: route('event.recruiting'), buttonText: 'go' },
-  { category: 'socialInteraction', iconType: 'follow', title: 'フォロー', url: route('user.follow', props.auth.user.screen_name), buttonText: props.counts.follow || 0 },
+  { category: 'socialInteraction', iconType: 'follow', title: 'フォロー', url: route('user.following', props.auth.user.screen_name), buttonText: props.counts.follow || 0 },
   { category: 'socialInteraction', iconType: 'follower', title: 'フォロワー', url: route('user.follower', props.auth.user.screen_name), buttonText: props.counts.follower || 0 },
   { category: 'team', iconType: 'teamCreate', title: 'チームを作成する', url: route('teams.create'), buttonText: 'go!' },
   { category: 'team', iconType: 'team', title: '所属チーム(仮)', url: '#', buttonText: 'go' },
