@@ -75,9 +75,8 @@ const querySetter = (value, type) => {
                       <Icon icon="line-md:bell" class="text-xl" />
                     </button>
                     <BtnSwapFollowing
-                      :follow-route="'users.follow'"
-                      :unfollow-route="'users.unfollow'"
-                      :screen-name="dataile.screen_name"
+                      :follow-route="route('users.follow', { id: dataile.screen_name })"
+                      :unfollow-route="route('users.unfollow', { id: dataile.screen_name })"
                       :count="dataile.followers_count"
                       :is-followed="authUser.is_followed" />
                     <button class="btn btn-neutral btn-sm flex flex-row ">

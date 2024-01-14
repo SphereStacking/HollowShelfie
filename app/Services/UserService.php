@@ -29,7 +29,7 @@ class UserService
     public function preloadProfileData(User $user)
     {
         $user->load(['links', 'tags']);
-        $user->is_followed = auth()->user()->isFollowedByCurrentUser();
+        $user->is_followed = $user->isFollowedByCurrentUser();
         $user->followers_count = $user->followersCount();
         return $user;
     }
@@ -44,7 +44,6 @@ class UserService
     {
         $follows = $user->follows()->with('followable')->orderBy('created_at', 'desc')->paginate($perPage);
 
-        // 各フォロー対象が認証ユーザーによってフォローされているかを確認
         foreach ($follows as $follow) {
             $followable = $follow->followable;
             $followable->is_followed = $followable->isFollowedByCurrentUser();
@@ -91,4 +90,39 @@ class UserService
         return $user->followersCount();
     }
 
+    public function followByFollowable(User $authUser, $type, $id)
+    {
+        $model = $type::find($id);
+        return $this->follow($authUser, $model);
+    }
+
+    public function unfollowByFollowable(User $authUser, $type, $id)
+    {
+        $model = $type::find($id);
+        return $this->unfollow($authUser, $model);
+    }
+
+    public function follow(User $authUser, $model)
+    {
+        $authUser->follow($model);
+        $message = "{$authUser->name}が{$model->name}をフォローしました。";
+
+        return [
+            'message' => $message,
+            'following' => $authUser,
+            'followed' => $model,
+        ];
+    }
+
+    public function unfollow(User $authUser, $model)
+    {
+        $authUser->unfollow($model);
+        $message = "{$authUser->name}が{$model->name}のフォローを解除しました。";
+
+        return [
+            'message' => $message,
+            'following' => $authUser,
+            'unfollowed' => $model,
+        ];
+    }
 }
