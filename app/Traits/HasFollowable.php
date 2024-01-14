@@ -57,9 +57,9 @@ trait HasFollowable
             return;
         }
         return Followable::where('user_id', $this->id)
-                    ->where('followable_id', $unfollowTarget->id)
-                    ->where('followable_type', get_class($unfollowTarget))
-                    ->delete();
+            ->where('followable_id', $unfollowTarget->id)
+            ->where('followable_type', get_class($unfollowTarget))
+            ->delete();
     }
 
     /**
@@ -103,8 +103,9 @@ trait HasFollowable
         if (!auth()->check()) {
             return false;
         }
-        return $this->followables()
-            ->where('user_id', auth()->id())
+        return Followable::where('user_id', auth()->id())
+            ->where('followable_id', $this->id)
+            ->where('followable_type', get_class($this))
             ->exists();
     }
 
