@@ -33,9 +33,9 @@ class FollowPaginatedResource extends JsonResource
             'data' => $this->resource->map(function ($item) {
                 // UserやTeamをfollowしているためfollowableに入れる。
                 return [
-                    'id' => $item->id,
-                    'type' => $item->followable_type,
-                    'followable'=>[
+                    'followable_id' => $item->followable_id,
+                    'followable_type' => $item->followable_type,
+                    'followable' => [
                         'name' => $item->followable->name,
                         'screen_name' => $item->followable->screen_name,
                         'profile_url' => $item->followable->profile_url,
