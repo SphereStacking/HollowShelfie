@@ -17,6 +17,11 @@ use App\Http\Controllers\FollowController;
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
+    // フォロー
+    Route::post('/follow', [FollowController::class, 'follow'])->name('follow');
+    // フォロー解除
+    Route::delete('/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
+
     // ユーザーをフォロー
     Route::post('/users/{user}/follow', [FollowController::class, 'followUser'])
         ->name('users.follow');

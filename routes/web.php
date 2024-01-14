@@ -81,7 +81,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/user/{user:alias_name}/bookmark', [EventBookmarkController::class, 'bookmark'])->name('dashboard.bookmark');
     Route::get('/user/{user:alias_name}/good', [EventGoodController::class, 'good'])->name('user.good');
-    Route::get('/user/{user:alias_name}/follow', [FollowController::class, 'follow'])->name('user.follow');
+    Route::get('/user/{user:alias_name}/following', [FollowController::class, 'following'])->name('user.following');
     Route::get('/user/{user:alias_name}/follower', [FollowController::class, 'follower'])->name('user.follower');
 
 
