@@ -1,66 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="/.images/mamehinata.png" width="600" alt="mame">
 </p>
 
-## About Laravel
+## about
+VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [resonite](https://resonite.com/))の情報共有serviceの構築する。  
+現在のVR界隈は情報のまとまっているところがない  
+イベントやコミュニティの情報を一元的にまとめることで活性化を図りたい。  
+まずは日々開催されているイベントの情報をより見やすくユーザーに届ける。  
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 結局は車輪の再発明だが。。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [vrchatイベントカレンダー](https://vrceve.com/)
+  - グーグルカレンダーベースのイベント情報掲載サイト
+- [vrcタイムライン](https://vrc.tl/)
+  - 海外Userのタイムライン形式のイベント情報掲載サイト
+- [twipla](https://twipla.jp/)
+  - 有名どころのイベント共有
+- [connpass](https://connpass.com)
+  - 有名どころのイベント共有
+- [PlanetVRC](https://planetvrchat.net/)
+  - 特定ユーザーによるVR界隈記事投稿
+- [メタカル最前線](https://metacul-frontier.com/)
+  - 特定ユーザーによるR界隈記事投稿
+- Qiita Note Zennなど
+  - ユーザーにようる記事投稿
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+このwebサービスの目指すところは上記サイトのいいとこどりを目指す。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+ユーザーがイベントを掲載できて
+演者の募集や打診によるオーガナイザーのマッチング
+記事投稿もできてVR界隈のナレッジの共有ができる(かなりニッチで技術に疎い人はアバターアップロードや改変すらままならないため)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## その他
+- [jira](https://sphere-stacking.atlassian.net/jira/software/projects/SPHERE/boards/1) (github issueに移したい。)
+- [slack](https://join.slack.com/t/shake-spheres/shared_invite/zt-2asmw8mhg-nAHGk4Ub88NzvyKveZDcAg)
+- [notion](https://www.notion.so/invite/b9dcd6b1ec909bf0c03498f20b2ede15fa2c3c59)
 
-## Laravel Sponsors
+## 目標
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- イベント作成機能
+  - 一覧表示
+  - 詳細表示
+  - 共有(外部SNS)
+  - 検索
+  - 編集
+  - 削除
+  - イベント情報の出演者の管理
+  - 予約公開
+  - タイムライン表示
+  - custom id
 
-### Premium Partners
+- bookmark
+- いいね
+- タグ
+- カテゴリ
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- チーム機能
+  - チーム作成
+  - チーム編集
+  - チーム削除
+  - チームメンバーの管理
+  - ロールの管理
 
-## Contributing
+- 出演者の募集
+- 登録Userへのイベント出演依頼
+- イベント管理機能
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- qiitaやzennのような記事投稿機能
 
-## Code of Conduct
+最終的にはチケットを販売できるようになると嬉しいかも。
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 課題
 
-## Security Vulnerabilities
+- インフラ全く分からん。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 技術スタック
 
-## License
+- [laravel](https://laravel.com/)
+  - [sail](https://laravel.com/docs/10.x/sail) (爆速環境構築まん)
+  - [jetstream](https://jetstream.laravel.com) (認証含めた神パッケージ)
+  - [inertia](https://inertiajs.com/forms) (バックとフロントの密結合)
+  - [scout](https://laravel.com/docs/10.x/scout) (全文検索)
+  - [socialite](https://laravel.com/docs/10.x/socialite) (SNSログイン)
+  - [cashier](https://laravel.com/docs/10.x/billing) (決済 その内いれたい。)
+- [vue.js](https://vuejs.org/)
+- [tailwindcss](https://tailwindcss.com/)
+  - [daisyui](https://daisyui.com/)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- [tinymce-vue](https://www.tiny.cloud/docs/tinymce/6/) (WYSIWYGエディター)
+  正直検討中 ほかにより良いのがないか。。
+- [meilisearch](https://www.meilisearch.com/) (全文検索)
+  - 日本語の検索がいまいちなためimageはprototypeを使用
+- [vue3-carousel](https://ismail9k.github.io/vue3-carousel/) (カルーセルバナー)
+- [dayjs](https://day.js.org/) (日付操作)  date-fnsは削除予定
+- [iconify](https://iconify.design/) (Iconに使用)
+
+
+## 開発環境構築
+
+1. git cloneして
+2. .env.exampleをコピーして.envを作成
+3. .envのDBの設定
+   GOOGLEとDISCORDの<ここ必要>の個所を埋める。
+   それぞれ個人で取得して設定してください
+   ※MEILISEARCHはあとで
+
+4. 依存ファイルのインストール
+   1. docker-compose up -d
+      ここで初回のインストールなりビルドが走ると思う。(多分)
+   2. docker-compose exec laravel.test bash
+   3. composer install
+   4. exit
+   ここの手順あいまい。
+   composerをPC自体にインストールして
+   composer installしてたかも
+5. ./vendor/bin/sail up
+   おこのみでsailのショートカットを作成してください
+   `alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`
+6. メイリサーチセットアップ[notion参照](https://www.notion.so/ff35198dd447429ebaf3058b88d71034)
+7. docker-compose exec laravel.test bash
+8. npm run dev
+    この段階ではログイン画面は表示されないと思う
+9. php artisan migrate
+10. php artisan db:seed
+   テスト用のUserが作成されているのでこちらでログイン
+   メールアドレス admin@admin
+   パスワード password
+
+
