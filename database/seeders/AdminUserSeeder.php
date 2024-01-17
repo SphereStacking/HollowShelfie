@@ -16,8 +16,8 @@ class AdminUserSeeder extends Seeder
     {
         //
         $user = User::factory()->create([
-            'name' => 'かわいいAshちゃん',
-            'email' => 'admin@ash',
+            'name' => 'admin',
+            'email' => 'admin@admin',
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
         ]);
         $team = Team::factory()->create([
