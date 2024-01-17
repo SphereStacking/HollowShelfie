@@ -32,6 +32,9 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 演者の募集や打診によるオーガナイザーのマッチング
 記事投稿もできてVR界隈のナレッジの共有ができる(かなりニッチで技術に疎い人はアバターアップロードや改変すらままならないため)
 
+ドメインは  v-shelf.com
+
+イベントのfryerやチラシを掲示する棚をイメージしてこの名称
 
 ## その他
 - [jira](https://sphere-stacking.atlassian.net/jira/software/projects/SPHERE/boards/1) (github issueに移したい。)
