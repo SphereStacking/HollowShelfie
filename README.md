@@ -3,10 +3,10 @@
 </p>
 
 ## about
-VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [resonite](https://resonite.com/))の情報共有serviceの構築する。
-現在のVR界隈は情報のまとまっているところがない
-イベントやコミュニティの情報を一元的にまとめることで活性化を図りたい。
-まずは日々開催されているイベントの情報をより見やすくユーザーに届ける。
+VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [resonite](https://resonite.com/))の情報共有serviceの構築する。  
+現在のVR界隈は情報のまとまっているところがない  
+イベントやコミュニティの情報を一元的にまとめることで活性化を図りたい。  
+まずは日々開催されているイベントの情報をより見やすくユーザーに届ける。  
 
 ## 結局は車輪の再発明
 
@@ -31,8 +31,7 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 
 
 ## その他
-- [jira](https://sphere-stacking.atlassian.net/jira/software/projects/SPHERE/boards/1)
-  - github issueに移したい。
+- [jira](https://sphere-stacking.atlassian.net/jira/software/projects/SPHERE/boards/1) (github issueに移したい。)
 - [slack](https://join.slack.com/t/shake-spheres/shared_invite/zt-2asmw8mhg-nAHGk4Ub88NzvyKveZDcAg)
 - [notion](https://www.notion.so/invite/b9dcd6b1ec909bf0c03498f20b2ede15fa2c3c59)
 
@@ -122,9 +121,5 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
    テスト用のUserが作成されているのでこちらでログイン
    メールアドレス admin@admin
    パスワード password
-
-   ユーザーを作成したりしてもよいが
-   php artisan db:seedを再度実行すると
-   admin userだけ残りほかのUserやすべてのデータが消える。
 
 
