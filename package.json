@@ -32,8 +32,9 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.16",
         "@heroicons/vue": "^2.0.18",
-        "@vuepic/vue-datepicker": "^7.3.0",
-        "@vueup/vue-quill": "^1.2.0",
+        "@tinymce/tinymce-vue": "^5.1.1",
+        "@vueform/slider": "^2.1.10",
+        "@vuepic/vue-datepicker": "^7.4.1",
         "date-fns": "^2.30.0",
         "dayjs": "^1.11.10",
         "theme-change": "^2.5.0",
