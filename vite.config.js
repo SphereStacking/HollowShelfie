@@ -26,7 +26,7 @@ export default defineConfig({
       dirs: ['resources/js'],
       resolvers: [
         (name) => {
-          if (name == "Icon")
+          if (name == 'Icon')
             return { name, from: '@iconify/vue' }
         },
       ],

@@ -30,6 +30,7 @@ module.exports = {
     'vue'
   ],
   'globals': {
+    'require': 'readonly',
     // Inertia
     'route': 'readonly',
     // Vue
