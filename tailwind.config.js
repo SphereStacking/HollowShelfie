@@ -1,7 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
 import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
-const colors = require("tailwindcss/colors");
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -11,7 +11,7 @@ export default {
     './storage/framework/views/*.php',
     './resources/views/**/*.blade.php',
     './resources/js/**/*.vue',
-    "./node_modules/vue-tailwind-datepicker/**/*.js",
+    './node_modules/vue-tailwind-datepicker/**/*.js',
   ],
 
   theme: {
@@ -20,8 +20,8 @@ export default {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        "vtd-primary": colors.sky, // Light mode Datepicker color
-        "vtd-secondary": colors.gray, // Dark mode Datepicker color
+        'vtd-primary': colors.sky, // Light mode Datepicker color
+        'vtd-secondary': colors.gray, // Dark mode Datepicker color
       },
     },
   },
@@ -34,20 +34,20 @@ export default {
     themes: [
       {
         mytheme: {
-          "color-scheme": "dark",
-          "primary": "#9FE88D",
-          "secondary": "#FF7D5C",
-          "accent": "#C792E9",
-          "neutral": "#B2CCD6",
-          "neutral-content": "#1c212b",
-          "base-100": "#2A303C",
-          "base-200": "#242933",
-          "base-300": "#20252E",
-          "base-content": "#B2CCD6",
-          "info": "#28ebff",
-          "success": "#62efbd",
-          "warning": "#efd057",
-          "error": "#ffae9b",
+          'color-scheme': 'dark',
+          'primary': '#9FE88D',
+          'secondary': '#FF7D5C',
+          'accent': '#C792E9',
+          'neutral': '#B2CCD6',
+          'neutral-content': '#1c212b',
+          'base-100': '#2A303C',
+          'base-200': '#242933',
+          'base-300': '#20252E',
+          'base-content': '#B2CCD6',
+          'info': '#28ebff',
+          'success': '#62efbd',
+          'warning': '#efd057',
+          'error': '#ffae9b',
         },
       },
       'dim',
