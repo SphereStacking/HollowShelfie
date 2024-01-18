@@ -111,7 +111,6 @@ export const ItemsConfig = {
     icon: 'mdi:cog',
     buttonClass: ''
   },
-
   default: {
     icon: '',
     buttonClass: ''

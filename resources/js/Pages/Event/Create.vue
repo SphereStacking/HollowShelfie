@@ -17,7 +17,7 @@ const props = defineProps({
         イベント
       </h2>
     </template>
-    <div class="mx-auto mt-10 flex max-w-7xl flex-col gap-5">
+    <div class="mx-auto mt-10 flex max-w-2xl flex-col gap-5 ">
       <EventCreateFormCard />
     </div>
   </AppLayout>
