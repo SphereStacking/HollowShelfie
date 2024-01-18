@@ -2,36 +2,46 @@
 defineProps({
   id: {
     type: String,
-    required: true
+    default: ''
   },
   label: {
     type: String,
-    required: false
+    required: true
   },
   modelValue: {
     type: String,
     default: 'hoge'
   },
+  placeholder: {
+    type: String,
+    default: ''
+  },
   help: {
     type: String,
     default: null
+  },
+  error: {
+    type: String,
+    default: null
+  },
+  type: {
+    type: String,
+    default: 'text'
   }
 })
+
+defineEmits(['update:modelValue'])
 
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <label
-      v-if="label!==null" :id="id+'label'" for="input"
-      class="text-lg font-bold">{{ label }}</label>
+  <Wrapper :label="label" :help="help" :error="error">
     <textarea
       :id="id"
-      class="textarea textarea-bordered" placeholder="Bio"
+      class="textarea textarea-bordered w-full rounded-md" :placeholder="placeholder"
       :value="modelValue" aria-describedby="input-help"
       @input="$emit('update:modelValue', $event.target.value)"></textarea>
-    <small v-if="help!==null" :id="id+'help'">{{ help }}</small>
-  </div>
+  </Wrapper>
 </template>
 
 <style lang="">
