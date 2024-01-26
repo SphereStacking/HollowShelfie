@@ -1,7 +1,29 @@
 <script setup>
-import { ref } from 'vue'
+import { Editor, EditorContent } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
+import Strike from '@tiptap/extension-strike'
+import Underline from '@tiptap/extension-underline'
+import ListItem from '@tiptap/extension-list-item'
+import BulletList from '@tiptap/extension-bullet-list'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Text from '@tiptap/extension-text'
+import TextStyle from '@tiptap/extension-text-style'
+import TextAlign from '@tiptap/extension-text-align'
+import Focus from '@tiptap/extension-focus'
+import Image from '@tiptap/extension-image'
+import Youtube from '@tiptap/extension-youtube'
+import Mention from '@tiptap/extension-mention'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
+import { Color } from '@tiptap/extension-color'
 
-import Editor from '@tinymce/tinymce-vue'
+import suggestionMention from './EditorPartials/SuggestionPartials/suggestionMention.js'
+import suggestionTag from './EditorPartials/SuggestionPartials/suggestionTag.js'
 
 const props = defineProps({
   id: {
@@ -34,35 +56,86 @@ const props = defineProps({
   }
 })
 
-const tinymceOptions = {
-  skin: 'oxide-dark',
-  content_css: 'dark',
-  statusbar: false,
-  menubar: true,
-  language: 'ja',
-  plugins: 'autolink charmap  emoticons image link lists media searchreplace table visualblocks wordcount ',
-  toolbar: 'blocks bold italic underline strikethrough forecolor removeformat | emoticons link image table | numlist bullist ',
+const emit =defineEmits(['update:modelValue'])
 
-}
-
-const emit = defineEmits(['update:modelValue'])
-
-const data = ref(props.modelValue)
-
-watch(data, (newValue) => {
-  emit('update:modelValue', newValue)
+const editor = new Editor({
+  content: props.modelValue,
+  extensions: [
+    Image,
+    Link.configure({
+      openOnClick: false,
+    }),
+    StarterKit,
+    Table.configure({
+      resizable: true,
+    }),
+    Youtube.configure({
+      HTMLAttributes: {
+        class: 'w-full aspect-video md:aspect-square',
+      },
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
+    Underline,
+    Strike,
+    BulletList,
+    OrderedList,
+    ListItem,
+    TextAlign.configure({
+      types: ['heading', 'paragraph'],
+    }),
+    Text,
+    TextStyle,
+    Color,
+    Focus.configure({
+      className: 'bg-base-300/25',
+      mode: 'all',
+    }),
+    Mention.configure({
+      HTMLAttributes: {
+        class: 'rounded-md bg-base-300 my-1 px-2 text-sm',
+      },
+      suggestion: suggestionMention,
+    }),
+    Mention.configure({
+      HTMLAttributes: {
+        class: 'rounded-md bg-base-300 my-1 px-2 text-sm',
+      },
+      suggestion: suggestionTag,
+    }),
+    TaskList,
+    TaskItem.configure({
+      nested: true,
+    }),
+  ],
+  editorProps: {
+    attributes: {
+      class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-48 '
+    },
+  },
 })
+
+const innerValue = computed(() => {
+  return editor.isEmpty ? '' : editor.getHTML()
+})
+
+watch(innerValue, (v) => {
+  emit('update:modelValue', v)
+})
+
+onBeforeUnmount(() => {
+  editor.destroy()
+})
+
 </script>
 <template>
   <Wrapper :label="label" :help="help" :error="error">
-    <div class="w-full ">
-      <editor
-        v-model="data"
-        :init="tinymceOptions"
-        api-key="4qnmsotx5i7dhoxoauuflkoztyubh347mirovtjgd6pp2fj3" />
+    <div class="w-full rounded-md bg-base-100  ">
+      <editor-menu :editor="editor" />
+      <EditorContent :editor="editor" class="mx-2 mb-2" />
     </div>
   </Wrapper>
 </template>
-<style>
-
+<style scoped>
 </style>
