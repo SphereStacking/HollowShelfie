@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props=defineProps({
   id: {
     type: String,
     default: ''
@@ -31,29 +31,15 @@ defineProps({
 
 })
 
-const InputType = 'text'
+const modelValue= ref(props.modelValue)
 
-const emit = defineEmits(['update:modelValue'])
-
-const updateValue = (e) => {
-  // 子要素のmodelValueをe.target.valueでupdate
-  emit('update:modelValue', e.target.value)
-}
 </script>
 
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
     :label-icon-type="labelIconType">
-    <InputFormBase
-      :id="id"
-      :type="InputType"
-      :placeholder="placeholder"
-      class="grow"
-      :class="{ 'input-error': error }"
-      :value="modelValue"
-      aria-describedby="input-help"
-      @input="updateValue" />
+    <DatePickerWrapper v-model="modelValue" time-picker text-input />
   </Wrapper>
 </template>
 

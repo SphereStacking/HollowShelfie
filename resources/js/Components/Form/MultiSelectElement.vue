@@ -1,16 +1,12 @@
 <script setup>
+import { vOnClickOutside } from '@vueuse/components'
+import draggable from 'vuedraggable'
+
 const props = defineProps({
-  id: {
-    type: String,
-    default: ''
-  },
+  //Wrapper用
   label: {
     type: String,
     required: true
-  },
-  tags: {
-    type: Array,
-    default: ()=>[],
   },
   placeholder: {
     type: String,
@@ -24,87 +20,171 @@ const props = defineProps({
     type: String,
     default: null
   },
-  deleteBtn: Boolean,
-  inputBox: Boolean,
+  //このコンポーネント用
+  modelValue: {
+    type: Array,
+    default: ()=>[],
+  },
+  selectableItems: {
+    type: Array,
+    default: ()=>[],
+  },
+  route: {
+    type: String,
+    default: ''
+  },
+  searchDelay: {
+    type: Number,
+    default: 200
+  },
+  itemType: {
+    type: String,
+    default: ''
+  },
+  labelIconType: {
+    type: String,
+    default: ''
+  },
 })
 
-const emits = defineEmits(['clickTag', 'update:tags'])
+const emits = defineEmits(['update:modelValue'])
 
-const newTag = ref('')
-const items = ref([...props.tags])
-const delimiter = ' '
+const inputRef = ref(null)
+const inputText = ref('')
+const items = ref([...props.modelValue])
 
-const isOpen = computed(() => newTag.value !== '')
-const isDeleteBtn = computed(() => props.deleteBtn === true)
-const ifInputBox = computed(() => props.inputBox === true)
+const isOpen = ref(false)
+const isExists = computed(() => filteredItems.value && filteredItems.value.length !== 0)
+const isSearching =ref(false)
+const filteredItems = ref([])
+const dragging= ref(false)
+let searchTimeoutId = null
 
-watch(() => props.tags, (val) => {
+watch(() => props.modelValue, (val) => {
   if (items.value !== val) {
     items.value = val
   }
 }, { deep: true, immediate: true })
 
-const clickTag = (tagValue) => {
-  emits('clickTag', tagValue)
-}
-
 const clickTagDelete = (tagValue) => {
   items.value = items.value.filter(item => ! [tagValue].includes(item))
-  emits('update:tags', items.value)
+  emits('update:modelValue', items.value)
 }
 
-const clickTagAdd = () => {
-  addTag(newTag.value)
+const isIncludesString = (searchString) => {
+  return items.value.some(item => item === searchString)
+}
+
+const handleAdd = (tagName) => {
+  console.log(tagName)
+  isOpen.value=false
+  if (tagName === ''){ return }
   clearInputTag()
-}
-
-const onKeyDown = () => {
-  addTag(newTag.value)
-  clearInputTag()
-}
-
-const addTag = (tagName) => {
+  inputRef.value.focus()
+  inputRef.value.select()
   if (isIncludesString(tagName)) {
-    alert('既にタグ(' + tagName + ')が存在します。')
+    alert('既に「' + tagName + '」が存在します。')
     return
   }
   items.value.push(tagName)
 }
 
-const clearInputTag = () => {
-  newTag.value = ''
+const clearInputTag = () => { inputText.value = ''}
+
+watch(inputText, (newValue) => {
+  isOpen.value=true
+  isSearching.value = true
+  filteredItems.value = ['', '', '']
+  clearTimeout(searchTimeoutId)
+  searchTimeoutId = setTimeout(() => {
+    getFilteredItems(newValue)
+    isSearching.value = false
+  }, props.searchDelay)
+})
+
+const getFilteredItems = (searchValue) => {
+  try {
+    filteredItems.value = props.selectableItems.filter(item => item.includes(searchValue))
+  } catch (error) {
+    console.error('Error:', error)
+  }
 }
 
-const isIncludesString = (searchString) => {
-  let searchTargetSting = [...items.value].map((value) => value).join(delimiter)+delimiter
-  return searchTargetSting.includes(searchString+delimiter)
+const onFocus=()=>{
+  isOpen.value=true
+  filteredItems.value= [...props.selectableItems]
 }
+const onClickOutsideHandler= ()=>{
+  isOpen.value=false
+  filteredItems.value= []
+}
+
 </script>
 
 <template>
-  <Wrapper :label="label" :help="help" :error="error">
+  <Wrapper
+    v-on-click-outside="onClickOutsideHandler" :label="label" :help="help"
+    :error="error" :label-icon-type="labelIconType">
     <div class="w-full">
       <!-- タグ入力ボックス -->
-      <div v-if="ifInputBox" class="relative">
-        <InputFormBase
-          v-model="newTag" class="mt-1 block w-full" :placeholder="placeholder"
-          @keydown.enter="onKeyDown" />
-        <div :class="[isOpen ? 'block' : 'hidden']">
-          <div class="absolute left-0 z-40 mt-2 w-full">
-            <div class="rounded border border-gray-300 bg-white py-1 text-sm shadow-lg">
-              <a class="block cursor-pointer px-5 py-1 hover:bg-indigo-600 hover:text-white" @click="clickTagAdd()"> Add tag "{{ newTag }}" </a>
+      <div class="input input-sm flex h-full w-full flex-wrap items-center gap-2 py-0.5">
+        <!-- タグ表示 -->
+        <draggable
+          v-model="items"
+          group="items"
+          item-key="id"
+          class="flex  flex-wrap gap-2"
+          @start="dragging=true"
+          @end="dragging=false">
+          <template #item="{element}">
+            <BtnConditionTypeMapper
+              :type="itemType"
+              @click="clickTagDelete(element)">
+              <div class="relative">
+                <IconTypeMapper
+                  :type="itemType"
+                  class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+                <Icon
+                  icon="mdi:close"
+                  class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
+                <div class="pl-6">
+                  {{ element }}
+                </div>
+              </div>
+            </BtnConditionTypeMapper>
+          </template>
+        </draggable>
+        <div class="relative grow">
+          <input
+            ref="inputRef"
+            v-model="inputText" class="input input-sm m-0 w-full shrink border-none p-0" :placeholder="placeholder"
+            @keydown.enter="handleAdd(inputText)"
+            @focus="onFocus">
+          <!-- 検索結果をbutton表示 -->
+          <div :class="[isOpen ? 'block' : 'hidden']" class="absolute left-0 z-40 mt-4 flex max-h-64 min-w-48 flex-col gap-0.5 overflow-y-auto rounded-md  bg-base-300 p-2 shadow-lg">
+            <template v-for="(item, index) in filteredItems" :key="index">
+              <slot
+                name="searchItem" :item="item" :handle-add="handleAdd"
+                :is-searching="isSearching">
+                <div
+                  class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm "
+                  @click="handleAdd(item)">
+                  <div>{{ item }}</div>
+                </div>
+              </slot>
+            </template>
+            <div v-if="!isExists">
+              <slot
+                name="notExist" :handle-add="handleAdd" :input-text="inputText">
+                <div
+                  class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm"
+                  @click="handleAdd(inputText)">
+                  Nothing {{ inputText }}
+                </div>
+              </slot>
             </div>
           </div>
         </div>
-      </div>
-      <!-- タグ表示 -->
-      <div v-for="(item, index) in items" :key="index" class="mr-1 mt-2 inline-flex items-center overflow-hidden rounded  text-sm  hover:cursor-pointer ">
-        <button v-if="isDeleteBtn" class="inline-block h-6 w-6  align-middle  focus:outline-none" @click="clickTagDelete(item)">
-          <i class="fas fa-times"></i>
-          <icon ic />
-        </button>
-        <BtnEventSerchItem />
-        <span class="mx-1.5 my-0.5 max-w-xs truncate" @click="clickTag(item)">{{ item }}</span>
       </div>
     </div>
   </Wrapper>

@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     required: true
   },
+  labelIconType: {
+    type: String,
+    default: ''
+  },
   modelValue: {
     type: String,
     default: ''
@@ -130,7 +134,9 @@ onBeforeUnmount(() => {
 
 </script>
 <template>
-  <Wrapper :label="label" :help="help" :error="error">
+  <Wrapper
+    :label="label" :help="help" :error="error"
+    :label-icon-type="labelIconType">
     <div class="w-full rounded-md bg-base-100  ">
       <editor-menu :editor="editor" />
       <EditorContent :editor="editor" class="mx-2 mb-2" />

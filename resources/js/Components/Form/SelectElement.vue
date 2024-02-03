@@ -28,6 +28,10 @@ defineProps({
     type: String,
     default: null
   },
+  selectableItems: {
+    type: Array,
+    default: ()=>[]
+  }
 
 })
 
@@ -45,15 +49,21 @@ const updateValue = (e) => {
   <Wrapper
     :label="label" :help="help" :error="error"
     :label-icon-type="labelIconType">
-    <InputFormBase
-      :id="id"
-      :type="InputType"
-      :placeholder="placeholder"
-      class="grow"
-      :class="{ 'input-error': error }"
-      :value="modelValue"
-      aria-describedby="input-help"
-      @input="updateValue" />
+    <div class="join grow">
+      <slot name="joinLeft"></slot>
+      <select
+        v-bind="$attrs"
+        class="join-item select select-sm  rounded-md py-0.5" :value="modelValue"
+        :class="{ 'select-error': error }" @input="updateValue">
+        <option disabled selected>
+          Pick one
+        </option>
+        <option v-for="item in selectableItems" :key="item">
+          {{ item }}
+        </option>
+      </select>
+      <slot name="joinRight"></slot>
+    </div>
   </Wrapper>
 </template>
 

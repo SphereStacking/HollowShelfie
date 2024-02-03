@@ -91,28 +91,28 @@ defineExpose({
 <template>
   <div>
     <div v-if="suggestionItems.length > 0" class="flex max-h-64 min-w-48 flex-col gap-0.5 overflow-y-auto rounded-md bg-base-300 p-2 shadow-lg">
-      <div
-        v-for="(item, index) in suggestionItems"
-        :key="index"
-        class="btn btn-md flex w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
-        :class="Object.keys(item).length === 0 ? 'skeleton' : ''"
-        @click="selectItem(index)">
-        <div class="avatar">
-          <div class="w-10 rounded-xl" :class="item.pohto_url ? '' : 'skeleton'">
-            <img v-if="item.pohto_url" :src="item.pohto_url">
+      <template v-for="(item, index) in suggestionItems" :key="index">
+        <div
+          class="btn btn-md flex w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
+          :class="Object.keys(item).length === 0 ? 'skeleton' : ''"
+          @click="selectItem(index)">
+          <div class="avatar">
+            <div class="w-10 rounded-xl" :class="item.image_url ? '' : 'skeleton'">
+              <img v-if="item.image_url" :src="item.image_url">
+            </div>
+          </div>
+          <div class="flex flex-col justify-start text-left ">
+            <div class="font-bold">
+              {{ item.name }}
+            </div>
+            <div class="text-xs opacity-30">
+              <template v-if="item.alias_name">
+                @{{ item.alias_name }}
+              </template>
+            </div>
           </div>
         </div>
-        <div class="flex flex-col justify-start text-left ">
-          <div class="font-bold">
-            {{ item.name }}
-          </div>
-          <div class="text-xs opacity-30">
-            <template v-if="item.alias_name">
-              @{{ item.alias_name }}
-            </template>
-          </div>
-        </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
