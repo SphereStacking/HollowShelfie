@@ -1,5 +1,8 @@
 <script setup>
-defineProps({
+import {computed} from 'vue'
+import IconTypeMapper from '@/Components/IconTypeMapper.vue'
+
+const props = defineProps({
   id: {
     type: String,
     default: ''
@@ -7,6 +10,10 @@ defineProps({
   label: {
     type: String,
     required: true
+  },
+  labelIconType: {
+    type: String,
+    default: ''
   },
   modelValue: {
     type: String,
@@ -36,20 +43,28 @@ const updateValue = (e) => {
   // 子要素のmodelValueをe.target.valueでupdate
   emit('update:modelValue', e.target.value)
 }
+
+const hasLabelIconType = computed(() => props.labelIconType === '')
 </script>
 
 <template>
   <div class="flex flex-col gap-0.5">
     <div class="flex flex-row items-center justify-between gap-0.5">
-      <label for="input" class="label-text font-bold">{{ label }}</label>
+      <div class="flex gap-2">
+        <IconTypeMapper v-if="!hasLabelIconType" :type="labelIconType" class="text-xl" />
+        <label for="input" class="label-text font-bold">{{ label }}</label>
+      </div>
       <small v-if="help !== null" id="input-help" class="label-text-alt">{{ help }}</small>
     </div>
+    <slot name="top"></slot>
     <div class="flex flex-row">
       <slot name="left"></slot>
       <slot></slot>
       <slot name="right"></slot>
     </div>
-    <InputError :message="error" />
+    <slot name="bottom">
+      <InputError :message="error" />
+    </slot>
   </div>
 </template>
 

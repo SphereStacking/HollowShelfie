@@ -125,12 +125,6 @@ watch(dates, (newDates) => {
       over
       dark
       @internal-model-change="handleInternal">
-      <template #dp-input="{ value }">
-        <div class="relative">
-          <Icon icon="mdi:calendar-range" class=" absolute left-2 top-1.5 text-xl" />
-          <input type="text" :value="value" class="input input-sm w-full pl-8">
-        </div>
-      </template>
       <template #left-sidebar="{selectDate}">
         <div class="flex h-full flex-col justify-end gap-1 pb-2">
           <div class="h-5">
