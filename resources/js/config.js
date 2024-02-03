@@ -20,7 +20,7 @@ export const ItemsConfig = {
     buttonClass: 'btn-neutral btn-outline'
   },
   instance: {
-    icon: 'mdi:map-marker',
+    icon: 'mdi:location-radius',
     buttonClass: 'btn-info'
   },
   date: {
@@ -111,7 +111,31 @@ export const ItemsConfig = {
     icon: 'mdi:cog',
     buttonClass: ''
   },
-
+  organizer: {
+    icon: 'mdi:ghost',
+    buttonClass: ''
+  },
+  performer: {
+    icon: 'mdi:food',
+    buttonClass: ''
+  },
+  wysiwygEditor: {
+    icon: 'mdi:text-box-edit',
+    buttonClass: ''
+  },
+  timeline: {
+    icon: 'mdi:chart-timeline',
+    buttonClass: ''
+  },
+  delete: {
+    icon: 'mdi:close',
+  },
+  upload: {
+    icon: 'mdi:cloud-upload-outline'
+  },
+  fryer: {
+    icon: 'mdi:image-frame'
+  },
   default: {
     icon: '',
     buttonClass: ''
