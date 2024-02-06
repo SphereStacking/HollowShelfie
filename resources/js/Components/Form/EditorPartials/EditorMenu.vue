@@ -40,7 +40,7 @@ const isShowAlign = computed(() => {
         <div class="join">
           <editor-menu-table-element :editor="editor" class="join-item" />
           <EditorMenuVideoElement :editor="editor" class="join-item" />
-          <editor-menu-image-element :editor="editor" class="join-item" />
+          <!-- <editor-menu-image-element :editor="editor" class="join-item" /> -->
           <editor-menu-link-element :editor="editor" class="join-item" />
         </div>
         <div class="join">
