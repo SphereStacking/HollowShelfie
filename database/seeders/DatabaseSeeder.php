@@ -46,5 +46,7 @@ class DatabaseSeeder extends Seeder
         Artisan::call('scout:import', ['model' => 'App\\Models\\Event']);
         Artisan::call('scout:import', ['model' => 'App\\Models\\User']);
         Artisan::call('scout:import', ['model' => 'App\\Models\\Team']);
+        Artisan::call('scout:import', ['model' => 'App\\Models\\Tag']);
+        Artisan::call('scout:import', ['model' => 'App\\Models\\CustomIdentifiable']);
     }
 }
