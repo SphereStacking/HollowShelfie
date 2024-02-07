@@ -1,5 +1,4 @@
 FROM php:8.2-fpm
-
 # Render.com
 # 本番用
 
@@ -11,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     git \
     libonig-dev \
     libpq-dev \
-    && docker-php-ext-install pdo_pgsql mbstring
+    && docker-php-ext-install pdo_pgsql mbstring bcmath
 
 # Composerのインストール
 COPY --from=composer /usr/bin/composer /usr/bin/composer
@@ -33,4 +32,3 @@ RUN npm run build
 CMD php artisan serve --host=0.0.0.0 --port=8080
 
 EXPOSE 8080
-
