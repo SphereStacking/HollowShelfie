@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Enums\EventStatus;
+use App\Traits\HasFileable;
 use Laravel\Scout\Searchable;
 use App\Models\Traits\EventScopes;
 use App\Models\Traits\EventGetters;
@@ -22,6 +23,8 @@ class Event extends Model
     use EventSetters;
     use EventScopes;
     use EventRelations;
+
+    use HasFileable;
 
     /**
      * @var array 可変の属性

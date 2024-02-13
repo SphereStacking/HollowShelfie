@@ -66,15 +66,6 @@ trait EventRelations
         return $this->belongsToMany(Category::class);
     }
 
-    /**
-     * ファイルとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function files()
-    {
-        return $this->morphMany(File::class, 'fileable');
-    }
 
 
 
