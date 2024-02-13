@@ -10,11 +10,11 @@ class FileService
     public function uploadFile(UploadedFile $uploadedFile, $fileable)
     {
         // フォルダ名をリソースのクラス名とIDで構築
-        $folder_root = 'uploads';
+        $folder_root = 'public';
         $folder_fileable = strtolower(class_basename($fileable));
         $folder_id = $fileable->id;
 
-        // 例： uploads/events/1, uploads/events/2, ...
+        // 例： public/events/1, public/events/2, ...
         $path = $folder_root . '/' .  $folder_fileable . '/' . $folder_id;
 
         // ファイルをストレージに保存
