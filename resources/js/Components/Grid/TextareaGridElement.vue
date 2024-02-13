@@ -13,7 +13,6 @@ const emit = defineEmits(['update:modelValue'])
 input.value=props.modelValue
 
 watch(input, (newValue) => {
-  console.log('hoge')
   emit('update:modelValue', newValue)
 })
 </script>
