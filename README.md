@@ -94,12 +94,11 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 - [tailwindcss](https://tailwindcss.com/)
   - [daisyui](https://daisyui.com/)
 
-- [tinymce-vue](https://www.tiny.cloud/docs/tinymce/6/) (WYSIWYGエディター)
-  正直検討中 ほかにより良いのがないか。。
+- [tiptap](https://tiptap.dev) (WYSIWYGエディター)
 - [meilisearch](https://www.meilisearch.com/) (全文検索)
   - 日本語の検索がいまいちなためimageはprototypeを使用
 - [vue3-carousel](https://ismail9k.github.io/vue3-carousel/) (カルーセルバナー)
-- [dayjs](https://day.js.org/) (日付操作)  date-fnsは削除予定
+- [date-fns](https://date-fns.org/) (日付操作)  day.jsは削除予定
 - [iconify](https://iconify.design/) (Iconに使用)
 
 
