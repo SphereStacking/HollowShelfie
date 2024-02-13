@@ -75,6 +75,12 @@ Route::get('/event/search', [SearchController::class, 'event'])
 Route::get('/user/search', [SearchController::class, 'user'])
     ->name('user.search.index');
 
+
+Route::get('/tag/suggestion', [SearchController::class, 'tagSuggestion'])
+    ->name('tag.suggestion');
+Route::get('/mention/search', [SearchController::class, 'mentionSuggestion'])
+    ->name('mention.suggestion');
+
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
