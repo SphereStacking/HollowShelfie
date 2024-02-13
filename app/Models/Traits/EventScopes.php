@@ -117,4 +117,18 @@ trait EventScopes
         }
         return $query;
     }
+
+    /**
+     * ログイン中のユーザーが管理できるイベントのみを取得するスコープ。
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $userId ユーザーID
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeManagedByUser($query, $userId)
+    {
+        return $query->whereHas('organizers', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        });
+    }
 }
