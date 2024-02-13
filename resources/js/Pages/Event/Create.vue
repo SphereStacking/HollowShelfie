@@ -1,23 +1,11 @@
-<script setup>
-
-const props = defineProps({
-  // publicRelationsEvents: {
-  //   type: Array,
-  //   required: true
-  // },
-
-})
-
-</script>
-
 <template>
   <AppLayout title="Dashboard">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-neutral">
+      <h2 class="text-xl font-semibold  leading-tight text-neutral">
         イベント
       </h2>
     </template>
-    <div class="mx-auto mt-10 flex max-w-2xl flex-col gap-5 ">
+    <div class="mx-auto mt-10 flex max-w-4xl flex-col gap-5 ">
       <EventCreateFormCard />
     </div>
   </AppLayout>
