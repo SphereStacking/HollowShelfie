@@ -97,6 +97,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
     Route::get('/event/recruiting', [EventController::class, 'recruiting'])->name('event.recruiting');
+    Route::get('/event/manage', [EventController::class, 'manage'])->name('event.manage');
 
     Route::post('/event', [EventController::class, 'store'])->name('event.store');
     Route::get('/event/{event}/show', [EventController::class, 'show'])->name('event.show');

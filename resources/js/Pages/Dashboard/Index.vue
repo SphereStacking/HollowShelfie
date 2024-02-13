@@ -32,7 +32,7 @@ const dashboardItems = [
   { category: 'team', iconType: 'teamCreate', title: 'チームを作成する', url: route('teams.create'), buttonText: 'go!' },
   { category: 'team', iconType: 'team', title: '所属チーム(仮)', url: '#', buttonText: 'go' },
   { category: 'organize', iconType: 'event', title: 'イベントを主催する(仮)', url: route('event.create'), buttonText: 'go' },
-  { category: 'organize', iconType: 'myEvents', title: 'イベント管理(仮)', url: '#', buttonText: '表示' },
+  { category: 'organize', iconType: 'myEvents', title: 'イベント管理(仮)', url: route('event.manage'), buttonText: '表示' },
   { category: 'setting', iconType: 'account', title: 'アカウント設定', url: route('profile.show'), buttonText: 'go' },
   { category: 'setting', iconType: 'profile', title: '公開プロファイル', url: props.auth.user.profile_url, buttonText: 'go' },
 ]
