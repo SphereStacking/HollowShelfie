@@ -33,23 +33,30 @@ const props = defineProps({
   }
 })
 
-const modelValue= ref(props.modelValue?props.modelValue:[])
+const emits = defineEmits(['update:modelValue'])
+
+const performers= ref(props.modelValue?props.modelValue:[])
 const getFilteredDataFunc = props.templateOptions['getFilteredDataFunc']
 const route = props.templateOptions['route']
 
-onMounted(() => {
-})
+watch(performers, (value) => {
+  emits('update:modelValue', value)
+}, { deep: true})
+
 </script>
 
 <template>
   <MultiSearchable
-    v-model="modelValue"
+    v-model="performers"
     class="h-full"
     item-type="performer"
     :route="route"
+    label-key="name"
     :get-filtered-data-func="getFilteredDataFunc">
     <template #searchItem="{ item, handleAdd}">
-      <div class="btn btn-md flex h-full w-full flex-row  items-center justify-start gap-2 py-1 text-sm" @click="handleAdd(item.name)">
+      <div
+        class="btn btn-md flex h-full w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
+        @click="handleAdd(item)">
         <div class="avatar">
           <div class="w-10 rounded-xl" :class="item.image_url ? '' : 'skeleton'">
             <img v-if="item.image_url" :src="item.image_url">

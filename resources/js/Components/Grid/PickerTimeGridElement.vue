@@ -1,20 +1,47 @@
 <script setup>
+import { format } from 'date-fns'
 const props=defineProps({
   modelValue: {
-    type: String,
-    default: ''
+    type: Array,
+    default: () => [],
   },
 
 })
 
-const modelValue= ref(props.modelValue)
+const emits = defineEmits(['update:modelValue'])
+const timeSpan = ref([])
+
+watch(() => props.modelValue, (newValue) => {
+  // newValueがnullまたはundefinedの場合、空の配列を使用する
+  if (newValue === null || newValue === undefined) {
+    timeSpan.value = []
+  } else {
+    timeSpan.value = newValue.map(timeString => {
+      const [hours, minutes, seconds] = timeString.split(':').map(Number)
+      return { hours, minutes, seconds }
+    })
+  }
+}, { deep: true, immediate: true })
+
+const update = (newValue) => {
+  const formattedTimeSpan = newValue.map(time => {
+    const date = new Date()
+    date.setHours(time.hours, time.minutes, time.seconds)
+    return format(date, 'HH:mm:ss')
+  })
+  emits('update:modelValue', formattedTimeSpan)
+}
+
 </script>
 
 <template>
   <DatePickerWrapper
-    v-model="modelValue" class=""
-    time-picker text-input
-    range />
+    :model-value="timeSpan"
+    time-picker
+    disable-time-range-validation
+    text-input
+    range
+    @update:model-value="update" />
 </template>
 
 <style lang="">
