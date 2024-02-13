@@ -80,6 +80,15 @@ class EventController extends Controller
             'instanceTypes'=> InstanceTypeResource::collection(InstanceType::all())
         ]);
     }
+
+    /**
+     * 新規イベント作成のフォームを表示。
+     *
+     * @return Response
+     */
+    public function edit(): Response
+    {
+        return Inertia::render('Event/Edit');
     }
 
     /**
