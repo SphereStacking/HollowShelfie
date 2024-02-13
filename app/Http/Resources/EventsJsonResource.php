@@ -25,7 +25,6 @@ class EventsJsonResource extends JsonResource
                 'tags' =>  $item->tags,
                 'status' => $item->status,
                 'status_label' => $item->status_label,
-                'status_label' => $item->status_label,
                 'good_count' => $item->good_count,
                 'short_good_count' => $item->short_good_count,
                 'event_timeline_status' => $item->event_timeline_status,

@@ -64,7 +64,7 @@ class EventController extends Controller
 
         return Inertia::render(
             'Event/Timeline',
-            $this->eventService->getEventList($section, $tags, $per_page)
+            []
         );
     }
 
@@ -140,7 +140,6 @@ class EventController extends Controller
     {
         return Inertia::render('Event/Show', [
             'event' => new EventShowJsonResource($this->eventService->getShowEvent($id)),
-            'recommendEvents' => $this->eventService->getRecommendEvent(),
             'trendTags' => $this->tagService->getTrendTagNames()
         ]);
     }
