@@ -157,4 +157,17 @@ class EventController extends Controller
         return Inertia::render('Event/Recruiting');
     }
 
+    public function manage(Request $request): Response
+    {
+        // 現在認証されているユーザーを取得
+        $user = Auth::user();
+
+        // FIXME:管理できるイベントを返す処理を追加する。
+        $events = [];
+
+        return Inertia::render('Event/EventManage', [
+            'events' => new EventListJsonResource($events),
+        ]);
+    }
+
 }
