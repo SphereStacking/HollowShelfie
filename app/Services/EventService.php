@@ -4,11 +4,13 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Tag;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Event;
 use App\Enums\EventStatus;
 use App\Services\FileService;
 use App\Services\ViewCountService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,7 +49,7 @@ class EventService
             $event->syncTimeTables($attributes['time_tables'] ?? []);
 
             foreach ($attributes['images'] as $file) {
-            $this->fileService->uploadFile($file, $event);
+                $this->fileService->uploadFile($file, $event);
             }
             DB::commit();
 
@@ -65,9 +67,12 @@ class EventService
     {
         $event = Event::with([
             'organizers.event_organizeble',
-            'event_time_tables.performers.performable' // UserまたはTeamのデータも併せて取得
+            'event_time_tables.performers.performable'
         ])->find($id);
+
+        // FIXME: ここうまく動いてない。
         $this->viewCountService->incrementCount($event);
+
         return $event;
     }
 

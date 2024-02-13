@@ -91,7 +91,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/user/{user:alias_name}/follower', [FollowController::class, 'follower'])->name('user.follower');
 
 
-
     Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
 
@@ -99,7 +98,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/event/recruiting', [EventController::class, 'recruiting'])->name('event.recruiting');
     Route::get('/event/manage', [EventController::class, 'manage'])->name('event.manage');
 
-    Route::post('/event', [EventController::class, 'store'])->name('event.store');
+    Route::put('/event', [EventController::class, 'store'])->name('event.store');
     Route::get('/event/{event}/show', [EventController::class, 'show'])->name('event.show');
     Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
     // Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy'); // Delete event
