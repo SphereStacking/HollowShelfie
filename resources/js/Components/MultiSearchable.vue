@@ -23,6 +23,14 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  placeholder: {
+    type: String,
+    default: ''
+  },
+  labelKey: {
+    type: String,
+    default: ''
+  },
   //routeからのレスポンスを加工して配列を返す処理の受け渡し。
   getFilteredDataFunc: {
     type: Function,
@@ -35,8 +43,7 @@ const emits = defineEmits(['update:modelValue'])
 
 const inputRef = ref(null)
 const inputText = ref('')
-const items = ref([...props.modelValue])
-
+const items = ref(props.modelValue? [props.modelValue] : [])
 const isOpen = computed(() => inputText.value !== '')
 const isExists = computed(() => filteredItems.value && filteredItems.value.length !== 0)
 const isSearching =ref(false)
@@ -57,19 +64,21 @@ const clickTagDelete = (tagValue) => {
 }
 
 const isIncludesString = (searchString) => {
+  console.log(items.value)
   return items.value.some(item => item === searchString)
 }
 
-const handleAdd = (tagName) => {
+const handleAdd = (value) => {
   if (inputText.value === ''){ return }
   clearInputTag()
   inputRef.value.focus()
   inputRef.value.select()
-  if (isIncludesString(tagName)) {
-    alert('既に「' + tagName + '」が存在します。')
+  if (isIncludesString(value)) {
+    alert('既に「' + value + '」が存在します。')
     return
   }
-  items.value.push(tagName)
+  items.value.push(value)
+  emits('update:modelValue', items.value)
 }
 
 const clearInputTag = () => { inputText.value = ''}
@@ -102,12 +111,18 @@ const fetchFilteredItems = async (searchValue) => {
   }
 }
 
+const getLabel = (item) => {
+  if (props.labelKey && typeof item === 'object') {
+    return item[props.labelKey]
+  }
+  return item
+}
 </script>
 
 <template>
   <div class="w-full">
     <!-- タグ入力ボックス -->
-    <div class="input input-sm flex h-full w-full flex-wrap items-center gap-2 py-0.5 text-base-content">
+    <div class="input input-sm flex h-full w-full flex-wrap items-center gap-2 text-base-content">
       <!-- タグ表示 -->
       <draggable
         v-model="items"
@@ -128,7 +143,7 @@ const fetchFilteredItems = async (searchValue) => {
                 icon="mdi:close"
                 class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
               <div class="pl-6">
-                {{ element }}
+                {{ getLabel(element) }}
               </div>
             </div>
           </BtnConditionTypeMapper>
@@ -150,7 +165,7 @@ const fetchFilteredItems = async (searchValue) => {
               <div
                 class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm "
                 @click="handleAdd(item)">
-                <div>{{ item }}</div>
+                <div> {{ getLabel(item) }}</div>
               </div>
             </slot>
           </template>

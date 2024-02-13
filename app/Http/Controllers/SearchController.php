@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use Inertia\Inertia;
 use App\Models\Event;
 use App\Models\Category;
@@ -11,6 +12,7 @@ use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Params\EventSearchParams;
+use App\Models\CustomIdentifiable;
 use Illuminate\Support\Facades\DB;
 use Meilisearch\Endpoints\Indexes;
 use Illuminate\Support\Facades\Log;
@@ -18,6 +20,7 @@ use App\Http\Requests\SearchRequest;
 use App\Services\EventSearchService;
 use App\Services\EventMeilisearchService;
 use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\MentionsuggestionJsonResource;
 
 class SearchController extends Controller
 {
@@ -83,5 +86,34 @@ class SearchController extends Controller
                 'statuses' =>  EventStatus::getPermittedStatusesForListSearch(),
             ]
         );
+    }
+
+    public function tagSuggestion(Request $request)
+    {
+        $suggestions = Tag::search($request->input('q'))
+            ->paginate(10)
+            ->through(function ($tag) {
+                $tag->loadCount(['taggables','events','users']);
+                return $tag;
+            });
+        return response()->json([
+            'status' => 'success',
+            'suggestions' => $suggestions,
+        ]);
+    }
+
+    public function mentionSuggestion(Request $request)
+    {
+        $searchResults = CustomIdentifiable::search($request->input('q'))->paginate(10);
+        $customIds = $searchResults->pluck('id')->toArray();
+        $customIdentities = CustomIdentifiable::with('aliasable')
+            ->whereIn('id', $customIds)
+            ->get();
+        // searchResults の data を customIdentities で置き換える
+        $searchResults->setCollection($customIdentities);
+        return response()->json([
+            'status' => 'success',
+            'suggestions' => new MentionsuggestionJsonResource($searchResults),
+        ]);
     }
 }
