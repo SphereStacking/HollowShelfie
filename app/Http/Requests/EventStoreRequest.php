@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Enums\EventStatus;
+use Illuminate\Foundation\Http\FormRequest;
+
+class EventStoreRequest extends FormRequest
+{
+
+
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * イベントストア用の属性を取得します。
+     *
+     * @return array
+     */
+    public function eventAttributes(): array
+    {
+        return [
+            'title' => $this->input('title') ?? '',
+            'categories' => $this->input('categories') ?? [],
+            'tags' => $this->input('tags') ?? [],
+            'description' => $this->input('description') ?? [],
+            'dates' => $this->input('dates') ?? [],
+            'organizers' => $this->input('organizers') ?? [],
+            'performers' => $this->input('performers') ?? [],
+            'time_tables' => $this->input('time_tables') ?? [],
+            'status' => EventStatus::from($this->input('status', EventStatus::DRAFT->value)),
+            'images' => $this->file('images') ?? [],
+        ];
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        //ドラフトのとき
+        if($this->input('status') == EventStatus::DRAFT->value){
+            return [
+                'images.*' => 'file|max:30720', //30MB
+            ];
+        }
+
+        //ドラフト以外
+        return [
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'images.*' => 'file|max:30720', //30MB
+            'categories' => 'required|array|min:1',
+        ];
+    }
+}

@@ -26,14 +26,38 @@ class EventService
     }
 
     //イベントを作成する。
-    public function storeEvent($attributes, $uploadedFiles)
+    public function storeEvent($attributes)
     {
-        $event = Event::create($attributes)->get();
-        // ファイルアップロードのロジックはFileServiceに委譲
-        foreach ($uploadedFiles as $file) {
+        DB::beginTransaction();
+        try {
+            Log::debug($attributes);
+
+            $event = new Event;
+            $event->title = $attributes['title'];
+            $event->description = $attributes['description'];
+            $event->start_date = $attributes['dates'][0] ?? null;
+            $event->end_date = $attributes['dates'][1] ?? null;
+            $event->event_create_user_id = Auth::user()->id;
+            $event->updateEventStatus($attributes['status'] ?? EventStatus::DRAFT);
+            $event->save();
+
+            $event->syncTagsByNames($attributes['tags'] ?? []);
+            $event->syncCategoriesByNames($attributes['categories']?? []);
+            $event->syncOrganizers($attributes['organizers']?? []);
+            $event->syncTimeTables($attributes['time_tables'] ?? []);
+
+            foreach ($attributes['images'] as $file) {
             $this->fileService->uploadFile($file, $event);
+            }
+            DB::commit();
+
+            return $event;
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            throw $e;
         }
-        return Event::create($attributes);
     }
 
     //イベントを取得する。

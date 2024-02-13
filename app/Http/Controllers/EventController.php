@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EventStatus;
 use Inertia\Inertia;
 use App\Models\Event;
+use Inertia\Response;
+use App\Models\Category;
+use App\Models\InstanceType;
 use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Http\Requests\EventRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EventStoreRequest;
+use App\Http\Resources\CategoryResource;
 use App\Services\EventMeilisearchService;
+use App\Http\Resources\InstanceTypeResource;
+use App\Http\Resources\EventListJsonResource;
 use App\Http\Resources\EventShowJsonResource;
 
 class EventController extends Controller
@@ -66,7 +75,11 @@ class EventController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Event/Create');
+        return Inertia::render('Event/Create', [
+            'categories'=> CategoryResource::collection(Category::all()),
+            'instanceTypes'=> InstanceTypeResource::collection(InstanceType::all())
+        ]);
+    }
     }
 
     /**
@@ -75,24 +88,12 @@ class EventController extends Controller
      * @param EventRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(EventRequest $request)
+    public function store(EventStoreRequest $request)
     {
-        $Attributes = $request->only([
-            'title',
-            'description',
-            'performers',
-            'flyer',
-            'date',
-            'dates'
-        ]);
+        $attributes = $request->eventAttributes();
+        $this->eventService->storeEvent($attributes);
 
-        $flyers = $request->only([
-            'flyers',
-        ]);
-
-        $this->eventService->storeEvent($Attributes, $flyers);
-
-        return redirect()->route('event.index')->with([
+        return redirect()->back()->with([
             'status' => 'success',
             'message' => 'イベントを登録しました。'
         ]);

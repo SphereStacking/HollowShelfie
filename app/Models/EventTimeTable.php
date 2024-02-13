@@ -20,7 +20,11 @@ class EventTimeTable extends Model
         'performance_time'
     ];
 
-
+    protected $fillable = [
+        'start_time',
+        'end_time',
+        'description',
+    ];
 
     protected $casts = [
         'start_date' => 'datetime',
@@ -29,7 +33,7 @@ class EventTimeTable extends Model
 
     public function getPerformanceTimeAttribute()
     {
-        return $this->start_date->format('H:i') . ' ~ ' . $this->end_date->format('H:i');
+        return $this->start_time. ' ~ ' . $this->end_time ;
     }
 
     public function event()
