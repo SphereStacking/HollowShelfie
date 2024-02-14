@@ -39,7 +39,7 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 イベントのfryerやチラシを掲示する棚をイメージしてこの名称
 
 ## その他
-- [jira](https://sphere-stacking.atlassian.net/jira/software/projects/SPHERE/boards/1) (github issueに移したい。)
+- [github PJ](https://github.com/orgs/ShakeSpheres/projects/1)
 - [slack](https://join.slack.com/t/shake-spheres/shared_invite/zt-2asmw8mhg-nAHGk4Ub88NzvyKveZDcAg)
 - [notion](https://www.notion.so/invite/b9dcd6b1ec909bf0c03498f20b2ede15fa2c3c59)
 
