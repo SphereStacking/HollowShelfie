@@ -35,6 +35,7 @@ class EventStoreRequest extends FormRequest
             'time_tables' => $this->input('time_tables') ?? [],
             'status' => EventStatus::from($this->input('status', EventStatus::DRAFT->value)),
             'images' => $this->file('images') ?? [],
+            'instances' => $this->input('instances') ?? [],
         ];
     }
 
@@ -58,6 +59,9 @@ class EventStoreRequest extends FormRequest
             'description' => 'required|string',
             'images.*' => 'file|max:30720', //30MB
             'categories' => 'required|array|min:1',
+            'instances' => 'required|array|max:1', //現状は
+            'instances.*.access_url' => 'required|string',
+            'instances.*.display_name' => 'required|string',
         ];
     }
 }
