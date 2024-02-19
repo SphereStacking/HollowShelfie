@@ -32,5 +32,9 @@ class Handler extends ExceptionHandler
         $this->renderable(function (InvalidStateException $e, $request) {
             return Inertia::render('Errors/InvalidState', []);
         });
+
+        $this->renderable(function (EventNotPublishedException $e, $request) {
+            return Inertia::render('Errors/EventNotPublished', []);
+        });
     }
 }
