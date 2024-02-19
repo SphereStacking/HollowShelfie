@@ -8,13 +8,17 @@ import PickerTimeGridElement from '@/Components/Grid/PickerTimeGridElement.vue'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
 
 const categoryNames = usePage().props.categories.map(category => category.name)
-const instanceTypeNames = usePage().props.instanceTypes.map(instanceType => instanceType.name)
+const instanceTypeNames = usePage().props.instanceTypes
 
 const form = useForm({
   _method: 'PUT',
   title: '',
   categories: [],
-  instance_type: '',
+  instances: [{
+    instance_type_id: '',
+    access_url: '',
+    display_name: '',
+  }],
   instance_url: '',
   tags: [],
   description: '',
@@ -69,12 +73,14 @@ const formSubmit = (status)=>{
       :error="form.errors.title" />
 
     <SelectElement
-      v-model="form.instance_type"
+      v-model="form.instances[0].instance_type_id"
       label="インスタンス"
       label-icon-type="instance"
       help="開催場所を選択"
       class=""
-      :error="form.errors.instance_type"
+      id-key="id"
+      label-key="name"
+      :error="form.errors.instances"
 
       :selectable-items="instanceTypeNames">
       <template #joinRight>

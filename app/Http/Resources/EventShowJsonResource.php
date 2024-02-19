@@ -97,7 +97,8 @@ class EventShowJsonResource extends JsonResource
             'instances' => $this->instances->map(function ($instance) {
                 return [
                     'instance_type' => $instance->instance_type_name,
-                    'location' => $instance->location,
+                    'access_url' => $instance->access_url,
+                    'display_name' => $instance->display_name,
                 ];
             }),
             'auth_user' => [

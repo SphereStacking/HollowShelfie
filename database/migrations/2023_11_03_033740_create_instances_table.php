@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('event_id');
-            $table->integer('instance_type_id');
-            $table->text('location');
+            $table->integer('instance_type_id')->nullable();
+            $table->text('access_url', 2048)->nullable();
+            $table->text('display_name')->nullable();
         });
     }
 
