@@ -43,6 +43,10 @@ export const ItemsConfig = {
     icon: 'mdi:bookmark',
     buttonClass: ''
   },
+  good: {
+    icon: 'mdi:thumb-up',
+    buttonClass: ''
+  },
   onGood: {
     icon: 'mdi:thumb-up',
     buttonClass: ''
