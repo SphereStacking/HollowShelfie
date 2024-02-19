@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('path');
             $table->string('name');
-            $table->string('type');  // type 列を追加
+            $table->string('original_name');
+            $table->string('type');
             $table->unsignedBigInteger('fileable_id'); // ポリモーフィック関連
             $table->string('fileable_type'); // ポリモーフィック関連
         });
