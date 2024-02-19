@@ -1,20 +1,12 @@
-<script setup>
-
-const props = defineProps({
-
-})
-
-</script>
-
 <template>
   <AppLayout title="Dashboard">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight ">
+      <h2 class="text-xl font-semibold  leading-tight text-neutral">
         イベント
       </h2>
     </template>
-    <div class="mx-auto mt-2 flex max-w-7xl flex-col gap-2">
-      <div>編集</div>
+    <div class="mx-auto mt-10 flex max-w-4xl flex-col gap-5 ">
+      <EventEditFormCard />
     </div>
   </AppLayout>
 </template>

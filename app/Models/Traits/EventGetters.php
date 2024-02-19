@@ -61,6 +61,17 @@ trait EventGetters
     }
 
     /**
+     * 関連付けられているカテゴリの名前を返す
+     *
+     * @return string|null
+     */
+    public function getCategoryNamesAttribute()
+    {
+        return $this->categories ? $this->categories->pluck('name')->toArray() : null;
+    }
+
+
+    /**
      * 関連付けられているインスタンスの中から最初の名前を返す
      *
      * @return string|null

@@ -12,6 +12,7 @@ use App\Models\Traits\EventGetters;
 use App\Models\Traits\EventSetters;
 use Illuminate\Support\Facades\Log;
 use App\Models\Traits\EventRelations;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -36,10 +37,31 @@ class Event extends Model
      * @var array
      */
     protected $appends = [
-        'created_user', 'status_label', 'tags',
+        'created_user', 'status_label', 'tags', 'category_names',
         'is_bookmark', 'is_good', 'category_name', 'instances', 'good_count',
         'short_good_count', 'event_timeline_status'
     ];
+
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // イベントが削除される前に実行
+        static::deleting(function ($event) {
+            // 関連する画像ファイルを削除
+            foreach ($event->files as $file) {
+                $filePath = 'public/' . $file->path . '/' . $file->name;
+                Storage::delete($filePath);
+            }
+
+            // 関連するファイルレコードも削除
+            $event->files()->delete();
+        });
+    }
 
     /**
      * MeiliSearch 検索可能な配列に変換します。
@@ -54,7 +76,7 @@ class Event extends Model
                 'title',
                 'description',
                 'status',
-                'creted_user',
+                'created_user',
                 'status_label',
                 'good_count',
             ]
@@ -197,4 +219,16 @@ class Event extends Model
         }
     }
 
+    public function syncInstances(array $instances)
+    {
+        // 既存のインスタンスを削除
+        $this->instances()->delete();
+
+        $validatedInstances = collect($instances)->filter(function ($instance) {
+            // InstanceType モデルに instance_type_id が存在するか確認
+            return \App\Models\InstanceType::find($instance['instance_type_id']) !== null;
+        })->all();
+        // 新しいインスタンスを一括作成
+        $this->instances()->createMany($validatedInstances);
+    }
 }

@@ -17,6 +17,17 @@ class Instance extends Model
     ];
 
     /**
+     * マスアサインメントで代入を許可する属性
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'instance_type_id',
+        'access_url',
+        'display_name',
+    ];
+
+    /**
      * インスタンスの名前を返す
      *
      * @return string|null

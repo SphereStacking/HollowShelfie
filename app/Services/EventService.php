@@ -13,6 +13,7 @@ use App\Services\ViewCountService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\EventNotPublishedException;
 
 class EventService
 {
@@ -47,6 +48,7 @@ class EventService
             $event->syncCategoriesByNames($attributes['categories']?? []);
             $event->syncOrganizers($attributes['organizers']?? []);
             $event->syncTimeTables($attributes['time_tables'] ?? []);
+            $event->syncInstances($attributes['instances'] ?? []);
 
             foreach ($attributes['images'] as $file) {
                 $this->fileService->uploadFile($file, $event);

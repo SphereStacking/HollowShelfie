@@ -51,6 +51,17 @@ trait UserRelations
     }
 
     /**
+     * グッドイベントリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function create_events()
+    {
+        return $this->hasMany(Event::class, 'event_create_user_id');
+    }
+
+
+    /**
      * このUserがオーガナイザーしているイベントを取得
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany

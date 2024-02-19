@@ -33,18 +33,21 @@ const prev = () => {
 </script>
 
 <template>
-  <Card>
+  <div class="flex h-full flex-col justify-between gap-2">
     <slot name="header"></slot>
-    <Carousel
-      v-model="currentSlide" :items-to-show="1" :wrap-around="true"
-      class="rounded-sm">
-      <Slide v-for="(slide, index) in props.images" :key="index">
-        <img :src="slide" alt="image" class="carousel__item ">
-      </Slide>
-    </Carousel>
 
-    <div class=" flex flex-row items-center gap-1">
-      <button class="btn p-0" @click="next">
+    <div class="relative h-full rounded-xl" :class="[!props.images.length ? 'bg-base-300' : '']">
+      <Carousel
+        v-model="currentSlide" :items-to-show="1" :wrap-around="true">
+        <Slide v-for="(slide, index) in props.images" :key="index">
+          <img :src="slide" alt="image" class="carousel__item ">
+        </Slide>
+      </Carousel>
+      <Icon v-if="!props.images.length" icon="mdi:image-off" class=" absolute left-1/2 top-1/2 h-10 w-20 -translate-x-1/2 -translate-y-1/2 bg-base-300 text-6xl" />
+    </div>
+
+    <div class=" flex flex-row items-center justify-between gap-1">
+      <button class="btn btn-square  btn-md" @click="next">
         <Icon icon="mdi:chevron-left" class="text-4xl" />
       </button>
       <Carousel
@@ -56,12 +59,11 @@ const prev = () => {
             @click="slideTo(index)">
         </Slide>
       </Carousel>
-      <button class="btn p-0" @click="prev">
+      <button class="btn btn-square  btn-md" @click="prev">
         <Icon icon="mdi:chevron-right" class="text-4xl" />
       </button>
     </div>
-
     <slot name="footer"></slot>
-  </Card>
+  </div>
 </template>
 
