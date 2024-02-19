@@ -39,7 +39,7 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 イベントのfryerやチラシを掲示する棚をイメージしてこの名称
 
 ## その他
-- [jira](https://sphere-stacking.atlassian.net/jira/software/projects/SPHERE/boards/1) (github issueに移したい。)
+- [github PJ](https://github.com/orgs/ShakeSpheres/projects/1)
 - [slack](https://join.slack.com/t/shake-spheres/shared_invite/zt-2asmw8mhg-nAHGk4Ub88NzvyKveZDcAg)
 - [notion](https://www.notion.so/invite/b9dcd6b1ec909bf0c03498f20b2ede15fa2c3c59)
 
@@ -94,12 +94,11 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 - [tailwindcss](https://tailwindcss.com/)
   - [daisyui](https://daisyui.com/)
 
-- [tinymce-vue](https://www.tiny.cloud/docs/tinymce/6/) (WYSIWYGエディター)
-  正直検討中 ほかにより良いのがないか。。
+- [tiptap](https://tiptap.dev) (WYSIWYGエディター)
 - [meilisearch](https://www.meilisearch.com/) (全文検索)
   - 日本語の検索がいまいちなためimageはprototypeを使用
 - [vue3-carousel](https://ismail9k.github.io/vue3-carousel/) (カルーセルバナー)
-- [dayjs](https://day.js.org/) (日付操作)  date-fnsは削除予定
+- [date-fns](https://date-fns.org/) (日付操作)  day.jsは削除予定
 - [iconify](https://iconify.design/) (Iconに使用)
 
 
