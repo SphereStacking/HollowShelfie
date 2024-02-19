@@ -89,9 +89,15 @@ const image_flyers = [
       </div>
 
       <div class=" mx-auto flex w-full flex-row gap-1 lg:col-span-7 lg:col-start-1 lg:row-start-2">
-        <div class="flex items-center gap-1 ">
-          <IconTypeMapper type="category" class="text-xl" />
-          <BtnEventSerchItem :value="event.category_name" type="category" is-navigate />
+        <div class="flex flex-row items-center gap-1">
+          <div class="mr-auto flex items-center gap-1  rounded-md">
+            <IconTypeMapper type="category" class="text-xl" />
+            <template v-for="(category_name, index) in event.category_names" :key="index">
+              <BtnConditionTypeMapper type="category" class="no-animation">
+                {{ category_name }}
+              </BtnConditionTypeMapper>
+            </template>
+          </div>
         </div>
         <div class="flex flex-row items-center gap-1">
           <div class="mr-auto flex items-center gap-1  rounded-md">
@@ -105,7 +111,9 @@ const image_flyers = [
       <!-- header -->
       <!-- leftside -->
       <div class="mx-auto w-full lg:col-span-3 lg:row-start-3">
-        <CarouselGallery class="sticky top-12" :images="image_flyers" />
+        <Card>
+          <CarouselGallery class="sticky top-12" :images="image_flyers" />
+        </Card>
       </div>
       <!-- leftside -->
       <!-- Main -->

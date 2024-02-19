@@ -1,3 +1,4 @@
+
 <script setup>
 
 import {useForm, usePage} from '@inertiajs/vue3'
@@ -9,16 +10,18 @@ import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
 const categoryNames = usePage().props.categories.map(category => category.name)
 const instanceTypeNames = usePage().props.instanceTypes
 
+const event = usePage().props.event
+
 const form = useForm({
   _method: 'PUT',
   title: '',
   categories: [],
   instances: [{
     instance_type_id: '',
+    instance_type: '',
     access_url: '',
     display_name: '',
   }],
-  instance_url: '',
   tags: [],
   description: '',
   dates: [],
@@ -46,7 +49,7 @@ const columDefs = [
 
 const formSubmit = (status)=>{
   form.status=status
-  form.post(route('event.store'), {
+  form.put(route('event.update'), {
     forceFormData: true,
     preserveScroll: true,
     onSuccess: () => {},
@@ -54,11 +57,29 @@ const formSubmit = (status)=>{
   })
 }
 
+onBeforeMount(() => {
+  form.title = event.title
+  form.categories = event.category_names
+  form.instances[0].instance_type_id = event.instances[0].instance_type_id
+  form.instances[0].instance_type = event.instances[0].instance_type
+  form.instances[0].access_url = event.instances[0].access_url
+  form.instances[0].display_name = event.instances[0].display_name
+  form.tags = event.tags
+  form.description = event.description
+  form.dates = [new Date(event.start_date), new Date(event.end_date)]
+  form.organizers = event.organizers
+  form.time_tables = event.time_table
+  form.images = event.files
+})
 </script>
 
 <template>
-  {{ form }}
-
+  <div>
+    {{ form }}
+  </div>
+  <div>
+    {{ event }}
+  </div>
   <FormCard>
     <template #title>
       イベント作成！
@@ -115,6 +136,7 @@ const formSubmit = (status)=>{
       label="タグ"
       label-icon-type="tag"
       item-type="tag"
+
       help="複数選択可能です。数の多いタグを使用することで見つかりやすくなります。"
       :error="form.errors.tags"
       item-icon-type="tag"
@@ -146,9 +168,9 @@ const formSubmit = (status)=>{
       v-model="form.organizers"
       label="オーガナイザー"
       label-icon-type="organizer"
-      item-type="organizer"
       help="主催者を選択してください"
       :error="form.errors.organizers"
+      item-type="organizer"
       :route="route('mention.suggestion')"
       label-key="name"
       :get-filtered-data-func="getFilteredDataFunc">
@@ -180,6 +202,8 @@ const formSubmit = (status)=>{
       </template>
     </MultiSearchableElement>
 
+    {{ event.time_table }}<br>
+    {{ form.time_tables }}
     <GridElement
       v-model="form.time_tables"
       label="タイムテーブル"
@@ -203,6 +227,10 @@ const formSubmit = (status)=>{
       help="先頭の画像がイベント表示の際の縦横比を決定します。画像サイズは統一することをお勧めします。"
       max-file-size="30MB"
       max-total-size="30MB" />
+
+    {{ form.images }}
+
+    {{ event.files }}
 
     <template #actions>
       <div class="mx-20 grid w-full grid-cols-2 gap-2">

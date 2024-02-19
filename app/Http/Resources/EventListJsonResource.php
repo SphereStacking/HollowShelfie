@@ -17,7 +17,7 @@ class EventListJsonResource extends JsonResource
     public function toArray($request)
     {
         return [
-            // 'debug' => $this->resource,
+            'debug' => $this->resource,
             'pagination' => [
                 'current_page' => $this->resource->currentPage(),
                 'first_page_url' => $this->resource->url(1),
@@ -37,16 +37,26 @@ class EventListJsonResource extends JsonResource
                     'created_at' => $item->created_at,
                     'title' => $item->title,
                     'description' => $item->description,
-                    'category_name' => $item->category_name,
+                    'category_name' => $item->category_name, //TODO:これ消す。
+                    'category_names' => $item->category_names,
                     'tags' =>  $item->tags,
                     'status' => $item->status,
                     'status_label' => $item->status_label,
                     'good_count' => $item->good_count,
                     'short_good_count' => $item->short_good_count,
                     'event_timeline_status' => $item->event_timeline_status,
+                    'formatted_start_date' => $item->getFormattedStartDateAttribute(),
+                    'formatted_end_date' => $item->getFormattedEndDateAttribute(),
+                    'good_count' => $item->good_count,
+                    'short_good_count' => $item->short_good_count,
+                    'files' => $item->files->map(function ($file) {
+                        return [
+                            'id' => $file->id,
+                            'public_url' => $file->public_url,
+                        ];
+                    }),
                     'organizers' => $item->organizers->map(function ($organizeble) {
                         return [
-                            'profile_url' =>  $organizeble->event_organizeble->profile_url,
                             'id' => $organizeble->event_organizeble_id,
                             'type' => $organizeble->event_organizeble_type,
                             'imag_url' => $organizeble->event_organizeble_type === User::class
@@ -65,7 +75,6 @@ class EventListJsonResource extends JsonResource
                         return $time_table->performers->map(function ($performer) {
                             return [
                                 'id' => $performer->performable->id,
-                                'profile_url' => $performer->performable->profile_url,
                                 'name' => $performer->performable->name,
                                 'links' => $performer->performable->links->map(function ($link) {
                                     return [
