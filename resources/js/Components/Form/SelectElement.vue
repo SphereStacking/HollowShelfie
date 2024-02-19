@@ -1,48 +1,53 @@
 <script setup>
-defineProps({
-  id: {
+const props = defineProps({
+  idKey: { // オブジェクトの配列の場合のidのキー
     type: String,
-    default: ''
+    default: null
   },
-  label: {
+  labelKey: { // オブジェクトの配列の場合の表示名のキー
+    type: String,
+    default: null
+  },
+  label: { // ラベル
     type: String,
     required: true
   },
-  labelIconType: {
+  labelIconType: { // ラベルのアイコンの種類
     type: String,
     default: ''
   },
-  modelValue: {
+  modelValue: { // v-modelの値
     type: String,
     default: ''
   },
-  placeholder: {
+  placeholder: { // プレースホルダー
     type: String,
     default: ''
   },
-  help: {
+  help: { // ヘルプテキスト
     type: String,
     default: null
   },
-  error: {
+  error: { // エラーメッセージ
     type: String,
     default: null
   },
-  selectableItems: {
+  selectableItems: { // 選択肢
     type: Array,
     default: ()=>[]
-  }
+  },
 
 })
 
-const InputType = 'text'
-
 const emit = defineEmits(['update:modelValue'])
 
-const updateValue = (e) => {
-  // 子要素のmodelValueをe.target.valueでupdate
-  emit('update:modelValue', e.target.value)
+const updateValue = (event) => {
+  emit('update:modelValue', event.target.value)
 }
+const isObjectArray = computed(() => {
+  return props.selectableItems.length > 0 && typeof props.selectableItems[0] === 'object'
+})
+
 </script>
 
 <template>
@@ -53,13 +58,13 @@ const updateValue = (e) => {
       <slot name="joinLeft"></slot>
       <select
         v-bind="$attrs"
-        class="join-item select select-sm  rounded-md py-0.5" :value="modelValue"
-        :class="{ 'select-error': error }" @input="updateValue">
-        <option disabled selected>
-          Pick one
+        class="join-item select select-sm rounded-md py-0.5" :value="modelValue"
+        :class="{ 'select-error': error }" @change="updateValue($event)">
+        <option disabled value="">
+          {{ placeholder }}
         </option>
-        <option v-for="item in selectableItems" :key="item">
-          {{ item }}
+        <option v-for="item in selectableItems" :key="isObjectArray ? item[idKey] : item" :value="isObjectArray ? item[idKey] : item">
+          {{ isObjectArray ? item[labelKey] : item }}
         </option>
       </select>
       <slot name="joinRight"></slot>
