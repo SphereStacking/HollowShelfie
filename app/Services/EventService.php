@@ -70,10 +70,18 @@ class EventService
             'event_time_tables.performers.performable'
         ])->find($id);
 
-        // FIXME: ここうまく動いてない。
-        $this->viewCountService->incrementCount($event);
+        $user = Auth::user();
 
+        // イベントが未公開（公開日が未来）かつログインユーザーがイベントの作成者でない場合、エラーを投げる
+        $isUnpublished = isset($event->published_at) && $event->published_at->isFuture();
+        $isNotCreator = $event->event_create_user_id !== $user->id;
+        if ($isUnpublished && $isNotCreator) {
+            throw new EventNotPublishedException('The event is not published yet.');
+        }
+
+        $this->viewCountService->incrementCount($event);
         return $event;
+
     }
 
     /**
