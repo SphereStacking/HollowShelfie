@@ -1,18 +1,31 @@
 <?php
 
-use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\TeamLogoController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EventGoodController;
-use App\Http\Controllers\EventBookmarkController;
+use App\Http\Controllers\Event\ShowEventController;
+use App\Http\Controllers\Event\StoreEventController;
+use App\Http\Controllers\Event\UpdateEventController;
+use App\Http\Controllers\EventGood\GetGoodController;
+use App\Http\Controllers\Event\GetEditEventController;
+use App\Http\Controllers\Event\GetIndexEventController;
+use App\Http\Controllers\EventGood\StoreGoodController;
+use App\Http\Controllers\Event\GetCreateEventController;
+use App\Http\Controllers\Event\GetManageEventController;
+use App\Http\Controllers\EventGood\DestroyGoodController;
+use App\Http\Controllers\Event\GetTimeLineEventController;
+use App\Http\Controllers\Event\GetRecruitingEventController;
+use App\Http\Controllers\EventBookmark\GetBookmarkController;
+use App\Http\Controllers\EventSearch\GetUserSearchController;
+use App\Http\Controllers\EventSearch\GetEventSearchController;
+use App\Http\Controllers\EventBookmark\StoreBookmarkController;
+use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,12 +80,12 @@ Route::get('/team/{team:alias_name}', [ProfileController::class, 'team'])
     ->name('team.profile.show');
 
 
-Route::get('/event', [EventController::class, 'index'])
+Route::get('/event', GetIndexEventController::class)
     ->name('event.index');
 
-Route::get('/event/search', [SearchController::class, 'event'])
+Route::get('/event/search', GetEventSearchController::class)
     ->name('event.search.index');
-Route::get('/user/search', [SearchController::class, 'user'])
+Route::get('/user/search', GetUserSearchController::class)
     ->name('user.search.index');
 
 
@@ -85,8 +98,8 @@ Route::get('/mention/search', [SearchController::class, 'mentionSuggestion'])
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/user/{user:alias_name}/bookmark', [EventBookmarkController::class, 'bookmark'])->name('dashboard.bookmark');
-    Route::get('/user/{user:alias_name}/good', [EventGoodController::class, 'good'])->name('user.good');
+    Route::get('/user/{user:alias_name}/bookmark', GetBookmarkController::class, 'bookmark')->name('dashboard.bookmark');
+    Route::get('/user/{user:alias_name}/good', GetGoodController::class, 'good')->name('user.good');
     Route::get('/user/{user:alias_name}/following', [FollowController::class, 'following'])->name('user.following');
     Route::get('/user/{user:alias_name}/follower', [FollowController::class, 'follower'])->name('user.follower');
 
@@ -94,21 +107,21 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::delete('/team/{team}/logo', [TeamLogoController::class, 'destroy'])->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', [TeamLogoController::class, 'update'])->name('current-team-logo.update');
 
-    Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
-    Route::get('/event/recruiting', [EventController::class, 'recruiting'])->name('event.recruiting');
-    Route::get('/event/manage', [EventController::class, 'manage'])->name('event.manage');
+    Route::get('/event/recruiting', GetRecruitingEventController::class)->name('event.recruiting');
+    Route::get('/event/manage', GetManageEventController::class)->name('event.manage');
 
-    Route::put('/event', [EventController::class, 'store'])->name('event.store');
-    Route::get('/event/{event}/show', [EventController::class, 'show'])->name('event.show');
-    Route::get('/event/{event}/edit', [EventController::class, 'edit'])->name('event.edit');
-    // Route::delete('/event/{event}', [EventController::class, 'destroy'])->name('event.destroy'); // Delete event
+    Route::put('/event', StoreEventController::class)->name('event.store');
+    Route::get('/event/create', GetCreateEventController::class)->name('event.create');
+    Route::get('/event/{event}/show', ShowEventController::class)->name('event.show');
+    Route::get('/event/{event}/edit', GetEditEventController::class)->name('event.edit');
+    Route::put('/event/{event}', UpdateEventController::class)->name('event.update');
 
-    Route::post('/event/{event}/good', [EventGoodController::class, 'store'])->name('event.good');
-    Route::delete('/event/{event}/good', [EventGoodController::class, 'destroy'])->name('event.ungood');
-    Route::post('/event/{event}/bookmark', [EventBookmarkController::class, 'store'])->name('event.bookmark');
-    Route::delete('/event/{event}/bookmark', [EventBookmarkController::class, 'destroy'])->name('event.unbookmark');
+    Route::post('/event/{event}/good', StoreGoodController::class)->name('event.good');
+    Route::delete('/event/{event}/good', DestroyGoodController::class)->name('event.ungood');
+    Route::post('/event/{event}/bookmark', StoreBookmarkController::class)->name('event.bookmark');
+    Route::delete('/event/{event}/bookmark', DestroyBookmarkController::class)->name('event.unbookmark');
 
-    Route::get('/event/timeline', [EventController::class, 'timeline'])->name('event.timeline.show');
+    Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.show');
 });
 
 // Route::get('/information', [InformationController::class, 'index'])->name('information.index');
