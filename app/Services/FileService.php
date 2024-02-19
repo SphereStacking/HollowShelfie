@@ -4,30 +4,27 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use App\Models\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileService
 {
     public function uploadFile(UploadedFile $uploadedFile, $fileable)
     {
-        // フォルダ名をリソースのクラス名とIDで構築
-        $folder_root = 'public';
-        $folder_fileable = strtolower(class_basename($fileable));
-        $folder_id = $fileable->id;
+        $folderName = strtolower(class_basename($fileable)) . '/' . $fileable->id;
+        $filename = $uploadedFile->hashName();
+        $savePath = Storage::disk('public')->putFileAs($folderName, $uploadedFile, $filename);
 
-        // 例： public/events/1, public/events/2, ...
-        $path = $folder_root . '/' .  $folder_fileable . '/' . $folder_id;
+        if (!$savePath) {
+            throw new \Exception('ファイルの保存に失敗しました。');
+        }
 
-        // ファイルをストレージに保存
-        // file名衝突はlaravelが良くやってくれるらしい。
-        $filename = $uploadedFile->store($path);
-
-        // データベースに情報を保存
-        $file = new File([
+        $file = $fileable->files()->create([
+            'path' => $folderName,
             'name' => $filename,
+            'original_name' => $uploadedFile->getClientOriginalName(),
             'type' => $uploadedFile->getClientMimeType(),
         ]);
-
-        $fileable->files()->save($file);
 
         return $file;
     }
