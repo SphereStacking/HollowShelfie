@@ -21,8 +21,8 @@ class GetEditEventController extends Controller
             throw new CannotOperateEventException();
         }
         return Inertia::render('Event/Edit', [
-            'categories'=> CategoryResource::collection(Category::all()),
-            'instanceTypes'=> InstanceTypeResource::collection(InstanceType::all()),
+            'categories'=> fn () => CategoryResource::collection(Category::all()),
+            'instanceTypes'=> fn () => InstanceTypeResource::collection(InstanceType::all()),
             'event' => new EventEditJsonResource($event),
         ]);
     }
