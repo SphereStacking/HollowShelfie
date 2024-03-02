@@ -2,21 +2,24 @@
 
 namespace App\Http\Controllers\Event;
 
-use Inertia\Inertia;
-use Inertia\Response;
-use App\Models\Category;
-use App\Models\InstanceType;
+use App\Services\EventService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\InstanceTypeResource;
+use Illuminate\Http\RedirectResponse;
 
 class GetCreateEventController extends Controller
 {
-    public function __invoke(): Response
+    private $eventService;
+
+    public function __construct(EventService $eventService)
     {
-        return Inertia::render('Event/Create', [
-            'categories'=> CategoryResource::collection(Category::all()),
-            'instanceTypes'=> InstanceTypeResource::collection(InstanceType::all())
-        ]);
+        $this->eventService = $eventService;
+    }
+
+    public function __invoke(): RedirectResponse
+    {
+        $event = $this->eventService->initCreateEvent();
+        //画像UPする関係で事前にEventを生成しておく必要があるため
+        //Eventを初期状態で生成し編集画面を返す。
+        return redirect()->route('event.edit', ['event' => $event]);
     }
 }
