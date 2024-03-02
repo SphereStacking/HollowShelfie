@@ -60,12 +60,12 @@ class EventMeilisearchService
                 $queryParams[] = new $class($item['include'], $type, $item['value']);
             }
         }
-        $fillterString = $this->makeFillter($queryParams);
+        $filterString = $this->makeFilter($queryParams);
         $events = Event::search(
             query: $params->text,
-            callback: function (Indexes $meilisearch, $query, array $options) use ($queryParams, $fillterString) {
+            callback: function (Indexes $meilisearch, $query, array $options) use ($queryParams, $filterString) {
                 $options['filter'] =
-                    'published_at < ' . Carbon::now()->getTimestamp() . $fillterString;
+                    'published_at < ' . Carbon::now()->getTimestamp() . $filterString;
                 Log::debug($options['filter']);
                 return $meilisearch->rawSearch(
                     $query,
@@ -94,13 +94,13 @@ class EventMeilisearchService
      * @param $query
      * @param $item
      */
-    private function makeFillter(array $queryParams)
+    private function makeFilter(array $queryParams)
     {
-        $fillterString = '';
+        $filterString = '';
         foreach ($queryParams as $item) {
-            $fillterString .= $item->makeQuery();
+            $filterString .= $item->makeQuery();
         }
-        return $fillterString;
+        return $filterString;
     }
 }
 
