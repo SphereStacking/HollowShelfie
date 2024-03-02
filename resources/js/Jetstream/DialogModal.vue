@@ -1,5 +1,4 @@
 <script setup>
-import Modal from './Modal.vue'
 
 const emit = defineEmits(['close'])
 
@@ -25,19 +24,21 @@ const close = () => {
 
 <template>
   <Modal
-    :show="show" :max-width="maxWidth" :closeable="closeable"
+    :show="show"
+    :max-width="maxWidth"
+    :closeable="closeable"
     @close="close">
     <div class="px-6 py-4">
-      <div class="text-lg font-medium ">
+      <div class="text-lg font-medium text-base-content">
         <slot name="title"></slot>
       </div>
 
-      <div class="mt-4 text-sm ">
+      <div class="mt-4 text-sm text-base-content">
         <slot name="content"></slot>
       </div>
     </div>
 
-    <div class="flex flex-row justify-end bg-base-300 px-6 py-4 text-right">
+    <div class="flex flex-row justify-end bg-base-300 px-6 py-4 text-end">
       <slot name="footer"></slot>
     </div>
   </Modal>
