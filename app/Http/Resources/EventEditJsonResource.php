@@ -78,7 +78,7 @@ class EventEditJsonResource extends JsonResource
             }),
             'instances' => $this->instances->map(function ($instance) {
                 return [
-                    'instance_type_id' => $instance->id,
+                    'instance_type_id' => $instance->instance_type_id,
                     'instance_type_name' => $instance->instance_type_name,
                     'access_url' => $instance->access_url,
                     'display_name' => $instance->display_name,
