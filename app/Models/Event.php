@@ -231,4 +231,15 @@ class Event extends Model
         // 新しいインスタンスを一括作成
         $this->instances()->createMany($validatedInstances);
     }
+
+   /**
+     * 指定されたユーザーがイベントを操作できるかどうかをチェックします。
+     *
+     * @param \App\Models\User $user チェックするユーザー
+     * @return bool ユーザーが操作できる場合はtrue、そうでない場合はfalse
+     */
+    public function canUserOperate(User $user): bool
+    {
+        return $this->event_create_user_id === $user->id;
+    }
 }

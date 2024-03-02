@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Throwable;
 use Inertia\Inertia;
+use App\Exceptions\CannotOperateEventException;
 use Laravel\Socialite\Two\InvalidStateException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -34,7 +35,11 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (EventNotPublishedException $e, $request) {
-            return Inertia::render('Errors/EventNotPublished', []);
+
+        $this->renderable(function (CannotOperateEventException $e, $request) {
+            return Inertia::render('Errors/403Error', [
+                'message' => '権限がありません。',
+            ]);
         });
     }
 }
