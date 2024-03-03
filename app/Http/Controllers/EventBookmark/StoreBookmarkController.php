@@ -7,7 +7,6 @@ use App\Models\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\EventBookmarkService;
-use Illuminate\Support\Facades\Redirect;
 
 class StoreBookmarkController extends Controller
 {
@@ -24,9 +23,11 @@ class StoreBookmarkController extends Controller
         // イベントに「ブックマーク」を追加
         User::find($user->id)->bookmark_events()->attach($event->id);
         $this->eventBookmarkService->attachEvent($user, $event);
-        return Redirect::back()->with([
-            'status' => 'success',
-            'message' => 'イベントをブックマークしました。'
+        return redirect()->back()->with([
+            'response'=> [
+                'status' => 'success',
+                'message' => 'イベントをブックマークしました。'
+            ]
         ]);
     }
 }
