@@ -95,4 +95,15 @@ enum EventStatus: string
         $selectedStatuses = ['ongoing', 'closed', 'upcoming', 'canceled', 'ongoing'];
         return array_intersect_key(self::STATUS_MAP, array_flip($selectedStatuses));
     }
+
+    /**
+     * 管理検索で許可されているステータスを取得します。
+     *
+     * @return array 許可されているステータスの配列
+     */
+    public static function getPermittedStatusesForAdminSearch(): array
+    {
+        $selectedStatuses = ['ongoing', 'closed', 'upcoming', 'canceled', 'ongoing','draft'];
+        return array_intersect_key(self::STATUS_MAP, array_flip($selectedStatuses));
+    }
 }
