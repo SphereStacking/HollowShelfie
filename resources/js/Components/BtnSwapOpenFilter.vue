@@ -6,26 +6,21 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  count: {
-    type: String,
-    default: '?'
-  },
-  showCount: {
-    type: Boolean,
-  },
 })
-const onIcon = ItemsConfig.onGood.icon
-const offIcon = ItemsConfig.offGood.icon
+const onIcon = ItemsConfig.close.icon
+const offIcon = ItemsConfig.filter.icon
+
+const emit = defineEmits(['update:check'])
+
+const updateCheck = (newCheck) => {
+  emit('update:check', newCheck)
+}
 </script>
 <template>
   <BtnSwapBase
     :on-icon="onIcon" :off-icon="offIcon"
-    :check="props.check">
-    <template #after>
-      <div v-if="showCount" class="badge badge-xs ">
-        {{ count }}
-      </div>
-    </template>
+    :check="props.check" @update:check="updateCheck">
+    <slot></slot>
   </BtnSwapBase>
 </template>
 <style lang="">
