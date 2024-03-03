@@ -51,6 +51,7 @@ module.exports = {
     'onBeforeUnmount': 'readonly',
     'onUnmounted': 'readonly',
     'defineComponent': 'readonly',
+    'useSlots': 'readonly'
   },
   rules: {
     // タグの最後で改行しないで
