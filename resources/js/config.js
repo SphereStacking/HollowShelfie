@@ -134,11 +134,18 @@ export const ItemsConfig = {
   delete: {
     icon: 'mdi:close',
   },
+  close: {
+    icon: 'mdi:close',
+  },
   upload: {
     icon: 'mdi:cloud-upload-outline'
   },
   fryer: {
     icon: 'mdi:image-frame'
+  },
+  filter: {
+    icon: 'mdi:tune',
+    buttonClass: ''
   },
   default: {
     icon: '',
