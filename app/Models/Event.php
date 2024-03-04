@@ -187,8 +187,8 @@ class Event extends Model
             $performersData = collect($timeTable['performers'])->map(function ($performer) use ($eventTimeTable) {
                 return [
                     'event_time_table_id' => $eventTimeTable->id,
-                    'performable_id' => $performer['identifiable_id'],
-                    'performable_type' => $performer['identifiable_type'],
+                    'performable_id' => $performer['id'],
+                    'performable_type' => $performer['type'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
