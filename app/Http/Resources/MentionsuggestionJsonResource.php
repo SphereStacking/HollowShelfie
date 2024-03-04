@@ -33,7 +33,7 @@ class MentionsuggestionJsonResource extends JsonResource
             'data' => $this->resource->map(function ($item) {
                 // UserやTeamをfollowしているためfollowableに入れる。
                 return [
-                    'identifiable_id' => $item->id,
+                    'identifiable_id' => $item->identifiable_id,
                     'identifiable_type' => $item->identifiable_type,
                     'alias_name'=> $item->alias_name,
                     'name'=> $item->aliasable->name,
