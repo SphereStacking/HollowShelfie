@@ -29,8 +29,27 @@ class EventService
         $this->viewCountService = $viewCountService;
     }
 
+    public function initCreateEvent()
+    {
+        $attributes= [
+            'title' => '',
+            'categories' => [],
+            'tags' =>  [],
+            'description' => '',
+            'dates' => [],
+            'organizers' =>  [],
+            'performers' =>[],
+            'time_tables' =>  [],
+            'status' =>  EventStatus::DRAFT,
+            'images' => [],
+            'instances' => [],
+        ];
+
+        return $this->createEvent($attributes);
+    }
+
     //イベントを作成する。
-    public function storeEvent($attributes)
+    public function createEvent($attributes)
     {
         DB::beginTransaction();
         try {
@@ -51,9 +70,41 @@ class EventService
             $event->syncTimeTables($attributes['time_tables'] ?? []);
             $event->syncInstances($attributes['instances'] ?? []);
 
-            foreach ($attributes['images'] as $file) {
-                $this->fileService->uploadFile($file, $event);
+            DB::commit();
+
+            return $event;
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            throw $e;
+        }
+    }
+
+    //イベントを更新する。
+    public function updateEvent($id,$attributes)
+    {
+        DB::beginTransaction();
+        try {
+            Log::debug($attributes);
+            $event = Event::findOrFail($id);
+            if (!$event->canUserOperate(Auth::user())) {
+                throw new CannotOperateEventException();
             }
+            $event->title = $attributes['title'];
+            $event->description = $attributes['description'];
+            $event->start_date = $attributes['dates'][0] ?? null;
+            $event->end_date = $attributes['dates'][1] ?? null;
+            $event->event_create_user_id = Auth::user()->id;
+            $event->updateEventStatus($attributes['status'] ?? EventStatus::DRAFT);
+            $event->save();
+
+            $event->syncTagsByNames($attributes['tags'] ?? []);
+            $event->syncCategoriesByNames($attributes['categories']?? []);
+            $event->syncOrganizers($attributes['organizers']?? []);
+            $event->syncTimeTables($attributes['time_tables'] ?? []);
+            $event->syncInstances($attributes['instances'] ?? []);
+
             DB::commit();
 
             return $event;
