@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Inertia\Inertia;
-use App\Models\Event;
 use App\Models\Category;
 use App\Enums\EventStatus;
 use App\Models\InstanceType;
@@ -13,11 +12,8 @@ use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Params\EventSearchParams;
 use App\Models\CustomIdentifiable;
-use Illuminate\Support\Facades\DB;
-use Meilisearch\Endpoints\Indexes;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\SearchRequest;
-use App\Services\EventSearchService;
 use App\Services\EventMeilisearchService;
 use App\Http\Resources\EventListJsonResource;
 use App\Http\Resources\MentionsuggestionJsonResource;
@@ -25,18 +21,16 @@ use App\Http\Resources\MentionsuggestionJsonResource;
 class SearchController extends Controller
 {
     protected $eventService;
-    protected $eventSearchService;
+    protected $eventEloquentSearchService;
     protected $eventMeilisearchService;
     protected $tagService;
 
     public function __construct(
         EventService $eventService,
-        EventSearchService $eventSearchService,
         EventMeilisearchService  $eventMeilisearchService,
         TagService $tagService
     ) {
         $this->eventService = $eventService;
-        $this->eventSearchService = $eventSearchService;
         $this->eventMeilisearchService = $eventMeilisearchService;
         $this->tagService = $tagService;
     }
