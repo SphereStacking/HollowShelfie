@@ -33,8 +33,9 @@ class EventEditJsonResource extends JsonResource
             'event_timeline_status' => $this->event_timeline_status,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'formatted_start_date' => $this->getFormattedStartDateAttribute(),
-            'formatted_end_date' => $this->getFormattedEndDateAttribute(),
+            'period' => $this->period,
+            'formatted_start_date' => $this->formatted_start_date,
+            'formatted_end_date' => $this->formatted_end_date,
             'good_count' => $this->good_count,
             'short_good_count' => $this->short_good_count,
             'files' => $this->files->map(function ($file) {

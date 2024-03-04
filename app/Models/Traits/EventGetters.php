@@ -152,6 +152,24 @@ trait EventGetters
         ];
     }
 
+    /**
+     * Event開催期間
+     *
+     * @return string
+     */
+    public function getPeriodAttribute()
+    {
+        $startDate = new Carbon($this->start_date);
+        $endDate = new Carbon($this->end_date);
+
+        // 日付が同じ場合は、開始時間と終了時間のみ表示
+        if ($startDate->format('Y/m/d') === $endDate->format('Y/m/d')) {
+            return $startDate->format('Y/m/d H:i') . ' ~ ' . $endDate->format('H:i');
+        } else {
+            return $startDate->format('Y/m/d H:i') . ' ~ ' . $endDate->format('Y/m/d H:i');
+        }
+    }
+
     // good数を取得する
     public function getGoodCountAttribute()
     {
