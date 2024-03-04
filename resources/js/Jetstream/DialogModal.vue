@@ -28,12 +28,12 @@ const close = () => {
     :max-width="maxWidth"
     :closeable="closeable"
     @close="close">
-    <div class="px-6 py-4">
-      <div class="text-lg font-medium text-base-content">
+    <div class="min-h-64 px-6 py-4 sm:px-8 sm:py-12">
+      <div class="text-2xl font-medium text-base-content sm:text-3xl">
         <slot name="title"></slot>
       </div>
 
-      <div class="mt-4 text-sm text-base-content">
+      <div class="mt-4 text-lg text-base-content sm:text-xl">
         <slot name="content"></slot>
       </div>
     </div>
