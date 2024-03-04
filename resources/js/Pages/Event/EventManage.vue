@@ -84,6 +84,7 @@ onMounted(() => {
         </div>
       </template>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <transition-group name="list">
           <div v-for="event in events.data" :key="event.id" class="flex flex-col gap-2 rounded-md bg-base-200 p-4">
             <div class="flex flex-row items-center justify-between gap-1">
               <div class="mr-auto flex items-center gap-1  rounded-md">
@@ -92,6 +93,9 @@ onMounted(() => {
                   {{ event.title }}
                 </p>
               </div>
+              <button class="btn btn-square btn-outline btn-error btn-sm  border-0" @click="modalEventDestroy.onBtnOpenModal(event)">
+                <IconTypeMapper type="delete" class="shrink-0 text-2xl" />
+              </button>
             </div>
 
             <div class="grid h-full gap-4 lg:grid-cols-2">
@@ -153,11 +157,29 @@ onMounted(() => {
               </div>
             </div>
           </div>
+        </transition-group>
       </div>
     </PaginationLayout>
+    <ModalEventDestroyConfirm ref="modalEventDestroy" />
   </AppLayout>
 </template>
 
-<style lang="">
+<style scoped>
+.list-move, /* 移動する要素にトランジションを適用 */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
 
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* leave する項目をレイアウトフローから外すことで
+   アニメーションが正しく計算されるようになる */
+.list-leave-active {
+  position: absolute;
+}
 </style>
