@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers\EventSearch;
 
+use Inertia\Inertia;
+use App\Models\Category;
+use App\Enums\EventStatus;
+use App\Models\InstanceType;
 use App\Services\TagService;
+use Illuminate\Http\Request;
 use App\Params\EventSearchParams;
 use App\Http\Controllers\Controller;
 use App\Services\EventMeilisearchService;
+use App\Http\Resources\EventListJsonResource;
 
 class GetEventSearchController extends Controller
 {
