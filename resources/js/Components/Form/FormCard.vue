@@ -1,14 +1,21 @@
 <script setup>
 
-import {computed, useSlots} from 'vue'
-
 const hasTitle = computed(() => !!useSlots().title)
 const hasActions = computed(() => !!useSlots().actions)
 const hasFooters = computed(() => !!useSlots().footer)
+
+const formCardElement = ref(null)
+
+const scrollToTop = () => {
+  formCardElement.value.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+defineExpose({ scrollToTop })
+
 </script>
 
 <template>
-  <div class="card card-compact bg-base-200 p-4 shadow-xl">
+  <div ref="formCardElement" class="card card-compact bg-base-200 p-4 shadow-xl">
     <slot name="header"></slot>
     <div class="card-body gap-5">
       <h2 v-if="hasTitle" class="card-title">
