@@ -1,3 +1,17 @@
+<script setup>
+
+function success() {
+  console.log('success')
+}
+
+function error() {
+  console.log('error')
+}
+
+const modal = ref()
+const openModal = (value) => { modal.value.onBtnOpenModal(value) }
+
+</script>
 <template>
   <AppLayout title="Dashboard">
     <template #header>
@@ -6,8 +20,9 @@
       </h2>
     </template>
     <div class="mx-auto mt-10 flex max-w-4xl flex-col gap-5 ">
-      <EventEditFormCard />
+      <EventEditFormCard @success="openModal" @error="error" />
     </div>
+    <ModalEventUpdateSuccess ref="modal" />
   </AppLayout>
 </template>
 

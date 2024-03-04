@@ -48,14 +48,13 @@ const generateShareUrl = (platform, options) => {
 
 // Twitter用のURLを生成
 // 使用するオプション: text, url, hashtags, mention
-const generateTwitterUrl = ({ text, url, hashtags, mention }) => {
-  let twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+const generateTwitterUrl = ({ text, hashtags }) => {
+  let twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
   // ハッシュタグの配列を処理
   if (Array.isArray(hashtags)) {
     const formattedHashtags = hashtags.map(tag => tag.startsWith('#') ? tag : `#${tag}`).join(' ')
     twitterUrl += `&hashtags=${encodeURIComponent(formattedHashtags)}`
   }
-  if (mention) twitterUrl += `&via=${encodeURIComponent(mention)}`
   return twitterUrl
 }
 
