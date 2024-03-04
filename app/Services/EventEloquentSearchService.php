@@ -6,11 +6,13 @@ use App\Models\Event;
 use App\Enums\EventStatus;
 use App\Params\EventSearchParams;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Auth\Authenticatable;
+use App\Params\EventEloquentSearchParams;
 
 /**
  * イベント検索サービス
  */
-class EventSearchService
+class EventEloquentSearchService
 {
     /**
      * クエリパラメータクラス
@@ -22,8 +24,6 @@ class EventSearchService
         'status' => StatusQueryParam::class,
         'tag' => TagQueryParam::class,
         'category' => CategoryQueryParam::class,
-        'isbookmark' => BookmarkQueryParam::class,
-        'isgood' => GoodQueryParam::class,
     ];
 
     /**
@@ -39,16 +39,54 @@ class EventSearchService
     ];
 
     /**
-     * 公開イベント検索を取得
+     * Userイベント検索を取得
      *
-     * @param EventSearchParams $params
+     * @param EventEloquentSearchParams $params
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getPublishedEventSearch(EventSearchParams $params)
+    public function getEventSearchByUser(User|Authenticatable $user, EventEloquentSearchParams $params)
+    {
+        $query = $user->create_events();
+
+        $query->where('title', 'like', "%{$params->text}%");
+
+        $queryParams = [];
+        foreach ($params->queryParams as $item) {
+            $type = $item['type'];
+            if (array_key_exists($type, $this->queryParamClasses)) {
+                $class = $this->queryParamClasses[$type];
+                $queryParams[] = new $class($item['include'], $type, $item['value']);
+            }
+        }
+
+        //動的に生成してqueryを追加
+        foreach ($queryParams as $item) {
+            $value = $item->formatValue($item->value);
+            $item->makeQuery($query, $value);
+        }
+
+        //オーダー指定がある場合は適用
+        if (array_key_exists($params->order, $this->orderScopes)) {
+            $scopeMethod = $this->orderScopes[$params->order];
+            $query->$scopeMethod();
+        }
+
+        return $query
+            ->paginate($params->paginate)
+            ->withQueryString();
+    }
+
+    /**
+     * 公開イベント検索を取得
+     *
+     * @param EventEloquentSearchParams $params
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getPublishedEventSearch(Event $query, EventEloquentSearchParams $params)
     {
 
-        $query = Event::query();
         $queryParams = [];
+        $params->text = $params->text ?? '';
 
         foreach ($params->queryParams as $item) {
             $type = $item['type'];
@@ -58,10 +96,13 @@ class EventSearchService
             }
         }
 
+        //動的に生成してqueryを追加
         foreach ($queryParams as $item) {
-            $this->handleSearchQuery($query, $item);
+            $value = $item->formatValue($item->value);
+            $item->makeQuery($query, $value);
         }
 
+        //オーダー指定がある場合は適用
         if (array_key_exists($params->order, $this->orderScopes)) {
             $scopeMethod = $this->orderScopes[$params->order];
             $query->$scopeMethod();
@@ -73,17 +114,6 @@ class EventSearchService
             ->withQueryString();
     }
 
-    /**
-     * 検索クエリを処理
-     *
-     * @param $query
-     * @param $item
-     */
-    private function handleSearchQuery($query, IQueryParam $queryParam)
-    {
-        $value = $queryParam->formatValue($queryParam->value);
-        $queryParam->makeQuery($query, $value);
-    }
 }
 
 
@@ -228,32 +258,4 @@ class CategoryQueryParam extends QueryParam implements IQueryParam
     }
 }
 
-/**
- * ブックマーククエリパラメータクラス
- */
-class BookmarkQueryParam extends QueryParam implements IQueryParam
-{
-    protected $relation = 'bookmark_users';
-    protected $column = 'user_id';
-
-    public function formatValue($value)
-    {
-        return auth()->user()->id;
-    }
-}
-
-
-/**
- * グッドクエリパラメータクラス
- */
-class GoodQueryParam extends QueryParam implements IQueryParam
-{
-    protected $relation = 'good_users';
-    protected $column = 'user_id';
-
-    public function formatValue($value)
-    {
-        return auth()->user()->id;
-    }
-}
 
