@@ -202,13 +202,13 @@ class Event extends Model
 
         switch ($newStatus) {
             case EventStatus::DRAFT:
-                $this->status = $newStatus;
+                $this->status = $newStatus->value;
                 $this->published_at = null;
                 break;
             case EventStatus::CLOSED:
             case EventStatus::UPCOMING:
             case EventStatus::CANCELED:
-                $this->status = $newStatus;
+                $this->status = $newStatus->value;
                 if ($this->published_at === null) {
                     $this->published_at = now();
                 }
