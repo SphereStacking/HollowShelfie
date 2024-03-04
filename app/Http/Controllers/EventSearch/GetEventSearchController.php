@@ -37,13 +37,13 @@ class GetEventSearchController extends Controller
         return Inertia::render(
             'Search/Event',
             [
-                'trendTags' => $this->tagService->getTrendTagNames(),
+                'trendTags' => fn () =>  $this->tagService->getTrendTagNames(),
                 'events' => new EventListJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
-                'categories' =>  Category::all(),
-                'instanceTypes' => InstanceType::all()->pluck('name'),
-                'statuses' =>  EventStatus::getPermittedStatusesForListSearch(),
+                'categories' =>  fn () => Category::all(),
+                'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
+                'statuses' =>  fn () => EventStatus::getPermittedStatusesForListSearch(),
             ]
         );
     }
