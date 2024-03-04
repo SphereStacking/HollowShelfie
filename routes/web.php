@@ -23,8 +23,10 @@ use App\Http\Controllers\Event\GetTimeLineEventController;
 use App\Http\Controllers\Event\GetRecruitingEventController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;
 use App\Http\Controllers\EventSearch\GetUserSearchController;
+use App\Http\Controllers\EventFryer\StoreEventFryerController;
 use App\Http\Controllers\EventSearch\GetEventSearchController;
 use App\Http\Controllers\EventBookmark\StoreBookmarkController;
+use App\Http\Controllers\EventFryer\DestroyEventFryerController;
 use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
 
 /*
@@ -111,10 +113,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/event/manage', GetManageEventController::class)->name('event.manage');
 
     Route::put('/event', StoreEventController::class)->name('event.store');
+    Route::delete('/event/fryer', DestroyEventFryerController::class)->name('event.fryer.destroy');
     Route::get('/event/create', GetCreateEventController::class)->name('event.create');
     Route::get('/event/{event}/show', ShowEventController::class)->name('event.show');
     Route::get('/event/{event}/edit', GetEditEventController::class)->name('event.edit');
     Route::put('/event/{event}', UpdateEventController::class)->name('event.update');
+    Route::put('/event/{event}/fryer', StoreEventFryerController::class)->name('event.fryer.store');
 
     Route::post('/event/{event}/good', StoreGoodController::class)->name('event.good');
     Route::delete('/event/{event}/good', DestroyGoodController::class)->name('event.ungood');
