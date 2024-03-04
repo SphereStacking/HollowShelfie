@@ -19,7 +19,7 @@ const updateCheck = (newCheck) => {
 <template>
   <BtnSwapBase
     :on-icon="onIcon" :off-icon="offIcon"
-    :check="props.check" @update:check="updateCheck">
+    :check="check" @update:check="updateCheck">
     <slot></slot>
   </BtnSwapBase>
 </template>

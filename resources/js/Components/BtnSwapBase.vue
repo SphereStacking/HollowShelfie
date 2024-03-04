@@ -45,6 +45,10 @@ const emit = defineEmits(['update:check'])
 watch(() => check.value, (value) => {
   emit('update:check', value)
 })
+
+nextTick(() => {
+  check.value = props.check
+})
 </script>
 <template>
   <button class="btn btn-xs px-1" @click="check = !check">
