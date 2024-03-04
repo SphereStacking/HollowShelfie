@@ -29,7 +29,7 @@ const props = defineProps({
     default: null
   },
   error: { // エラーメッセージ
-    type: String,
+    type: [String, Object],
     default: null
   },
   selectableItems: { // 選択肢
@@ -48,18 +48,30 @@ const isObjectArray = computed(() => {
   return props.selectableItems.length > 0 && typeof props.selectableItems[0] === 'object'
 })
 
+// errorがオブジェクトの場合、selectErrorとwrapperErrorを分ける
+// NOTE: このコンポーネントでは、selectErrorはselect要素に対するエラーメッセージ、
+//       wrapperErrorはラッパー要素に対するエラーメセージとして扱う
+const errorMessages = computed(() => {
+  if (typeof props.error === 'object' && props.error !== null) {
+    return props.error
+  }
+  return {
+    selectError: props.error,
+    wrapperError: props.error
+  }
+})
 </script>
 
 <template>
   <Wrapper
-    :label="label" :help="help" :error="error"
+    :label="label" :help="help" :error="errorMessages.wrapperError"
     :label-icon-type="labelIconType">
     <div class="join grow">
       <slot name="joinLeft"></slot>
       <select
         v-bind="$attrs"
         class="join-item select select-sm rounded-md py-0.5" :value="modelValue"
-        :class="{ 'select-error': error }" @change="updateValue($event)">
+        :class="{ 'select-error': errorMessages.selectError }" @change="updateValue($event)">
         <option disabled value="">
           {{ placeholder }}
         </option>
