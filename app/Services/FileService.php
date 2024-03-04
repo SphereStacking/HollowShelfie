@@ -5,11 +5,10 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class FileService
 {
-    public function uploadFile(UploadedFile $uploadedFile, $fileable)
+    public function uploadFile(UploadedFile $uploadedFile, $fileable): File
     {
         $folderName = strtolower(class_basename($fileable)) . '/' . $fileable->id;
         $filename = $uploadedFile->hashName();
@@ -27,5 +26,18 @@ class FileService
         ]);
 
         return $file;
+    }
+
+    public function deleteFile(File $file)
+    {
+        $file->deleteFile();
+        $file->delete();
+    }
+
+    public function deleteFileById( $id)
+    {
+        $file = File::findOrFail($id);
+        $file->deleteFile();
+        $file->delete();
     }
 }

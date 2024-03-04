@@ -24,6 +24,11 @@ class File extends Model
         return Storage::disk("public")->url($this->path . '/' . $this->name);
     }
 
+    public function deleteFile()
+    {
+        Storage::disk('public')->delete($this->path . '/' . $this->name);
+    }
+
     public function fileable()
     {
         return $this->morphTo();
