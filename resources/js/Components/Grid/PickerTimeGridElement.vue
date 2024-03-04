@@ -13,10 +13,11 @@ const timeSpan = ref([])
 
 watch(() => props.modelValue, (newValue) => {
   // newValueがnullまたはundefinedの場合、空の配列を使用する
-  if (newValue === null || newValue === undefined) {
+  if (newValue === null || newValue === undefined || newValue === '') {
     timeSpan.value = []
   } else {
-    timeSpan.value = newValue.map(timeString => {
+    // 有効な文字列のみを処理する
+    timeSpan.value = newValue.filter(timeString => timeString && timeString.trim() !== '').map(timeString => {
       const [hours, minutes, seconds] = timeString.split(':').map(Number)
       return { hours, minutes, seconds }
     })
