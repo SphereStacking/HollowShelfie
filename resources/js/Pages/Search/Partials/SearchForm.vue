@@ -1,8 +1,13 @@
 <script setup>
 import { ref, watch, defineProps, defineEmits } from 'vue'
 import { usePage } from '@inertiajs/vue3'
-
-import dayjs from 'dayjs'
+import ConditionDate from './ConditionDate.vue'
+import ConditionStatus from './ConditionStatus.vue'
+import ConditionCategory from './ConditionCategory.vue'
+import ConditionTag from './ConditionTag.vue'
+import ConditionOrganizer from './ConditionOrganizer.vue'
+import ConditionPerformer from './ConditionPerformer.vue'
+import ConditionOther from './ConditionOther.vue'
 
 const props = defineProps({
   text: {
@@ -12,13 +17,21 @@ const props = defineProps({
   modelValue: {
     type: Object,
     required: true,
-    default: () => []
+    default: () => ({})
   },
   categories: {
     type: Array,
     required: true
   },
   tags: {
+    type: Array,
+    required: true
+  },
+  performers: {
+    type: Array,
+    required: true
+  },
+  organizers: {
     type: Array,
     required: true
   },
@@ -33,7 +46,8 @@ const props = defineProps({
 })
 const emit = defineEmits([
   'update:modelValue',
-  'update:text'
+  'update:text',
+  'executeSearch',
 ])
 
 const info = ref()
@@ -44,31 +58,20 @@ const conditions = ref(props.modelValue)
 const text = ref(props.text)
 const history = ref([]) // Added this line
 const currentPosition = ref(-1) // Added this line
-const categories = ref(props.categories.map(v => v.name))
-const tags = ref(props.tags.map(v => v))
+const categories = ref(props.categories ? props.categories.map(v => v.name) : [])
 const selectFilterType = ref('')
 const isOpenFilter = ref(false)
-const searchCategoryText = ref('')
-const searchTagText = ref('')
-const searchDateText = ref('')
-const searchTitleText = ref('')
-const searchUserText = ref('')
 
 const includesOrder = ['and', 'or', 'not']
 
-const inputRefs = {
-  'category': searchCategoryText,
-  'tag': searchTagText,
-  'title': searchTitleText,
-  'user': searchUserText
-}
-
 const filterMaps = [
-  { type: 'category', label: 'category' },
-  { type: 'date', label: 'date' },
-  { type: 'status', label: 'status' },
-  { type: 'tag', label: 'tags' },
-  { type: 'other', label: 'other' }
+  { type: 'category', label: 'category', component: ConditionCategory, items: categories },
+  { type: 'tag', label: 'tags', component: ConditionTag, items: props.tags },
+  { type: 'status', label: 'status', component: ConditionStatus, items: props.statuses },
+  { type: 'date', label: 'date', component: ConditionDate, items: [] },
+  { type: 'organizer', label: 'organizer', component: ConditionOrganizer, items: props.organizers },
+  { type: 'performer', label: 'performer', component: ConditionPerformer, items: props.performers },
+  { type: 'other', label: 'other', component: ConditionOther, items: props.instanceTypes },
 ]
 
 const includeLabels = {
@@ -162,25 +165,27 @@ onMounted(() => {
   }
   pushToHistory()
 })
+
 </script>
 <template>
   <div class="">
     <div class="collapse overflow-visible bg-base-100">
       <input v-model="isOpenFilter" type="checkbox">
       <div class="collapse-title pl-1 pr-0 text-xl font-medium">
-        <div class="felx-row flex items-center gap-2 text-xl font-medium ">
+        <div class="flex flex-row items-center gap-2 text-xl font-medium ">
           <div class="join w-full">
-            <input v-model="text" type="text" class="input join-item input-bordered input-sm w-full">
+            <input v-model="text" type="text" class="input input-sm join-item input-bordered w-full">
             <button class="btn btn-outline join-item btn-sm" @click="emitExecuteSearch()">
               <Icon icon="mdi:magnify" class="mx-2 text-xl" />
             </button>
           </div>
-          <button class="btn indicator btn-neutral btn-sm w-16" @click="isOpenFilter = !isOpenFilter">
-            <Icon icon="mdi:tune" class="text-xl" />
+          <BtnSwapOpenFilter
+            v-model:check="isOpenFilter" class="btn indicator btn-neutral btn-sm w-16"
+            swap-effect="rotate" on-color="text-neutral-content" off-color="text-neutral-content">
             <div v-if="hasSearchConditions" class="badge indicator-item badge-info" @click="emitExecuteSearch()">
               <Icon :icon="isSameCondition ? 'mdi:check' : 'line-md:uploading-loop'" class=" text-sm " />
             </div>
-          </button>
+          </BtnSwapOpenFilter>
         </div>
       </div>
 
@@ -190,8 +195,10 @@ onMounted(() => {
           filters
           <Icon icon="mdi:information-slab-circle" class="text-xl text-accent" @click="infoOpenModal" />
         </div>
-        <div class="flex h-auto min-h-[2.7rem] w-full flex-wrap gap-2 rounded-md border-2 p-2">
-          <div v-for="( item, index ) in conditions " v-if="isOpenFilter" class="flex flex-row items-center">
+        <div v-if="isOpenFilter" class="flex h-auto min-h-[2.7rem] w-full flex-wrap gap-2 rounded-md border-2 p-2">
+          <div
+            v-for="( item, index ) in conditions" :key="index"
+            class="flex flex-row items-center">
             <button class="btn btn-ghost btn-xs p-0">
               <Icon :icon="includeLabels[item.include].icon" class="text-xl" @click="cycleSearchCondition(index)" />
             </button>
@@ -208,8 +215,9 @@ onMounted(() => {
           <div class="col-span-1 flex flex-col gap-2">
             <div class="menu w-full  rounded-box bg-base-200">
               <button
-                v-for=" item in filterMaps " class="btn justify-start"
-                :class="{ 'btn-primary': selectFilterType == item.type }" @click="selectFilterType = item.type">
+                v-for=" item in filterMaps" :key="item.type" class="btn justify-start"
+                :class="{ 'btn-primary': selectFilterType == item.type }"
+                @click="selectFilterType = item">
                 <IconTypeMapper :type="item.type" />
                 {{ item.label }}
               </button>
@@ -232,109 +240,10 @@ onMounted(() => {
               </button>
             </div>
             <div v-if="isOpenFilter" class="h-full w-full  rounded-xl border-2 p-4">
-              <TransitionSlideUp :is-show="selectFilterType == 'date'">
-                <div class="flex flex-wrap gap-2">
-                  <div class="join w-full">
-                    <PickerDateRange
-                      v-model="searchDateText" class="join-item "
-                      input-classes="input input-sm input-bordered z-20" />
-                    <button
-                      class="felx-row btn join-item btn-neutral btn-sm flex gap-2 "
-                      @click="addCondition({ type: 'date', value: searchDateText })">
-                      Add
-                    </button>
-                  </div>
-                  <BtnEventSerchItem
-                    type="date" value="今日"
-                    @click="addCondition({ type: 'date', value: dayjs().format('YYYY-MM-DD') })" />
-                  <BtnEventSerchItem
-                    type="date" value="今週"
-                    @click="addCondition({ type: 'date', value: dayjs().startOf('week').format('YYYY-MM-DD') + ' ~ ' + dayjs().endOf('week').format('YYYY-MM-DD') })" />
-                  <BtnEventSerchItem
-                    type="date" value="今月"
-                    @click="addCondition({ type: 'date', value: dayjs().startOf('month').format('YYYY-MM-DD') + ' ~ ' + dayjs().endOf('month').format('YYYY-MM-DD') })" />
-                </div>
-              </TransitionSlideUp>
-              <TransitionSlideUp :is-show="selectFilterType == 'status'">
-                <div class="flex gap-1">
-                  <BtnEventSerchItem
-                    v-for="( status, label ) in statuses " :key="status" type="status"
-                    :value="status"
-                    @click="addCondition({ type: 'status', value: status })" />
-                </div>
-              </TransitionSlideUp>
-              <TransitionSlideUp :is-show="selectFilterType == 'category'">
-                <div class="flex flex-wrap gap-2">
-                  <div class="join w-full">
-                    <input
-                      v-model="searchCategoryText" type="text" class="input join-item input-bordered input-sm w-full"
-                      @keyup.enter="addCondition({ type: 'category', value: searchCategoryText })">
-                    <button
-                      class="felx-row btn join-item btn-neutral btn-sm flex gap-2"
-                      @click="addCondition({ type: 'category', value: searchCategoryText })">
-                      Add
-                    </button>
-                  </div>
-                  <BtnEventSerchItem
-                    v-for=" category in categories " :key="category" type="category"
-                    :value="category"
-                    @click="addCondition({ type: 'category', value: category })" />
-                </div>
-              </TransitionSlideUp>
-              <TransitionSlideUp :is-show="selectFilterType == 'tag'">
-                <div class="flex flex-wrap gap-2">
-                  <div class="join w-full">
-                    <input
-                      v-model="searchTagText" type="text" class="input join-item input-bordered input-sm w-full"
-                      @keyup.enter="addCondition({ type: 'tag', value: searchTagText })">
-                    <button
-                      class="felx-row btn join-item btn-neutral btn-sm flex gap-2"
-                      @click="addCondition({ type: 'tag', value: searchTagText })">
-                      Add
-                    </button>
-                  </div>
-                  <BtnEventSerchItem
-                    v-for=" tag in tags " :key="tag" type="tag"
-                    :value="tag"
-                    @click="addCondition({ type: 'tag', value: tag })" />
-                </div>
-              </TransitionSlideUp>
-              <TransitionSlideUp :is-show="selectFilterType == 'other'">
-                <div class="flex flex-col gap-1">
-                  <div class="flex flex-row gap-1">
-                    <IconTypeMapper type="instance" class="text-xl" />
-                    instance
-                  </div>
-                  <div class="flex gap-1">
-                    <BtnEventSerchItem
-                      v-for=" instanceType in instanceTypes " :key="instanceType" type="location"
-                      :value="instanceType" @click="addCondition({ type: 'instance', value: instanceType })" />
-                  </div>
-                  <div class="flex flex-row gap-1">
-                    <IconTypeMapper type="user" class="text-xl" />
-                    user
-                  </div>
-                  <div class="join w-full">
-                    <input
-                      v-model="searchUserText" type="text" class="input join-item input-bordered input-sm w-full"
-                      @keyup.enter="addCondition({ type: 'user', value: searchUserText })">
-                    <button
-                      class="felx-row btn join-item btn-neutral btn-sm flex gap-2"
-                      @click="addCondition({ type: 'user', value: searchUserText })">
-                      Add
-                    </button>
-                  </div>
-                  <div class="flex flex-row gap-1">
-                    <IconTypeMapper type="more" class="text-xl" />
-                    more
-                  </div>
-                  <div class="flex gap-1">
-                    <BtnEventSerchItem
-                      v-for=" instanceType in instanceTypes " :key="instanceType" type="location"
-                      :value="instanceType" @click="addCondition({ type: 'instance', value: instanceType })" />
-                  </div>
-                </div>
-              </TransitionSlideUp>
+              <component
+                :is="selectFilterType.component"
+                :items="selectFilterType.items"
+                :add-condition-func="addCondition" />
             </div>
           </div>
         </div>
@@ -344,3 +253,6 @@ onMounted(() => {
   </div>
 </template>
 
+<style scoped>
+
+</style>
