@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\EventNotPublishedException;
+use App\Exceptions\CannotOperateEventException;
 
 class EventService
 {
@@ -84,6 +85,28 @@ class EventService
         $this->viewCountService->incrementCount($event);
         return $event;
 
+    }
+
+    //イベントを削除する。
+    public function deleteEvent($id)
+    {
+        DB::beginTransaction();
+        try {
+            $event = Event::findOrFail($id);
+            if (!$event->canUserOperate(Auth::user())) {
+                throw new CannotOperateEventException();
+            }
+            $event->delete();
+            DB::commit();
+        } catch (CannotOperateEventException $e) {
+            DB::rollBack();
+            Log::warning($e->getMessage());
+            throw $e;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            throw $e;
+        }
     }
 
     /**

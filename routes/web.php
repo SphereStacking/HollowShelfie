@@ -13,6 +13,7 @@ use App\Http\Controllers\Event\ShowEventController;
 use App\Http\Controllers\Event\StoreEventController;
 use App\Http\Controllers\Event\UpdateEventController;
 use App\Http\Controllers\EventGood\GetGoodController;
+use App\Http\Controllers\Event\DestroyEventController;
 use App\Http\Controllers\Event\GetEditEventController;
 use App\Http\Controllers\Event\GetIndexEventController;
 use App\Http\Controllers\EventGood\StoreGoodController;
@@ -118,6 +119,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/event/{event}/show', ShowEventController::class)->name('event.show');
     Route::get('/event/{event}/edit', GetEditEventController::class)->name('event.edit');
     Route::put('/event/{event}', UpdateEventController::class)->name('event.update');
+    Route::delete('/event/{event}', DestroyEventController::class)->name('event.destroy');
     Route::put('/event/{event}/fryer', StoreEventFryerController::class)->name('event.fryer.store');
 
     Route::post('/event/{event}/good', StoreGoodController::class)->name('event.good');
