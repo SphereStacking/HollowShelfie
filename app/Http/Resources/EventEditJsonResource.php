@@ -69,9 +69,9 @@ class EventEditJsonResource extends JsonResource
                     ],
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [
-                            'id' => $performer->performable->id,
+                            'id' => $performer->performable_id,
+                            'type' => $performer->performable_type,
                             'name' => $performer->performable->name,
-                            'type' => $performer->performable->performable_type,
                         ];
                     }),
                 ];
