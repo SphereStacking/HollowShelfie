@@ -34,6 +34,9 @@ const form = useForm({
 const getFilteredDataFunc =(response) => {
   return response.data.suggestions.data
 }
+const addFormatData = (item) => {
+  return { id: item.identifiable_id, type: item.identifiable_type, name: item.name }
+}
 
 const columDefs = [
   { template: RowDeleteGridElement, headerName: '-', width: '10px' },
@@ -41,29 +44,40 @@ const columDefs = [
   { field: 'performers', headerName: 'パフォーマー', width: '200px', template: SearchPerformersGridElement,
     templateOptions: {
       route: route('mention.suggestion'),
-      getFilteredDataFunc: getFilteredDataFunc
+      getFilteredDataFunc: getFilteredDataFunc,
+      addFormatDataFunc: addFormatData,
     }
   },
   { field: 'description', headerName: '説明', width: '200px', template: 'textarea'},
 ]
 
+const emit = defineEmits(['success', 'error'])
+
+const formCard = ref(null)
+
 const formSubmit = (status)=>{
   form.status=status
-  form.put(route('event.update'), {
-    forceFormData: true,
+  form.put(route('event.update', event.id), {
     preserveScroll: true,
-    onSuccess: () => {},
-    onError: () => {},
+    onSuccess: () => {
+      emit('success', usePage().props.response.event)
+    },
+    onError: () => {
+      emit('error')
+      formCard.value.scrollToTop()
+    },
   })
 }
 
 onBeforeMount(() => {
   form.title = event.title
   form.categories = event.category_names
-  form.instances[0].instance_type_id = event.instances[0].instance_type_id
-  form.instances[0].instance_type = event.instances[0].instance_type
-  form.instances[0].access_url = event.instances[0].access_url
-  form.instances[0].display_name = event.instances[0].display_name
+  if (event.instances && event.instances.length > 0) {
+    form.instances[0].instance_type_id = event.instances[0].instance_type_id
+    form.instances[0].instance_type = event.instances[0].instance_type
+    form.instances[0].access_url = event.instances[0].access_url
+    form.instances[0].display_name = event.instances[0].display_name
+  }
   form.tags = event.tags
   form.description = event.description
   form.dates = [new Date(event.start_date), new Date(event.end_date)]
@@ -71,20 +85,14 @@ onBeforeMount(() => {
   form.time_tables = event.time_table
   form.images = event.files
 })
+
 </script>
 
 <template>
-  <div>
-    {{ form }}
-  </div>
-  <div>
-    {{ event }}
-  </div>
-  <FormCard>
+  <FormCard ref="formCard">
     <template #title>
       イベント作成！
     </template>
-
     <TextElement
       v-model="form.title"
       label="タイトル"
@@ -100,12 +108,22 @@ onBeforeMount(() => {
       class=""
       id-key="id"
       label-key="name"
-      :error="form.errors.instances"
+      :error="{
+        selectError: form.errors['instances.0.instance_type_id'],
+        wrapperError: form.errors['instances'],
+      }"
 
       :selectable-items="instanceTypeNames">
       <template #joinRight>
-        <input v-model="form.instances[0].access_url" class="input join-item input-sm w-full" placeholder="url">
-        <input v-model="form.instances[0].display_name" class="input join-item input-sm w-full" placeholder="label">
+        <input
+          v-model="form.instances[0].access_url"
+          class="input input-sm join-item w-full"
+          placeholder="url">
+        <input
+          v-model="form.instances[0].display_name"
+          :class="{ 'input-error': form.errors['instances.0.display_name'] }"
+          class="input input-sm join-item w-full"
+          placeholder="label">
       </template>
     </SelectElement>
 
@@ -177,7 +195,7 @@ onBeforeMount(() => {
       <template #searchItem="{ item, handleAdd}">
         <div
           class="btn btn-md flex w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
-          @click="handleAdd({ id: item.identifiable_id, type: item.identifiable_type, name: item.name })">
+          @click="handleAdd(addFormatData(item))">
           <div class="avatar">
             <div class="w-10 rounded-xl" :class="item.image_url ? '' : 'skeleton'">
               <img v-if="item.image_url" :src="item.image_url">
@@ -202,8 +220,6 @@ onBeforeMount(() => {
       </template>
     </MultiSearchableElement>
 
-    {{ event.time_table }}<br>
-    {{ form.time_tables }}
     <GridElement
       v-model="form.time_tables"
       label="タイムテーブル"
@@ -220,18 +236,14 @@ onBeforeMount(() => {
       help="イベントの概要などを詳しく記入してください" />
 
     <FileInputElement
-      v-model="form.images"
+      v-model="event.files"
       label="フライヤー"
       label-icon-type="fryer"
+      :upload-route="route('event.fryer.store', event.id)"
+      :delete-route="route('event.fryer.destroy')"
       :error="form.errors.images"
       help="先頭の画像がイベント表示の際の縦横比を決定します。画像サイズは統一することをお勧めします。"
-      max-file-size="30MB"
-      max-total-size="30MB" />
-
-    {{ form.images }}
-
-    {{ event.files }}
-
+      max-file-size="2MB" />
     <template #actions>
       <div class="mx-20 grid w-full grid-cols-2 gap-2">
         <button class="btn btn-outline " @click="formSubmit('draft')">

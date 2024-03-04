@@ -12,15 +12,17 @@ const props = defineProps({
   },
   hashtags: {
     type: String,
-    default: () => [],
+    default: () => '',
     required: false,
   },
   mention: {
     type: String,
+    default: () => '',
     required: false,
   },
   instance: {
     type: String,
+    default: () => '',
     required: false,
   },
 })
@@ -38,33 +40,23 @@ const share = (platform) => {
 
 </script>
 <template>
-  <ul>
-    <li>
-      <a class="btn btn-xs" @click="share('twitter')">
-        <Icon icon="ri:twitter-x-fill" class="text-xl" />
-      </a>
-    </li>
-    <!-- <li>
-      <a @click="share('facebook')" class="btn btn-xs">
-        <Icon icon="ri:facebook-fill" color="#1877F2" class="text-xl" />
-      </a>
-    </li>
-    <li>
-      <a @click="share('misskey')" class="btn btn-xs">
-        <Icon icon="simple-icons:misskey" color="#86B300" class="text-xl" />
-      </a>
-    </li>
-    <li>
-      <a @click="share('mastodon')" class="btn btn-xs">
-        <Icon icon="ri:mastodon-fill" color="#3088D4" class="text-xl" />
-      </a>
-    </li>
-    <li>
-      <a @click="share('reddit')" class="btn btn-xs">
-        <Icon icon="ri:reddit-line" color="orangered" class="text-xl" />
-      </a>
-    </li> -->
-  </ul>
+  <div class="">
+    <button class="btn btn-xs" @click="share('twitter')">
+      <Icon icon="ri:twitter-x-fill" class="text-xl" />
+    </button>
+    <!-- <button class="btn btn-xs" @click="share('facebook')">
+      <Icon icon="ri:facebook-fill" color="#1877F2" class="text-xl" />
+    </button>
+    <button class="btn btn-xs" @click="share('misskey')">
+      <Icon icon="simple-icons:misskey" color="#86B300" class="text-xl" />
+    </button>
+    <button class="btn btn-xs" @click="share('mastodon')">
+      <Icon icon="ri:mastodon-fill" color="#3088D4" class="text-xl" />
+    </button>
+    <button class="btn btn-xs" @click="share('reddit')">
+      <Icon icon="ri:reddit-line" color="orangered" class="text-xl" />
+    </button> -->
+  </div>
 </template>
 <style lang="">
 
