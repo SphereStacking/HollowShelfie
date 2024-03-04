@@ -42,7 +42,8 @@ class HandleInertiaRequests extends Middleware
                 'twitter' => config('app.twitter'),
                 'github' => config('app.github'),
                 'credit' => config('app.credit'),
-            ]
+            ],
+            'response' => $request->session()->get('response'),
         ];
     }
 }
