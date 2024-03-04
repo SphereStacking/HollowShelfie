@@ -36,7 +36,8 @@ const props = defineProps({
 const emits = defineEmits(['update:modelValue'])
 
 const performers= ref(props.modelValue?props.modelValue:[])
-const getFilteredDataFunc = props.templateOptions['getFilteredDataFunc']
+const getFilteredDataFunc = props.templateOptions['getFilteredDataFunc'] ?? ((item) => item)
+const addFormatDataFunc = props.templateOptions['addFormatDataFunc'] ?? ((item) => item)
 const route = props.templateOptions['route']
 
 watch(performers, (value) => {
@@ -56,7 +57,7 @@ watch(performers, (value) => {
     <template #searchItem="{ item, handleAdd}">
       <div
         class="btn btn-md flex h-full w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
-        @click="handleAdd(item)">
+        @click="handleAdd(addFormatDataFunc(item))">
         <div class="avatar">
           <div class="w-10 rounded-xl" :class="item.image_url ? '' : 'skeleton'">
             <img v-if="item.image_url" :src="item.image_url">
@@ -74,7 +75,7 @@ watch(performers, (value) => {
         </div>
       </div>
     </template>
-    <template #notExist="{ inputText, handleAdd}">
+    <template #notExist>
       <button class="btn btn-md w-full gap-2 py-1 text-sm" disabled>
         見つかりません
       </button>
