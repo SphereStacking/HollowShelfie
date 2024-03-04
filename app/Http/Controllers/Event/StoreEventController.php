@@ -17,7 +17,7 @@ class StoreEventController extends Controller
 
     public function __invoke(EventStoreRequest $request)
     {
-        $attributes = $request->eventAttributes();
+        $attributes = $request->getAttributes();
         $this->eventService->storeEvent($attributes);
 
         return redirect()->back()->with([

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Enums\EventStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EventStoreRequest extends FormRequest
+class  EventStoreRequest extends FormRequest
 {
 
 
@@ -22,7 +22,7 @@ class EventStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function eventAttributes(): array
+    public function getAttributes(): array
     {
         return [
             'title' => $this->input('title') ?? '',
@@ -47,7 +47,7 @@ class EventStoreRequest extends FormRequest
     public function rules(): array
     {
         //ドラフトのとき
-        if($this->input('status') == EventStatus::DRAFT->value){
+        if($this->input('status') === EventStatus::DRAFT->value){
             return [
                 'images.*' => 'file|max:30720', //30MB
             ];
