@@ -28,6 +28,12 @@ class EventsJsonResource extends JsonResource
                 'good_count' => $item->good_count,
                 'short_good_count' => $item->short_good_count,
                 'event_timeline_status' => $item->event_timeline_status,
+                'files' => $item->files->map(function ($file) {
+                    return [
+                        'id' => $file->id,
+                        'public_url' => $file->public_url,
+                    ];
+                }),
                 'organizers' => $item->organizers->map(function ($organizeble) {
                     return [
                         'profile_url' => $organizeble->event_organizeble->profile_url,
