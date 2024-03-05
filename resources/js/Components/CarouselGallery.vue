@@ -1,6 +1,6 @@
 <script setup>
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
+import { Carousel, Slide, } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 const props = defineProps({
@@ -36,14 +36,20 @@ const prev = () => {
   <div class="flex h-full flex-col justify-between gap-2">
     <slot name="header"></slot>
 
-    <div class="relative h-full rounded-xl" :class="[!props.images.length ? 'bg-base-300' : '']">
-      <Carousel
-        v-model="currentSlide" :items-to-show="1" :wrap-around="true">
-        <Slide v-for="(slide, index) in props.images" :key="index">
-          <img :src="slide" alt="image" class="carousel__item ">
-        </Slide>
-      </Carousel>
-      <Icon v-if="!props.images.length" icon="mdi:image-off" class=" absolute left-1/2 top-1/2 h-10 w-20 -translate-x-1/2 -translate-y-1/2 bg-base-300 text-6xl" />
+    <div class="aspect-w-16 aspect-h-9 relative min-h-80 " :class="[!props.images.length ? 'rounded-xl bg-base-300' : '']">
+      <template v-if="props.images.length>0">
+        <Carousel
+          v-model="currentSlide" :items-to-show="1" :wrap-around="true">
+          <Slide v-for="(image, index) in props.images" :key="index">
+            <img class="carousel__item" :src="image">
+          </Slide>
+        </Carousel>
+      </template>
+      <template v-else>
+        <div class="h-full w-full bg-base-300">
+          <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
+        </div>
+      </template>
     </div>
 
     <div class=" flex flex-row items-center justify-between gap-1">

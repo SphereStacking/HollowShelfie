@@ -112,7 +112,7 @@ const image_flyers = [
       <!-- leftside -->
       <div class="mx-auto w-full lg:col-span-3 lg:row-start-3">
         <Card>
-          <CarouselGallery class="sticky top-12" :images="image_flyers" />
+          <CarouselGallery class="sticky top-12" :images="event.files" />
         </Card>
       </div>
       <!-- leftside -->
