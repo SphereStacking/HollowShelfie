@@ -1,23 +1,9 @@
 <script setup>
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
+import { Carousel, Slide, Pagination } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
-import file1 from '@/Components/LXIX_Design_224-4.png'
-import file2 from '@/Components/LXIX_Design_225-5.png'
-import file3 from '@/Components/LXIX_Design_196-4.png'
 import { router } from '@inertiajs/vue3'
-const image_flyers = [
-  file1,
-  file2,
-  file3,
-  file1,
-  file2,
-  file3,
-  file1,
-  file2,
-  file3,
-]
 
 const props = defineProps({
   events: {
@@ -75,7 +61,16 @@ const getEventShow = (event) => {
       <Slide v-for="(event, index) in events" :key="index">
         <div class="carousel__item hero  rounded-md bg-base-200 ">
           <div class="hero-content flex-col lg:flex-row">
-            <img :src="file1" class="h-80 max-w-sm shadow-2xl">
+            <div class=" relative aspect-a4 h-80">
+              <template v-if="event.files.length>0">
+                <img :src="event.files[0]">
+              </template>
+              <template v-else>
+                <div class="h-full w-full bg-base-300">
+                  <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
+                </div>
+              </template>
+            </div>
             <div class="flex flex-col items-start gap-2">
               <div class="flex w-full flex-row justify-between">
                 <div>{{ event.event_timeline_status }}</div>
@@ -114,7 +109,7 @@ const getEventShow = (event) => {
                 </div>
                 <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-200 p-2">
                   <a
-                    v-for="(organizer, index ) in event.organizers" :href="organizer.profile_url"
+                    v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
                     :data-tip="organizer.name">
                     <img :src="organizer.imag_url">
@@ -129,7 +124,7 @@ const getEventShow = (event) => {
                 </div>
                 <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-200 p-2">
                   <a
-                    v-for="(performer, index ) in event.performers" :href="performer.profile_url"
+                    v-for="(performer, index ) in event.performers" :key="index" :href="performer.profile_url"
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
                     :data-tip="performer.name">
                     <img :src="performer.image_url">
