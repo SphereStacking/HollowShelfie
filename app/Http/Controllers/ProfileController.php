@@ -9,7 +9,7 @@ use App\Services\TeamService;
 use App\Services\UserService;
 use App\Params\EventSearchParams;
 use App\Services\EventMeilisearchService;
-use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
 use App\Http\Resources\TeamPublicProfileJsonResource;
 use App\Models\Team;
@@ -52,7 +52,7 @@ class ProfileController extends Controller
             'profile' => new UserPublicProfileJsonResource(
                 $this->userService->preloadProfileData($user),
             ),
-            'events' => new EventListJsonResource(
+            'events' => new EventsPaginatedJsonResource(
                 $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
             ),
             'url' => route('event.search.index', [
@@ -85,7 +85,7 @@ class ProfileController extends Controller
             'profile' => new TeamPublicProfileJsonResource(
                 $this->teamService->preloadProfileData($team),
             ),
-            'events' => new EventListJsonResource(
+            'events' => new EventsPaginatedJsonResource(
                 $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
             ),
             'url' => route('event.search.index', [

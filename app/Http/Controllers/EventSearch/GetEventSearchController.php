@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use App\Params\EventSearchParams;
 use App\Http\Controllers\Controller;
 use App\Services\EventMeilisearchService;
-use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\EventsPaginatedJsonResource;
 
 class GetEventSearchController extends Controller
 {
@@ -38,7 +38,7 @@ class GetEventSearchController extends Controller
             'Search/Event',
             [
                 'trendTags' => fn () =>  $this->tagService->getTrendTagNames(),
-                'events' => new EventListJsonResource(
+                'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' =>  fn () => Category::all(),

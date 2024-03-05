@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Enums\EventStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EventListJsonResource extends JsonResource
+class EventsPaginatedJsonResource extends JsonResource
 {
     /**
      * リソースを配列に変換します。

@@ -15,7 +15,7 @@ use App\Models\CustomIdentifiable;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\SearchRequest;
 use App\Services\EventMeilisearchService;
-use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\MentionsuggestionJsonResource;
 
 class SearchController extends Controller
@@ -49,7 +49,7 @@ class SearchController extends Controller
             'Search/Event',
             [
                 'trendTags' => $this->tagService->getTrendTagNames(),
-                'events' => new EventListJsonResource(
+                'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' =>  Category::all(),
@@ -72,7 +72,7 @@ class SearchController extends Controller
             'Search/Performer',
             [
                 'trendTags' => $this->tagService->getTrendTagNames(),
-                'events' => new EventListJsonResource(
+                'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' =>  Category::all(),

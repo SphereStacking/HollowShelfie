@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Params\EventEloquentSearchParams;
 use App\Services\EventEloquentSearchService;
-use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\EventsPaginatedJsonResource;
 
 class GetManageEventController extends Controller
 {
@@ -40,7 +40,7 @@ class GetManageEventController extends Controller
         $events = $this->eventEloquentSearchService->getEventSearchByUser($user, $eventSearchParams);
 
         return Inertia::render('Event/EventManage', [
-            'events' => new EventListJsonResource($events),
+            'events' => new EventsPaginatedJsonResource($events),
             'categories' =>  fn () => Category::all(),
             'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
             'statuses' =>  fn () => EventStatus::getPermittedStatusesForAdminSearch(),

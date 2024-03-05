@@ -34,7 +34,7 @@ class GetUserSearchController extends Controller
             'Search/Performer',
             [
                 'trendTags' => $this->tagService->getTrendTagNames(),
-                'events' => new EventListJsonResource(
+                'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' =>  Category::all(),
