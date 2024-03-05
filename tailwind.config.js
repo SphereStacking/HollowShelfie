@@ -24,6 +24,9 @@ export default {
         'vtd-primary': colors.sky, // Light mode Datepicker color
         'vtd-secondary': colors.gray, // Dark mode Datepicker color
       },
+      aspectRatio: {
+        'a4': '1 / 1.414', // A4サイズの縦横比
+      },
     },
   },
 
