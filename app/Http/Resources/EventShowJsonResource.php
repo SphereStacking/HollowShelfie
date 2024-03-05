@@ -16,11 +16,6 @@ class EventShowJsonResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'images' => $this->files->map(function ($file) {
-                return [
-                    'url' => $file->url,
-                ];
-            }),
             'id' => $this->id,
             'created_at' => $this->created_at,
             'title' => $this->title,
