@@ -5,7 +5,7 @@ namespace App\Http\Controllers\EventGood;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Services\EventGoodService;
-use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\EventsPaginatedJsonResource;
 
 class GetGoodController extends Controller
 {
@@ -21,7 +21,7 @@ class GetGoodController extends Controller
         return Inertia::render(
             'Dashboard/Good',
             [
-                'events' => new EventListJsonResource(
+                'events' => new EventsPaginatedJsonResource(
                     $this->eventGoodService->getGoodEventsByUser(auth()->user())
                 ),
             ]

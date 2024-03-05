@@ -7,7 +7,7 @@ use Inertia\Response;
 use App\Services\TagService;
 use App\Services\EventService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EventListJsonResource;
+use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\EventShowJsonResource;
 
 class ShowEventController extends Controller
