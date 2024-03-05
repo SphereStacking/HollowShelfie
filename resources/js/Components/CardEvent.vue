@@ -1,29 +1,14 @@
 
 <script setup>
-import { Link, router } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 import { Carousel, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
-const props = defineProps({
+defineProps({
   event: {
     type: Object,
     required: true
   },
-})
-
-import file3 from './LXIX_Design_196-4.png'
-import file1 from './LXIX_Design_224-4.png'
-import file2 from './LXIX_Design_225-5.png'
-
-const image_flyers = [
-  file1,
-  file2,
-  file3,
-]
-
-const randomColor = computed(() => {
-  const colors = ['blue', 'green', 'red', 'yellow', 'indigo', 'purple', 'pink']
-  return colors[Math.floor(Math.random() * colors.length)]
 })
 </script>
 
@@ -42,14 +27,21 @@ const randomColor = computed(() => {
     <div class="mx-3 mt-1 truncate whitespace-nowrap font-bold ">
       {{ event.title }}
     </div>
-    <div class="relative">
-      <Carousel
-        :autoplay="5000" wrap-around class=" absolute flex flex-col"
-        pause-autoplay-on-hover>
-        <Slide v-for="(image, index) in image_flyers" :key="index">
-          <img class="carousel__item" :src="image">
-        </Slide>
-      </Carousel>
+    <div class="aspect-w-16 aspect-h-9 relative min-h-80">
+      <template v-if="event.files.length>0">
+        <Carousel
+          :autoplay="5000" wrap-around class=""
+          pause-autoplay-on-hover>
+          <Slide v-for="(image, index) in event.files" :key="index">
+            <img class="carousel__item" :src="image">
+          </Slide>
+        </Carousel>
+      </template>
+      <template v-else>
+        <div class="h-full w-full bg-base-300">
+          <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
+        </div>
+      </template>
     </div>
     <div class="m-2 flex justify-between">
       <div class="flex gap-1">
