@@ -33,7 +33,7 @@ defineProps({
           :autoplay="5000" wrap-around class=""
           pause-autoplay-on-hover>
           <Slide v-for="(image, index) in event.files" :key="index">
-            <img class="carousel__item" :src="image">
+            <img class="carousel__item" :src="image.public_url">
           </Slide>
         </Carousel>
       </template>
