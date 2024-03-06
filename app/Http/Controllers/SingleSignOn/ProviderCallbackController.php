@@ -1,34 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SingleSignOn;
 
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use App\Services\UserService;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\SocialAccountService;
-use App\Http\Resources\UserPublicProfileJsonResource;
 
-class SocialAccountController extends Controller
+class ProviderCallbackController extends Controller
 {
     protected $socialAccountService;
-    protected $userService;
-
 
     public function __construct(
         SocialAccountService $socialAccountService,
-        UserService $userService,
     ) {
         $this->socialAccountService = $socialAccountService;
-        $this->userService = $userService;
     }
 
-    public function redirectToProvider($provider)
-    {
-        return $this->socialAccountService->redirectToProvider($provider);
-    }
-
-    public function handleProviderCallback($provider)
+    public function __invoke($provider)
     {
         $result = $this->socialAccountService->createOrGetUser($provider);
 

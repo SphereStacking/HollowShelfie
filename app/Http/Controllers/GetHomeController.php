@@ -15,7 +15,7 @@ use App\Http\Resources\EventsJsonResource;
 use App\Http\Resources\TagWithCountJsonResource;
 use App\Http\Resources\CategoryWithCountJsonResource;
 
-class HomeController extends Controller
+class GetHomeController extends Controller
 {
     protected $eventService;
     protected $eventMeilisearchService;
@@ -34,7 +34,7 @@ class HomeController extends Controller
         $this->tagService = $tagService;
     }
 
-    public function index()
+    public function __invoke()
     {
         $trendParams = new EventSearchParams(
             '',

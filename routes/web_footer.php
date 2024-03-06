@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\MarkdownPageController;
+use App\Http\Controllers\Markdown\GetAboutPageController;
+use App\Http\Controllers\Markdown\GetGuidePageController;
+use App\Http\Controllers\Markdown\GetLegalPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,6 @@ use App\Http\Controllers\MarkdownPageController;
 |
 */
 
-Route::get('/about/{about}', [MarkdownPageController::class, 'showAbout'])->name('about');
-Route::get('/guide/{guides}', [MarkdownPageController::class, 'showGuides'])->name('guide');
-Route::get('/legal/{legal}', [MarkdownPageController::class, 'showLegal'])->name('legal');
+Route::get('/about/{about}', GetAboutPageController::class)->name('about');
+Route::get('/guide/{guides}', GetGuidePageController::class)->name('guide');
+Route::get('/legal/{legal}', GetLegalPageController::class)->name('legal');

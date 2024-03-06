@@ -8,7 +8,7 @@ use App\Services\EventService;
 use App\Services\EventGoodService;
 use App\Services\EventBookmarkService;
 
-class DashboardController extends Controller
+class GetDashboardController extends Controller
 {
     protected $eventService;
     protected $eventMeilisearchService;
@@ -30,9 +30,8 @@ class DashboardController extends Controller
         $this->userService = $userService;
     }
 
-    public function index()
+    public function __invoke()
     {
-
         return Inertia::render(
             'Dashboard/Index',
             [   'counts' => [
