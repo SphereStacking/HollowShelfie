@@ -16,6 +16,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\TimeTablePerformers;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class EventRelationSeeder extends Seeder
 {
@@ -24,7 +25,8 @@ class EventRelationSeeder extends Seeder
      */
     public function run(): void
     {
-        Event::all()->each(function ($event) {
+        $files = Storage::disk('public')->files('dummy');
+        Event::all()->each(function ($event) use ($files) {
             $count = rand(1, 4);
 
             // タグをランダムに紐づける
@@ -63,6 +65,18 @@ class EventRelationSeeder extends Seeder
                     'event_time_table_id' => $eventTimeTable->id,
                 ]);
             }
+
+            for ($i = 0; $i < rand(1, 4); $i++) {
+                $randomFile = Arr::random($files); // ランダムに一つ選択
+                $fileName = basename($randomFile); // ファイル名のみを取得
+                $event->files()->create([
+                    'path' => "dummy",
+                    'name' => $fileName,
+                    'original_name' => $fileName,
+                    'type' => 'image/jpeg',
+                ]);
+            }
+
 
             //--------------------------------------------------------
             // ランダムなユーザーを主催者として追加
