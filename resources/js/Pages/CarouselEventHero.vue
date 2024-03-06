@@ -63,7 +63,7 @@ const getEventShow = (event) => {
           <div class="hero-content flex-col lg:flex-row">
             <div class=" relative aspect-a4 h-80">
               <template v-if="event.files.length>0">
-                <img :src="event.files[0]">
+                <img :src="event.files[0].public_url">
               </template>
               <template v-else>
                 <div class="h-full w-full bg-base-300">
