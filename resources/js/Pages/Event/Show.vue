@@ -27,16 +27,8 @@ const performers = props.event.performers
 
 const instances = props.event.instances
 
-import file1 from '@/Components/LXIX_Design_224-4.png'
-import file2 from '@/Components/LXIX_Design_225-5.png'
-import file3 from '@/Components/LXIX_Design_196-4.png'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
-const image_flyers = [
-  file1,
-  file2,
-  file3,
-]
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -133,7 +125,7 @@ const image_flyers = [
           </div>
           <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
             <a
-              v-for="(organizer, index ) in organizers" :href="organizer.profile_url"
+              v-for="(organizer, index ) in organizers" :key="index" :href="organizer.profile_url"
               class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="organizer.name">
               <img :src="organizer.imag_url">
             </a>
@@ -147,7 +139,7 @@ const image_flyers = [
           </div>
           <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
             <a
-              v-for="(performer, index ) in performers" :href="performer.profile_url"
+              v-for="(performer, index ) in performers" :key="index" :href="performer.profile_url"
               class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name">
               <img :src="performer.image_url">
             </a>
@@ -160,7 +152,7 @@ const image_flyers = [
           </div>
           <div class="flex w-full flex-col rounded-xl bg-base-200">
             <a
-              v-for="(instance, index ) in instances" href="#"
+              v-for="(instance, index ) in instances" :key="index" href="#"
               class="mx-2 my-1 flex flex-row gap-2 transition-all duration-200 hover:-translate-y-1">
               <div class="badge badge-primary">{{ instance.instance_type }}</div>
               <div class="overflow-hidden whitespace-nowrap"> {{ instance.location }}</div>
@@ -199,7 +191,7 @@ const image_flyers = [
                 関連イベント
               </template>
               <template #content>
-                <div v-for="event in recommendEvents">
+                <div v-for="event in recommendEvents" :key="event.id">
                   {{ event.title }}
                 </div>
               </template>
