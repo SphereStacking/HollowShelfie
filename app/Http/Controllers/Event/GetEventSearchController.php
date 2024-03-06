@@ -1,13 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\EventSearch;
+namespace App\Http\Controllers\Event;
 
+use Inertia\Inertia;
+use App\Models\Category;
+use App\Enums\EventStatus;
+use App\Models\InstanceType;
 use App\Services\TagService;
+use Illuminate\Http\Request;
 use App\Params\EventSearchParams;
 use App\Http\Controllers\Controller;
 use App\Services\EventMeilisearchService;
+use App\Http\Resources\EventsPaginatedJsonResource;
 
-class GetUserSearchController extends Controller
+class GetEventSearchController extends Controller
 {
     protected $eventMeilisearchService;
     protected $tagService;
@@ -28,18 +34,16 @@ class GetUserSearchController extends Controller
             $request->input('paginate', null),
             $request->input('o', null),
         );
-        Log::debug($EventSearchParams);
-
         return Inertia::render(
-            'Search/Performer',
+            'Search/Event',
             [
-                'trendTags' => $this->tagService->getTrendTagNames(),
+                'trendTags' => fn () =>  $this->tagService->getTrendTagNames(),
                 'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
-                'categories' =>  Category::all(),
-                'instanceTypes' => InstanceType::all()->pluck('name'),
-                'statuses' =>  EventStatus::getPermittedStatusesForListSearch(),
+                'categories' =>  fn () => Category::all(),
+                'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
+                'statuses' =>  fn () => EventStatus::getPermittedStatusesForListSearch(),
             ]
         );
     }

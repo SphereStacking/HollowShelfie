@@ -6,8 +6,9 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Resources\UserPublicProfileJsonResource;
+use App\Models\User;
 
-class WelcomeController extends Controller
+class GetWelcomeController extends Controller
 {
     protected $userService;
 
@@ -17,11 +18,11 @@ class WelcomeController extends Controller
         $this->userService = $userService;
     }
 
-    public function welcome()
+    public function __invoke()
     {
         return Inertia::render('Welcome', [
             'user' => new UserPublicProfileJsonResource(
-                $this->userService->getPublishProfile(1),
+                $this->userService->preloadProfileData(User::find(1)),
             ),
         ]);
     }

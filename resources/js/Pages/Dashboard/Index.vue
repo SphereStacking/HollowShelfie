@@ -21,7 +21,7 @@ const dashboardCategory = [
   { id: 'setting', iconType: 'setting', title: 'Setting' },
 ]
 const dashboardItems = [
-  { category: 'activity', iconType: 'bookmarks', title: 'bookmarks', url: route('dashboard.bookmark', props.auth.user.screen_name), buttonText: props.counts.bookmark?.total || 0 },
+  { category: 'activity', iconType: 'bookmarks', title: 'bookmarks', url: route('user.bookmark', props.auth.user.screen_name), buttonText: props.counts.bookmark?.total || 0 },
   { category: 'activity', iconType: 'onGood', title: 'Goods', url: route('user.good', props.auth.user.screen_name), buttonText: props.counts.good || 0 },
   { category: 'search', iconType: 'event', title: 'イベントを探す', url: route('event.search.index'), buttonText: 'go' },
   { category: 'search', iconType: 'team', title: 'チームを探す(仮)', url: '#', buttonText: 'go' },

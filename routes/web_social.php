@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\SocialAccountController;
+use App\Http\Controllers\SingleSignOn\ProviderCallbackController;
+use App\Http\Controllers\SingleSignOn\RedirectToProviderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +15,5 @@ use App\Http\Controllers\SocialAccountController;
 |
 */
 
-Route::get('/auth/{provider}', [SocialAccountController::class, 'redirectToProvider']);
-Route::get('/auth/{provider}/callback', [SocialAccountController::class, 'handleProviderCallback']);
+Route::get('/auth/{provider}', RedirectToProviderController::class)->name('auth.redirect');
+Route::get('/auth/{provider}/callback', ProviderCallbackController::class)->name('auth.callback');
