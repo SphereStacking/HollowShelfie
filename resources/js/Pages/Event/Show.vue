@@ -104,7 +104,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
       <!-- leftside -->
       <div class="mx-auto w-full lg:col-span-3 lg:row-start-3">
         <Card>
-          <CarouselGallery class="sticky top-12" :images="event.files" />
+          <CarouselGallery class="sticky top-12" :images="event.files.map(file => file.public_url)" />
         </Card>
       </div>
       <!-- leftside -->
