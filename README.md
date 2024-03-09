@@ -114,25 +114,27 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
    ※MEILISEARCH　に関しては後ほどdocker imageをビルドしてから行う。
 
 5. 依存ファイルのインストール
-   1. docker-compose up -d
+   1. `docker-compose up -d`
       ここで初回のインストールなりビルドが走ると思う。(多分)
-   2. docker-compose exec laravel.test bash
-   3. composer install
-   4. exit
+   2. `docker-compose exec laravel.test bash`
+   3. `composer install`
+   4. `exit`
    ここの手順あいまい。
    composerをPC自体にインストールして
    composer installしてたかも
-6. ./vendor/bin/sail up
+6. `./vendor/bin/sail up`
    おこのみでsailのショートカットを作成してください
    `alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`
 7. メイリサーチセットアップ[notion参照](https://www.notion.so/ff35198dd447429ebaf3058b88d71034)
-8. docker-compose exec laravel.test bash
-9. npm run dev
+8. `docker-compose exec laravel.test bash`
+9. `npm run dev`
     この段階ではログイン画面は表示されないと思う
-10. php artisan migrate
-11. php artisan db:seed
-   テスト用のUserが作成されているのでこちらでログイン
-   - メールアドレス admin@admin
-   - パスワード password
+10. `php artisan migrate`
+12. `php artisan db:seed`
+    
 
 
+## 構築後の起動
+1. `sail up -d` sail環境の起動
+2. `docker exec -it sphere_app-laravel.test-1  bash` で立ち上げた環境に入る。
+3. `npm run dev` 開発サーバ起動
