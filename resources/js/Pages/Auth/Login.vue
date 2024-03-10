@@ -43,7 +43,7 @@ const submit = () => {
 
     <form @submit.prevent="submit">
       <div>
-        <InputLabel for="email" value="Email" />
+        <InputLabel for="email" :value="$t('Email')" />
         <TextInput
           id="email" v-model="form.email" type="email"
           class="mt-1 block w-full" required autofocus
@@ -52,7 +52,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="password" value="Password" />
+        <InputLabel for="password" :value="$t('Password')" />
         <TextInput
           id="password" v-model="form.password" type="password"
           class="mt-1 block w-full" required

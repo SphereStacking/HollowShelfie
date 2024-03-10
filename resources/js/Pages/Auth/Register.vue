@@ -24,7 +24,7 @@ const submit = () => {
 </script>
 
 <template>
-  <Head title="Register" />
+  <Head :title="$t('Register')" />
 
   <AuthenticationCard>
     <template #logo>
@@ -33,7 +33,7 @@ const submit = () => {
 
     <form @submit.prevent="submit">
       <div>
-        <InputLabel for="name" value="Name" />
+        <InputLabel for="name" :value="$t('Name')" />
         <TextInput
           id="name" v-model="form.name" type="text"
           class="mt-1 block w-full" required autofocus
@@ -42,7 +42,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="email" value="Email" />
+        <InputLabel for="email" :value="$t('Email')" />
         <TextInput
           id="email" v-model="form.email" type="email"
           class="mt-1 block w-full" required
@@ -51,7 +51,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="password" value="Password" />
+        <InputLabel for="password" :value="$t('Password')" />
         <TextInput
           id="password" v-model="form.password" type="password"
           class="mt-1 block w-full" required
@@ -60,7 +60,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="password_confirmation" value="Confirm Password" />
+        <InputLabel for="password_confirmation" :value="$t('Confirm Password')" />
         <TextInput
           id="password_confirmation" v-model="form.password_confirmation" type="password"
           class="mt-1 block w-full" required autocomplete="new-password" />

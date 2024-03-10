@@ -116,7 +116,7 @@ const displayableRole = (role) => {
 
           <!-- Member Email -->
           <div class="col-span-6 sm:col-span-4">
-            <InputLabel for="email" value="Email" />
+            <InputLabel for="email" :value="$t('Email')" />
             <TextInput
               id="email"
               v-model="addTeamMemberForm.email"
@@ -127,7 +127,7 @@ const displayableRole = (role) => {
 
           <!-- Role -->
           <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4">
-            <InputLabel for="roles" value="Role" />
+            <InputLabel for="roles" :value="$t('Role')" />
             <InputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
             <div class="relative z-0 mt-1 cursor-pointer rounded-lg border border-gray-200">
