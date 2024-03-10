@@ -95,7 +95,7 @@ const clearPhotoFileInput = () => {
           class="hidden"
           @change="updatePhotoPreview">
 
-        <InputLabel for="photo" value="Photo" />
+        <InputLabel for="photo" :value="$t('Photo')" />
 
         <!-- Current Profile Photo -->
         <div v-show="! photoPreview" class="mt-2">
@@ -126,7 +126,7 @@ const clearPhotoFileInput = () => {
 
       <!-- Name -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="name" value="Name" />
+        <InputLabel for="name" :value="$t('Name')" />
         <TextInput
           id="name"
           v-model="form.name"
@@ -139,7 +139,7 @@ const clearPhotoFileInput = () => {
 
       <!-- Email -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="email" value="Email" />
+        <InputLabel for="email" :value="$t('Email')" />
         <TextInput
           id="email"
           v-model="form.email"

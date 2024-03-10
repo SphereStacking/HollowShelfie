@@ -19,7 +19,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-  <Head title="Email Verification" />
+  <Head :title="$t('Email Verification')" />
 
   <AuthenticationCard>
     <template #logo>
@@ -27,24 +27,24 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
     </template>
 
     <div class="mb-4 text-sm text-gray-600">
-      Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+      {{ $t("Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.") }}
     </div>
 
     <div v-if="verificationLinkSent" class="mb-4 text-sm font-medium text-green-600">
-      A new verification link has been sent to the email address you provided in your profile settings.
+      {{ $t('A new verification link has been sent to the email address you provided in your profile settings.') }}
     </div>
 
     <form @submit.prevent="submit">
       <div class="mt-4 flex items-center justify-between">
         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Resend Verification Email
+          {{ $t('Resend Verification Email') }}
         </PrimaryButton>
 
         <div>
           <Link
             :href="route('profile.show')"
             class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            Edit Profile
+            {{ $t('Edit Profile') }}
           </Link>
 
           <Link
@@ -52,7 +52,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
             method="post"
             as="button"
             class="ml-2 rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            Log Out
+            {{ $t('Log Out') }}
           </Link>
         </div>
       </div>
