@@ -27,6 +27,15 @@ export default {
       aspectRatio: {
         'a4': '1 / 1.414', // A4サイズの縦横比
       },
+      keyframes: {
+        slide: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' }, // 2セット分の半分を移動
+        },
+      },
+      animation: {
+        'slide-infinite': 'slide 40s linear infinite',
+      },
     },
   },
 
