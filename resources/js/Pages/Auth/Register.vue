@@ -24,7 +24,7 @@ const submit = () => {
 </script>
 
 <template>
-  <Head title="Register" />
+  <Head :title="$t('Register')" />
 
   <AuthenticationCard>
     <template #logo>
@@ -33,7 +33,7 @@ const submit = () => {
 
     <form @submit.prevent="submit">
       <div>
-        <InputLabel for="name" value="Name" />
+        <InputLabel for="name" :value="$t('Name')" />
         <TextInput
           id="name" v-model="form.name" type="text"
           class="mt-1 block w-full" required autofocus
@@ -42,7 +42,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="email" value="Email" />
+        <InputLabel for="email" :value="$t('Email')" />
         <TextInput
           id="email" v-model="form.email" type="email"
           class="mt-1 block w-full" required
@@ -51,7 +51,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="password" value="Password" />
+        <InputLabel for="password" :value="$t('Password')" />
         <TextInput
           id="password" v-model="form.password" type="password"
           class="mt-1 block w-full" required
@@ -60,7 +60,7 @@ const submit = () => {
       </div>
 
       <div class="mt-4">
-        <InputLabel for="password_confirmation" value="Confirm Password" />
+        <InputLabel for="password_confirmation" :value="$t('Confirm Password')" />
         <TextInput
           id="password_confirmation" v-model="form.password_confirmation" type="password"
           class="mt-1 block w-full" required autocomplete="new-password" />
@@ -75,13 +75,18 @@ const submit = () => {
               required />
 
             <div class="ml-2">
-              I agree to the <a
+              {{ $t('I agree to') }}
+              (
+              <a
                 target="_blank" :href="route('legal', 'terms-of-service')"
-                class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Terms
-                of Service</a> and <a
-                target="_blank" :href="route('legal', 'privacy-policy')"
-                class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Privacy
-                Policy</a>
+                class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                {{ $t('Terms of Service') }}
+              </a>
+              &nbsp;
+              <a target="_blank" :href="route('legal', 'privacy-policy')" class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                {{ $t('Privacy Policy') }}
+              </a>
+              )
             </div>
           </div>
           <InputError class="mt-2" :message="form.errors.terms" />
@@ -92,11 +97,11 @@ const submit = () => {
         <Link
           :href="route('login')"
           class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-offset-2 ">
-          Already registered?
+          {{ $t('Already registered?') }}
         </Link>
 
         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Register
+          {{ $t('Register') }}
         </PrimaryButton>
       </div>
     </form>
@@ -106,9 +111,9 @@ const submit = () => {
       </div>
       <SocialLogin />
       <div class="mt-2">
-        Already have account?
+        {{ $t('Already registered?') }}
         <Link :href="route('login')" class="link">
-          Sign in
+          {{ $t('Log in') }}
         </Link>
       </div>
     </div>

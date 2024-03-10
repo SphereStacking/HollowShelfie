@@ -27,17 +27,17 @@ const updateTeamName = () => {
 <template>
   <FormSection @submitted="updateTeamName">
     <template #title>
-      Team Name
+      {{ $t('Team Name') }}
     </template>
 
     <template #description>
-      チームの名前と所有者の情報。
+      {{ $t('The team\'s name and owner information.') }}
     </template>
 
     <template #form>
       <!-- Team Owner Information -->
       <div class="col-span-6">
-        <InputLabel value="Team Owner" />
+        <InputLabel :value="$t('Team Owner')" />
 
         <div class="mt-2 flex items-center">
           <img class="h-12 w-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
@@ -55,7 +55,7 @@ const updateTeamName = () => {
 
       <!-- Team Name -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="name" value="Team Name" />
+        <InputLabel for="name" :value="$t('Team Name')" />
 
         <TextInput
           id="name" v-model="form.name" type="text"

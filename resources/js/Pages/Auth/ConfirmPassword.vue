@@ -26,7 +26,7 @@ const submit = () => {
 </script>
 
 <template>
-  <Head title="Secure Area" />
+  <Head :title="$t('Secure Area')" />
 
   <AuthenticationCard>
     <template #logo>
@@ -34,12 +34,12 @@ const submit = () => {
     </template>
 
     <div class="mb-4 text-sm text-gray-600">
-      This is a secure area of the application. Please confirm your password before continuing.
+      {{ $t('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>
 
     <form @submit.prevent="submit">
       <div>
-        <InputLabel for="password" value="Password" />
+        <InputLabel for="password" :value="$t('Password')" />
         <TextInput
           id="password"
           ref="passwordInput"
@@ -54,7 +54,7 @@ const submit = () => {
 
       <div class="mt-4 flex justify-end">
         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-          Confirm
+          {{ $t('Confirm') }}
         </PrimaryButton>
       </div>
     </form>
