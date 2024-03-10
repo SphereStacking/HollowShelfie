@@ -96,10 +96,10 @@ const isLogin = ref(auth_user.value !== null)
               </div>
               <template v-if="!isLogin">
                 <Link :href="route('login')" class="btn  btn-sm">
-                  ログイン
+                  {{ $t('Login') }}
                 </Link>
                 <Link :href="route('register')" class="btn  btn-sm">
-                  登録
+                  {{ $t('Register') }}
                 </Link>
               </template>
 
@@ -125,15 +125,15 @@ const isLogin = ref(auth_user.value !== null)
                     <div class="w-60">
                       <!-- Team Management -->
                       <div class="block px-4 py-2 text-xs text-gray-400">
-                        Manage Team
+                        {{ $t('Manage Team') }}
                       </div>
                       <!-- Team Settings -->
                       <DropdownLink v-if="isTeam" :href="route('teams.show', auth_user.current_team)">
-                        Team Settings
+                        {{ $t('Team Settings') }}
                       </DropdownLink>
 
                       <DropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">
-                        Create New Team
+                        {{ $t('Create New Team') }}
                       </DropdownLink>
 
                       <!-- Team Switcher -->
@@ -141,7 +141,7 @@ const isLogin = ref(auth_user.value !== null)
                         <div class="border-t border-gray-200"></div>
 
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                          Switch Teams
+                          {{ $t('Switch Teams') }}
                         </div>
 
                         <template v-for="team in auth_user.all_teams" :key="team.id">
@@ -184,15 +184,15 @@ const isLogin = ref(auth_user.value !== null)
                   <template #content>
                     <!-- Account Management -->
                     <div class="block px-4 py-2 text-xs ">
-                      Manage Account
+                      {{ $t('Manage Account') }}
                     </div>
 
                     <DropdownLink :href="route('profile.show')">
-                      Profile
+                      {{ $t('Profile') }}
                     </DropdownLink>
 
                     <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
-                      API Tokens
+                      {{ $t('API Tokens') }}
                     </DropdownLink>
 
                     <div class="border-t border-gray-200"></div>
@@ -200,7 +200,7 @@ const isLogin = ref(auth_user.value !== null)
                     <!-- Authentication -->
                     <form @submit.prevent="logout">
                       <DropdownLink as="button">
-                        Log Out
+                        {{ $t('Log Out') }}
                       </DropdownLink>
                     </form>
                   </template>
@@ -234,7 +234,7 @@ const isLogin = ref(auth_user.value !== null)
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
           <div class="space-y-1 pb-3 pt-2">
             <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
-              Dashboard
+              {{ $t('Dashboard') }}
             </ResponsiveNavLink>
           </div>
 
@@ -261,19 +261,19 @@ const isLogin = ref(auth_user.value !== null)
 
             <div class="mt-3 space-y-1">
               <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                Profile
+                {{ $t('Profile') }}
               </ResponsiveNavLink>
 
               <ResponsiveNavLink
                 v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"
                 :active="route().current('api-tokens.index')">
-                API Tokens
+                {{ $t('API Tokens') }}
               </ResponsiveNavLink>
 
               <!-- Authentication -->
               <form method="POST" @submit.prevent="logout">
                 <ResponsiveNavLink as="button">
-                  Log Out
+                  {{ $t('Log Out') }}
                 </ResponsiveNavLink>
               </form>
 
@@ -282,20 +282,20 @@ const isLogin = ref(auth_user.value !== null)
                 <div class="border-t border-gray-200"></div>
 
                 <div class="block px-4 py-2 text-xs text-gray-400">
-                  Manage Team
+                  {{ $t('Manage Team') }}
                 </div>
 
                 <!-- Team Settings -->
                 <ResponsiveNavLink
                   v-if="isTeam" :href="route('teams.show', auth_user.current_team)"
                   :active="route().current('teams.show')">
-                  Team Settings
+                  {{ $t('Team Settings') }}
                 </ResponsiveNavLink>
 
                 <ResponsiveNavLink
                   v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')"
                   :active="route().current('teams.create')">
-                  Create New Team
+                  {{ $t('Create New Team') }}
                 </ResponsiveNavLink>
 
                 <!-- Team Switcher -->
@@ -303,7 +303,7 @@ const isLogin = ref(auth_user.value !== null)
                   <div class="border-t border-gray-200"></div>
 
                   <div class="block px-4 py-2 text-xs text-gray-400">
-                    Switch Teams
+                    {{ $t('Switch Teams') }}
                   </div>
 
                   <template v-for="team in auth_user.all_teams" :key="team.id">

@@ -63,6 +63,7 @@
         "daisyui": "^4.7.2",
         "date-fns": "^2.30.0",
         "dayjs": "^1.11.10",
+        "laravel-vue-i18n": "^2.7.6",
         "theme-change": "^2.5.0",
         "tippy.js": "^6.3.7",
         "uuid": "^9.0.1",
