@@ -27,11 +27,11 @@ const updateTeamName = () => {
 <template>
   <FormSection @submitted="updateTeamName">
     <template #title>
-      Team Name
+      {{ $t('Team Name') }}
     </template>
 
     <template #description>
-      チームの名前と所有者の情報。
+      {{ $t('The team\'s name and owner information.') }}
     </template>
 
     <template #form>
