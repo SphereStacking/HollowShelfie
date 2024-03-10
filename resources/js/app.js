@@ -5,16 +5,8 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m'
-import { createI18n } from 'vue-i18n'
-import ja from '../lang/ja/ja.json'
+import { i18nVue } from 'laravel-vue-i18n'
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
-const i18n = createI18n({
-  locale: 'ja',
-  fallbackLocale: 'ja',
-  messages: {
-    ja: ja,
-  }
-})
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,
@@ -23,7 +15,13 @@ createInertiaApp({
     return createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
-      .use(i18n)
+      .use(i18nVue, {
+        lang: 'ja',
+        resolve: lang => {
+          const langs = import.meta.glob('../lang/*.json', { eager: true })
+          return langs[`../lang/${lang}.json`].default
+        },
+      })
       .mount(el)
   },
   progress: {
