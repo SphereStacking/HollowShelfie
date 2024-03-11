@@ -26,6 +26,9 @@ class GetWelcomeController extends Controller
 
     public function __invoke()
     {
+        if (auth()->check()) {
+            return redirect()->route('home');
+        }
         return Inertia::render('Welcome', [
             'user' => new UserPublicProfileJsonResource(
                 $this->userService->preloadProfileData(User::find(1)),
