@@ -27,13 +27,13 @@ defineProps({
     <div class="mx-3 mt-1 truncate whitespace-nowrap font-bold ">
       {{ event.title }}
     </div>
-    <div class="aspect-w-16 aspect-h-9 relative min-h-80">
+    <div class="relative aspect-a4 min-w-40">
       <template v-if="event.files.length>0">
         <Carousel
           :autoplay="5000" wrap-around class=""
           pause-autoplay-on-hover>
           <Slide v-for="(image, index) in event.files" :key="index">
-            <img class="carousel__item" :src="image.public_url">
+            <img class="carousel__item h-full w-full object-cover" :src="image.public_url">
           </Slide>
         </Carousel>
       </template>

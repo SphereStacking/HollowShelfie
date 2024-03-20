@@ -72,8 +72,8 @@ Route::get('/phpinfo', function () {
 // });
 
 
-Route::get('/', GetHomeController::class)->name('home');
-Route::get('/welcome', GetWelcomeController::class)
+Route::get('/home', GetHomeController::class)->name('home');
+Route::get('/', GetWelcomeController::class)
     ->name('welcome');
 
 Route::get('/credits', function () {

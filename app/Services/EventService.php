@@ -182,5 +182,13 @@ class EventService
     }
 
 
-
+    public function getPublicRandomEvents($limit = 3,$status = null)
+    {
+        $status = $status ?? EventStatus::getPermittedStatusesForListSearch();
+        return Event::where('published_at', '<=', Carbon::now())
+            ->whereIn('status', $status)
+            ->inRandomOrder()
+            ->limit($limit)
+            ->get();
+    }
 }
