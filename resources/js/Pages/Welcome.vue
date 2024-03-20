@@ -8,6 +8,9 @@ const user = page.props.user ?? null
 const events = page.props.events ?? []
 const eventCount = page.props.eventCount ?? 0
 const userCount = page.props.userCount ?? 0
+const issueForms = page.props.config.issueForms ?? []
+const supportings = page.props.config.supportings ?? []
+
 // アイコンタイプ、ラベル、説明のデータ構造を定義
 const AppStatuses = [
   { type: 'trend', label: 'PV', description: 'サイトへのアクセス数です。', count: 0 },
@@ -233,13 +236,13 @@ const columns = computed(() => {
       <div class="grid grid-cols-3 gap-10 rounded-3xl  border-4 border-pink-300 p-10  text-base-content shadow-xl shadow-pink-500/50">
         <div class="col-span-3 rounded-md p-4 text-center font-neon text-3xl font-black text-pink-500-neon">
           Our Premium<br>
-          Sponsors
+          Supporter
         </div>
 
         <div class="col-span-3 mt-20 flex flex-col items-center">
-          <div class="btn btn-outline btn-lg border-pink-300">
-            スポンサーになる
-          </div>
+          <a :href="supportings.fanbox" target="_blank" class="btn btn-outline btn-lg border-pink-300">
+            サポーターになる
+          </a>
         </div>
       </div>
     </section>
@@ -292,9 +295,9 @@ const columns = computed(() => {
         </div>
 
         <div class="col-span-3 mt-20 flex flex-col items-center">
-          <div class="btn btn-outline btn-lg border-sky-300">
-            send us aa testimonial
-          </div>
+          <a :href="issueForms.feedback" target="_blank" class="btn btn-outline btn-lg border-sky-300">
+            フィードバックを送る
+          </a>
         </div>
       </div>
     </section>
