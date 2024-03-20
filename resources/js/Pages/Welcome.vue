@@ -17,6 +17,11 @@ const AppStatuses = [
   { type: 'organizer', label: 'User', description: '登録されているユーザー数です。', count: userCount },
   { type: 'event', label: 'Event', description: '開催予定のイベント数です。', count: eventCount },
 ]
+const Supporters=[
+  {name: 'hoge一郎', image: ''},
+  {name: 'fuga二郎', image: ''},
+  {name: 'piyo三郎', image: ''},
+]
 const features =[
   {
     icon: 'matching',
@@ -178,19 +183,27 @@ const columns = computed(() => {
           Features
         </div>
         <div class=" grid grid-cols-2 gap-5 p-10 text-base-content md:px-52">
-          <div v-for="feature in features" :key="feature.title" class="flex flex-row items-center rounded-md bg-base-200 p-4">
-            <div class="flex flex-row items-center gap-2">
-              <IconTypeMapper :type="feature.icon" class="h-10 w-10" />
-            </div>
-            <div class="ml-4">
-              <div class="text-2xl font-black">
-                {{ feature.title }}
+          <TransitionInViewportObserver
+            v-for="(feature, index) in features"
+            :key="feature"
+            enter-active-class="transition-all duration-1000"
+            leave-active-class="transition-all duration-1000"
+            :enter-from-class="index % 2 === 0 ? '-translate-x-20 opacity-0' : 'translate-x-20 opacity-0'"
+            leave-to-class="opacity-0">
+            <div class="flex w-full  flex-row items-center rounded-md bg-base-200 p-4">
+              <div class="flex flex-row items-center gap-2">
+                <IconTypeMapper :type="feature.icon" class="h-10 w-10" />
               </div>
-              <div>
-                {{ feature.description }}
+              <div class="ml-4">
+                <div class="text-2xl font-black">
+                  {{ feature.title }}
+                </div>
+                <div>
+                  {{ feature.description }}
+                </div>
               </div>
             </div>
-          </div>
+          </TransitionInViewportObserver>
         </div>
       </div>
     </section>
@@ -233,13 +246,25 @@ const columns = computed(() => {
         <div class="h-10 w-5 rounded-t-xl bg-pink-300 shadow-pink-500/50"></div>
         <div class="h-10 w-5 rounded-t-xl bg-pink-300 shadow-pink-500/50"></div>
       </div>
-      <div class="grid grid-cols-3 gap-10 rounded-3xl  border-4 border-pink-300 p-10  text-base-content shadow-xl shadow-pink-500/50">
-        <div class="col-span-3 rounded-md p-4 text-center font-neon text-3xl font-black text-pink-500-neon">
+      <div class="rounded-3xl border-4 border-pink-300  shadow-xl shadow-pink-500/50 ">
+        <div class="rounded-md pt-10 text-center font-neon text-3xl font-black text-pink-500-neon">
           Our Premium<br>
           Supporter
         </div>
-
-        <div class="col-span-3 mt-20 flex flex-col items-center">
+        <div class=" grid grid-cols-3 gap-5 p-10 text-base-content md:col-span-1 md:px-52">
+          <TransitionInViewportObserver
+            v-for="supporter in Supporters"
+            :key="supporter"
+            enter-active-class="transition-all duration-1000"
+            leave-active-class="transition-all duration-1000"
+            :enter-from-class="'scale-0 opacity-0'"
+            leave-to-class="opacity-0">
+            <div class="p-4 text-center">
+              {{ supporter.name }}
+            </div>
+          </TransitionInViewportObserver>
+        </div>
+        <div class="col-span-3 mb-10 mt-20 flex flex-col items-center">
           <a :href="supportings.fanbox" target="_blank" class="btn btn-outline btn-lg border-pink-300">
             サポーターになる
           </a>
