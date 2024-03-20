@@ -19,6 +19,10 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        'monoton': ['Monoton', 'cursive'],
+        'limelight': ['Limelight', 'cursive'],
+        'frijole': ['Frijole', 'cursive'],
+        'neon': ['Neon', 'cursive'],
       },
       colors: {
         'vtd-primary': colors.sky, // Light mode Datepicker color
@@ -42,6 +46,22 @@ export default {
   plugins: [
     forms, typography,
     daisyui,
+    //neon効果を持つクラスを追加
+    function({ addUtilities, theme }) {
+      const newUtilities = {}
+      const colors = theme('colors')
+      Object.keys(colors).forEach(color => {
+        if (typeof colors[color] === 'object') {
+          Object.keys(colors[color]).forEach(shade => {
+            const className = `.text-${color}-${shade}-neon`
+            newUtilities[className] = {
+              textShadow: `0 0 5px ${colors[color][shade]}, 0 0 10px ${colors[color][shade]}, 0 0 20px ${colors[color][shade]}`,
+            }
+          })
+        }
+      })
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    }
   ],
   daisyui: {
     themes: [
