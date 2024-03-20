@@ -38,10 +38,18 @@ class HandleInertiaRequests extends Middleware
                 'query' => $request->query(),
             ],
             'config' => [
-                'appName' => config('app.name'),
-                'twitter' => config('app.twitter'),
-                'github' => config('app.github'),
-                'credit' => config('app.credit'),
+                'appName' => fn() => config('app.name'),
+                'twitter' => fn() => config('app.twitter'),
+                'github' => fn() => config('app.github'),
+                'credit' => fn() => config('app.credit'),
+                'issueForms' => [
+                    'bug_report' => fn() => config('external_services.issue_forms.bug_report'),
+                    'feedback' => fn() => config('external_services.issue_forms.feedback'),
+                    'new_feature' => fn() => config('external_services.issue_forms.new_feature'),
+                ],
+                'supportings'=>[
+                    'fanbox'=> fn() => config('external_services.supportings.fanbox'),
+                ],
             ],
             'response' => $request->session()->get('response'),
         ];
