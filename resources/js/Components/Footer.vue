@@ -5,6 +5,7 @@ const appName = page.props.config.appName ?? null
 const credit = page.props.config.credit ?? null
 const Twitter = page.props.config.twitter ?? null
 const GitHub = page.props.config.github ?? null
+const issueForms = page.props.config.issueForms ?? []
 
 const pages = {
   About: [
@@ -24,14 +25,19 @@ const pages = {
     { url: route('legal', 'terms-of-service'), label: '利用規約', target: '_self' },
     { url: route('legal', 'privacy-policy'), label: 'プライバシーポリシー', target: '_self' },
     { url: route('legal', 'commercial-transaction-law'), label: '特商法表記', target: '_self' }
+  ],
+  Issue: [
+    { url: issueForms.feedback, label: 'フィードバックを送る', target: '_blank' },
+    { url: issueForms.bug_report, label: 'バグを報告する', target: '_blank' },
+    { url: issueForms.new_feature, label: '新機能のリクエスト', target: '_blank' }
   ]
 }
 
 </script>
 <template>
   <footer class="space-y-4 bg-base-300 p-4 text-center">
-    <div class="mx-auto grid max-w-4xl  grid-cols-2 gap-2 md:grid-cols-5 md:gap-20">
-      <ApplicationMark class="col-span-2 h-14 sm:col-span-1" />
+    <div class="mx-auto grid max-w-4xl  grid-cols-2 gap-2 md:grid-cols-6 md:gap-12">
+      <ApplicationMark class="col-span-3 row-span-full h-14 md:col-span-1" />
       <div v-for="(links, section) in pages" :key="section" class="text-left">
         <p class="text-lg font-bold">
           {{ section }}
