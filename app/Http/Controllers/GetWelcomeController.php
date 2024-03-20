@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Event;
 use App\Enums\EventStatus;
 use Illuminate\Http\Request;
 use App\Services\UserService;
@@ -34,6 +35,8 @@ class GetWelcomeController extends Controller
                 $this->userService->preloadProfileData(User::find(1)),
             ),
             'events' => new EventsJsonResource($this->eventService->getPublicRandomEvents(15, [EventStatus::ONGOING])),
+            'eventCount' => fn () => Event::count(),
+            'userCount' => fn () => User::count(),
         ]);
     }
 }
