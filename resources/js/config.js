@@ -147,6 +147,18 @@ export const ItemsConfig = {
     icon: 'mdi:tune',
     buttonClass: ''
   },
+  trend: {
+    icon: 'mdi:trending-up',
+    buttonClass: ''
+  },
+  matching: {
+    icon: 'mdi:handshake',
+    buttonClass: ''
+  },
+  schedule: {
+    icon: 'mdi:invoice-text-scheduled',
+    buttonClass: ''
+  },
   default: {
     icon: '',
     buttonClass: ''
