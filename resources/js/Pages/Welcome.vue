@@ -92,7 +92,7 @@ const descriptions = [
   '常に使っている最高のアプリです。'
 ]
 
-const feedbacks = Array.from({ length: 20 }, (_, index) => ({
+const feedbacks = Array.from({ length: 10 }, (_, index) => ({
   profile_photo: `https://source.unsplash.com/random/300x300/?portrait&sig=${index}`,
   description: descriptions[Math.floor(Math.random() * descriptions.length)]
 }))
@@ -177,7 +177,7 @@ const columns = computed(() => {
         <div class="rounded-md pt-10 text-center font-neon text-3xl font-black ">
           Features
         </div>
-        <div class=" grid grid-cols-2 gap-5 p-10 px-52 text-base-content">
+        <div class=" grid grid-cols-2 gap-5 p-10 text-base-content md:px-52">
           <div v-for="feature in features" :key="feature.title" class="flex flex-row items-center rounded-md bg-base-200 p-4">
             <div class="flex flex-row items-center gap-2">
               <IconTypeMapper :type="feature.icon" class="h-10 w-10" />
@@ -268,8 +268,8 @@ const columns = computed(() => {
         <div class="h-10 w-5 rounded-t-xl bg-sky-300 shadow-sky-500/50"></div>
         <div class="h-10 w-5 rounded-t-xl bg-sky-300 shadow-sky-500/50"></div>
       </div>
-      <div class="grid auto-rows-min grid-cols-3 gap-10 rounded-3xl  border-4 border-sky-300 p-10 text-base-content shadow-xl shadow-sky-500/50">
-        <div class="col-span-3 rounded-md p-4 text-center font-neon text-3xl font-black text-sky-500-neon">
+      <div class="grid auto-rows-min grid-cols-1 gap-2 rounded-3xl  border-4 border-sky-300  p-10 text-base-content shadow-xl shadow-sky-500/50 md:grid-cols-3 md:gap-10">
+        <div class="col-span-1 rounded-md p-4 text-center font-neon text-3xl font-black text-sky-500-neon md:col-span-3">
           Service<br>
           Feedback
         </div>
@@ -294,7 +294,7 @@ const columns = computed(() => {
           </div>
         </div>
 
-        <div class="col-span-3 mt-20 flex flex-col items-center">
+        <div class="col-span-1 mt-20 flex flex-col items-center md:col-span-3">
           <a :href="issueForms.feedback" target="_blank" class="btn btn-outline btn-lg border-sky-300">
             フィードバックを送る
           </a>
