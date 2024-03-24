@@ -43,9 +43,9 @@ class HandleInertiaRequests extends Middleware
                 'github' => fn() => config('app.github'),
                 'credit' => fn() => config('app.credit'),
                 'issueForms' => [
-                    'bug_report' => fn() => config('external_services.issue_forms.bug_report'),
-                    'feedback' => fn() => config('external_services.issue_forms.feedback'),
-                    'new_feature' => fn() => config('external_services.issue_forms.new_feature'),
+                    'bug_report' => fn() => config('external_services.issue_forms.bug_report.url'),
+                    'feedback' => fn() => config('external_services.issue_forms.feedback.url'),
+                    'new_feature' => fn() => config('external_services.issue_forms.new_feature.url'),
                 ],
                 'supportings'=>[
                     'fanbox'=> fn() => config('external_services.supportings.fanbox'),
