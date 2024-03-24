@@ -9,20 +9,25 @@ use App\Enums\EventStatus;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Services\EventService;
+use App\Services\GoogleFormsService;
 use App\Http\Resources\EventsJsonResource;
+use App\Http\Resources\FeedbacksJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
 
 class GetWelcomeController extends Controller
 {
     protected $userService;
     protected $eventService;
+    protected $googleFormsService;
 
     public function __construct(
         UserService $userService,
         EventService $eventService,
+        GoogleFormsService $googleFormsService,
     ) {
         $this->userService = $userService;
         $this->eventService = $eventService;
+        $this->googleFormsService = $googleFormsService;
     }
 
     public function __invoke()
@@ -37,6 +42,8 @@ class GetWelcomeController extends Controller
             'events' => new EventsJsonResource($this->eventService->getPublicRandomEvents(15, [EventStatus::ONGOING])),
             'eventCount' => fn () => Event::count(),
             'userCount' => fn () => User::count(),
+            'feedbacks' => fn () => new FeedbacksJsonResource($this->googleFormsService->getFormResponses(config('external_services.issue_forms.feedback.id'))),
+            'sponsors' => fn () => config('sponsors.users'),
         ]);
     }
 }
