@@ -159,6 +159,15 @@ export const ItemsConfig = {
     icon: 'mdi:invoice-text-scheduled',
     buttonClass: ''
   },
+  banner: {
+    icon: 'mdi:flag',
+    buttonClass: ''
+  },
+  advertisement: {
+    icon: 'mdi:newspaper-variant-multiple',
+    buttonClass: ''
+  },
+
   default: {
     icon: '',
     buttonClass: ''

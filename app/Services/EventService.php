@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\EventNotPublishedException;
 use App\Exceptions\CannotOperateEventException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EventService
 {
@@ -124,13 +125,18 @@ class EventService
             'event_time_tables.performers.performable'
         ])->find($id);
 
+        if(!$event){
+            throw new ModelNotFoundException('Eventが見つかりませんでした。');
+        }
         $user = Auth::user();
 
         // イベントが未公開（公開日が未来）かつログインユーザーがイベントの作成者でない場合、エラーを投げる
-        $isUnpublished = isset($event->published_at) && $event->published_at->isFuture();
-        $isNotCreator = $event->event_create_user_id !== $user->id;
-        if ($isUnpublished && $isNotCreator) {
-            throw new EventNotPublishedException('The event is not published yet.');
+        if (
+            isset($event->published_at) &&
+            $event->published_at->isFuture() &&
+            $event->event_create_user_id !== $user?->id
+        ) {
+            throw new EventNotPublishedException('イベントはまだ公開されていません。');
         }
 
         $this->viewCountService->incrementCount($event);
