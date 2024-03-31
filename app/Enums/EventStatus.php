@@ -7,41 +7,59 @@ namespace App\Enums;
  */
 enum EventStatus: string
 {
-    case DRAFT = 'draft';
-    case CLOSED = 'closed';
-    case UPCOMING = 'upcoming';
-    case CANCELED = 'canceled';
-    case DELETED = 'deleted';
+    /** 開催中 */
     case ONGOING = 'ongoing';
+    /** 予定 */
+    case UPCOMING = 'upcoming';
+    /** 終了 */
+    case CLOSED = 'closed';
+    /** キャンセル */
+    case CANCELED = 'canceled';
+    /** 公開予約中 */
+    case SCHEDULED = 'scheduled';
+    /** 下書き */
+    case DRAFT = 'draft';
+    /** 削除 */
+    case DELETED = 'deleted';
 
-    private const STATUS_MAP = [
-        'ongoing' => '開催中',
-        'upcoming' => '予定',
-        'closed' => '終了',
-        'canceled' => 'キャンセル',
-        'scheduled' => '公開予約中',
-        'draft' => '下書き',
-        'deleted' => '削除',
-    ];
-
-    /**
-     * ステータス文字列をEventStatus列挙型に変換します。
-     *
-     * @param string $status ステータス文字列
-     * @return EventStatus|null ステータス文字列に対応するEventStatus列挙型
-     */
-    public static function getStatus(string $status): ?EventStatus
+    public function label(): string
     {
-        return match ($status) {
-            'draft' => self::DRAFT,
-            'closed' => self::CLOSED,
-            'upcoming' => self::UPCOMING,
-            'canceled' => self::CANCELED,
-            'deleted' => self::DELETED,
-            'ongoing' => self::ONGOING,
-            default => null,
+        return match($this) {
+            self::ONGOING => '開催中',
+            self::UPCOMING => '予定',
+            self::CLOSED => '終了',
+            self::CANCELED => 'キャンセル',
+            self::SCHEDULED => '公開予約中',
+            self::DRAFT => '下書き',
+            self::DELETED => '削除',
         };
     }
+
+    /** 公開済みのステータス */
+    public const PUBLISHED_STATUSES = [
+        self::ONGOING,
+        self::CLOSED,
+        self::CANCELED,
+        self::UPCOMING,
+        self::SCHEDULED,
+    ];
+
+    /** 管理者検索用のステータス */
+    public const ADMIN_SEARCH_STATUSES = [
+        self::ONGOING,
+        self::CLOSED,
+        self::UPCOMING,
+        self::CANCELED,
+        self::DRAFT,
+    ];
+
+    /** 公開検索用のステータス */
+    public const PUBLIC_SEARCH_STATUSES = [
+        self::ONGOING,
+        self::CLOSED,
+        self::UPCOMING,
+        self::CANCELED,
+    ];
 
     /**
      * ラベルを元にステータス文字列を取得します。
@@ -51,7 +69,12 @@ enum EventStatus: string
      */
     public static function getRawStatus(string $label): ?string
     {
-        return array_search($label, self::STATUS_MAP) ?: null;
+        foreach (self::cases() as $case) {
+            if ($case->label() === $label) {
+                return $case->value;
+            }
+        }
+        return null;
     }
 
     /**
@@ -62,48 +85,7 @@ enum EventStatus: string
      */
     public static function getStatusLabel(string $status): ?string
     {
-        return self::STATUS_MAP[$status] ?? null;
+        return self::tryFrom($status)?->label();
     }
 
-    /**
-     * 全てのステータス文字列を取得します。
-     *
-     * @return array ステータス文字列の配列
-     */
-    public static function getAllStatuses(): array
-    {
-        return array_keys(self::STATUS_MAP);
-    }
-
-    /**
-     * 全てのステータスマップを取得します。
-     *
-     * @return array ステータスマップの配列
-     */
-    public static function getAllStatusMap(): array
-    {
-        return self::STATUS_MAP;
-    }
-
-    /**
-     * リスト検索で許可されているステータスを取得します。
-     *
-     * @return array 許可されているステータスの配列
-     */
-    public static function getPermittedStatusesForListSearch(): array
-    {
-        $selectedStatuses = ['ongoing', 'closed', 'upcoming', 'canceled', 'ongoing'];
-        return array_intersect_key(self::STATUS_MAP, array_flip($selectedStatuses));
-    }
-
-    /**
-     * 管理検索で許可されているステータスを取得します。
-     *
-     * @return array 許可されているステータスの配列
-     */
-    public static function getPermittedStatusesForAdminSearch(): array
-    {
-        $selectedStatuses = ['ongoing', 'closed', 'upcoming', 'canceled', 'ongoing','draft'];
-        return array_intersect_key(self::STATUS_MAP, array_flip($selectedStatuses));
-    }
 }
