@@ -69,7 +69,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           <IconTypeMapper type="category" />
           Category
         </div>
-        <BtnEventSerchItem
+        <BtnEventSearchItem
           v-for="(category) in trendCategories" :key="category.id"
           :button-text-setter="getButtonText" :query-setter="querySetter" :value="category"
           type="category" is-navigate />
@@ -80,7 +80,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           tag
         </div>
 
-        <BtnEventSerchItem
+        <BtnEventSearchItem
           v-for="(tag) in trendTags" :key="tag.id" :button-text-setter="getButtonText"
           :query-setter="querySetter" :value="tag" type="tag"
           is-navigate />

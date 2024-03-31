@@ -43,7 +43,7 @@ class EventShowJsonResource extends JsonResource
                     'profile_url' => $organizeble->event_organizeble->profile_url,
                     'id' => $organizeble->event_organizeble_id,
                     'type' => $organizeble->event_organizeble_type,
-                    'imag_url' => $organizeble->event_organizeble_type === User::class
+                    'image_url' =>  $organizeble->event_organizeble_type === User::class
                         ? $organizeble->event_organizeble->profile_photo_url
                         : $organizeble->event_organizeble->team_logo_url,
                     'name' => $organizeble->event_organizeble->name,
@@ -78,8 +78,8 @@ class EventShowJsonResource extends JsonResource
                 return [
                     'id' => $time_table->id,
                     'description' => $time_table->description,
-                    'start_date' => $time_table->start_date,
-                    'end_date' => $time_table->end_date,
+                    'start_time' => $time_table->start_time,
+                    'end_time' => $time_table->end_time,
                     'performance_time' => $time_table->performance_time,
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [

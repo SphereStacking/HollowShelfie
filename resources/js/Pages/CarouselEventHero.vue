@@ -89,14 +89,14 @@ const getEventShow = (event) => {
                 <!-- category -->
                 <div class="flex items-center gap-1 ">
                   <IconTypeMapper type="category" class="text-xl" />
-                  <BtnEventSerchItem :value="event.category_name" type="category" is-navigate />
+                  <BtnEventSearchItem :value="event.category_name" type="category" is-navigate />
                 </div>
                 <!-- tag -->
                 <div class="flex flex-row items-center gap-1">
                   <div class="mr-auto flex items-center gap-1  rounded-md">
                     <IconTypeMapper type="tag" class="text-xl" />
                     <template v-for="(tag, index) in event.tags" :key="index">
-                      <BtnEventSerchItem :value="tag" type="tag" is-navigate />
+                      <BtnEventSearchItem :value="tag" type="tag" is-navigate />
                     </template>
                   </div>
                 </div>
@@ -112,7 +112,7 @@ const getEventShow = (event) => {
                     v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
                     :data-tip="organizer.name">
-                    <img :src="organizer.imag_url">
+                    <img :src="organizer.image_url">
                   </a>
                 </div>
               </div>
