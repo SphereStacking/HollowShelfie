@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Tag;
 use App\Models\Event;
+use App\Models\Tag;
 use App\Models\Taggable;
 use Illuminate\Support\Facades\DB;
 

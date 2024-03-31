@@ -2,18 +2,12 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Tag;
-use App\Models\File;
-use App\Models\Link;
-use App\Models\User;
-use App\Models\View;
 use App\Models\Badge;
 use App\Models\Event;
-use App\Models\Category;
-use App\Models\Instance;
-use App\Models\SocialAccount;
 use App\Models\EventOrganizer;
-use App\Models\EventTimeTable;
+use App\Models\Link;
+use App\Models\SocialAccount;
+use App\Models\Tag;
 
 /**
  * ユーザー関連のトレイト
@@ -59,7 +53,6 @@ trait UserRelations
     {
         return $this->hasMany(Event::class, 'event_create_user_id');
     }
-
 
     /**
      * このUserがオーガナイザーしているイベントを取得

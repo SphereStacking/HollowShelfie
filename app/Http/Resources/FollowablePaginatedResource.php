@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
-use App\Enums\EventStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FollowablePaginatedResource extends JsonResource
@@ -43,7 +41,7 @@ class FollowablePaginatedResource extends JsonResource
                     ],
                     'bio' => 'TODO', // TODO:
                 ];
-            })
+            }),
         ];
     }
 }

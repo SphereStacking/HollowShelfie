@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use Google\Client;
@@ -13,7 +14,7 @@ class GoogleFormsService
         $client = new Client();
         $client->setApplicationName('vShelf');
         $client->setScopes([Forms::FORMS_RESPONSES_READONLY]);
-        $client->setAuthConfig(json_decode(env('GOOGLE_CREDENTIALS_JSON'),true));
+        $client->setAuthConfig(json_decode(env('GOOGLE_CREDENTIALS_JSON'), true));
 
         $this->client = $client;
     }
@@ -22,6 +23,7 @@ class GoogleFormsService
     {
         $service = new Forms($this->client);
         $responses = $service->forms_responses->listFormsResponses($formId);
-        return  $responses->getResponses();
+
+        return $responses->getResponses();
     }
 }

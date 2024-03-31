@@ -2,20 +2,17 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
-use App\Models\Tag;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Event;
 use App\Models\Category;
-use App\Models\Instance;
-use Illuminate\Support\Arr;
+use App\Models\Event;
 use App\Models\EventOrganizer;
 use App\Models\EventTimeTable;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Tag;
+use App\Models\Team;
 use App\Models\TimeTablePerformers;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class EventRelationSeeder extends Seeder
@@ -70,13 +67,12 @@ class EventRelationSeeder extends Seeder
                 $randomFile = Arr::random($files); // ランダムに一つ選択
                 $fileName = basename($randomFile); // ファイル名のみを取得
                 $event->files()->create([
-                    'path' => "dummy",
+                    'path' => 'dummy',
                     'name' => $fileName,
                     'original_name' => $fileName,
                     'type' => 'image/jpeg',
                 ]);
             }
-
 
             //--------------------------------------------------------
             // ランダムなユーザーを主催者として追加
@@ -86,7 +82,7 @@ class EventRelationSeeder extends Seeder
                 $organizerData = $this->createOrganizerData($event->id, $modelClass);
                 // $organizerData が null でない場合にのみ、$organizersData に追加する
                 if ($organizerData !== null) {
-                    $organizers[] = new EventOrganizer($organizerData);;
+                    $organizers[] = new EventOrganizer($organizerData);
                 }
             }
             // データベースに主催者データを一括挿入
@@ -98,10 +94,7 @@ class EventRelationSeeder extends Seeder
     /**
      * ランダムなモデルをイベントに紐づける。
      *
-     * @param  $event
-     * @param  string $relationMethod
-     * @param  string $modelClass
-     * @param  int    $count
+     * @param    $event
      */
     private function attachRandomModels($model, string $relationMethod, string $modelClass, int $count): void
     {
@@ -112,11 +105,7 @@ class EventRelationSeeder extends Seeder
     /**
      * ランダムなモデルをイベントに紐づける。際にpivotデータを紐づける。
      *
-     * @param Event $event
-     * @param string $relationMethod
-     * @param string $modelClass
-     * @param int $count
-     * @param \Closure $func
+     * @param  Event  $event
      */
     private function attachRandomModelsPivot($model, string $relationMethod, string $modelClass, int $count, \Closure $func): void
     {
@@ -132,8 +121,8 @@ class EventRelationSeeder extends Seeder
     /**
      * 主催者データを生成するヘルパーメソッド
      *
-     * @param int $eventId
-     * @param string $modelClass
+     * @param  int  $eventId
+     * @param  string  $modelClass
      * @return array
      */
     private function createOrganizerData($eventId, $modelClass)
@@ -143,10 +132,11 @@ class EventRelationSeeder extends Seeder
             // レコードが見つからない場合はnullを返す
             return null;
         }
+
         return [
             'event_id' => $eventId,
             'event_organizeble_id' => $modelInstance->id,
-            'event_organizeble_type' => get_class($modelInstance)
+            'event_organizeble_type' => get_class($modelInstance),
         ];
     }
 }

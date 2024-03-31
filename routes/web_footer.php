@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Markdown\GetAboutPageController;
 use App\Http\Controllers\Markdown\GetGuidePageController;
 use App\Http\Controllers\Markdown\GetLegalPageController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

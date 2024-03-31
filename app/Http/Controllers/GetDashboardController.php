@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use App\Services\UserService;
-use App\Services\EventService;
-use App\Services\EventGoodService;
 use App\Services\EventBookmarkService;
+use App\Services\EventGoodService;
+use App\Services\EventService;
+use App\Services\UserService;
+use Inertia\Inertia;
 
 class GetDashboardController extends Controller
 {
     protected $eventService;
+
     protected $eventMeilisearchService;
+
     protected $tagService;
+
     protected $categoryService;
+
     protected $eventBookmarkService;
+
     protected $eventGoodService;
+
     protected $userService;
 
     public function __construct(
@@ -34,15 +40,15 @@ class GetDashboardController extends Controller
     {
         return Inertia::render(
             'Dashboard/Index',
-            [   'counts' => [
-                    'bookmark' => [
-                        'total' => $this->eventBookmarkService->getBookmarkedEventsCountByUser(auth()->user()),
-                        'statues' => $this->eventBookmarkService->getBookmarkedEventsCountByUserForAllStatuses(auth()->user())
-                    ],
-                    'good' => $this->eventGoodService->getGoodEventsByUser(auth()->user())->count(),
-                    'follow'=> $this->userService->getFollowCount(auth()->user()),
-                    'follower'=> $this->userService->getFollowerCount(auth()->user()),
-                ]
+            ['counts' => [
+                'bookmark' => [
+                    'total' => $this->eventBookmarkService->getBookmarkedEventsCountByUser(auth()->user()),
+                    'statues' => $this->eventBookmarkService->getBookmarkedEventsCountByUserForAllStatuses(auth()->user()),
+                ],
+                'good' => $this->eventGoodService->getGoodEventsByUser(auth()->user())->count(),
+                'follow' => $this->userService->getFollowCount(auth()->user()),
+                'follower' => $this->userService->getFollowerCount(auth()->user()),
+            ],
             ]
         );
     }

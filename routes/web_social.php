@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SingleSignOn\ProviderCallbackController;
 use App\Http\Controllers\SingleSignOn\RedirectToProviderController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Event;
 
-use App\Services\EventService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EventStoreRequest;
+use App\Services\EventService;
 
 class StoreEventController extends Controller
 {
@@ -22,7 +22,7 @@ class StoreEventController extends Controller
 
         return redirect()->back()->with([
             'status' => 'success',
-            'message' => 'イベントを登録しました。'
+            'message' => 'イベントを登録しました。',
         ]);
     }
 }

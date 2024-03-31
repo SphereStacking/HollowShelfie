@@ -32,9 +32,9 @@ class EventTimeTableFactory extends Factory
 
         return [
             'event_id' => Event::inRandomOrder()->first()->id,
-            'description' =>  $this->faker->text(10),
+            'description' => $this->faker->text(10),
             'start_time' => $startTime,
-            'end_time' => $endTime
+            'end_time' => $endTime,
         ];
     }
 }

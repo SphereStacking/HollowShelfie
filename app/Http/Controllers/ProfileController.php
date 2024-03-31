@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Http\Resources\TeamPublicProfileJsonResource;
+use App\Http\Resources\UserPublicProfileJsonResource;
+use App\Models\Team;
 use App\Models\User;
-use Inertia\Inertia;
-use Illuminate\Http\Request;
-use App\Services\TeamService;
-use App\Services\UserService;
 use App\Params\EventSearchParams;
 use App\Services\EventMeilisearchService;
-use App\Http\Resources\EventsPaginatedJsonResource;
-use App\Http\Resources\UserPublicProfileJsonResource;
-use App\Http\Resources\TeamPublicProfileJsonResource;
-use App\Models\Team;
+use App\Services\TeamService;
+use App\Services\UserService;
+use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
     protected $userService;
+
     protected $teamService;
+
     protected $eventMeilisearchService;
 
     public function __construct(
         UserService $userService,
         TeamService $teamService,
-        EventMeilisearchService  $eventMeilisearchService
+        EventMeilisearchService $eventMeilisearchService
     ) {
         $this->userService = $userService;
         $this->teamService = $teamService;
@@ -34,7 +35,6 @@ class ProfileController extends Controller
     /**
      * ユーザーのプロファイルを表示します。
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\View\View
      */
     public function user(User $user)
@@ -60,17 +60,16 @@ class ProfileController extends Controller
                 'q' => $EventSearchParams->queryParams,
                 'paginate' => $EventSearchParams->getDefaultPaginate(),
                 'o' => $EventSearchParams->order,
-            ])
+            ]),
         ]);
     }
 
     /**
      * チームのプロファイルを表示します。
      *
-     * @param  \App\Models\Team  $team
      * @return \Illuminate\View\View
      */
-    public function team( Team $team)
+    public function team(Team $team)
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
@@ -93,7 +92,7 @@ class ProfileController extends Controller
                 'q' => $EventSearchParams->queryParams,
                 'paginate' => $EventSearchParams->getDefaultPaginate(),
                 'o' => $EventSearchParams->order,
-            ])
+            ]),
         ]);
     }
 }

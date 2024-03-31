@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class MarkdownPageController extends Controller
 {
@@ -26,11 +25,12 @@ class MarkdownPageController extends Controller
 
     private function show($category, $page)
     {
-        if (!File::exists(resource_path("markdown/{$category}/{$page}.md"))) {
+        if (! File::exists(resource_path("markdown/{$category}/{$page}.md"))) {
             abort(404);
         }
 
         $content = File::get(resource_path("markdown/{$category}/{$page}.md"));
+
         return Inertia::render('Markdown/Index', [
             'content' => Str::markdown($content),
         ]);

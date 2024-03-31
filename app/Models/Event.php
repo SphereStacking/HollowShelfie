@@ -2,38 +2,34 @@
 
 namespace App\Models;
 
-use Exception;
-use Carbon\Carbon;
-use App\Models\Category;
 use App\Enums\EventStatus;
-use App\Traits\HasFileable;
-use Laravel\Scout\Searchable;
-use App\Models\Traits\EventScopes;
 use App\Models\Traits\EventGetters;
-use App\Models\Traits\EventSetters;
-use Illuminate\Support\Facades\Log;
 use App\Models\Traits\EventRelations;
+use App\Models\Traits\EventScopes;
+use App\Models\Traits\EventSetters;
+use App\Traits\HasFileable;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
+use Laravel\Scout\Searchable;
 
 class Event extends Model
 {
-    use SoftDeletes;
-    use HasFactory;
-    use Searchable;
-
     use EventGetters;
-    use EventSetters;
-    use EventScopes;
     use EventRelations;
-
+    use EventScopes;
+    use EventSetters;
+    use HasFactory;
     use HasFileable;
+    use Searchable;
+    use SoftDeletes;
 
     /**
      * @var array 可変の属性
      */
-    protected $fillable = ['title', 'description','status '];
+    protected $fillable = ['title', 'description', 'status '];
 
     /**
      * @var array
@@ -41,7 +37,7 @@ class Event extends Model
     protected $appends = [
         'created_user', 'status_label', 'tags', 'category_names',
         'is_bookmark', 'is_good', 'category_name', 'instances', 'good_count',
-        'short_good_count', 'event_timeline_status'
+        'short_good_count', 'event_timeline_status',
     ];
 
     protected $casts = [
@@ -56,7 +52,7 @@ class Event extends Model
         static::deleting(function ($event) {
             // 関連する画像ファイルを削除
             foreach ($event->files as $file) {
-                $filePath = 'public/' . $file->path . '/' . $file->name;
+                $filePath = 'public/'.$file->path.'/'.$file->name;
                 Storage::delete($filePath);
             }
 
@@ -84,8 +80,8 @@ class Event extends Model
             ]
         );
         $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;
-        $array['start_date'] =  $this->published_at ? Carbon::parse($this->start_date)->getTimestamp() : null;
-        $array['end_date'] =  $this->published_at ? Carbon::parse($this->end_date)->getTimestamp() : null;
+        $array['start_date'] = $this->published_at ? Carbon::parse($this->start_date)->getTimestamp() : null;
+        $array['end_date'] = $this->published_at ? Carbon::parse($this->end_date)->getTimestamp() : null;
         $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
         $array['instances'] = $this->instances()->get()->map(function ($instance) {
             return [
@@ -98,13 +94,14 @@ class Event extends Model
         $array['performers'] = $this->event_time_tables->flatMap(function ($time_table) {
             return $time_table->performers->pluck('performable.name');
         });
+
         return $array;
     }
 
     /**
      * タグを同期する。
      *
-     * @param array $tagNames タグ名の配列
+     * @param  array  $tagNames タグ名の配列
      * @return void
      */
     public function syncTagsByNames(array $tagNames)
@@ -121,7 +118,7 @@ class Event extends Model
     /**
      * カテゴリを同期する。
      *
-     * @param array $categoryIds カテゴリIDの配列
+     * @param  array  $categoryIds カテゴリIDの配列
      * @return void
      */
     public function syncCategoriesByNames(array $categoryNames)
@@ -138,7 +135,7 @@ class Event extends Model
     /**
      * オーガナイザーを同期する
      *
-     * @param array $organizersData オーガナイザーのデータ配列
+     * @param  array  $organizersData オーガナイザーのデータ配列
      */
     public function syncOrganizers(array $organizersData)
     {
@@ -163,7 +160,7 @@ class Event extends Model
     /**
      * タイムテーブルを同期する。
      *
-     * @param array $categoryIds カテゴリIDの配列
+     * @param  array  $categoryIds カテゴリIDの配列
      * @return void
      */
     public function syncTimeTables(array $timeTables)
@@ -181,9 +178,9 @@ class Event extends Model
             Log::debug($timeTable);
 
             $eventTimeTable = $this->event_time_tables()->create([
-                'start_time' => $timeTable['times'][0]??null,
-                'end_time' => $timeTable['times'][1]??null,
-                'description' => $timeTable['description']??'',
+                'start_time' => $timeTable['times'][0] ?? null,
+                'end_time' => $timeTable['times'][1] ?? null,
+                'description' => $timeTable['description'] ?? '',
             ]);
 
             $performersData = collect($timeTable['performers'])->map(function ($performer) use ($eventTimeTable) {
@@ -234,10 +231,10 @@ class Event extends Model
         $this->instances()->createMany($validatedInstances);
     }
 
-   /**
+    /**
      * 指定されたユーザーがイベントを操作できるかどうかをチェックします。
      *
-     * @param \App\Models\User $user チェックするユーザー
+     * @param  \App\Models\User  $user チェックするユーザー
      * @return bool ユーザーが操作できる場合はtrue、そうでない場合はfalse
      */
     public function canUserOperate(User $user): bool

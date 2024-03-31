@@ -38,17 +38,17 @@ class HandleInertiaRequests extends Middleware
                 'query' => $request->query(),
             ],
             'config' => [
-                'appName' => fn() => config('app.name'),
-                'twitter' => fn() => config('app.twitter'),
-                'github' => fn() => config('app.github'),
-                'credit' => fn() => config('app.credit'),
+                'appName' => fn () => config('app.name'),
+                'twitter' => fn () => config('app.twitter'),
+                'github' => fn () => config('app.github'),
+                'credit' => fn () => config('app.credit'),
                 'issueForms' => [
-                    'bug_report' => fn() => config('external_services.issue_forms.bug_report.url'),
-                    'feedback' => fn() => config('external_services.issue_forms.feedback.url'),
-                    'new_feature' => fn() => config('external_services.issue_forms.new_feature.url'),
+                    'bug_report' => fn () => config('external_services.issue_forms.bug_report.url'),
+                    'feedback' => fn () => config('external_services.issue_forms.feedback.url'),
+                    'new_feature' => fn () => config('external_services.issue_forms.new_feature.url'),
                 ],
-                'supportings'=>[
-                    'fanbox'=> fn() => config('external_services.supportings.fanbox'),
+                'supportings' => [
+                    'fanbox' => fn () => config('external_services.supportings.fanbox'),
                 ],
             ],
             'response' => $request->session()->get('response'),

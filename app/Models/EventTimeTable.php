@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class EventTimeTable extends Model
 {
@@ -17,7 +15,7 @@ class EventTimeTable extends Model
      * @var array<int, string>
      */
     protected $appends = [
-        'performance_time'
+        'performance_time',
     ];
 
     protected $fillable = [
@@ -33,7 +31,7 @@ class EventTimeTable extends Model
 
     public function getPerformanceTimeAttribute()
     {
-        return $this->start_time. ' ~ ' . $this->end_time ;
+        return $this->start_time.' ~ '.$this->end_time;
     }
 
     public function event()

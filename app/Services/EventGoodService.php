@@ -2,15 +2,14 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Event;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class EventGoodService
 {
     public function attachEvent(User $user, Event $event)
     {
-        if (!$this->isEventGoodByUser($user, $event)) {
+        if (! $this->isEventGoodByUser($user, $event)) {
             $user->good_events()->attach($event->id);
         }
     }

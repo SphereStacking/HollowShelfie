@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\EventGood;
 
-use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use App\Services\EventGoodService;
 use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Services\EventGoodService;
+use Inertia\Inertia;
 
 class GetGoodController extends Controller
 {

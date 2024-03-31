@@ -8,5 +8,4 @@ class GetLegalPageController extends MarkdownPageBaseController
     {
         return $this->getPage('legal', $page);
     }
-
 }

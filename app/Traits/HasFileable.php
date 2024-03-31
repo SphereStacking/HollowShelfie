@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traits;
 
 use App\Models\File;
@@ -14,5 +15,4 @@ trait HasFileable
     {
         return $this->morphMany(File::class, 'fileable');
     }
-
 }
