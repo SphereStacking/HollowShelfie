@@ -5,7 +5,6 @@ const props = defineProps({
     type: String,
     required: true
   },
-
   recommendEvents: {
     type: Array,
     default: () => []
@@ -13,14 +12,17 @@ const props = defineProps({
   trendTags: {
     type: Array,
     default: () => []
+  },
+  config: {
+    type: Object,
+    default: () => {}
   }
 })
 defineEmits(
   ['click']
 )
 
-import IconTypeMapper from '@/Components/IconTypeMapper.vue'
-
+const supportings = props.config.supportings ?? []
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -114,7 +116,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
         <Card class="h-full w-full border bg-transparent">
           <template #title>
             <h4 class="font-bold uppercase ">
-              ここに広告を表示したい
+              広告を募集中!
             </h4>
           </template>
         </Card>
@@ -149,10 +151,21 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
             <!-- コミュニティスポンサー -->
             <Card class="w-full">
               <template #title>
-                スポンサー
+                <div class="flex w-full flex-row justify-between gap-2">
+                  サポーター募集！
+                  <a
+                    class="btn btn-circle btn-accent btn-sm" :href="supportings.fanbox">
+                    <Icon icon="mdi:plus" />
+                  </a>
+                </div>
               </template>
-              <p>誰もいないよ😿</p>
-              <p>まってるよ！</p>
+            </Card>
+            <Card class="h-32 w-full border bg-transparent">
+              <template #title>
+                <h4 class="font-bold uppercase ">
+                  広告を募集中!
+                </h4>
+              </template>
             </Card>
           </div>
         </aside>
