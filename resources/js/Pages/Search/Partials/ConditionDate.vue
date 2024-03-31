@@ -47,13 +47,13 @@ const searchDateText = ref('')
           Add
         </button>
       </div>
-      <BtnEventSerchItem
+      <BtnEventSearchItem
         type="date" value="今日"
         @click="addConditionFunc({ type: 'date', value: dayjs().format('YYYY-MM-DD') })" />
-      <BtnEventSerchItem
+      <BtnEventSearchItem
         type="date" value="今週"
         @click="addConditionFunc({ type: 'date', value: dayjs().startOf('week').format('YYYY-MM-DD') + ' ~ ' + dayjs().endOf('week').format('YYYY-MM-DD') })" />
-      <BtnEventSerchItem
+      <BtnEventSearchItem
         type="date" value="今月"
         @click="addConditionFunc({ type: 'date', value: dayjs().startOf('month').format('YYYY-MM-DD') + ' ~ ' + dayjs().endOf('month').format('YYYY-MM-DD') })" />
     </div>

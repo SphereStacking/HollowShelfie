@@ -103,7 +103,7 @@ const querySetter = (value, type) => {
                     <div class="mr-auto flex items-center gap-1  rounded-md">
                       <IconTypeMapper type="tag" class="text-xl" />
                       <template v-for="(tag, index) in dataile.tags" :key="index">
-                        <BtnEventSerchItem
+                        <BtnEventSearchItem
                           :button-text-setter="getButtonText" :query-setter="querySetter" :value="tag"
                           type="tag" is-navigate />
                       </template>
