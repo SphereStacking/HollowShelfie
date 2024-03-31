@@ -2,9 +2,9 @@
 
 namespace App\Models\Traits;
 
-use DateTime;
-use Carbon\Carbon;
 use App\Enums\EventStatus;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 trait EventGetters
@@ -70,7 +70,6 @@ trait EventGetters
         return $this->categories ? $this->categories->pluck('name')->toArray() : null;
     }
 
-
     /**
      * 関連付けられているインスタンスの中から最初の名前を返す
      *
@@ -111,11 +110,12 @@ trait EventGetters
         if ($interval->d >= 1) {
             return $startDate->format('Y/m/d H:i');
         } elseif ($hoursUntilStart >= 1) {
-            return $hoursUntilStart . '時間後';
+            return $hoursUntilStart.'時間後';
         } else {
-            return $interval->i . '分後';
+            return $interval->i.'分後';
         }
     }
+
     /**
      * 開始日をフォーマット
      *
@@ -125,6 +125,7 @@ trait EventGetters
     {
         $startDate = new Carbon($this->start_date);
         $startDate->setLocale('ja');
+
         return [
             'year' => $startDate->format('Y'),
             'month' => $startDate->format('m'),
@@ -143,6 +144,7 @@ trait EventGetters
     {
         $endDate = new Carbon($this->end_date);
         $endDate->setLocale('ja');
+
         return [
             'year' => $endDate->format('Y'),
             'month' => $endDate->format('m'),
@@ -164,9 +166,9 @@ trait EventGetters
 
         // 日付が同じ場合は、開始時間と終了時間のみ表示
         if ($startDate->format('Y/m/d') === $endDate->format('Y/m/d')) {
-            return $startDate->format('Y/m/d H:i') . ' ~ ' . $endDate->format('H:i');
+            return $startDate->format('Y/m/d H:i').' ~ '.$endDate->format('H:i');
         } else {
-            return $startDate->format('Y/m/d H:i') . ' ~ ' . $endDate->format('Y/m/d H:i');
+            return $startDate->format('Y/m/d H:i').' ~ '.$endDate->format('Y/m/d H:i');
         }
     }
 
@@ -190,7 +192,7 @@ trait EventGetters
             $suffix = 'M';
         }
 
-        return round($count, 1) . $suffix;
+        return round($count, 1).$suffix;
     }
 
     // ステータスのlabelを返す

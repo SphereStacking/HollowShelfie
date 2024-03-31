@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Follow;
 
-use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * フォロー関連の操作を管理するコントローラー
@@ -16,7 +16,7 @@ class FollowBaseController extends Controller
      * @param  string  $message
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    protected function generateResponse($message,$target)
+    protected function generateResponse($message, $target)
     {
         if (request()->wantsJson()) {
             // Ajaxリクエストの場合はJSONレスポンスを返す
@@ -24,15 +24,14 @@ class FollowBaseController extends Controller
                 'status' => 'success',
                 'message' => $message,
                 'is_followed' => $target->isFollowedByCurrentUser(),
-                'followers_count' => $target->followersCount()
+                'followers_count' => $target->followersCount(),
             ]);
         } else {
             // それ以外の場合はInertiaレスポンス（またはリダイレクト）を返す
             return Redirect::back()->with([
                 'status' => 'success',
-                'message' => $message
+                'message' => $message,
             ]);
         }
     }
 }
-

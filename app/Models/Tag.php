@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Tag extends Model
 {
@@ -47,6 +46,7 @@ class Tag extends Model
         $array['total_count'] = $this->taggables()->count();
         $array['event_count'] = $this->events()->count();
         $array['user_count'] = $this->users()->count();
+
         return $array;
     }
 }

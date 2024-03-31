@@ -2,24 +2,21 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
-use App\Models\Tag;
-use App\Models\User;
-use Inertia\Inertia;
-use App\Models\Event;
 use App\Enums\EventStatus;
-use App\Services\FileService;
-use App\Services\ViewCountService;
+use App\Exceptions\CannotOperateEventException;
+use App\Exceptions\EventNotPublishedException;
+use App\Models\Event;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use App\Exceptions\EventNotPublishedException;
-use App\Exceptions\CannotOperateEventException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EventService
 {
-    protected FileService  $fileService;
+    protected FileService $fileService;
+
     protected ViewCountService $viewCountService;
 
     public function __construct(
@@ -32,16 +29,16 @@ class EventService
 
     public function initCreateEvent()
     {
-        $attributes= [
+        $attributes = [
             'title' => '',
             'categories' => [],
-            'tags' =>  [],
+            'tags' => [],
             'description' => '',
             'dates' => [],
-            'organizers' =>  [],
-            'performers' =>[],
-            'time_tables' =>  [],
-            'status' =>  EventStatus::DRAFT,
+            'organizers' => [],
+            'performers' => [],
+            'time_tables' => [],
+            'status' => EventStatus::DRAFT,
             'images' => [],
             'instances' => [],
         ];
@@ -66,8 +63,8 @@ class EventService
             $event->save();
 
             $event->syncTagsByNames($attributes['tags'] ?? []);
-            $event->syncCategoriesByNames($attributes['categories']?? []);
-            $event->syncOrganizers($attributes['organizers']?? []);
+            $event->syncCategoriesByNames($attributes['categories'] ?? []);
+            $event->syncOrganizers($attributes['organizers'] ?? []);
             $event->syncTimeTables($attributes['time_tables'] ?? []);
             $event->syncInstances($attributes['instances'] ?? []);
 
@@ -83,13 +80,13 @@ class EventService
     }
 
     //イベントを更新する。
-    public function updateEvent($id,$attributes)
+    public function updateEvent($id, $attributes)
     {
         DB::beginTransaction();
         try {
             Log::debug($attributes);
             $event = Event::findOrFail($id);
-            if (!$event->canUserOperate(Auth::user())) {
+            if (! $event->canUserOperate(Auth::user())) {
                 throw new CannotOperateEventException();
             }
             $event->title = $attributes['title'];
@@ -101,8 +98,8 @@ class EventService
             $event->save();
 
             $event->syncTagsByNames($attributes['tags'] ?? []);
-            $event->syncCategoriesByNames($attributes['categories']?? []);
-            $event->syncOrganizers($attributes['organizers']?? []);
+            $event->syncCategoriesByNames($attributes['categories'] ?? []);
+            $event->syncOrganizers($attributes['organizers'] ?? []);
             $event->syncTimeTables($attributes['time_tables'] ?? []);
             $event->syncInstances($attributes['instances'] ?? []);
 
@@ -122,10 +119,10 @@ class EventService
     {
         $event = Event::with([
             'organizers.event_organizeble',
-            'event_time_tables.performers.performable'
+            'event_time_tables.performers.performable',
         ])->find($id);
 
-        if(!$event){
+        if (! $event) {
             throw new ModelNotFoundException('Eventが見つかりませんでした。');
         }
         $user = Auth::user();
@@ -140,6 +137,7 @@ class EventService
         }
 
         $this->viewCountService->incrementCount($event);
+
         return $event;
 
     }
@@ -150,7 +148,7 @@ class EventService
         DB::beginTransaction();
         try {
             $event = Event::findOrFail($id);
-            if (!$event->canUserOperate(Auth::user())) {
+            if (! $event->canUserOperate(Auth::user())) {
                 throw new CannotOperateEventException();
             }
             $event->delete();
@@ -169,7 +167,7 @@ class EventService
     /**
      * 指定されたユーザーがオーガナイザーになっているイベントをページネーション付きで取得
      *
-     * @param User $user ユーザーインスタンス
+     * @param  User  $user ユーザーインスタンス
      * @return \Illuminate\Pagination\LengthAwarePaginator ページネーションされたイベント
      */
     public function getPaginatedEventsForOrganizer(User $user)
@@ -187,10 +185,10 @@ class EventService
         return $paginatedEventOrganizers;
     }
 
-
-    public function getPublicRandomEvents($limit = 3,$status = null)
+    public function getPublicRandomEvents($limit = 3, $status = null)
     {
         $status = $status ?? EventStatus::PUBLIC_SEARCH_STATUSES;
+
         return Event::where('published_at', '<=', Carbon::now())
             ->whereIn('status', $status)
             ->inRandomOrder()

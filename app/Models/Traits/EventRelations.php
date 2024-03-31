@@ -2,14 +2,13 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Tag;
-use App\Models\File;
-use App\Models\User;
-use App\Models\View;
 use App\Models\Category;
-use App\Models\Instance;
 use App\Models\EventOrganizer;
 use App\Models\EventTimeTable;
+use App\Models\Instance;
+use App\Models\Tag;
+use App\Models\User;
+use App\Models\View;
 
 /**
  * イベント関連のトレイト
@@ -65,9 +64,6 @@ trait EventRelations
     {
         return $this->belongsToMany(Category::class);
     }
-
-
-
 
     /**
      * タグとのリレーション

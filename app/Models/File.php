@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class File extends Model
 {
     use HasFactory;
-    protected $fillable = ['path', 'type','name','original_name'];
 
+    protected $fillable = ['path', 'type', 'name', 'original_name'];
 
     /**
      * @var array
@@ -21,18 +21,16 @@ class File extends Model
 
     public function getPublicUrlAttribute()
     {
-        return Storage::disk("public")->url($this->path . '/' . $this->name);
+        return Storage::disk('public')->url($this->path.'/'.$this->name);
     }
 
     public function deleteFile()
     {
-        Storage::disk('public')->delete($this->path . '/' . $this->name);
+        Storage::disk('public')->delete($this->path.'/'.$this->name);
     }
 
     public function fileable()
     {
         return $this->morphTo();
     }
-
-
 }

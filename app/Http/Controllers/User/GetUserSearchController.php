@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Services\TagService;
-use App\Params\EventSearchParams;
 use App\Http\Controllers\Controller;
+use App\Params\EventSearchParams;
 use App\Services\EventMeilisearchService;
+use App\Services\TagService;
 
 class GetUserSearchController extends Controller
 {
     protected $eventMeilisearchService;
+
     protected $tagService;
 
     public function __construct(
-        EventMeilisearchService  $eventMeilisearchService,
+        EventMeilisearchService $eventMeilisearchService,
         TagService $tagService
     ) {
         $this->eventMeilisearchService = $eventMeilisearchService;
@@ -37,9 +38,9 @@ class GetUserSearchController extends Controller
                 'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
-                'categories' =>  Category::all(),
+                'categories' => Category::all(),
                 'instanceTypes' => InstanceType::all()->pluck('name'),
-                'statuses' =>  EventStatus::PUBLIC_SEARCH_STATUSES,
+                'statuses' => EventStatus::PUBLIC_SEARCH_STATUSES,
             ]
         );
     }

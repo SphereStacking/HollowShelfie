@@ -3,13 +3,11 @@
 namespace App\Http\Requests;
 
 use App\Enums\EventStatus;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
 class EventUpdateRequest extends FormRequest
 {
-
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -20,8 +18,6 @@ class EventUpdateRequest extends FormRequest
 
     /**
      * イベントストア用の属性を取得します。
-     *
-     * @return array
      */
     public function getAttributes(): array
     {
@@ -62,7 +58,7 @@ class EventUpdateRequest extends FormRequest
 
         \Log::debug($this->all());
         //ドラフトのとき
-        if($this->input('status') == EventStatus::DRAFT->value){
+        if ($this->input('status') == EventStatus::DRAFT->value) {
             return [];
         }
 

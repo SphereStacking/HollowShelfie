@@ -23,7 +23,6 @@ class UpdateViewCounts extends Command
      */
     protected $description = 'Update view counts from Redis';
 
-
     /**
      * Execute the console command.
      */
@@ -47,7 +46,7 @@ class UpdateViewCounts extends Command
             // }
         }
 
-        if (!empty($updates)) {
+        if (! empty($updates)) {
             foreach ($updates as $update) {
                 View::where('id', $update['id'])->update(['count' => $update['count']]);
             }

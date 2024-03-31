@@ -96,7 +96,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
         <CarouselEventHero :events="items.events" />
 
-        <div class="grid w-full grid-cols-2 gap-10  sm:grid-cols-3 md:grid-cols-4  xl:grid-cols-6 ">
+        <div class="grid w-full grid-cols-2 gap-8  sm:grid-cols-3 md:grid-cols-4 md:gap-16 xl:gap-24">
           <CardEvent
             v-for="(event, index) in items.events" :key="index" :event="event"
             class=" min-h-48 " />

@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers\Follow;
 
-use App\Services\UserService;
 use App\Http\Requests\FollowRequest;
+use App\Services\UserService;
 
 /**
  * フォロー関連の操作を管理するコントローラー
  */
 class DestroyFollowController extends FollowBaseController
 {
-
     protected $userService;
 
     /**
      * FollowControllerのコンストラクタ
-     *
-     * @param UserService $userService
      */
     public function __construct(
         UserService $userService
@@ -26,9 +23,8 @@ class DestroyFollowController extends FollowBaseController
 
     public function __invoke(FollowRequest $request)
     {
-        $result = $this->userService->unfollowByFollowable(auth()->user(), $request->type,$request->id);
-        return $this->generateResponse($result['message'] , $result['unfollowed']);
+        $result = $this->userService->unfollowByFollowable(auth()->user(), $request->type, $request->id);
+
+        return $this->generateResponse($result['message'], $result['unfollowed']);
     }
-
 }
-

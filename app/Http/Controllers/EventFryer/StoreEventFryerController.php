@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\EventFryer;
 
-use App\Models\Event;
-use Illuminate\Http\Request;
-use App\Services\FileService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\StoreEventFryerJsonResource;
 use App\Http\Requests\StoreEventFryerRequest;
+use App\Http\Resources\StoreEventFryerJsonResource;
+use App\Models\Event;
+use App\Services\FileService;
 
 class StoreEventFryerController extends Controller
 {
@@ -21,17 +20,17 @@ class StoreEventFryerController extends Controller
     public function __invoke(StoreEventFryerRequest $request, Event $event)
     {
         $attributes = $request->getAttributes();
-        $uploadFiles=[];
+        $uploadFiles = [];
         foreach ($attributes['images'] as $file) {
             $uploadFiles[] = $this->fileService->uploadFile($file, $event);
         }
 
         return redirect()->back()->with([
-            'response'=>[
+            'response' => [
                 'status' => 'success',
                 'message' => 'フライヤーを保存しました。',
-                'files' => new StoreEventFryerJsonResource($uploadFiles)
-            ]
+                'files' => new StoreEventFryerJsonResource($uploadFiles),
+            ],
         ]);
     }
 }

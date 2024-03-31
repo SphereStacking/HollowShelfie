@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
-use App\Models\Category;
 use App\Enums\EventStatus;
-use App\Services\TagService;
-use Illuminate\Http\Request;
-use App\Services\EventService;
+use App\Http\Resources\CategoryWithCountJsonResource;
+use App\Http\Resources\EventsJsonResource;
+use App\Http\Resources\TagWithCountJsonResource;
 use App\Params\EventSearchParams;
 use App\Services\CategoryService;
 use App\Services\EventMeilisearchService;
-use App\Http\Resources\EventsJsonResource;
-use App\Http\Resources\TagWithCountJsonResource;
-use App\Http\Resources\CategoryWithCountJsonResource;
+use App\Services\EventService;
+use App\Services\TagService;
+use Inertia\Inertia;
 
 class GetHomeController extends Controller
 {
     protected $eventService;
+
     protected $eventMeilisearchService;
+
     protected $tagService;
+
     protected $categoryService;
 
     public function __construct(
@@ -65,6 +66,7 @@ class GetHomeController extends Controller
             12,
             null,
         );
+
         return Inertia::render(
             'Home',
             [

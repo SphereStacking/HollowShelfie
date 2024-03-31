@@ -6,7 +6,6 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class FollowsTableSeeder extends Seeder
 {
@@ -29,7 +28,7 @@ class FollowsTableSeeder extends Seeder
                 DB::table('follows')->updateOrInsert([
                     'user_id' => $user->id,
                     'followable_id' => $followId,
-                    'followable_type' => 'App\Models\User'
+                    'followable_type' => 'App\Models\User',
                 ]);
             }
 
@@ -39,7 +38,7 @@ class FollowsTableSeeder extends Seeder
                 DB::table('follows')->updateOrInsert([
                     'user_id' => $user->id,
                     'followable_id' => $followId,
-                    'followable_type' => 'App\Models\Team'
+                    'followable_type' => 'App\Models\Team',
                 ]);
             }
         });

@@ -22,7 +22,7 @@ trait EventScopes
             [
                 EventStatus::ONGOING,
                 EventStatus::UPCOMING,
-                EventStatus::CLOSED
+                EventStatus::CLOSED,
             ]
         );
     }
@@ -40,7 +40,7 @@ trait EventScopes
             [
                 EventStatus::ONGOING->name,
                 EventStatus::UPCOMING->name,
-                EventStatus::CLOSED->name
+                EventStatus::CLOSED->name,
             ]
         );
     }
@@ -66,6 +66,7 @@ trait EventScopes
     {
         return $query->orderBy('good_count', 'desc');
     }
+
     /**
      * 良い評価の多いイベントを取得するスコープ
      *
@@ -115,14 +116,15 @@ trait EventScopes
                 $query->whereIn('name', $tags);
             });
         }
+
         return $query;
     }
 
     /**
      * ログイン中のユーザーが管理できるイベントのみを取得するスコープ。
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $userId ユーザーID
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int  $userId ユーザーID
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeManagedByUser($query, $userId)

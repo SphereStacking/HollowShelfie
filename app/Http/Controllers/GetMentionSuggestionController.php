@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\CustomIdentifiable;
 use App\Http\Resources\MentionsuggestionJsonResource;
+use App\Models\CustomIdentifiable;
+use Illuminate\Http\Request;
 
 class GetMentionSuggestionController extends Controller
 {
@@ -17,6 +17,7 @@ class GetMentionSuggestionController extends Controller
             ->get();
         // searchResults の data を customIdentities で置き換える
         $searchResults->setCollection($customIdentities);
+
         return response()->json([
             'status' => 'success',
             'suggestions' => new MentionsuggestionJsonResource($searchResults),

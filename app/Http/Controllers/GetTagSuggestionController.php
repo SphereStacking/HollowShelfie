@@ -11,9 +11,11 @@ class GetTagSuggestionController extends Controller
         $suggestions = Tag::search($request->input('q'))
             ->paginate(10)
             ->through(function ($tag) {
-                $tag->loadCount(['taggables','events','users']);
+                $tag->loadCount(['taggables', 'events', 'users']);
+
                 return $tag;
             });
+
         return response()->json([
             'status' => 'success',
             'suggestions' => $suggestions,

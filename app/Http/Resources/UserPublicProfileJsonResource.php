@@ -30,7 +30,7 @@ class UserPublicProfileJsonResource extends JsonResource
                 }),
                 'followers_count' => $this->followers_count,
                 'content' => 'hogegegege',
-                'tags'=> $this->tags->map(function ($tag) {
+                'tags' => $this->tags->map(function ($tag) {
                     return [
                         'name' => $tag->name,
                     ];

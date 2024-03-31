@@ -2,16 +2,12 @@
 
 namespace Database\Factories;
 
-use Carbon\Carbon;
-use App\Models\Team;
-use App\Models\User;
-use App\Models\Event;
 use App\Enums\EventStatus;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use App\Services\FileService;
-use Laravel\Jetstream\Features;
+use App\Models\Event;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -38,6 +34,7 @@ class EventFactory extends Factory
         // 開始時間から2時間後を終了時間とする
         $endDateTime = Carbon::instance($dateTime)->addHours(2)->format('Ymd\THis\Z');
         $status = Arr::random(EventStatus::cases());
+
         return [
             'event_create_user_id' => User::inRandomOrder()->first()->id,
             'title' => $this->faker->text(20),
@@ -52,11 +49,11 @@ class EventFactory extends Factory
                     case EventStatus::ONGOING:
                         return Carbon::now();
                     case EventStatus::SCHEDULED:
-                            return $this->faker->dateTimeBetween('+1 month', '+2 month');
+                        return $this->faker->dateTimeBetween('+1 month', '+2 month');
                     case EventStatus::CANCELED:
                     case EventStatus::CLOSED:
                     case EventStatus::DRAFT:
-                            return null;
+                        return null;
                     default:
                         return null;
                 }

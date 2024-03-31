@@ -75,7 +75,7 @@ class AdminUserSeeder extends Seeder
                 // 最初のユーザー（Ash）のみチームを作成
                 $team = Team::factory()->create([
                     'user_id' => $user->id,
-                    'name' => "運営",
+                    'name' => '運営',
                     'personal_team' => true,
                 ]);
                 $user->current_team_id = $team->id;
