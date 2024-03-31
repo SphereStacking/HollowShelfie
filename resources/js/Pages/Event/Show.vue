@@ -87,7 +87,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
           <div class="mr-auto flex items-center gap-1  rounded-md">
             <IconTypeMapper type="tag" class="text-xl" />
             <template v-for="(tag, index) in event.tags" :key="index">
-              <BtnEventSerchItem :value="tag" type="tag" is-navigate />
+              <BtnEventSearchItem :value="tag" type="tag" is-navigate />
             </template>
           </div>
         </div>
@@ -131,7 +131,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
               </template>
               <div class="flex flex-wrap items-center gap-1">
                 <template v-for="(tag, index) in trendTags" :key="index">
-                  <BtnEventSerchItem :value="tag" type="tag" is-navigate />
+                  <BtnEventSearchItem :value="tag" type="tag" is-navigate />
                 </template>
               </div>
             </Card>

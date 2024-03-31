@@ -52,7 +52,7 @@ const computedItems = computed(() => {
       leave-active-class="transition ease-in duration-75 absolute"
       leave-from-class="transform opacity-100"
       leave-to-class="transform opacity-0">
-      <BtnEventSerchItem
+      <BtnEventSearchItem
         v-for="item in computedItems" :key="item" :type="type"
         :value="item"
         @click="addConditionFunc({ type: type, value: item })" />

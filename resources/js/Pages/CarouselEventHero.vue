@@ -89,14 +89,14 @@ const getEventShow = (event) => {
                 <!-- category -->
                 <div class="flex items-center gap-1 ">
                   <IconTypeMapper type="category" class="text-xl" />
-                  <BtnEventSerchItem :value="event.category_name" type="category" is-navigate />
+                  <BtnEventSearchItem :value="event.category_name" type="category" is-navigate />
                 </div>
                 <!-- tag -->
                 <div class="flex flex-row items-center gap-1">
                   <div class="mr-auto flex items-center gap-1  rounded-md">
                     <IconTypeMapper type="tag" class="text-xl" />
                     <template v-for="(tag, index) in event.tags" :key="index">
-                      <BtnEventSerchItem :value="tag" type="tag" is-navigate />
+                      <BtnEventSearchItem :value="tag" type="tag" is-navigate />
                     </template>
                   </div>
                 </div>
