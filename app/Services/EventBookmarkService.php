@@ -68,7 +68,7 @@ class eventBookmarkService
     {
         $counts = [];
         foreach (EventStatus::cases() as $status) {
-            $counts[$status] = $user->bookmark_events()->where('status', $status)->count();
+            $counts[$status->value] = $user->bookmark_events()->where('status', $status->value)->count();
         }
         return $counts;
     }
