@@ -43,7 +43,7 @@ class GetEventSearchController extends Controller
                 ),
                 'categories' =>  fn () => Category::all(),
                 'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
-                'statuses' =>  fn () => EventStatus::getPermittedStatusesForListSearch(),
+                'statuses' =>  fn () => EventStatus::PUBLISHED_STATUSES,
             ]
         );
     }

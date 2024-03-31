@@ -43,7 +43,7 @@ class GetManageEventController extends Controller
             'events' => new EventsPaginatedJsonResource($events),
             'categories' =>  fn () => Category::all(),
             'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
-            'statuses' =>  fn () => EventStatus::getPermittedStatusesForAdminSearch(),
+            'statuses' =>  fn () => EventStatus::ADMIN_SEARCH_STATUSES,
             'trendTags' => fn () => $this->tagService->getTrendTagNames(),
         ]);
     }

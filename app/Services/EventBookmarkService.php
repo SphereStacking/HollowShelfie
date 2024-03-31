@@ -67,7 +67,7 @@ class eventBookmarkService
     public function getBookmarkedEventsCountByUserForAllStatuses(User $user)
     {
         $counts = [];
-        foreach (EventStatus::getAllStatuses() as $status) {
+        foreach (EventStatus::cases() as $status) {
             $counts[$status] = $user->bookmark_events()->where('status', $status)->count();
         }
         return $counts;
