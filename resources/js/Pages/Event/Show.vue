@@ -18,14 +18,6 @@ const props = defineProps({
 defineEmits(
   ['click']
 )
-//データ整形
-const time_table = props.event.time_table
-const tags = props.event.tags
-const event = props.event
-const organizers = props.event.organizers
-const performers = props.event.performers
-
-const instances = props.event.instances
 
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
@@ -110,55 +102,11 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
       <!-- leftside -->
       <!-- Main -->
       <div class="mx-auto flex w-full flex-col gap-2 lg:col-span-6">
-        <CardArticle>
-          <template #content>
-            <div class=" prose lg:prose-xl">
-              {{ event.description }}
-              <!-- {{ props.event }} -->
-            </div>
-          </template>
-        </CardArticle>
-        <div class="flex w-full flex-col  justify-center">
-          <div class="flex flex-row items-center gap-1">
-            <Icon icon="mdi:ghost" class="text-md" />
-            <div>organizers</div>
-          </div>
-          <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
-            <a
-              v-for="(organizer, index ) in organizers" :key="index" :href="organizer.profile_url"
-              class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="organizer.name">
-              <img :src="organizer.imag_url">
-            </a>
-          </div>
-        </div>
-
-        <div class="flex w-full flex-col justify-center">
-          <div class="flex flex-row items-center gap-1">
-            <Icon icon="mdi:food" class="text-md" />
-            <div>performers</div>
-          </div>
-          <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
-            <a
-              v-for="(performer, index ) in performers" :key="index" :href="performer.profile_url"
-              class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name">
-              <img :src="performer.image_url">
-            </a>
-          </div>
-        </div>
-        <div class="flex w-full flex-col  justify-center">
-          <div class="flex flex-row items-center gap-1">
-            <Icon icon="line-md:map-marker-multiple-alt-filled" class="text-md" />
-            <div>location</div>
-          </div>
-          <div class="flex w-full flex-col rounded-xl bg-base-200">
-            <a
-              v-for="(instance, index ) in instances" :key="index" href="#"
-              class="mx-2 my-1 flex flex-row gap-2 transition-all duration-200 hover:-translate-y-1">
-              <div class="badge badge-primary">{{ instance.instance_type }}</div>
-              <div class="overflow-hidden whitespace-nowrap"> {{ instance.location }}</div>
-            </a>
-          </div>
-        </div>
+        <ShowDescription :description="event.description" />
+        <ShowOrganizers :organizers="event.organizers" />
+        <ShowPerformers :performers="event.performers" />
+        <ShowInstances :instances="event.instances" />
+        <ShowTimetable :time-table="event.time_table" />
       </div>
       <!-- Main -->
       <!-- RightSide -->
