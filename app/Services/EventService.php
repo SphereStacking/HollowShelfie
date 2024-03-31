@@ -190,7 +190,7 @@ class EventService
 
     public function getPublicRandomEvents($limit = 3,$status = null)
     {
-        $status = $status ?? EventStatus::getPermittedStatusesForListSearch();
+        $status = $status ?? EventStatus::PUBLIC_SEARCH_STATUSES;
         return Event::where('published_at', '<=', Carbon::now())
             ->whereIn('status', $status)
             ->inRandomOrder()

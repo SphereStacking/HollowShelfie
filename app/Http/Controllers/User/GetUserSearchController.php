@@ -39,7 +39,7 @@ class GetUserSearchController extends Controller
                 ),
                 'categories' =>  Category::all(),
                 'instanceTypes' => InstanceType::all()->pluck('name'),
-                'statuses' =>  EventStatus::getPermittedStatusesForListSearch(),
+                'statuses' =>  EventStatus::PUBLIC_SEARCH_STATUSES,
             ]
         );
     }
