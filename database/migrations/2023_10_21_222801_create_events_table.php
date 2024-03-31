@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->timestamp('published_at')->nullable();
             $table->text('title');
             $table->integer('event_create_user_id');
-            $table->timestamp('published_at')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->text('description');
             $table->string('status')->default(\App\Enums\EventStatus::DRAFT);
+
         });
     }
 

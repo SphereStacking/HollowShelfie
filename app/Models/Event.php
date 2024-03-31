@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
 {
+    use SoftDeletes;
     use HasFactory;
     use Searchable;
 
