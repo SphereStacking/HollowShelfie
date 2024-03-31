@@ -53,21 +53,6 @@ eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents
 eventItems.value.push({ url: props.recentEventsUrl, events: props.recentEvents, title: 'Recent', icon: 'mdi:timelapse' })
 eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'NEW', icon: 'mdi:new-box' })
 
-import image1 from '@/tmp/2024SummerFestival.png'
-import image2 from '@/tmp/Comiket.png'
-import image3 from '@/tmp/SuccubusCafe.png'
-import image4 from '@/tmp/VOCALOIDFuture.png'
-import image5 from '@/tmp/Werewolf.png'
-
-//TODO:仮
-const slides = [
-  { image: image1, url: 'http://localhost/event/1/show' },
-  { image: image2, url: 'http://localhost/event/2/show' },
-  { image: image3, url: 'http://localhost/event/3/show' },
-  { image: image4, url: 'http://localhost/event/4/show' },
-  { image: image5, url: 'http://localhost/event/5/show' },
-]
-
 </script>
 
 <template>
@@ -79,8 +64,6 @@ const slides = [
     </template>
 
     <div class="mx-auto mt-5 flex max-w-7xl flex-col gap-10">
-      <CarouselBanner :slides="slides" />
-
       <div class="flex flex-wrap justify-center gap-2">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
           <IconTypeMapper type="category" />
