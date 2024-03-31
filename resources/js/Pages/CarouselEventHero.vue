@@ -112,7 +112,7 @@ const getEventShow = (event) => {
                     v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
                     :data-tip="organizer.name">
-                    <img :src="organizer.imag_url">
+                    <img :src="organizer.image_url">
                   </a>
                 </div>
               </div>
