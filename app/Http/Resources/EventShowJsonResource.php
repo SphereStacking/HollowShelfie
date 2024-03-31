@@ -78,8 +78,8 @@ class EventShowJsonResource extends JsonResource
                 return [
                     'id' => $time_table->id,
                     'description' => $time_table->description,
-                    'start_date' => $time_table->start_date,
-                    'end_date' => $time_table->end_date,
+                    'start_time' => $time_table->start_time,
+                    'end_time' => $time_table->end_time,
                     'performance_time' => $time_table->performance_time,
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [
