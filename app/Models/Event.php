@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Exception;
 use Carbon\Carbon;
 use App\Models\Category;
 use App\Enums\EventStatus;
@@ -12,8 +13,8 @@ use App\Models\Traits\EventGetters;
 use App\Models\Traits\EventSetters;
 use Illuminate\Support\Facades\Log;
 use App\Models\Traits\EventRelations;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
