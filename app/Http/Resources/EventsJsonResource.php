@@ -39,7 +39,7 @@ class EventsJsonResource extends JsonResource
                         'profile_url' => $organizeble->event_organizeble->profile_url,
                         'id' => $organizeble->event_organizeble_id,
                         'type' => $organizeble->event_organizeble_type,
-                        'imag_url' => $organizeble->event_organizeble_type === User::class
+                        'image_url' => $organizeble->event_organizeble_type === User::class
                             ? $organizeble->event_organizeble->profile_photo_url
                             : $organizeble->event_organizeble->team_logo_url,
                         'name' => $organizeble->event_organizeble->name,
