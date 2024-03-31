@@ -5,7 +5,6 @@ const props = defineProps({
     type: String,
     required: true
   },
-
   recommendEvents: {
     type: Array,
     default: () => []
@@ -13,22 +12,17 @@ const props = defineProps({
   trendTags: {
     type: Array,
     default: () => []
+  },
+  config: {
+    type: Object,
+    default: () => {}
   }
 })
 defineEmits(
   ['click']
 )
-//データ整形
-const time_table = props.event.time_table
-const tags = props.event.tags
-const event = props.event
-const organizers = props.event.organizers
-const performers = props.event.performers
 
-const instances = props.event.instances
-
-import IconTypeMapper from '@/Components/IconTypeMapper.vue'
-
+const supportings = props.config.supportings ?? []
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -95,7 +89,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
           <div class="mr-auto flex items-center gap-1  rounded-md">
             <IconTypeMapper type="tag" class="text-xl" />
             <template v-for="(tag, index) in event.tags" :key="index">
-              <BtnEventSerchItem :value="tag" type="tag" is-navigate />
+              <BtnEventSearchItem :value="tag" type="tag" is-navigate />
             </template>
           </div>
         </div>
@@ -103,62 +97,18 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
       <!-- header -->
       <!-- leftside -->
       <div class="mx-auto w-full lg:col-span-3 lg:row-start-3">
-        <Card>
-          <CarouselGallery class="sticky top-12" :images="event.files.map(file => file.public_url)" />
+        <Card class="sticky top-12">
+          <CarouselGallery :images="event.files.map(file => file.public_url)" />
         </Card>
       </div>
       <!-- leftside -->
       <!-- Main -->
       <div class="mx-auto flex w-full flex-col gap-2 lg:col-span-6">
-        <CardArticle>
-          <template #content>
-            <div class=" prose lg:prose-xl">
-              {{ event.description }}
-              <!-- {{ props.event }} -->
-            </div>
-          </template>
-        </CardArticle>
-        <div class="flex w-full flex-col  justify-center">
-          <div class="flex flex-row items-center gap-1">
-            <Icon icon="mdi:ghost" class="text-md" />
-            <div>organizers</div>
-          </div>
-          <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
-            <a
-              v-for="(organizer, index ) in organizers" :key="index" :href="organizer.profile_url"
-              class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="organizer.name">
-              <img :src="organizer.imag_url">
-            </a>
-          </div>
-        </div>
-
-        <div class="flex w-full flex-col justify-center">
-          <div class="flex flex-row items-center gap-1">
-            <Icon icon="mdi:food" class="text-md" />
-            <div>performers</div>
-          </div>
-          <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
-            <a
-              v-for="(performer, index ) in performers" :key="index" :href="performer.profile_url"
-              class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name">
-              <img :src="performer.image_url">
-            </a>
-          </div>
-        </div>
-        <div class="flex w-full flex-col  justify-center">
-          <div class="flex flex-row items-center gap-1">
-            <Icon icon="line-md:map-marker-multiple-alt-filled" class="text-md" />
-            <div>location</div>
-          </div>
-          <div class="flex w-full flex-col rounded-xl bg-base-200">
-            <a
-              v-for="(instance, index ) in instances" :key="index" href="#"
-              class="mx-2 my-1 flex flex-row gap-2 transition-all duration-200 hover:-translate-y-1">
-              <div class="badge badge-primary">{{ instance.instance_type }}</div>
-              <div class="overflow-hidden whitespace-nowrap"> {{ instance.location }}</div>
-            </a>
-          </div>
-        </div>
+        <ShowDescription :description="event.description" />
+        <ShowOrganizers :organizers="event.organizers" />
+        <ShowPerformers :performers="event.performers" />
+        <ShowInstances :instances="event.instances" />
+        <ShowTimetable :time-table="event.time_table" />
       </div>
       <!-- Main -->
       <!-- RightSide -->
@@ -166,7 +116,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
         <Card class="h-full w-full border bg-transparent">
           <template #title>
             <h4 class="font-bold uppercase ">
-              ここに広告を表示したい
+              広告を募集中!
             </h4>
           </template>
         </Card>
@@ -181,8 +131,10 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
                   人気のタグ
                 </h4>
               </template>
-              <div class="flex flex-wrap gap-0.5">
-                <LinkBadges :route="route('event.search.index')" :tags="trendTags" />
+              <div class="flex flex-wrap items-center gap-1">
+                <template v-for="(tag, index) in trendTags" :key="index">
+                  <BtnEventSearchItem :value="tag" type="tag" is-navigate />
+                </template>
               </div>
             </Card>
             <!-- 関連記事 -->
@@ -199,10 +151,21 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
             <!-- コミュニティスポンサー -->
             <Card class="w-full">
               <template #title>
-                スポンサー
+                <div class="flex w-full flex-row justify-between gap-2">
+                  サポーター募集！
+                  <a
+                    class="btn btn-circle btn-accent btn-sm" :href="supportings.fanbox">
+                    <Icon icon="mdi:plus" />
+                  </a>
+                </div>
               </template>
-              <p>誰もいないよ😿</p>
-              <p>まってるよ！</p>
+            </Card>
+            <Card class="h-32 w-full border bg-transparent">
+              <template #title>
+                <h4 class="font-bold uppercase ">
+                  広告を募集中!
+                </h4>
+              </template>
             </Card>
           </div>
         </aside>

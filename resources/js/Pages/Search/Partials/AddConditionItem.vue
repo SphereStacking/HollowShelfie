@@ -19,7 +19,7 @@ defineEmits(['addCondition'])
 
 <template>
   <div class="flex flex-wrap gap-2">
-    <BtnEventSerchItem
+    <BtnEventSearchItem
       v-for="item in items " :key="item" :type="type"
       :value="item"
       @click="addConditionFunc({ type: type, value: item })" />
