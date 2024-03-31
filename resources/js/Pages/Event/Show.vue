@@ -129,8 +129,10 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
                   人気のタグ
                 </h4>
               </template>
-              <div class="flex flex-wrap gap-0.5">
-                <LinkBadges :route="route('event.search.index')" :tags="trendTags" />
+              <div class="flex flex-wrap items-center gap-1">
+                <template v-for="(tag, index) in trendTags" :key="index">
+                  <BtnEventSerchItem :value="tag" type="tag" is-navigate />
+                </template>
               </div>
             </Card>
             <!-- 関連記事 -->
