@@ -10,13 +10,10 @@ use App\Services\UserService;
  */
 class DestroyTeamFollowController extends FollowBaseController
 {
-
     protected $userService;
 
     /**
      * FollowControllerのコンストラクタ
-     *
-     * @param UserService $userService
      */
     public function __construct(
         UserService $userService
@@ -26,9 +23,8 @@ class DestroyTeamFollowController extends FollowBaseController
 
     public function __invoke(Team $team)
     {
-        $result =$this->userService->unfollow(auth()->user(),$team);
-        return $this->generateResponse($result['message'] , $result['unfollowed']);
+        $result = $this->userService->unfollow(auth()->user(), $team);
+
+        return $this->generateResponse($result['message'], $result['unfollowed']);
     }
-
 }
-

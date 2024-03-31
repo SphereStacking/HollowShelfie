@@ -10,13 +10,10 @@ use App\Services\UserService;
  */
 class StoreTeamFollowController extends FollowBaseController
 {
-
     protected $userService;
 
     /**
      * FollowControllerのコンストラクタ
-     *
-     * @param UserService $userService
      */
     public function __construct(
         UserService $userService
@@ -26,9 +23,8 @@ class StoreTeamFollowController extends FollowBaseController
 
     public function __invoke(Team $team)
     {
-        $result = $this->userService->follow(auth()->user(),$team);
-        return $this->generateResponse($result['message'] , $result['followed']);
+        $result = $this->userService->follow(auth()->user(), $team);
+
+        return $this->generateResponse($result['message'], $result['followed']);
     }
-
 }
-

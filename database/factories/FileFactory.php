@@ -24,7 +24,7 @@ class FileFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => 'uploads/dummy/path/' . Str::random(10) . '.jpg',
+            'name' => 'uploads/dummy/path/'.Str::random(10).'.jpg',
             'type' => 'image/jpeg',
         ];
     }

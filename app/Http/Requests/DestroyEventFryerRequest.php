@@ -14,10 +14,8 @@ class DestroyEventFryerRequest extends FormRequest
         return true;
     }
 
-        /**
+    /**
      * イベントストア用の属性を取得します。
-     *
-     * @return array
      */
     public function getAttributes(): array
     {

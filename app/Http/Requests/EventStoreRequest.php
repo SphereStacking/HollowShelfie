@@ -5,10 +5,8 @@ namespace App\Http\Requests;
 use App\Enums\EventStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
-class  EventStoreRequest extends FormRequest
+class EventStoreRequest extends FormRequest
 {
-
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -19,8 +17,6 @@ class  EventStoreRequest extends FormRequest
 
     /**
      * イベントストア用の属性を取得します。
-     *
-     * @return array
      */
     public function getAttributes(): array
     {
@@ -47,7 +43,7 @@ class  EventStoreRequest extends FormRequest
     public function rules(): array
     {
         //ドラフトのとき
-        if($this->input('status') === EventStatus::DRAFT->value){
+        if ($this->input('status') === EventStatus::DRAFT->value) {
             return [
                 'images.*' => 'file|max:30720', //30MB
             ];

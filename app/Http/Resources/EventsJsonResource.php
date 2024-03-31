@@ -22,7 +22,7 @@ class EventsJsonResource extends JsonResource
                 'title' => $item->title,
                 'description' => $item->description,
                 'category_name' => $item->category_name,
-                'tags' =>  $item->tags,
+                'tags' => $item->tags,
                 'status' => $item->status,
                 'status_label' => $item->status_label,
                 'good_count' => $item->good_count,
@@ -39,7 +39,7 @@ class EventsJsonResource extends JsonResource
                         'profile_url' => $organizeble->event_organizeble->profile_url,
                         'id' => $organizeble->event_organizeble_id,
                         'type' => $organizeble->event_organizeble_type,
-                        'imag_url' =>  $organizeble->event_organizeble_type === User::class
+                        'imag_url' => $organizeble->event_organizeble_type === User::class
                             ? $organizeble->event_organizeble->profile_photo_url
                             : $organizeble->event_organizeble->team_logo_url,
                         'name' => $organizeble->event_organizeble->name,
@@ -51,7 +51,7 @@ class EventsJsonResource extends JsonResource
                         }),
                     ];
                 }),
-                'performers'=> $item->event_time_tables->flatMap(function ($time_table) {
+                'performers' => $item->event_time_tables->flatMap(function ($time_table) {
                     return $time_table->performers->map(function ($performer) {
                         return [
                             'id' => $performer->performable->id,
@@ -66,7 +66,7 @@ class EventsJsonResource extends JsonResource
                             'type' => $performer->performable->performable_type,
                             'image_url' => $performer->performable_type === User::class
                                 ? $performer->performable->profile_photo_url
-                                : $performer->performable->team_logo_url
+                                : $performer->performable->team_logo_url,
                         ];
                     });
                 }),

@@ -2,11 +2,10 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Tag;
-use App\Models\Link;
-use App\Models\User;
 use App\Models\Badge;
 use App\Models\EventOrganizer;
+use App\Models\Link;
+use App\Models\Tag;
 
 /**
  * ユーザー関連のトレイト

@@ -13,6 +13,7 @@ class StoreTeamLogoController extends Controller
         if (isset($request['logo'])) {
             $team->updateTeamLogo($request['logo']);
         }
+
         return back(303)->with('status', 'team-logo-updated');
     }
 }

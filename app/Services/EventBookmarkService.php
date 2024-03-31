@@ -1,11 +1,10 @@
 <?php
+
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\Event;
 use App\Enums\EventStatus;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use App\Models\Event;
+use App\Models\User;
 
 /**
  * イベントブックマークサービスクラス
@@ -14,22 +13,16 @@ class eventBookmarkService
 {
     /**
      * ユーザーがイベントをブックマークする
-     *
-     * @param User $user
-     * @param Event $event
      */
     public function attachEvent(User $user, Event $event)
     {
-        if (!$this->isEventBookmarkedByUser($user, $event)) {
+        if (! $this->isEventBookmarkedByUser($user, $event)) {
             $user->bookmark_events()->attach($event->id);
         }
     }
 
     /**
      * ユーザーがイベントのブックマークを解除する
-     *
-     * @param User $user
-     * @param Event $event
      */
     public function detachEvent(User $user, Event $event)
     {
@@ -39,7 +32,6 @@ class eventBookmarkService
     /**
      * ユーザーがブックマークしたイベントを取得する
      *
-     * @param User $user
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getBookmarkedEventsByUser(User $user)
@@ -50,18 +42,16 @@ class eventBookmarkService
     /**
      * ユーザーがブックマークしたイベントの数を取得する
      *
-     * @param User $user
      * @return int
      */
     public function getBookmarkedEventsCountByUser(User $user)
     {
-        return  $user->bookmark_events()->count();
+        return $user->bookmark_events()->count();
     }
 
     /**
      * ユーザーがブックマークした各ステータスのイベントの数を取得する
      *
-     * @param User $user
      * @return array
      */
     public function getBookmarkedEventsCountByUserForAllStatuses(User $user)
@@ -70,14 +60,13 @@ class eventBookmarkService
         foreach (EventStatus::cases() as $status) {
             $counts[$status->value] = $user->bookmark_events()->where('status', $status->value)->count();
         }
+
         return $counts;
     }
 
     /**
      * ユーザーが特定のイベントをブックマークしているか確認する
      *
-     * @param User $user
-     * @param Event $event
      * @return bool
      */
     public function isEventBookmarkedByUser(User $user, Event $event)

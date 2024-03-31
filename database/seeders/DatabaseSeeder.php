@@ -4,14 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Tag;
-use App\Models\User;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
-use Database\Seeders\TeamRelationSeeder;
-use Database\Seeders\UserRelationSeeder;
 
 class DatabaseSeeder extends Seeder
 {

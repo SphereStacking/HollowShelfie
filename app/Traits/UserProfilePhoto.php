@@ -11,7 +11,6 @@ trait UserProfilePhoto
     /**
      * Update the user's profile photo.
      *
-     * @param  \Illuminate\Http\UploadedFile  $photo
      * @param  string  $storagePath
      * @return void
      */
@@ -51,8 +50,6 @@ trait UserProfilePhoto
 
     /**
      * Get the URL to the user's profile photo.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function profilePhotoUrl(): Attribute
     {
@@ -74,7 +71,7 @@ trait UserProfilePhoto
             return mb_substr($segment, 0, 1);
         })->join(' '));
 
-        return 'https://robohash.org/seed/' . urlencode($name);
+        return 'https://robohash.org/seed/'.urlencode($name);
     }
 
     /**

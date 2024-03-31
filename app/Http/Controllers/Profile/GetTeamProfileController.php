@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\Models\Team;
-use Inertia\Inertia;
-use App\Services\TeamService;
-use App\Services\UserService;
-use App\Params\EventSearchParams;
 use App\Http\Controllers\Controller;
-use App\Services\EventMeilisearchService;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\TeamPublicProfileJsonResource;
+use App\Models\Team;
+use App\Params\EventSearchParams;
+use App\Services\EventMeilisearchService;
+use App\Services\TeamService;
+use App\Services\UserService;
+use Inertia\Inertia;
 
 class GetTeamProfileController extends Controller
 {
     protected $userService;
+
     protected $teamService;
+
     protected $eventMeilisearchService;
 
     public function __construct(
         UserService $userService,
         TeamService $teamService,
-        EventMeilisearchService  $eventMeilisearchService
+        EventMeilisearchService $eventMeilisearchService
     ) {
         $this->userService = $userService;
         $this->teamService = $teamService;
@@ -31,7 +33,6 @@ class GetTeamProfileController extends Controller
     /**
      * チームのプロファイルを表示します。
      *
-     * @param  \App\Models\Team  $team
      * @return \Illuminate\View\View
      */
     public function __invoke(Team $team)
@@ -57,7 +58,7 @@ class GetTeamProfileController extends Controller
                 'q' => $EventSearchParams->queryParams,
                 'paginate' => $EventSearchParams->getDefaultPaginate(),
                 'o' => $EventSearchParams->order,
-            ])
+            ]),
         ]);
     }
 }

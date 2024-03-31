@@ -148,11 +148,11 @@ return [
                     'instances.*.location',
                     'instances.*.instance_type_name',
                     'categories',
-                    'good_count'
+                    'good_count',
                 ],
                 'sortableAttributes' => [
                     'good_count',
-                    'published_at'
+                    'published_at',
                 ],
             ],
         ],

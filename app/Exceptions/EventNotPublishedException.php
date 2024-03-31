@@ -11,5 +11,4 @@ class EventNotPublishedException extends Exception
 
     // エラーメッセージ
     protected $message = 'The event is not published.';
-
 }

@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
-use SocialiteProviders\Manager\SocialiteWasCalled;
-use SocialiteProviders\Discord\DiscordExtendSocialite;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use SocialiteProviders\Discord\DiscordExtendSocialite;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         SocialiteWasCalled::class => [
-            DiscordExtendSocialite::class . '@handle',
+            DiscordExtendSocialite::class.'@handle',
         ],
     ];
 

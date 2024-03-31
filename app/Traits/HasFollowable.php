@@ -1,14 +1,13 @@
 <?php
+
 namespace App\Traits;
 
-use App\Models\User;
 use App\Models\Followable;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 trait HasFollowable
 {
-
     /**
      * このモデルがフォローしているFollowableモデルのリレーションを返します。
      *
@@ -35,9 +34,10 @@ trait HasFollowable
      */
     public function follow($followTarget)
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return;
         }
+
         return Followable::firstOrCreate([
             'user_id' => $this->id,
             'followable_id' => $followTarget->id,
@@ -53,9 +53,10 @@ trait HasFollowable
      */
     public function unfollow($unfollowTarget)
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return;
         }
+
         return Followable::where('user_id', $this->id)
             ->where('followable_id', $unfollowTarget->id)
             ->where('followable_type', get_class($unfollowTarget))
@@ -68,14 +69,12 @@ trait HasFollowable
     public function isFollowedBy(User $user)
     {
         return $this->followables()
-                    ->where('user_id', $user->id)
-                    ->exists();
+            ->where('user_id', $user->id)
+            ->exists();
     }
 
     /**
      * このモデルをフォローしているユーザーの数を取得します。
-     *
-     * @return int
      */
     public function followersCount(): int
     {
@@ -84,8 +83,6 @@ trait HasFollowable
 
     /**
      * このモデルがフォローしている数を取得します。
-     *
-     * @return int
      */
     public function followingCount(): int
     {
@@ -95,18 +92,16 @@ trait HasFollowable
     /**
      * 認証してるユーザーがフォローしているがどうか
      * 認証されていなければ falseを返す
-     *
-     * @return bool
      */
     public function isFollowedByCurrentUser(): bool
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return false;
         }
+
         return Followable::where('user_id', auth()->id())
             ->where('followable_id', $this->id)
             ->where('followable_type', get_class($this))
             ->exists();
     }
-
 }

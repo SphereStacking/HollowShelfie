@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventEditJsonResource extends JsonResource
@@ -21,7 +20,7 @@ class EventEditJsonResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'category_names' => $this->category_names,
-            'tags' =>  $this->tags,
+            'tags' => $this->tags,
             'status' => $this->status,
             'status_label' => $this->status_label,
             'create_user' => $this->event_create_user,
@@ -46,7 +45,7 @@ class EventEditJsonResource extends JsonResource
                     'name' => $organizeble->event_organizeble->name,
                 ];
             }),
-            'performers'=> $this->event_time_tables->flatMap(function ($time_table) {
+            'performers' => $this->event_time_tables->flatMap(function ($time_table) {
                 return $time_table->performers->map(function ($performer) {
                     return [
                         'id' => $performer->performable->id,

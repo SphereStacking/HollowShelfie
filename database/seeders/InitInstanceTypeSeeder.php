@@ -2,11 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use App\Models\InstanceType;
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class InitInstanceTypeSeeder extends AbstractOnceSeeder
 {

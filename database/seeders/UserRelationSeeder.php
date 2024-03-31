@@ -2,19 +2,12 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
-use App\Models\Tag;
-use App\Models\Link;
-use App\Models\Team;
-use App\Models\User;
 use App\Models\Badge;
 use App\Models\Event;
-use App\Models\Category;
-use App\Models\Instance;
-use Illuminate\Support\Arr;
+use App\Models\Link;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class UserRelationSeeder extends Seeder
 {
@@ -36,31 +29,25 @@ class UserRelationSeeder extends Seeder
 
             //--------------------------------------------------------
             // タグをランダムに紐づける
-            $this->attachRandomModels($user, 'tags', Tag::class, $count*2);
+            $this->attachRandomModels($user, 'tags', Tag::class, $count * 2);
         });
     }
 
     /**
      * ランダムなモデルをイベントに紐づける。
      *
-     * @param  $event
-     * @param  string $relationMethod
-     * @param  string $modelClass
-     * @param  int    $count
+     * @param    $event
      */
     private function attachRandomModels($model, string $relationMethod, string $modelClass, int $count): void
     {
         $id = $modelClass::inRandomOrder()->limit($count)->pluck('id');
         $model->$relationMethod()->syncWithoutDetaching($id);
     }
+
     /**
      * ランダムなモデルをイベントに紐づける。際にpivotデータを紐づける。
      *
-     * @param Event $event
-     * @param string $relationMethod
-     * @param string $modelClass
-     * @param int $count
-     * @param \Closure $func
+     * @param  Event  $event
      */
     private function attachRandomModelsPivot($model, string $relationMethod, string $modelClass, int $count, \Closure $func): void
     {

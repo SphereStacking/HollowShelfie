@@ -2,15 +2,9 @@
 
 namespace App\Http\Controllers\Event;
 
-use Inertia\Inertia;
-use App\Models\Event;
-use Inertia\Response;
-use App\Models\Category;
-use App\Models\InstanceType;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\InstanceTypeResource;
-use App\Http\Resources\EventEditJsonResource;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class GetTimeLineEventController extends Controller
 {

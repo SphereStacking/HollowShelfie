@@ -2,14 +2,12 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\Event;
-use App\Enums\EventStatus;
-use App\Params\EventSearchParams;
 use App\Models\Traits\EventScopes;
-use Meilisearch\Endpoints\Indexes;
+use App\Params\EventSearchParams;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-
+use Meilisearch\Endpoints\Indexes;
 
 /**
  * イベント検索サービス
@@ -17,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 class EventMeilisearchService
 {
     use EventScopes;
+
     /**
      * クエリパラメータクラス
      *
@@ -41,13 +40,9 @@ class EventMeilisearchService
         'trend' => 'scopeOrderByTrendiness', // TODO:いつかやろうね
     ];
 
-
-
-
     /**
      * 公開イベント検索を取得
      *
-     * @param EventSearchParams $params
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getPublishedEventSearch(EventSearchParams $params)
@@ -63,10 +58,11 @@ class EventMeilisearchService
         $filterString = $this->makeFilter($queryParams);
         $events = Event::search(
             query: $params->text,
-            callback: function (Indexes $meilisearch, $query, array $options) use ($queryParams, $filterString) {
+            callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
                 $options['filter'] =
-                    'published_at < ' . Carbon::now()->getTimestamp() . $filterString;
+                    'published_at < '.Carbon::now()->getTimestamp().$filterString;
                 Log::debug($options['filter']);
+
                 return $meilisearch->rawSearch(
                     $query,
                     $options,
@@ -74,15 +70,13 @@ class EventMeilisearchService
             },
         );
 
-
-
-
         if (array_key_exists($params->order, $this->orderScopes)) {
             $scopeMethod = $this->orderScopes[$params->order];
             $events = $this->$scopeMethod($events);
         }
 
         $events = $this->scopeWithStatusPublishedForScout($events);
+
         return $events
             ->paginate($params->paginate)
             ->withQueryString();
@@ -100,10 +94,10 @@ class EventMeilisearchService
         foreach ($queryParams as $item) {
             $filterString .= $item->makeQuery();
         }
+
         return $filterString;
     }
 }
-
 
 /**
  * クエリパラメータインターフェース
@@ -111,7 +105,9 @@ class EventMeilisearchService
 interface IScoutQueryParam
 {
     public function __construct($include, $type, $value);
+
     public function makeQuery();
+
     public function formatValue();
 }
 
@@ -123,7 +119,9 @@ abstract class ScoutQueryParam
     protected $column;
 
     public $include;
+
     public $type;
+
     public $value;
 
     /**
@@ -147,6 +145,7 @@ abstract class ScoutQueryParam
     public function makeQuery()
     {
         $method = $this->conditionMaps[$this->include];
+
         return $this->$method($this->column, $this->formatValue());
     }
 
@@ -156,23 +155,25 @@ abstract class ScoutQueryParam
             return " {$operator} ({$column} > {$value[0]} AND {$column} < {$value[1]})";
         } else {
             $value = is_numeric($value) ? $value : "\"{$value}\"";
+
             return " {$operator} {$column} = {$value}";
         }
     }
 
     private function where($column, $value)
     {
-        return $this->buildQuery("AND", $column, $value);
+        return $this->buildQuery('AND', $column, $value);
     }
 
     private function whereOr($column, $value)
     {
-        return $this->buildQuery("OR", $column, $value);
+        return $this->buildQuery('OR', $column, $value);
     }
 
     private function whereNot($column, $value)
     {
         $value = is_numeric($value) ? $value : "\"{$value}\"";
+
         return " AND NOT {$column} = {$value}";
     }
 }
@@ -180,7 +181,7 @@ abstract class ScoutQueryParam
 /**
  * 日付クエリパラメータクラス
  */
-class DateScoutQueryParam  extends ScoutQueryParam implements IScoutQueryParam
+class DateScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 {
     protected $column = 'start_date';
 
@@ -188,8 +189,10 @@ class DateScoutQueryParam  extends ScoutQueryParam implements IScoutQueryParam
     {
         if (is_string($this->value) && strpos($this->value, '~') !== false) {
             [$start, $end] = explode('~', $this->value);
+
             return [Carbon::parse($start)->getTimestamp(), Carbon::parse($end)->getTimestamp()];
         }
+
         return $this->value;
     }
 }
@@ -197,7 +200,7 @@ class DateScoutQueryParam  extends ScoutQueryParam implements IScoutQueryParam
 /**
  * ステータスクエリパラメータクラス
  */
-class StatusScoutQueryParam  extends ScoutQueryParam implements IScoutQueryParam
+class StatusScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 {
     protected $column = 'status_label';
 

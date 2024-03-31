@@ -2,14 +2,8 @@
 
 namespace Database\Factories;
 
-use Carbon\Carbon;
-use App\Models\Tag;
-use App\Models\Event;
 use App\Models\Instance;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use App\Models\InstanceType;
-use Laravel\Jetstream\Features;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

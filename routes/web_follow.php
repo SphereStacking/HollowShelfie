@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Follow\StoreFollowController;
 use App\Http\Controllers\Follow\DestroyFollowController;
-use App\Http\Controllers\Follow\StoreTeamFollowController;
-use App\Http\Controllers\Follow\StoreUserFollowController;
 use App\Http\Controllers\Follow\DestroyTeamFollowController;
 use App\Http\Controllers\Follow\DestroyUserFollowController;
+use App\Http\Controllers\Follow\StoreFollowController;
+use App\Http\Controllers\Follow\StoreTeamFollowController;
+use App\Http\Controllers\Follow\StoreUserFollowController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

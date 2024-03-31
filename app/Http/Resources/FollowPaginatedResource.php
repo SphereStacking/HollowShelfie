@@ -1,8 +1,7 @@
 <?php
+
 namespace App\Http\Resources;
 
-use App\Models\User;
-use App\Enums\EventStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FollowPaginatedResource extends JsonResource
@@ -46,7 +45,7 @@ class FollowPaginatedResource extends JsonResource
                         'bio' => 'TODO', // TODO:
                     ],
                 ];
-            })
+            }),
         ];
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Rules;
 
 use Closure;
@@ -23,7 +24,7 @@ class ReservedWord implements ValidationRule
     {
         $reservedWords = [];
         foreach ($this->categories as $category) {
-            $reservedWords = array_merge($reservedWords, config('reserved_words.' . $category, []));
+            $reservedWords = array_merge($reservedWords, config('reserved_words.'.$category, []));
         }
         if (in_array($value, $reservedWords)) {
             $fail('The :attribute is a reserved word.');

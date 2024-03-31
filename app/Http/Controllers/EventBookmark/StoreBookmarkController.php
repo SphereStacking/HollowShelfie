@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\EventBookmark;
 
-use App\Models\User;
-use App\Models\Event;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
+use App\Models\User;
 use App\Services\EventBookmarkService;
+use Illuminate\Support\Facades\Auth;
 
 class StoreBookmarkController extends Controller
 {
@@ -23,11 +23,12 @@ class StoreBookmarkController extends Controller
         // イベントに「ブックマーク」を追加
         User::find($user->id)->bookmark_events()->attach($event->id);
         $this->eventBookmarkService->attachEvent($user, $event);
+
         return redirect()->back()->with([
-            'response'=> [
+            'response' => [
                 'status' => 'success',
-                'message' => 'イベントをブックマークしました。'
-            ]
+                'message' => 'イベントをブックマークしました。',
+            ],
         ]);
     }
 }

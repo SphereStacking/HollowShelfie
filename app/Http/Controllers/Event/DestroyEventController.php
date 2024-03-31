@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Event;
 
-use App\Services\EventService;
 use App\Http\Controllers\Controller;
+use App\Services\EventService;
 
 class DestroyEventController extends Controller
 {
@@ -17,9 +17,10 @@ class DestroyEventController extends Controller
     public function __invoke($id)
     {
         $this->eventService->deleteEvent($id);
+
         return redirect()->back()->with([
             'status' => 'success',
-            'message' => 'イベントを削除しました。'
+            'message' => 'イベントを削除しました。',
         ]);
     }
 }
