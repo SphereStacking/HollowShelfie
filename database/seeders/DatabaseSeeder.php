@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Artisan::call('migrate:refresh');
+        Artisan::call('scout:flush', ['model' => 'App\\Models\\Event']);
+        Artisan::call('scout:flush', ['model' => 'App\\Models\\User']);
+        Artisan::call('scout:flush', ['model' => 'App\\Models\\Team']);
+        Artisan::call('scout:flush', ['model' => 'App\\Models\\Tag']);
+        Artisan::call('scout:flush', ['model' => 'App\\Models\\CustomIdentifiable']);
 
         $this->call([
             AdminUserSeeder::class,
