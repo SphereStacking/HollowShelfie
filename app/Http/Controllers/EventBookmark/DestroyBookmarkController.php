@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\EventBookmark;
 
-use App\Models\Event;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 use App\Services\EventBookmarkService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class DestroyBookmarkController extends Controller
@@ -21,9 +21,10 @@ class DestroyBookmarkController extends Controller
     {
         $user = Auth::user();
         $this->eventBookmarkService->detachEvent($user, $event);
+
         return Redirect::back()->with([
             'status' => 'success',
-            'message' => 'イベントのブックマークを取り消しました。'
+            'message' => 'イベントのブックマークを取り消しました。',
         ]);
     }
 }

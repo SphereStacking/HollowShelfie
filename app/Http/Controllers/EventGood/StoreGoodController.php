@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\EventGood;
 
-use App\Models\User;
-use App\Models\Event;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 use App\Services\EventGoodService;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class StoreGoodController extends Controller
 {
@@ -22,9 +20,10 @@ class StoreGoodController extends Controller
     {
         $user = Auth::user();
         $this->eventGoodService->attachEvent($user, $event);
+
         return redirect()->back()->with([
             'status' => 'success',
-            'message' => 'イベントにいいねしました。'
+            'message' => 'イベントにいいねしました。',
         ]);
     }
 }

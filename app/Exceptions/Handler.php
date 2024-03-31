@@ -2,12 +2,10 @@
 
 namespace App\Exceptions;
 
-use Throwable;
-use Inertia\Inertia;
-use App\Exceptions\EventNotPublishedException;
-use App\Exceptions\CannotOperateEventException;
-use Laravel\Socialite\Two\InvalidStateException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Inertia\Inertia;
+use Laravel\Socialite\Two\InvalidStateException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Badge;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class InitBadgeSeeder extends Seeder
 {

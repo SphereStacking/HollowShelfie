@@ -2,35 +2,30 @@
 
 namespace App\Models;
 
-use App\Models\Badge;
-use App\Models\SocialAccount;
-use App\Traits\HasFollowable;
-use Laravel\Scout\Searchable;
-use Laravel\Jetstream\HasTeams;
-use App\Traits\UserProfilePhoto;
-use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\UserRelations;
 use App\Traits\HasCustomIdentifiable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasFollowable;
+use App\Traits\UserProfilePhoto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasTeams;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
+    use HasCustomIdentifiable;
     use HasFactory;
-    use UserProfilePhoto;
+    use HasFollowable;
     use HasTeams;
     use Notifiable;
-    use TwoFactorAuthenticatable;
-
-    use UserRelations;
     use Searchable;
-    use HasCustomIdentifiable;
-    use HasFollowable;
+    use TwoFactorAuthenticatable;
+    use UserProfilePhoto;
+    use UserRelations;
 
     /**
      * The attributes that are mass assignable.
@@ -68,7 +63,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url', 'links', 'profile_url','screen_name'
+        'profile_photo_url', 'links', 'profile_url', 'screen_name',
     ];
 
     /**
@@ -101,6 +96,7 @@ class User extends Authenticatable
             ]
         );
         $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+
         return $array;
     }
 }

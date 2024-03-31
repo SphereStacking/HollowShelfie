@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
-use App\Enums\EventStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventsPaginatedJsonResource extends JsonResource
@@ -39,7 +38,7 @@ class EventsPaginatedJsonResource extends JsonResource
                     'description' => $item->description,
                     'category_name' => $item->category_name, //TODO:これ消す。
                     'category_names' => $item->category_names,
-                    'tags' =>  $item->tags,
+                    'tags' => $item->tags,
                     'status' => $item->status,
                     'status_label' => $item->status_label,
                     'good_count' => $item->good_count,
@@ -71,7 +70,7 @@ class EventsPaginatedJsonResource extends JsonResource
                             }),
                         ];
                     }),
-                    'performers'=> $item->event_time_tables->flatMap(function ($time_table) {
+                    'performers' => $item->event_time_tables->flatMap(function ($time_table) {
                         return $time_table->performers->map(function ($performer) {
                             return [
                                 'id' => $performer->performable->id,
@@ -85,7 +84,7 @@ class EventsPaginatedJsonResource extends JsonResource
                                 'type' => $performer->performable->performable_type,
                                 'image_url' => $performer->performable_type === User::class
                                     ? $performer->performable->profile_photo_url
-                                    : $performer->performable->team_logo_url
+                                    : $performer->performable->team_logo_url,
                             ];
                         });
                     }),
@@ -101,7 +100,7 @@ class EventsPaginatedJsonResource extends JsonResource
                         'is_bookmark' => $item->is_bookmark ?? false,
                     ],
                 ];
-            })
+            }),
         ];
     }
 }

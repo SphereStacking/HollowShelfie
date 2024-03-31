@@ -2,12 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Event;
 use App\Enums\EventStatus;
-use App\Params\EventSearchParams;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Contracts\Auth\Authenticatable;
+use App\Models\Event;
 use App\Params\EventEloquentSearchParams;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * イベント検索サービス
@@ -41,7 +39,6 @@ class EventEloquentSearchService
     /**
      * Userイベント検索を取得
      *
-     * @param EventEloquentSearchParams $params
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getEventSearchByUser(User|Authenticatable $user, EventEloquentSearchParams $params)
@@ -79,7 +76,6 @@ class EventEloquentSearchService
     /**
      * 公開イベント検索を取得
      *
-     * @param EventEloquentSearchParams $params
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getPublishedEventSearch(Event $query, EventEloquentSearchParams $params)
@@ -113,9 +109,7 @@ class EventEloquentSearchService
             ->paginate($params->paginate)
             ->withQueryString();
     }
-
 }
-
 
 /**
  * クエリパラメータインターフェース
@@ -123,8 +117,11 @@ class EventEloquentSearchService
 interface IQueryParam
 {
     public function __construct($include, $type, $value);
+
     public function makeQuery(Event $query, $value);
+
     public function formatValue($value);
+
     public function getRelation();
 }
 
@@ -134,10 +131,13 @@ interface IQueryParam
 abstract class QueryParam
 {
     protected $relation = null;
+
     protected $column;
 
     public $include;
+
     public $type;
+
     public $value;
 
     /**
@@ -150,6 +150,7 @@ abstract class QueryParam
         'or' => 'orWhere',
         'not' => 'whereNotIn',
     ];
+
     public $rangeConditionMaps = [
         'and' => 'whereBetween',
         'or' => 'orWhereBetween',
@@ -171,6 +172,7 @@ abstract class QueryParam
     public function makeQuery($query, $value)
     {
         $method = $this->getMethod($value);
+
         return $this->relation
             ? $this->makeQueryWithRelation($query, $method, $value)
             : $this->makeQueryWithoutRelation($query, $method, $value);
@@ -190,12 +192,14 @@ abstract class QueryParam
         $query->whereHas($this->relation, function ($query) use ($method, $value) {
             $query->$method($this->column, $value);
         });
+
         return $query;
     }
 
     private function makeQueryWithoutRelation($query, $method, $value)
     {
         $query->$method($this->column, $value);
+
         return $query;
     }
 }
@@ -203,7 +207,7 @@ abstract class QueryParam
 /**
  * 日付クエリパラメータクラス
  */
-class DateQueryParam  extends QueryParam implements IQueryParam
+class DateQueryParam extends QueryParam implements IQueryParam
 {
     protected $column = 'start_date';
 
@@ -211,8 +215,10 @@ class DateQueryParam  extends QueryParam implements IQueryParam
     {
         if (is_string($value) && strpos($value, '~') !== false) {
             [$start, $end] = explode('~', $value);
+
             return [$start, $end];
         }
+
         return $value;
     }
 }
@@ -220,7 +226,7 @@ class DateQueryParam  extends QueryParam implements IQueryParam
 /**
  * ステータスクエリパラメータクラス
  */
-class StatusQueryParam  extends QueryParam implements IQueryParam
+class StatusQueryParam extends QueryParam implements IQueryParam
 {
     protected $column = 'status';
 
@@ -236,6 +242,7 @@ class StatusQueryParam  extends QueryParam implements IQueryParam
 class TagQueryParam extends QueryParam implements IQueryParam
 {
     protected $relation = 'tags';
+
     protected $column = 'name';
 
     public function formatValue($value)
@@ -250,6 +257,7 @@ class TagQueryParam extends QueryParam implements IQueryParam
 class CategoryQueryParam extends QueryParam implements IQueryParam
 {
     protected $relation = 'categories';
+
     protected $column = 'name';
 
     public function formatValue($value)
@@ -257,5 +265,3 @@ class CategoryQueryParam extends QueryParam implements IQueryParam
         return $value;
     }
 }
-
-

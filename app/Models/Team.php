@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use App\Traits\TeamLogo;
-use App\Traits\HasFollowable;
-use Laravel\Scout\Searchable;
 use App\Models\Traits\TeamRelations;
 use App\Traits\HasCustomIdentifiable;
+use App\Traits\HasFollowable;
+use App\Traits\TeamLogo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Laravel\Scout\Searchable;
 
 class Team extends JetstreamTeam
 {
-    use TeamRelations;
-
-    use HasFactory;
-    use TeamLogo;
-    use Searchable;
     use HasCustomIdentifiable;
+    use HasFactory;
     use HasFollowable;
+    use Searchable;
+    use TeamLogo;
+    use TeamRelations;
 
     /**
      * The attributes that should be cast.
@@ -59,7 +58,7 @@ class Team extends JetstreamTeam
      * @var array<int, string>
      */
     protected $appends = [
-        'team_logo_url', 'links', 'profile_url','screen_name'
+        'team_logo_url', 'links', 'profile_url', 'screen_name',
     ];
 
     public function getProfileUrlAttribute()
@@ -92,6 +91,7 @@ class Team extends JetstreamTeam
             ]
         );
         $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+
         return $array;
     }
 }

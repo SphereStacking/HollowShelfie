@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\EventGood;
 
-use App\Models\Event;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 use App\Services\EventGoodService;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class DestroyGoodController extends Controller
 {
@@ -21,9 +20,10 @@ class DestroyGoodController extends Controller
     {
         $user = Auth::user();
         $this->eventGoodService->detachEvent($user, $event);
+
         return redirect()->back()->with([
             'status' => 'success',
-            'message' => 'イベントのいいねを取り消しました。'
+            'message' => 'イベントのいいねを取り消しました。',
         ]);
     }
 }

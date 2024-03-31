@@ -2,19 +2,19 @@
 
 namespace App\Services;
 
-use Illuminate\Http\UploadedFile;
 use App\Models\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
     public function uploadFile(UploadedFile $uploadedFile, $fileable): File
     {
-        $folderName = strtolower(class_basename($fileable)) . '/' . $fileable->id;
+        $folderName = strtolower(class_basename($fileable)).'/'.$fileable->id;
         $filename = $uploadedFile->hashName();
         $savePath = Storage::disk('public')->putFileAs($folderName, $uploadedFile, $filename);
 
-        if (!$savePath) {
+        if (! $savePath) {
             throw new \Exception('ファイルの保存に失敗しました。');
         }
 
@@ -34,7 +34,7 @@ class FileService
         $file->delete();
     }
 
-    public function deleteFileById( $id)
+    public function deleteFileById($id)
     {
         $file = File::findOrFail($id);
         $file->deleteFile();

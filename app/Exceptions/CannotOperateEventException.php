@@ -11,5 +11,4 @@ class CannotOperateEventException extends Exception
 
     // エラーメッセージ
     protected $message = 'このイベントを操作することはできません。';
-
 }

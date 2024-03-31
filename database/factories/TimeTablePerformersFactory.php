@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\EventTimeTable;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\EventTimeTable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,10 +20,11 @@ class TimeTablePerformersFactory extends Factory
     public function definition(): array
     {
         $modelClass = rand(0, 1) ? User::class : Team::class;
+
         return [
             'event_time_table_id' => EventTimeTable::inRandomOrder()->first()->id,
             'performable_id' => $modelClass::inRandomOrder()->first()->id,
-            'performable_type' => $modelClass
+            'performable_type' => $modelClass,
         ];
     }
 }

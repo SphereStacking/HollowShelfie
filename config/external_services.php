@@ -20,8 +20,8 @@ return [
             'url' => 'https://docs.google.com/forms/d/'.env('NEW_FEATURE_GOOGLE_FORM_ID').'/viewform',
         ],
     ],
-    'supportings'=>[
-        'fanbox'=>'https://spherestacking.fanbox.cc',
+    'supportings' => [
+        'fanbox' => 'https://spherestacking.fanbox.cc',
     ],
     'gravatar' => [
         'profile' => 'https://www.gravatar.com/avatar/',

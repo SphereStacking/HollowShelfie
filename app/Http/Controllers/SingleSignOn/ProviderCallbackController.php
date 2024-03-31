@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\SingleSignOn;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Services\SocialAccountService;
+use Illuminate\Support\Facades\Auth;
 
 class ProviderCallbackController extends Controller
 {
@@ -20,7 +20,7 @@ class ProviderCallbackController extends Controller
     {
         $result = $this->socialAccountService->createOrGetUser($provider);
 
-        if (!$result['user']) {
+        if (! $result['user']) {
             return redirect()->route('login')->with('error', 'Failed to authenticate with the social account.');
         }
 

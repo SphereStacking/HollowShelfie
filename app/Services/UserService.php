@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Services\EventMeilisearchService;
 
 /**
  * ユーザーサービスクラス
@@ -14,7 +13,6 @@ class UserService
 
     /**
      * コンストラクタ
-     * @param EventMeilisearchService $eventMeilisearchService
      */
     public function __construct(EventMeilisearchService $eventMeilisearchService)
     {
@@ -23,7 +21,7 @@ class UserService
 
     /**
      * プロフィールデータを事前ロードする
-     * @param User $user
+     *
      * @return User
      */
     public function preloadProfileData(User $user)
@@ -31,13 +29,14 @@ class UserService
         $user->load(['links', 'tags']);
         $user->is_followed = $user->isFollowedByCurrentUser();
         $user->followers_count = $user->followersCount();
+
         return $user;
     }
 
     /**
      * フォローページネーションを取得する
-     * @param User $user
-     * @param int $perPage
+     *
+     * @param  int  $perPage
      * @return mixed
      */
     public function getFollowPagination(User $user, $perPage = 10)
@@ -54,8 +53,8 @@ class UserService
 
     /**
      * フォロワーページネーションを取得する
-     * @param User $user
-     * @param int $perPage
+     *
+     * @param  int  $perPage
      * @return mixed
      */
     public function getFollowerPagination(User $user, $perPage = 10)
@@ -72,7 +71,7 @@ class UserService
 
     /**
      * 対象のフォロー数を取得する
-     * @param User $user
+     *
      * @return int
      */
     public function getFollowCount(User $user)
@@ -82,7 +81,7 @@ class UserService
 
     /**
      * 対象のフォロワー数を取得する
-     * @param User $user
+     *
      * @return int
      */
     public function getFollowerCount(User $user)
@@ -93,12 +92,14 @@ class UserService
     public function followByFollowable(User $authUser, $type, $id)
     {
         $model = $type::find($id);
+
         return $this->follow($authUser, $model);
     }
 
     public function unfollowByFollowable(User $authUser, $type, $id)
     {
         $model = $type::find($id);
+
         return $this->unfollow($authUser, $model);
     }
 

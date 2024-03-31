@@ -21,7 +21,7 @@ class EventShowJsonResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'category_names' => $this->category_names,
-            'tags' =>  $this->tags,
+            'tags' => $this->tags,
             'status' => $this->status,
             'status_label' => $this->status_label,
             'create_user' => $this->event_create_user,
@@ -40,10 +40,10 @@ class EventShowJsonResource extends JsonResource
             }),
             'organizers' => $this->organizers->map(function ($organizeble) {
                 return [
-                    'profile_url' =>  $organizeble->event_organizeble->profile_url,
+                    'profile_url' => $organizeble->event_organizeble->profile_url,
                     'id' => $organizeble->event_organizeble_id,
                     'type' => $organizeble->event_organizeble_type,
-                    'imag_url' =>  $organizeble->event_organizeble_type === User::class
+                    'imag_url' => $organizeble->event_organizeble_type === User::class
                         ? $organizeble->event_organizeble->profile_photo_url
                         : $organizeble->event_organizeble->team_logo_url,
                     'name' => $organizeble->event_organizeble->name,
@@ -55,7 +55,7 @@ class EventShowJsonResource extends JsonResource
                     }),
                 ];
             }),
-            'performers'=> $this->event_time_tables->flatMap(function ($time_table) {
+            'performers' => $this->event_time_tables->flatMap(function ($time_table) {
                 return $time_table->performers->map(function ($performer) {
                     return [
                         'id' => $performer->performable->id,
@@ -70,7 +70,7 @@ class EventShowJsonResource extends JsonResource
                         'type' => $performer->performable->performable_type,
                         'image_url' => $performer->performable_type === User::class
                             ? $performer->performable->profile_photo_url
-                            : $performer->performable->team_logo_url
+                            : $performer->performable->team_logo_url,
                     ];
                 });
             }),
@@ -95,7 +95,7 @@ class EventShowJsonResource extends JsonResource
                             'type' => $performer->performable->performable_type,
                             'image_url' => $performer->performable_type === User::class
                                 ? $performer->performable->profile_photo_url
-                                : $performer->performable->team_logo_url
+                                : $performer->performable->team_logo_url,
                         ];
                     }),
                 ];

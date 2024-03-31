@@ -11,7 +11,6 @@ trait TeamLogo
     /**
      * Update the user's logo photo.
      *
-     * @param  \Illuminate\Http\UploadedFile  $photo
      * @param  string  $storagePath
      * @return void
      */
@@ -51,8 +50,6 @@ trait TeamLogo
 
     /**
      * Get the URL to the user's logo photo.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function teamLogoUrl(): Attribute
     {
@@ -71,7 +68,7 @@ trait TeamLogo
     protected function defaultTeamLogoUrl()
     {
 
-        return 'https://fakeimg.pl/400x200/?text=' . $this->name . '&font=noto-sans';
+        return 'https://fakeimg.pl/400x200/?text='.$this->name.'&font=noto-sans';
     }
 
     /**
@@ -81,6 +78,6 @@ trait TeamLogo
      */
     protected function teamLogoDisk()
     {
-        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' :  'public';
+        return isset($_ENV['VAPOR_ARTIFACT_NAME']) ? 's3' : 'public';
     }
 }
