@@ -20,7 +20,7 @@ defineProps({
           class=" relative flex min-h-24 items-center justify-center gap-5 rounded-xl border-r-2 p-2"
           :class="[
             index % 2 === 0 ? 'bg-base-300' : 'bg-base-100',
-            index > 0 && item.start_time !== timeTable[index - 1].end_time ? 'mb-5' : 'mb-0'
+            index > 0 && item.start_time !== timeTable[index - 1].end_time ? 'mt-5' : 'mt-0'
           ]">
           <div class="absolute -top-3 right-5 z-10">
             <template v-if="index > 0 && item.start_time !== timeTable[index - 1].end_time">
