@@ -19,8 +19,7 @@ class UpdateEventController extends Controller
     public function __invoke(EventUpdateRequest $request, $id)
     {
         $attributes = $request->getAttributes();
-        $event = $this->eventService->updateEvent($id, $attributes);
-
+         $event = $this->eventService->updateEventByAlias($id, $attributes);
         return redirect()->back()->with([
             'response' => [
                 'status' => 'success',

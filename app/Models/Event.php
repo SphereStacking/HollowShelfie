@@ -2,19 +2,21 @@
 
 namespace App\Models;
 
-use App\Enums\EventStatus;
-use App\Models\Traits\EventGetters;
-use App\Models\Traits\EventRelations;
-use App\Models\Traits\EventScopes;
-use App\Models\Traits\EventSetters;
-use App\Traits\HasFileable;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use App\Enums\EventStatus;
+use App\Traits\HasFileable;
 use Laravel\Scout\Searchable;
+use App\Models\Traits\EventScopes;
+use App\Models\Traits\EventGetters;
+use App\Models\Traits\EventSetters;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Traits\EventRelations;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
 {
@@ -65,6 +67,17 @@ class Event extends Model
             $event->files()->delete();
         });
     }
+
+    /**
+     * ルートバインディングを解決する
+     *
+     * @return Model|null
+     */
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('alias', $value)->first();
+    }
+
 
     /**
      * MeiliSearch 検索可能な配列に変換します。
@@ -238,12 +251,30 @@ class Event extends Model
 
     /**
      * 指定されたユーザーがイベントを操作できるかどうかをチェックします。
-     *
-     * @param  \App\Models\User  $user チェックするユーザー
-     * @return bool ユーザーが操作できる場合はtrue、そうでない場合はfalse
      */
-    public function canUserOperate(User $user): bool
+    public function canUserOperate(User | Authenticatable | Null $user): bool
     {
+        if ($user === null) {
+            return false;
+        }
         return $this->event_create_user_id === $user->id;
     }
+
+    /**
+     * 指定されたユーザーがこのイベントを表示可能かどうかを判定します。
+     *
+     * 条件:
+     * - イベントが公開されている（published_atが過去の日時）
+     * - イベントが非公開の場合、イベントの作成者であれば表示可能
+     */
+    public function canUserShow(User | Authenticatable | Null $user): bool
+    {
+        // イベントが公開されているか
+        if (isset($this->published_at) && $this->published_at->isPast()) {
+            return true;
+        }
+        // ログインユーザーがイベントの作成者か
+        return $this->event_create_user_id === $user?->id;
+    }
+
 }

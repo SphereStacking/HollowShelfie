@@ -14,9 +14,9 @@ class DestroyEventController extends Controller
         $this->eventService = $eventService;
     }
 
-    public function __invoke($id)
+    public function __invoke($alias)
     {
-        $this->eventService->deleteEvent($id);
+        $this->eventService->deleteEvent($alias);
 
         return redirect()->back()->with([
             'status' => 'success',

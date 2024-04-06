@@ -21,10 +21,10 @@ class ShowEventController extends Controller
         $this->tagService = $tagService;
     }
 
-    public function __invoke($id): Response
+    public function __invoke($alias): Response
     {
         return Inertia::render('Event/Show', [
-            'event' => new EventShowJsonResource($this->eventService->getShowEvent($id)),
+            'event' => new EventShowJsonResource($this->eventService->getEventDetailByAlias($alias)),
             'trendTags' => $this->tagService->getTrendTagNames(),
         ]);
     }
