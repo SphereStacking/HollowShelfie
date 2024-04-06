@@ -43,8 +43,6 @@ class SocialAccountService
             ['email' => $extUser->getEmail()],
             ['name' => $extUser->getName(), 'password' => Hash::make(Str::random(24))]
         );
-        $isNew = $user->wasRecentlyCreated;
-
-        return compact('user', 'isNew');
+        return compact('user');
     }
 }
