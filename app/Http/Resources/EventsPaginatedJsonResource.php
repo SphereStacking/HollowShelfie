@@ -70,7 +70,7 @@ class EventsPaginatedJsonResource extends JsonResource
                             }),
                         ];
                     }),
-                    'performers' => $this->event_time_tables->flatMap(function ($time_table) {
+                    'performers' => $item->event_time_tables->flatMap(function ($time_table) {
                             return $time_table->performers;
                         })->unique(function ($performer) {
                             return $performer->performable_type . $performer->performable_id;
