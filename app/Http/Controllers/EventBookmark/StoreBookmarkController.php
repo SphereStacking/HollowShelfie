@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers\EventBookmark;
 
+use App\Services\EventService;
 use App\Http\Controllers\Controller;
-use App\Models\Event;
-use App\Models\User;
-use App\Services\EventBookmarkService;
 use Illuminate\Support\Facades\Auth;
+use App\Services\EventBookmarkService;
 
 class StoreBookmarkController extends Controller
 {
+    protected $eventService;
     protected $eventBookmarkService;
 
-    public function __construct(EventBookmarkService $eventBookmarkService)
+    public function __construct(EventService $eventService,EventBookmarkService $eventBookmarkService)
     {
         $this->eventBookmarkService = $eventBookmarkService;
+        $this->eventService = $eventService;
     }
 
-    public function __invoke(Event $event)
+    public function __invoke($alias)
     {
-        $user = Auth::user();
         // イベントに「ブックマーク」を追加
-        User::find($user->id)->bookmark_events()->attach($event->id);
-        $this->eventBookmarkService->attachEvent($user, $event);
+        $event = $this->eventService->getEventByAlias($alias);
+        $this->eventBookmarkService->attachEvent(Auth::user(), $event);
 
         return redirect()->back()->with([
             'response' => [
