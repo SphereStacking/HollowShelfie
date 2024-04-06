@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Event;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EventUpdateRequest;
-use App\Http\Resources\EventEditJsonResource;
+use App\Http\Resources\EventShowJsonResource;
 use App\Services\EventService;
 
 class UpdateEventController extends Controller
@@ -25,7 +25,7 @@ class UpdateEventController extends Controller
             'response' => [
                 'status' => 'success',
                 'message' => 'イベントを更新しました。',
-                'event' => new EventEditJsonResource($event),
+                'event' => new EventShowJsonResource($event),
             ],
         ]);
     }
