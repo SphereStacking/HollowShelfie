@@ -13,14 +13,15 @@ const onBtnOpenModal = (newItem) => {
   IsOpenModal.value = true
   console.log(newItem)
   item.value = {
-    title: newItem.title,
     id: newItem.id,
+    alias: newItem.alias,
+    title: newItem.title,
     status: newItem.status,
     status_label: newItem.status_label,
     start_date: newItem.start_date,
     end_date: newItem.end_date,
     period: newItem.period,
-    url: route('event.show', newItem.id),
+    url: route('event.show', newItem.alias),
     instances: newItem.instances.map((instance) => instance.instance_type_name+ ' '+instance.display_name).join(''),
     organizers: newItem.organizers.map((organizer) => organizer.name).join('、'),
     performers: newItem.performers.map((performer) => performer.name).join('、'),
@@ -60,7 +61,7 @@ defineExpose({
     <template #content>
       <div class="flex w-full flex-col items-center">
         <p>{{ item.title }} </p>
-        <a class="btn btn-link" :href="route('event.show', item.id)">{{ linklabel }}</a>
+        <a class="btn btn-link" :href="route('event.show', item.alias)">{{ linklabel }}</a>
         <BtnSnsShare v-if="item.status !== 'draft'" :text="getShareText()" />
       </div>
     </template>

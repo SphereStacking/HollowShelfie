@@ -7,7 +7,7 @@ const props = defineProps({
     required: true
   },
   eventId: {
-    type: Number,
+    type: String,
     required: true
   },
 })

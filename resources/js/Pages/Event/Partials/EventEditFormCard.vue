@@ -57,7 +57,7 @@ const formCard = ref(null)
 
 const formSubmit = (status)=>{
   form.status=status
-  form.put(route('event.update', event.id), {
+  form.put(route('event.update', event.alias), {
     preserveScroll: true,
     onSuccess: () => {
       emit('success', usePage().props.response.event)
@@ -239,7 +239,7 @@ onBeforeMount(() => {
       v-model="event.files"
       label="フライヤー"
       label-icon-type="fryer"
-      :upload-route="route('event.fryer.store', event.id)"
+      :upload-route="route('event.fryer.store', event.alias)"
       :delete-route="route('event.fryer.destroy')"
       :error="form.errors.images"
       help="先頭の画像がイベント表示の際の縦横比を決定します。画像サイズは統一することをお勧めします。"
