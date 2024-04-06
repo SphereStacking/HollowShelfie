@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventShowJsonResource extends JsonResource
@@ -17,6 +18,7 @@ class EventShowJsonResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'alias' => $this->alias,
             'created_at' => $this->created_at,
             'title' => $this->title,
             'description' => $this->description,
