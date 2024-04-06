@@ -63,9 +63,9 @@ const supportings = props.config.supportings ?? []
                   :label="event.status_label" />
               </div>
               <div class="flex items-center gap-2 rounded-md p-1">
-                <BtnSwapEventBookmark :event-id="event.id" :check="event.auth_user?.is_bookmark" />
+                <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
                 <BtnSwapEventGood
-                  :event-id="event.id" :check="event.auth_user?.is_good" :count="event.short_good_count"
+                  :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
                   show-count />
                 <Icon icon="mdi:share-variant" class="text-xl" />
               </div>
