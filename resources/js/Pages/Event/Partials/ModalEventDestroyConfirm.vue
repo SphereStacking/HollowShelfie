@@ -15,8 +15,9 @@ const onBtnOpenModal = (newItem) => {
   IsOpenModal.value = true
   console.log(newItem)
   item.value = {
-    title: newItem.title,
     id: newItem.id,
+    alias: newItem.alias,
+    title: newItem.title,
   }
 }
 
@@ -64,7 +65,7 @@ const confirm = ref(false)
         <button class="btn btn-outline btn-neutral btn-sm col-span-1 col-start-2" @click="onBtnCloseModal()">
           キャンセル
         </button>
-        <button :disabled="!confirm" class="btn btn-error btn-sm col-span-1 col-start-3" @click="deleteEvent(item.id)">
+        <button :disabled="!confirm" class="btn btn-error btn-sm col-span-1 col-start-3" @click="deleteEvent(item.alias)">
           削除
         </button>
       </div>

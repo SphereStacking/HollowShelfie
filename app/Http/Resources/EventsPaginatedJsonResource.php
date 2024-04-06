@@ -33,6 +33,7 @@ class EventsPaginatedJsonResource extends JsonResource
             'data' => $this->resource->map(function ($item) {
                 return [
                     'id' => $item->id,
+                    'alias' => $item->alias,
                     'created_at' => $item->created_at,
                     'title' => $item->title,
                     'description' => $item->description,
