@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
 class Event extends Model
@@ -50,6 +51,10 @@ class Event extends Model
 
         // イベントが削除される前に実行
         static::deleting(function ($event) {
+            // ソフトデリートの場合は、ファイル削除をスキップ
+            if (! $event->isForceDeleting()) {
+                return;
+            }
             // 関連する画像ファイルを削除
             foreach ($event->files as $file) {
                 $filePath = 'public/'.$file->path.'/'.$file->name;

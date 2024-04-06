@@ -71,26 +71,26 @@ class EventsPaginatedJsonResource extends JsonResource
                         ];
                     }),
                     'performers' => $item->event_time_tables->flatMap(function ($time_table) {
-                            return $time_table->performers;
-                        })->unique(function ($performer) {
-                            return $performer->performable_type . $performer->performable_id;
-                        })->map(function ($performer) {
-                            return [
-                                'id' => $performer->performable_id,
-                                'profile_url' => $performer->performable->profile_url,
-                                'name' => $performer->performable->name,
-                                'links' => $performer->performable->links->map(function ($link) {
-                                    return [
-                                        'label' => $link->label,
-                                        'link' => $link->link,
-                                    ];
-                                }),
-                                'type' => $performer->performable_type,
-                                'image_url' => $performer->performable_type === User::class
-                                    ? $performer->performable->profile_photo_url
-                                    : $performer->performable->team_logo_url,
-                            ];
-                        }
+                        return $time_table->performers;
+                    })->unique(function ($performer) {
+                        return $performer->performable_type.$performer->performable_id;
+                    })->map(function ($performer) {
+                        return [
+                            'id' => $performer->performable_id,
+                            'profile_url' => $performer->performable->profile_url,
+                            'name' => $performer->performable->name,
+                            'links' => $performer->performable->links->map(function ($link) {
+                                return [
+                                    'label' => $link->label,
+                                    'link' => $link->link,
+                                ];
+                            }),
+                            'type' => $performer->performable_type,
+                            'image_url' => $performer->performable_type === User::class
+                                ? $performer->performable->profile_photo_url
+                                : $performer->performable->team_logo_url,
+                        ];
+                    }
                     )->values(),
                     'instances' => $item->instances->map(function ($instance) {
                         return [
