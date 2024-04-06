@@ -58,6 +58,7 @@ class EventFactory extends Factory
                         return null;
                 }
             },
+            'alias' => $this->faker->unique()->slug(2),
         ];
     }
 

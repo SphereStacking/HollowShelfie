@@ -2,23 +2,26 @@
 
 namespace App\Http\Controllers\EventFryer;
 
+use App\Services\FileService;
+use App\Services\EventService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventFryerRequest;
 use App\Http\Resources\StoreEventFryerJsonResource;
-use App\Models\Event;
-use App\Services\FileService;
 
 class StoreEventFryerController extends Controller
 {
     private $fileService;
+    private $eventService;
 
-    public function __construct(FileService $fileService)
+    public function __construct(FileService $fileService, EventService $eventService)
     {
         $this->fileService = $fileService;
+        $this->eventService = $eventService;
     }
 
-    public function __invoke(StoreEventFryerRequest $request, Event $event)
+    public function __invoke(StoreEventFryerRequest $request, string $alias)
     {
+        $event = $this->eventService->findOrFailByAlias($alias);
         $attributes = $request->getAttributes();
         $uploadFiles = [];
         foreach ($attributes['images'] as $file) {

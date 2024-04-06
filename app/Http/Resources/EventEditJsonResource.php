@@ -16,6 +16,7 @@ class EventEditJsonResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'alias' => $this->alias,
             'created_at' => $this->created_at,
             'title' => $this->title,
             'description' => $this->description,

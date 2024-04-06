@@ -147,10 +147,10 @@ onMounted(() => {
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
-                  <a class="btn btn-link btn-xs" :href="route('event.show',event.id)">
+                  <a class="btn btn-link btn-xs" :href="route('event.show',event.alias)">
                     公開ページ
                   </a>
-                  <a class="btn btn-primary btn-xs" :href="route('event.edit',event.id)">
+                  <a class="btn btn-primary btn-xs" :href="route('event.edit',event.alias)">
                     edit
                   </a>
                 </div>

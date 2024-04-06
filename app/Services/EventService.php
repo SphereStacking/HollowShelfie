@@ -80,12 +80,11 @@ class EventService
     }
 
     //イベントを更新する。
-    public function updateEvent($id, $attributes)
+    public function updateEventByAlias(string $alias, array $attributes)
     {
         DB::beginTransaction();
         try {
-            Log::debug($attributes);
-            $event = Event::findOrFail($id);
+            $event = self::findOrFailByAlias($alias);
             if (! $event->canUserOperate(Auth::user())) {
                 throw new CannotOperateEventException();
             }
@@ -142,12 +141,67 @@ class EventService
 
     }
 
+
+    /**
+     * イベントをリレーション含めて詳細を取得する。
+     */
+    public function getEventDetailByAlias($alias)
+    {
+        $event = Event::with([
+            'organizers.event_organizeble',
+            'event_time_tables.performers.performable',
+        ])->where('alias', $alias)->first();
+
+        if (! $event) {
+            throw new ModelNotFoundException('Eventが見つかりませんでした。');
+        }
+        $user = Auth::user();
+
+        // イベントが未公開（公開日が未来）かつログインユーザーがイベントの作成者でない場合、エラーを投げる
+        if (!$event->canUserShow($user)) {
+            throw new EventNotPublishedException('イベントはまだ公開されていません。');
+        }
+
+        $this->viewCountService->incrementCount($event);
+
+        return $event;
+    }
+
+    /**
+     * イベントを取得する。
+     */
+    public function getEventByAlias($alias)
+    {
+        $event = Event::where('alias', $alias)->first();
+
+        if (! $event) {
+            throw new ModelNotFoundException('Eventが見つかりませんでした。');
+        }
+        $user = Auth::user();
+        if (!$event->canUserShow($user)) {
+            throw new EventNotPublishedException('イベントはまだ公開されていません。');
+        }
+
+        $this->viewCountService->incrementCount($event);
+
+        return $event;
+    }
+
+    /**
+     * 内部参照用
+     * イベント取得
+     */
+    private function findOrFailByAlias($alias): Event
+    {
+        return Event::where('alias', $alias)->firstOrFail();
+    }
+
     //イベントを削除する。
-    public function deleteEvent($id)
+    public function deleteEvent(string $alias): void
     {
         DB::beginTransaction();
         try {
-            $event = Event::findOrFail($id);
+            $event = self::findOrFailByAlias($alias);
             if (! $event->canUserOperate(Auth::user())) {
                 throw new CannotOperateEventException();
             }

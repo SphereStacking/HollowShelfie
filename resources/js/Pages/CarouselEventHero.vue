@@ -32,7 +32,7 @@ const prev = () => {
 }
 
 const getEventShow = (event) => {
-  router.visit(route('event.show', event.id), {
+  router.visit(route('event.show', event.alias), {
     method: 'get',
     preserveState: false,
     preserveScroll: true,
@@ -75,9 +75,9 @@ const getEventShow = (event) => {
               <div class="flex w-full flex-row justify-between">
                 <div>{{ event.event_timeline_status }}</div>
                 <div class="flex gap-1">
-                  <BtnSwapEventBookmark :event-id="event.id" :check="event.auth_user?.is_bookmark" />
+                  <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
                   <BtnSwapEventGood
-                    :event-id="event.id" :check="event.auth_user?.is_good" :count="event.short_good_count"
+                    :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
                     show-count />
                 </div>
               </div>

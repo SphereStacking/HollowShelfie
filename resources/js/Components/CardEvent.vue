@@ -45,13 +45,13 @@ defineProps({
     </div>
     <div class="m-2 flex justify-between">
       <div class="flex gap-1">
-        <BtnSwapEventBookmark :event-id="event.id" :check="event.auth_user?.is_bookmark" />
+        <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
         <BtnSwapEventGood
-          :event-id="event.id" :check="event.auth_user?.is_good" :count="event.short_good_count"
+          :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
           show-count />
       </div>
       <div></div>
-      <Link :href="route('event.show', event.id)" class="text-md btn btn-link btn-active btn-xs m-0 p-0">
+      <Link :href="route('event.show', event.alias)" class="text-md btn btn-link btn-active btn-xs m-0 p-0">
         Read More
       </Link>
       <div></div>
