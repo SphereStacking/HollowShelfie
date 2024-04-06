@@ -45,15 +45,6 @@ class EventEditJsonResource extends JsonResource
                     'name' => $organizeble->event_organizeble->name,
                 ];
             }),
-            'performers' => $this->event_time_tables->flatMap(function ($time_table) {
-                return $time_table->performers->map(function ($performer) {
-                    return [
-                        'id' => $performer->performable->id,
-                        'name' => $performer->performable->name,
-                        'type' => $performer->performable->performable_type,
-                    ];
-                });
-            }),
             'time_table' => $this->event_time_tables->map(function ($time_table) {
                 return [
                     'id' => $time_table->id,
