@@ -98,7 +98,7 @@ Route::get('/tag/suggestion', GetTagSuggestionController::class)
 Route::get('/mention/search', GetMentionSuggestionController::class)
     ->name('mention.suggestion');
 
-Route::get('/event/{event}/show', ShowEventController::class)->name('event.show');
+Route::get('/event/{alias}/show', ShowEventController::class)->name('event.show');
 
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -118,15 +118,15 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::put('/event', StoreEventController::class)->name('event.store');
     Route::delete('/event/fryer', DestroyEventFryerController::class)->name('event.fryer.destroy');
     Route::get('/event/create', GetCreateEventController::class)->name('event.create');
-    Route::get('/event/{event}/edit', GetEditEventController::class)->name('event.edit');
-    Route::put('/event/{event}', UpdateEventController::class)->name('event.update');
-    Route::delete('/event/{event}', DestroyEventController::class)->name('event.destroy');
-    Route::put('/event/{event}/fryer', StoreEventFryerController::class)->name('event.fryer.store');
+    Route::get('/event/{alias}/edit', GetEditEventController::class)->name('event.edit');
+    Route::put('/event/{alias}', UpdateEventController::class)->name('event.update');
+    Route::delete('/event/{alias}', DestroyEventController::class)->name('event.destroy');
+    Route::put('/event/{alias}/fryer', StoreEventFryerController::class)->name('event.fryer.store');
 
-    Route::post('/event/{event}/good', StoreGoodController::class)->name('event.good');
-    Route::delete('/event/{event}/good', DestroyGoodController::class)->name('event.ungood');
-    Route::post('/event/{event}/bookmark', StoreBookmarkController::class)->name('event.bookmark');
-    Route::delete('/event/{event}/bookmark', DestroyBookmarkController::class)->name('event.unbookmark');
+    Route::post('/event/{alias}/good', StoreGoodController::class)->name('event.good');
+    Route::delete('/event/{alias}/good', DestroyGoodController::class)->name('event.ungood');
+    Route::post('/event/{alias}/bookmark', StoreBookmarkController::class)->name('event.bookmark');
+    Route::delete('/event/{alias}/bookmark', DestroyBookmarkController::class)->name('event.unbookmark');
 
     Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.show');
 });
