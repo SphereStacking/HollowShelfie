@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('end_date')->nullable();
             $table->text('description');
             $table->string('status')->default(\App\Enums\EventStatus::DRAFT);
+            $table->string('alias')->unique();
         });
     }
 
