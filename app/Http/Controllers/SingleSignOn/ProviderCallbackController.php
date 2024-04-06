@@ -26,8 +26,6 @@ class ProviderCallbackController extends Controller
 
         Auth::login($result['user'], true);
 
-        return $result['isNew']
-            ? redirect()->route('welcome')
-            : redirect()->route('home');
+        return redirect()->route('welcome');
     }
 }
