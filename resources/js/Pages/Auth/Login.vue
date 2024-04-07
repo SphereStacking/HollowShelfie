@@ -83,10 +83,6 @@ const submit = () => {
       :error="$page.props.errors.socialstream" :prompt="$page.props.socialstream.prompt"
       :labels="$page.props.socialstream.labels" :providers="$page.props.socialstream.providers" />
     <div class="mt-2 flex flex-col justify-center">
-      <div class="divider">
-        OR
-      </div>
-      <SocialLogin />
       <div class="mt-2">
         {{ $t('Not a member?') }}
         <Link :href="route('register')" class="link">
