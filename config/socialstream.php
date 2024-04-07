@@ -5,17 +5,23 @@ use JoelButcher\Socialstream\Providers;
 
 return [
     'middleware' => ['web'],
-    'prompt' => 'Or Login Via',
+    'prompt' => 'OR',
     'providers' => [
         // Providers::github(),
         Providers::google(),
+        [
+            'id' => 'discord',
+            'name' => 'Discord',
+            'label' => 'Discord',
+        ],
     ],
     'features' => [
-        // Features::createAccountOnFirstLogin(),
+        Features::createAccountOnFirstLogin(),
         // Features::generateMissingEmails(),
         Features::rememberSession(),
         Features::providerAvatars(),
         Features::refreshOAuthTokens(),
+        Features::loginOnRegistration(),
     ],
     'home' => '/dashboard',
     'redirects' => [

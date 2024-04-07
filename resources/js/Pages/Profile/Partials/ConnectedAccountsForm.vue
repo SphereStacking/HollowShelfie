@@ -59,17 +59,16 @@ const closeModal = () => {
 <template>
   <ActionSection>
     <template #title>
-      Connected Accounts
+      {{ $t('Connected Accounts') }}
     </template>
 
     <template #description>
-      Connect your social media accounts to enable Sign In with OAuth.
+      {{ $t('Connect your social media accounts to enable Sign In with OAuth.') }}
     </template>
 
     <template #content>
-      <div class="rounded border-l-4 border-red-600 bg-red-500/10 p-4 text-sm font-medium text-red-500 dark:border-red-700 dark:bg-red-500/5">
-        If you feel any of your connected accounts have been compromised, you should disconnect them
-        immediately and change your password.
+      <div class="rounded border-l-4 border-error bg-error/10 p-4 text-sm font-medium">
+        {{ $t('If you feel any of your connected accounts have been compromised, you should disconnect them immediately and change your password.') }}
       </div>
 
       <div class="mt-6 space-y-6">
@@ -82,22 +81,22 @@ const closeModal = () => {
                 <div class="flex items-center space-x-6">
                   <button
                     v-if="$page.props.jetstream.managesProfilePhotos && getAccountForProvider(provider).avatar_path"
-                    class="ms-6 cursor-pointer text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
+                    class="btn btn-ghost btn-sm"
                     @click="setProfilePhoto(getAccountForProvider(provider).id)">
-                    Use Avatar as Profile Photo
+                    {{ $t('Use Avatar as Profile Photo') }}
                   </button>
 
                   <DangerButton
                     v-if="$page.props.socialstream.connectedAccounts.length > 1 || $page.props.socialstream.hasPassword"
                     @click="confirmRemoveAccount(getAccountForProvider(provider).id)">
-                    Remove
+                    {{ $t('Disconnect') }}
                   </DangerButton>
                 </div>
               </template>
 
               <template v-else>
                 <ActionLink :href="route('oauth.redirect', { provider })">
-                  Connect
+                  {{ $t('Connect') }}
                 </ActionLink>
               </template>
             </template>
@@ -108,11 +107,11 @@ const closeModal = () => {
       <!-- Confirmation Modal -->
       <DialogModal :show="confirmingRemoveAccount" @close="closeModal">
         <template #title>
-          Are you sure you want to remove this account?
+          {{ $t('Are you sure you want to disconnect this account?') }}
         </template>
 
         <template #content>
-          Please enter your password to confirm you would like to remove this account.
+          {{ $t('Please enter your password to confirm you would like to remove this account.') }}
 
           <div class="mt-4">
             <TextInput
@@ -130,13 +129,13 @@ const closeModal = () => {
 
         <template #footer>
           <SecondaryButton @click="closeModal">
-            Cancel
+            {{ $t('Cancel') }}
           </SecondaryButton>
 
           <PrimaryButton
             class="ml-2" :class="{ 'opacity-25': form.processing }"
             :disabled="form.processing" @click="removeAccount">
-            Remove Account
+            {{ $t('Disconnect') }}
           </PrimaryButton>
         </template>
       </DialogModal>
