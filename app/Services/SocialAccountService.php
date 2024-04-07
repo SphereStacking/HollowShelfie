@@ -43,6 +43,7 @@ class SocialAccountService
             ['email' => $extUser->getEmail()],
             ['name' => $extUser->getName(), 'password' => Hash::make(Str::random(24))]
         );
+
         return compact('user');
     }
 }

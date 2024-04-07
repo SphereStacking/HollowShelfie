@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/auth/{provider}', RedirectToProviderController::class)->name('auth.redirect');
-Route::get('/auth/{provider}/callback', ProviderCallbackController::class)->name('auth.callback');
+// Route::get('/auth/{provider}', RedirectToProviderController::class)->name('auth.redirect');
+// Route::get('/auth/{provider}/callback', ProviderCallbackController::class)->name('auth.callback');
