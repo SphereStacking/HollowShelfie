@@ -38,9 +38,7 @@ class GetWelcomeController extends Controller
         }
 
         return Inertia::render('Welcome', [
-            'user' => new UserPublicProfileJsonResource(
-                $this->userService->preloadProfileData(User::find(1)),
-            ),
+            'developer' => config('developers.owner'),
             'events' => new EventsJsonResource($this->eventService->getPublicRandomEvents(15, [EventStatus::ONGOING])),
             'eventCount' => fn () => Event::count(),
             'userCount' => fn () => User::count(),
