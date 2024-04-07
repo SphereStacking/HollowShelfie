@@ -2,30 +2,29 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UserRelations;
-use App\Traits\HasCustomIdentifiable;
-use App\Traits\HasFollowable;
-use App\Traits\UserProfilePhoto;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use JoelButcher\Socialstream\HasConnectedAccounts;
+use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
-    use HasCustomIdentifiable;
+    use HasConnectedAccounts;
     use HasFactory;
-    use HasFollowable;
+    use HasProfilePhoto {
+        HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
+    }
     use HasTeams;
     use Notifiable;
-    use Searchable;
+    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
-    use UserProfilePhoto;
-    use UserRelations;
 
     /**
      * The attributes that are mass assignable.
@@ -33,11 +32,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for arrays.
      *
      * @var array<int, string>
      */
@@ -49,7 +50,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
@@ -63,40 +64,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url', 'links', 'profile_url', 'screen_name',
+        'profile_photo_url',
     ];
 
     /**
-     * 関連付けられているlink
-     *
-     * @return string|null
+     * Get the URL to the user's profile photo.
      */
-    public function getLinksAttribute()
+    public function profilePhotoUrl(): Attribute
     {
-        return $this->links()->get();
-    }
-
-    public function getProfileUrlAttribute()
-    {
-        return route('user.profile.show', $this->customIdentifiable->alias_name);
-    }
-
-    /**
-     * MeiliSearch 検索可能な配列に変換します。
-     *
-     * @return array
-     */
-    public function toSearchableArray()
-    {
-        $array = $this->only(
-            [
-                'id',
-                'name',
-                'bio',
-            ]
-        );
-        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
-
-        return $array;
+        return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
+            ? Attribute::get(fn () => $this->profile_photo_path)
+            : $this->getPhotoUrl();
     }
 }
