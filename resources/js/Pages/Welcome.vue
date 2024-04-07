@@ -4,7 +4,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 
 import { usePage, Link } from '@inertiajs/vue3'
 const page = usePage()
-const user = page.props.user ?? null
+const developer = page.props.developer ?? null
 const events = page.props.events ?? []
 const eventCount = page.props.eventCount ?? 0
 const userCount = page.props.userCount ?? 0
@@ -48,7 +48,7 @@ const plans = [
     title: 'Standard',
     price: '500/月',
     supplement: '基本の全てに加えて、',
-    features: ['チーム', 'マッチング掲載', '記事投稿'],
+    features: ['チーム', 'マッチング掲載', '記事投稿', 'カスタムurl'],
     isComingSoon: true,
     link: { label: '', url: '' }
   },
@@ -323,8 +323,9 @@ const columns = computed(() => {
         <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
         developer
       </div>
-      <img :src="user.dataile.photo_url" class="h-40 rounded-md">
+      <a :href="developer.link" target="_blank">
+        <img :src="developer.image" class="h-40 rounded-md">
+      </a>
     </section>
   </AppLayout>
 </template>
-z
