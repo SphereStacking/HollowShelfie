@@ -2,29 +2,36 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UserRelations;
-use App\Traits\HasCustomIdentifiable;
 use App\Traits\HasFollowable;
-use App\Traits\UserProfilePhoto;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Scout\Searchable;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Laravel\Scout\Searchable;
+use App\Models\Traits\UserRelations;
+use App\Traits\HasCustomIdentifiable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use JoelButcher\Socialstream\HasConnectedAccounts;
+use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
-    use HasCustomIdentifiable;
+    use HasConnectedAccounts;
     use HasFactory;
-    use HasFollowable;
+    use HasProfilePhoto {
+        HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
+    }
     use HasTeams;
+    use HasCustomIdentifiable;
+    use HasFollowable;
     use Notifiable;
-    use Searchable;
+    use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
-    use UserProfilePhoto;
+    use Searchable;
     use UserRelations;
 
     /**
@@ -33,11 +40,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for arrays.
      *
      * @var array<int, string>
      */
@@ -49,7 +58,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */
@@ -63,8 +72,22 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url', 'links', 'profile_url', 'screen_name',
+        'profile_photo_url',
+        'links',
+        'profile_url',
+        'screen_name',
     ];
+
+
+    /**
+     * Get the URL to the user's profile photo.
+     */
+    public function profilePhotoUrl(): Attribute
+    {
+        return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
+            ? Attribute::get(fn () => $this->profile_photo_path)
+            : $this->getPhotoUrl();
+    }
 
     /**
      * 関連付けられているlink

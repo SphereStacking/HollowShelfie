@@ -21,6 +21,6 @@ class GetCreateEventController extends Controller
 
         //画像UPする関係で事前にEventを生成しておく必要があるため
         //Eventを初期状態で生成し編集画面を返す。
-        return redirect()->route('event.edit', ['event' => $event]);
+        return redirect()->route('event.edit', $event->alias);
     }
 }

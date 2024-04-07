@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use App\Enums\EventStatus;
-use App\Exceptions\CannotOperateEventException;
-use App\Exceptions\EventNotPublishedException;
-use App\Models\Event;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Event;
+use App\Enums\EventStatus;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Exceptions\EventNotPublishedException;
+use App\Exceptions\CannotOperateEventException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EventService
 {
@@ -60,6 +61,7 @@ class EventService
             $event->end_date = $attributes['dates'][1] ?? null;
             $event->event_create_user_id = Auth::user()->id;
             $event->updateEventStatus($attributes['status'] ?? EventStatus::DRAFT);
+            $event->alias = Str::ulid();
             $event->save();
 
             $event->syncTagsByNames($attributes['tags'] ?? []);
