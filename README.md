@@ -113,7 +113,7 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 
    ※MEILISEARCH　に関しては後ほどdocker imageをビルドしてから行う。
 
-5. 依存ファイルのインストール
+4. 依存ファイルのインストール
    1. `docker-compose up -d`
       ここで初回のインストールなりビルドが走ると思う。(多分)
    2. `docker-compose exec laravel.test bash`
@@ -122,19 +122,25 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
    ここの手順あいまい。
    composerをPC自体にインストールして
    composer installしてたかも
-6. `./vendor/bin/sail up`
+5. `./vendor/bin/sail up`
    おこのみでsailのショートカットを作成してください
    `alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`
-7. メイリサーチセットアップ[notion参照](https://www.notion.so/ff35198dd447429ebaf3058b88d71034)
-8. `docker-compose exec laravel.test bash`
-9. `npm run dev`
+6. メイリサーチセットアップ[notion参照](https://www.notion.so/ff35198dd447429ebaf3058b88d71034)
+7. `docker-compose exec laravel.test bash`
+8. `npm run dev`
     この段階ではログイン画面は表示されないと思う
-10. `php artisan migrate`
-12. `php artisan db:seed`
-    
-
+9.  `php artisan migrate`
+10. `php artisan db:seed`
 
 ## 構築後の起動
+
 1. `sail up -d` sail環境の起動
 2. `docker exec -it sphere_app-laravel.test-1  bash` で立ち上げた環境に入る。
 3. `npm run dev` 開発サーバ起動
+
+## links
+
+OAuth2.0用
+- [Google Cloud Console](https://console.cloud.google.com/welcome?authuser=1&hl=ja&project=pj-sphere)
+- [Discord Developer](https://discord.com/developers/applications/1172881212809936916/information)
+

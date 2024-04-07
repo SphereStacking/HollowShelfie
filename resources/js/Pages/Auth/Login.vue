@@ -7,6 +7,7 @@ import InputError from '@/Jetstream/InputError.vue'
 import InputLabel from '@/Jetstream/InputLabel.vue'
 import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
 import TextInput from '@/Jetstream/TextInput.vue'
+import Socialstream from '@/Components/Socialstream.vue'
 
 defineProps({
   canResetPassword: Boolean,
@@ -77,11 +78,11 @@ const submit = () => {
         </PrimaryButton>
       </div>
     </form>
+    <Socialstream
+      v-if="$page.props.socialstream.show && $page.props.socialstream.providers.length"
+      :error="$page.props.errors.socialstream" :prompt="$page.props.socialstream.prompt"
+      :labels="$page.props.socialstream.labels" :providers="$page.props.socialstream.providers" />
     <div class="mt-2 flex flex-col justify-center">
-      <div class="divider">
-        OR
-      </div>
-      <SocialLogin />
       <div class="mt-2">
         {{ $t('Not a member?') }}
         <Link :href="route('register')" class="link">
