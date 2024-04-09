@@ -66,12 +66,7 @@ const navigateToType = (searchValue, type) => {
         <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
           <div v-for="(instance, index) in event.files" :key="index">
             <div>
-              <div v-if="index === currentImageIndex">
-                <Icon icon="mdi:image-outline" class="text-xl" />
-              </div>
-              <div v-else>
-                -
-              </div>
+              {{ index === currentImageIndex ? '•' : '-' }}
             </div>
           </div>
         </div>
