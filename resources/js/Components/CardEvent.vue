@@ -54,7 +54,7 @@ const navigateToType = (searchValue, type) => {
             <img
               v-for="(image, index) in event.files" v-show="index === currentImageIndex"
               :key="index"
-              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 cursor-pointer"
+              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 cursor-pointer select-none"
               :src="image.public_url">
           </TransitionGroup>
         </template>
@@ -65,7 +65,7 @@ const navigateToType = (searchValue, type) => {
         </template>
         <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
           <div v-for="(instance, index) in event.files" :key="index">
-            <div>
+            <div class="select-none">
               {{ index === currentImageIndex ? '•' : '-' }}
             </div>
           </div>
