@@ -22,23 +22,12 @@ const onBtnOpenModal = (newItem) => {
     end_date: newItem.end_date,
     period: newItem.period,
     url: route('event.show', newItem.alias),
-    instances: newItem.instances.map((instance) => instance.instance_type_name+ ' '+instance.display_name).join(''),
-    organizers: newItem.organizers.map((organizer) => organizer.name).join('、'),
-    performers: newItem.performers.map((performer) => performer.name).join('、'),
-    category_names: newItem.category_names.map((category) => category).join('、'),
+    instances: newItem.instances.join(''),
+    organizers: newItem.organizers.join(''),
+    performers: newItem.performers.join(''),
+    category_names: newItem.category_names.join('、'),
     tags: newItem.tags.map((tag) => '#'+tag).join(' '),
   }
-}
-
-function getShareText() {
-  return `✨ ${item.value.title}\n` +
-   `🗓 ${item.value.period}\n` +
-   `📍 ${item.value.instances}\n` +
-   `👥 ${item.value.organizers}\n` +
-   `🎤 ${item.value.performers}\n` +
-   `🧺 ${item.value.category_names}\n` +
-   `🏷 #vShelf ${item.value.tags}\n` +
-   `🔗 ${item.value.url}\n`
 }
 
 const linklabel = computed(() => {
@@ -62,7 +51,12 @@ defineExpose({
       <div class="flex w-full flex-col items-center">
         <p>{{ item.title }} </p>
         <a class="btn btn-link" :href="route('event.show', item.alias)">{{ linklabel }}</a>
-        <BtnSnsShare v-if="item.status !== 'draft'" :text="getShareText()" />
+        <div v-if="item.status !== 'draft'">
+          <BtnSnsShareEventToX
+            :title="item.title" :period="item.period" :instance-names="item.instances"
+            :organizer-names="item.organizers" :performer-names="item.performers" :category-names="item.category_names"
+            :tags="item.tags" :route="item.url" />
+        </div>
       </div>
     </template>
 

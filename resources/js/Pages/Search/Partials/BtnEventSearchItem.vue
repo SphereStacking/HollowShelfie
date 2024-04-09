@@ -52,25 +52,29 @@ const navigateToType = () => {
 <template>
   <BtnConditionTypeMapper :type="type" @click="navigateToType()">
     <template v-if="isIcon && isClose">
-      <div class="relative">
-        <IconTypeMapper
-          v-if="isIcon" :type="type"
-          class="absolute left-0 top-0 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
-        <Icon
-          icon="mdi:close"
-          class="absolute left-0 top-0 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100"
-          @click="removeCondition" />
-        <div class="pl-6">
-          {{ buttonTextSetter(value) }}
+      <slot name="icon">
+        <div class="relative">
+          <IconTypeMapper
+            v-if="isIcon" :type="type"
+            class="absolute left-0 top-0 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+          <Icon
+            icon="mdi:close"
+            class="absolute left-0 top-0 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100"
+            @click="removeCondition" />
+          <div class="pl-6">
+            {{ buttonTextSetter(value) }}
+          </div>
         </div>
-      </div>
+      </slot>
     </template>
     <template v-else>
-      <IconTypeMapper v-if="isIcon" :type="type" class="text-lg" />
-      <Icon
-        v-if="isClose" icon="line-md:close-small" class="text-lg"
-        @click="removeCondition" />
-      {{ buttonTextSetter(value) }}
+      <slot name="content">
+        <IconTypeMapper v-if="isIcon" :type="type" class="text-lg" />
+        <Icon
+          v-if="isClose" icon="line-md:close-small" class="text-lg"
+          @click="removeCondition" />
+        {{ buttonTextSetter(value) }}
+      </slot>
     </template>
   </BtnConditionTypeMapper>
 </template>
