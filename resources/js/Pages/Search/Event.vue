@@ -83,9 +83,10 @@ onMounted(() => {
           </ul>
         </div>
       </template>
-      <div class="my-2 grid w-full grid-cols-2  gap-6 sm:grid-cols-3  md:grid-cols-4 xl:grid-cols-6">
+      <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
         <CardEvent
           v-for="(item, index) in props.events.data" :key="index" :event="item"
+          class="my-2"
           scroll-region />
       </div>
     </PaginationLayout>
