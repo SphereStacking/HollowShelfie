@@ -2,13 +2,19 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Category;
-use App\Models\EventOrganizer;
-use App\Models\EventTimeTable;
-use App\Models\Instance;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\View;
+use App\Models\Category;
+use App\Models\Instance;
+use App\Models\EventOrganizer;
+use App\Models\EventTimeTable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * イベント関連のトレイト
@@ -17,100 +23,72 @@ trait EventRelations
 {
     /**
      * イベント作成ユーザーとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function event_create_user()
+    public function event_create_user() :BelongsTo
     {
         return $this->belongsTo(User::class, 'event_create_user_id');
     }
 
     /**
      * インスタンスとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function instances()
+    public function instances(): HasMany
     {
         return $this->hasMany(Instance::class);
     }
 
     /**
      * ブックマークユーザーとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function bookmark_users()
+    public function bookmark_users():BelongsToMany
     {
         return $this->belongsToMany(User::class, 'event_user_bookmark');
     }
 
     /**
      * 良いユーザーとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function good_users()
+    public function good_users():BelongsToMany
     {
         return $this->belongsToMany(User::class, 'event_user_good');
     }
 
     /**
      * カテゴリとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function categories():BelongsToMany
     {
         return $this->belongsToMany(Category::class);
     }
 
     /**
      * タグとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function tags()
+    public function tags():MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**
      * イベントタイムテーブルとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function event_time_tables()
+    public function event_time_tables():HasMany
     {
         return $this->hasMany(EventTimeTable::class);
     }
 
     /**
      * オーガナイザーとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function organizers()
+    public function organizers(): HasMany
     {
         return $this->hasMany(EventOrganizer::class);
     }
 
     /**
-     * スケジュールとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function schedules()
-    {
-        return $this->hasMany(EventSchedule::class);
-    }
-
-    /**
      * ビューとのリレーション
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphManｊy
      */
-    public function view()
+    public function view():MorphOne
     {
         return $this->morphOne(View::class, 'viewable');
     }

@@ -13,15 +13,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\InstanceTypeResource;
 use App\Http\Resources\EventEditJsonResource;
+use App\Exceptions\CannotOperateEventException;
 
 class GetEditEventController extends Controller
 {
-    private EventService $eventService;
-
-    public function __construct(EventService $eventService)
-    {
-        $this->eventService = $eventService;
-    }
+    public function __construct(
+        private readonly EventService $eventService,
+    ) {}
 
     public function __invoke($alias): Response
     {

@@ -4,6 +4,9 @@ namespace App\Models\Traits;
 
 use App\Enums\EventStatus;
 
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Laravel\Scout\Builder as ScoutBuilder;
+
 /**
  * イベントのスコープに関するトレイト
  */
@@ -11,11 +14,8 @@ trait EventScopes
 {
     /**
      * 公開中のイベントを取得するスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithStatusPublished($query)
+    public function scopeWithStatusPublished(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
     {
         return $query->whereIn(
             'status',
@@ -29,11 +29,8 @@ trait EventScopes
 
     /**
      * Scout用の公開中のイベントを取得するスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithStatusPublishedForScout($query)
+    public function scopeWithStatusPublishedForScout(ScoutBuilder $query): ScoutBuilder
     {
         return $query->whereIn(
             'status',
@@ -47,68 +44,49 @@ trait EventScopes
 
     /**
      * 新しいイベントを取得するスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOrderByNewest($query)
+    public function scopeOrderByNewest(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
     {
         return $query->orderBy('published_at', 'desc');
     }
 
     /**
      * Scout用 良い評価の多いイベントを取得するスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOrderByGoodUserCountForScout($query)
+    public function scopeOrderByGoodUserCountForScout(ScoutBuilder $query): ScoutBuilder
     {
         return $query->orderBy('good_count', 'desc');
     }
 
     /**
      * 良い評価の多いイベントを取得するスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOrderByGoodUserCount($query)
+    public function scopeOrderByGoodUserCount(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
     {
         return $query->withCount('good_users')->orderBy('good_users_count', 'desc');
     }
 
     /**
-     *閲覧数なイベントを取得するスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * 閲覧数なイベントを取得するスコープ
      */
-    public function scopeOrderByViews($query)
+    public function scopeOrderByViews(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
     {
         return $query->orderBy('hot', 'desc');
     }
 
     /**
      * トレンドのイベントを取得するスコープ
-     * TODO: いつか実装
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+
      */
-    public function scopeOrderByTrendiness($query)
+    public function scopeOrderByTrendiness(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
     {
         return $query;
     }
 
     /**
      * タグに基づいてフィルタするクエリスコープ
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  array  $tags
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFilterByTags($query, $tags)
+    public function scopeFilterByTags(EloquentBuilder|ScoutBuilder $query, array $tags): EloquentBuilder|ScoutBuilder
     {
         if ($tags) {
             // タグの名前で絞り込む
@@ -122,14 +100,10 @@ trait EventScopes
 
     /**
      * ログイン中のユーザーが管理できるイベントのみを取得するスコープ。
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $userId ユーザーID
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeManagedByUser($query, $userId)
+    public function scopeManagedByUser(EloquentBuilder|ScoutBuilder $query, int $userId): EloquentBuilder|ScoutBuilder
     {
-        return $query->whereHas('organizers', function ($query) use ($userId) {
+        return $query->whereHas('organizers', function (EloquentBuilder|ScoutBuilder $query) use ($userId) {
             $query->where('user_id', $userId);
         });
     }

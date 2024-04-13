@@ -10,14 +10,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class DestroyBookmarkController extends Controller
 {
-    protected $eventService;
-    protected $eventBookmarkService;
 
-    public function __construct(EventService $eventService,EventBookmarkService $eventBookmarkService)
-    {
-        $this->eventService = $eventService;
-        $this->eventBookmarkService = $eventBookmarkService;
-    }
+    public function __construct(
+        private EventService $eventService,
+        private EventBookmarkService $eventBookmarkService
+    ) {}
 
     public function __invoke($alias)
     {

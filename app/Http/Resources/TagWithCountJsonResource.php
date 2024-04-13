@@ -2,8 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class TagWithCountJsonResource extends JsonResource
 {
@@ -12,10 +13,8 @@ class TagWithCountJsonResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
-        Log::debug($this->resource);
-
         return $this->resource->map(function ($tag) {
             return [
                 'name' => $tag->name,

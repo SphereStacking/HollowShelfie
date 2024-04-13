@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\Models\Event;
-use App\Models\Traits\EventScopes;
-use App\Params\EventSearchParams;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
+use App\Models\Event;
+use App\Params\EventSearchParams;
+use App\Models\Traits\EventScopes;
 use Meilisearch\Endpoints\Indexes;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * イベント検索サービス
@@ -42,10 +43,8 @@ class EventMeilisearchService
 
     /**
      * 公開イベント検索を取得
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getPublishedEventSearch(EventSearchParams $params)
+    public function getPublishedEventSearch(EventSearchParams $params):LengthAwarePaginator
     {
         $queryParams = [];
         foreach ($params->queryParams as $item) {
@@ -61,8 +60,6 @@ class EventMeilisearchService
             callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
                 $options['filter'] =
                     'published_at < '.Carbon::now()->getTimestamp().$filterString;
-                Log::debug($options['filter']);
-
                 return $meilisearch->rawSearch(
                     $query,
                     $options,
@@ -79,7 +76,7 @@ class EventMeilisearchService
 
         return $events
             ->paginate($params->paginate)
-            ->withQueryString();
+            ->appends(request()->query());
     }
 
     /**
@@ -176,6 +173,11 @@ abstract class ScoutQueryParam
 
         return " AND NOT {$column} = {$value}";
     }
+
+    /**
+     * 値をフォーマットする
+     */
+    abstract public function formatValue();
 }
 
 /**

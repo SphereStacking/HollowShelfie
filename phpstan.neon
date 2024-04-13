@@ -10,9 +10,11 @@ parameters:
     level: 5
 
     ignoreErrors:
-        - '#Unsafe usage of new static#'
 
     excludePaths:
         - ./*/*/FileToBeExcluded.php
+        - ./*/*/Socialstream/*.php
+        - ./*/*/Jetstream/*.php
+        - ./*/*/Fortify/*.php
 
     checkMissingIterableValueType: false

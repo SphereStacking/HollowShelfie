@@ -14,8 +14,6 @@ class CategoryWithCountJsonResource extends JsonResource
      */
     public function toArray($request): array
     {
-        Log::debug($this->resource);
-
         return $this->resource->map(function ($tag) {
             return [
                 'name' => $tag->name,

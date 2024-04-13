@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\EventsPaginatedJsonResource;
-use App\Http\Resources\TeamPublicProfileJsonResource;
 use App\Models\Team;
-use App\Params\EventSearchParams;
-use App\Services\EventMeilisearchService;
+use Inertia\Inertia;
+use Inertia\Response;
 use App\Services\TeamService;
 use App\Services\UserService;
-use Inertia\Inertia;
+use App\Params\EventSearchParams;
+use App\Http\Controllers\Controller;
+use App\Services\EventMeilisearchService;
+use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Http\Resources\TeamPublicProfileJsonResource;
 
 class GetTeamProfileController extends Controller
 {
@@ -33,9 +34,8 @@ class GetTeamProfileController extends Controller
     /**
      * チームのプロファイルを表示します。
      *
-     * @return \Illuminate\View\View
      */
-    public function __invoke(Team $team)
+    public function __invoke(Team $team): Response
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
