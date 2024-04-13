@@ -4,16 +4,34 @@ namespace App\Traits;
 
 use App\Models\Followable;
 use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Auth;
 
 trait HasFollowable
 {
     /**
-     * このモデルがフォローしているFollowableモデルのリレーションを返します。
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * ログインUserがフォローしているか
      */
-    public function follows()
+    public function getIsFollowedAttribute(): bool
+    {
+        return $this->isFollowedByCurrentUser();
+    }
+
+    /**
+     * 対象modelのフォロー数
+     */
+    public function getFollowersCountAttribute()
+    {
+        return $this->followersCount();
+    }
+
+    /**
+     * このモデルがフォローしているFollowableモデルのリレーションを返します。
+     */
+    public function follows(): HasMany
     {
         return $this->hasMany(Followable::class, 'user_id');
     }
@@ -21,44 +39,38 @@ trait HasFollowable
     /**
      * モデルにフォロー機能を追加します。
      */
-    public function followables()
+    public function followables(): MorphMany
     {
         return $this->morphMany(Followable::class, 'followable');
     }
 
     /**
      * このモデルをフォローします。
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
      */
-    public function follow($followTarget)
+    public function follow(Model $followTarget): Followable
     {
         if (! Auth::check()) {
-            return;
+            throw new AuthenticationException('ログイン');
         }
 
         return Followable::firstOrCreate([
-            'user_id' => $this->id,
-            'followable_id' => $followTarget->id,
+            'user_id' => $this->getKey(),
+            'followable_id' => $followTarget->getKey(),
             'followable_type' => get_class($followTarget),
         ]);
     }
 
     /**
      * このモデルのフォローを解除します。
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
      */
-    public function unfollow($unfollowTarget)
+    public function unfollow(Model $unfollowTarget): ?bool
     {
         if (! Auth::check()) {
-            return;
+            throw new AuthenticationException('');
         }
 
-        return Followable::where('user_id', $this->id)
-            ->where('followable_id', $unfollowTarget->id)
+        return Followable::where('user_id', $this->getKey())
+            ->where('followable_id', $unfollowTarget->getKey())
             ->where('followable_type', get_class($unfollowTarget))
             ->delete();
     }
@@ -69,7 +81,7 @@ trait HasFollowable
     public function isFollowedBy(User $user)
     {
         return $this->followables()
-            ->where('user_id', $user->id)
+            ->where('user_id', $user->getKey())
             ->exists();
     }
 
@@ -90,17 +102,17 @@ trait HasFollowable
     }
 
     /**
-     * 認証してるユーザーがフォローしているがどうか
-     * 認証されていなければ falseを返す
+     * 現在のユーザーがフォローしているがどうか
      */
     public function isFollowedByCurrentUser(): bool
     {
-        if (! auth()->check()) {
+        // NOTE: 認証していないユーザーにはfalse
+        if (! Auth::check()) {
             return false;
         }
 
-        return Followable::where('user_id', auth()->id())
-            ->where('followable_id', $this->id)
+        return Followable::where('user_id', Auth::id())
+            ->where('followable_id', $this->getKey())
             ->where('followable_type', get_class($this))
             ->exists();
     }

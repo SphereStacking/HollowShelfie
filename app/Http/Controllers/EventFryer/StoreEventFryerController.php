@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\EventFryer;
 
-use App\Services\FileService;
-use App\Services\EventService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventFryerRequest;
 use App\Http\Resources\StoreEventFryerJsonResource;
+use App\Services\EventService;
+use App\Services\FileService;
 
 class StoreEventFryerController extends Controller
 {
     private $fileService;
+
     private $eventService;
 
     public function __construct(FileService $fileService, EventService $eventService)

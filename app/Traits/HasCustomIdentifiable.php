@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use App\Models\CustomIdentifiable;
 use App\Rules\ReservedWord;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -53,12 +55,8 @@ trait HasCustomIdentifiable
 
     /**
      * ルートバインディングを解決する
-     *
-     * @param  mixed  $value
-     * @param  string|null  $field
-     * @return Model|null
      */
-    public function resolveRouteBinding($value, $field = null)
+    public function resolveRouteBinding(mixed $value, mixed $field = null): ?Model
     {
         return $this->whereHas('customIdentifiable', function ($query) use ($value) {
             $query->where('alias_name', $value);
@@ -67,10 +65,8 @@ trait HasCustomIdentifiable
 
     /**
      * カスタム識別子リレーションを取得する
-     *
-     * @return MorphOne
      */
-    public function customIdentifiable()
+    public function customIdentifiable(): MorphOne
     {
         return $this->morphOne(CustomIdentifiable::class, 'identifiable');
     }

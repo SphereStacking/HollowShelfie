@@ -15,16 +15,10 @@ use Inertia\Inertia;
 
 class GetEventSearchController extends Controller
 {
-    protected $eventMeilisearchService;
-
-    protected $tagService;
-
     public function __construct(
-        EventMeilisearchService $eventMeilisearchService,
-        TagService $tagService
+        private readonly EventMeilisearchService $eventMeilisearchService,
+        private readonly TagService $tagService,
     ) {
-        $this->eventMeilisearchService = $eventMeilisearchService;
-        $this->tagService = $tagService;
     }
 
     public function __invoke(Request $request)
@@ -44,7 +38,7 @@ class GetEventSearchController extends Controller
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' => fn () => Category::all(),
-                'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
+                'instanceTypes' => fn () => InstanceType::query()->select('name')->get(),
                 'statuses' => fn () => EventStatus::PUBLISHED_STATUSES,
             ]
         );

@@ -8,33 +8,19 @@ use App\Http\Resources\UserPublicProfileJsonResource;
 use App\Models\User;
 use App\Params\EventSearchParams;
 use App\Services\EventMeilisearchService;
-use App\Services\TeamService;
 use App\Services\UserService;
 use Inertia\Inertia;
 
 class GetUserProfileController extends Controller
 {
-    protected $userService;
-
-    protected $teamService;
-
-    protected $eventMeilisearchService;
-
     public function __construct(
-        UserService $userService,
-        TeamService $teamService,
-        EventMeilisearchService $eventMeilisearchService
+        private UserService $userService,
+        private EventMeilisearchService $eventMeilisearchService
     ) {
-        $this->userService = $userService;
-        $this->teamService = $teamService;
-        $this->eventMeilisearchService = $eventMeilisearchService;
     }
 
-    //
     /**
      * ユーザーのプロファイルを表示します。
-     *
-     * @return \Illuminate\View\View
      */
     public function __invoke(User $user)
     {

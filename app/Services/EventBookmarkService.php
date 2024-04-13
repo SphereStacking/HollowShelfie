@@ -2,20 +2,20 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\Event;
 use App\Enums\EventStatus;
-use Illuminate\Auth\Authenticatable;
+use App\Models\Event;
+use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * イベントブックマークサービスクラス
  */
-class eventBookmarkService
+class EventBookmarkService
 {
     /**
      * ユーザーがイベントをブックマークする
      */
-    public function attachEvent(User| Authenticatable | null $user, Event $event)
+    public function attachEvent(User|Authenticatable|null $user, Event $event): void
     {
         if (! $this->isEventBookmarkedByUser($user, $event)) {
             $user->bookmark_events()->attach($event->id);
@@ -25,7 +25,7 @@ class eventBookmarkService
     /**
      * ユーザーがイベントのブックマークを解除する
      */
-    public function detachEvent(User| Authenticatable | null $user, Event $event)
+    public function detachEvent(User|Authenticatable|null $user, Event $event)
     {
         $user->bookmark_events()->detach($event->id);
     }
@@ -35,7 +35,7 @@ class eventBookmarkService
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getBookmarkedEventsByUser(User| Authenticatable | null $user)
+    public function getBookmarkedEventsByUser(User|Authenticatable|null $user)
     {
         return $user->bookmark_events()->paginate(12);
     }
@@ -45,7 +45,7 @@ class eventBookmarkService
      *
      * @return int
      */
-    public function getBookmarkedEventsCountByUser(User| Authenticatable | null $user)
+    public function getBookmarkedEventsCountByUser(User|Authenticatable|null $user)
     {
         return $user->bookmark_events()->count();
     }
@@ -55,7 +55,7 @@ class eventBookmarkService
      *
      * @return array
      */
-    public function getBookmarkedEventsCountByUserForAllStatuses(User| Authenticatable | null $user)
+    public function getBookmarkedEventsCountByUserForAllStatuses(User|Authenticatable|null $user)
     {
         $counts = [];
         foreach (EventStatus::cases() as $status) {
@@ -70,7 +70,7 @@ class eventBookmarkService
      *
      * @return bool
      */
-    public function isEventBookmarkedByUser(User| Authenticatable | null $user, Event $event)
+    public function isEventBookmarkedByUser(User|Authenticatable|null $user, Event $event)
     {
         // ユーザーが特定のイベントをブックマークしているか確認
         return $user->bookmark_events()->where('event_id', $event->id)->exists();

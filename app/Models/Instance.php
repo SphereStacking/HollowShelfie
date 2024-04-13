@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Instance extends Model
 {
     use HasFactory;
 
     /**
-     * @var array 可変の属性
+     * 可変の属性
+     *
+     * @var array<int, string>
      */
     protected $appends = [
         'instance_type_name',
@@ -29,16 +32,16 @@ class Instance extends Model
 
     /**
      * インスタンスの名前を返す
-     *
-     * @return string|null
      */
-    public function getInstanceTypeNameAttribute()
+    public function getInstanceTypeNameAttribute(): ?string
     {
         return $this->instance_type->name;
     }
 
-    //イベントに紐づくinstance
-    public function instance_type()
+    /**
+     * イベントに紐づくinstance
+     */
+    public function instance_type(): BelongsTo
     {
         return $this->belongsTo(InstanceType::class);
     }

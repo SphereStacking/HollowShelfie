@@ -11,6 +11,7 @@ use App\Services\EventMeilisearchService;
 use App\Services\TeamService;
 use App\Services\UserService;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class GetTeamProfileController extends Controller
 {
@@ -32,10 +33,8 @@ class GetTeamProfileController extends Controller
 
     /**
      * チームのプロファイルを表示します。
-     *
-     * @return \Illuminate\View\View
      */
-    public function __invoke(Team $team)
+    public function __invoke(Team $team): Response
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す

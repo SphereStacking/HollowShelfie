@@ -14,8 +14,6 @@ class TeamService
     public function preloadProfileData(Team $team)
     {
         $team->load(['links', 'event_organizers']);
-        $team->is_followed = $team->isFollowedByCurrentUser();
-        $team->followers_count = $team->followersCount();
 
         return $team;
     }
