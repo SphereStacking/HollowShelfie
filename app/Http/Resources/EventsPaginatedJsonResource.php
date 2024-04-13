@@ -3,17 +3,17 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventsPaginatedJsonResource extends JsonResource
 {
     /**
-     * リソースを配列に変換します。
+     * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'debug' => $this->resource,
@@ -47,8 +47,6 @@ class EventsPaginatedJsonResource extends JsonResource
                     'event_timeline_status' => $item->event_timeline_status,
                     'formatted_start_date' => $item->getFormattedStartDateAttribute(),
                     'formatted_end_date' => $item->getFormattedEndDateAttribute(),
-                    'good_count' => $item->good_count,
-                    'short_good_count' => $item->short_good_count,
                     'files' => $item->files->map(function ($file) {
                         return [
                             'id' => $file->id,
@@ -63,12 +61,12 @@ class EventsPaginatedJsonResource extends JsonResource
                                 ? $organizeble->event_organizeble->profile_photo_url
                                 : $organizeble->event_organizeble->team_logo_url,
                             'name' => $organizeble->event_organizeble->name,
-                            'links' => $organizeble->event_organizeble->links->map(function ($link) {
-                                return [
-                                    'label' => $link->label,
-                                    'link' => $link->link,
-                                ];
-                            }),
+                            // 'links' => $organizeble->event_organizeble->links->map(function ($link) {
+                            //     return [
+                            //         'label' => $link->label,
+                            //         'link' => $link->link,
+                            //     ];
+                            // }),
                         ];
                     }),
                     'performers' => $item->event_time_tables->flatMap(function ($time_table) {
@@ -80,12 +78,12 @@ class EventsPaginatedJsonResource extends JsonResource
                             'id' => $performer->performable_id,
                             'profile_url' => $performer->performable->profile_url,
                             'name' => $performer->performable->name,
-                            'links' => $performer->performable->links->map(function ($link) {
-                                return [
-                                    'label' => $link->label,
-                                    'link' => $link->link,
-                                ];
-                            }),
+                            // 'links' => $performer->performable->links->map(function ($link) {
+                            //     return [
+                            //         'label' => $link->label,
+                            //         'link' => $link->link,
+                            //     ];
+                            // }),
                             'type' => $performer->performable_type,
                             'image_url' => $performer->performable_type === User::class
                                 ? $performer->performable->profile_photo_url

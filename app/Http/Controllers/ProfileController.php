@@ -12,6 +12,7 @@ use App\Services\EventMeilisearchService;
 use App\Services\TeamService;
 use App\Services\UserService;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProfileController extends Controller
 {
@@ -34,10 +35,8 @@ class ProfileController extends Controller
     //
     /**
      * ユーザーのプロファイルを表示します。
-     *
-     * @return \Illuminate\View\View
      */
-    public function user(User $user)
+    public function user(User $user): Response
     {
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
@@ -66,10 +65,8 @@ class ProfileController extends Controller
 
     /**
      * チームのプロファイルを表示します。
-     *
-     * @return \Illuminate\View\View
      */
-    public function team(Team $team)
+    public function team(Team $team): Response
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す

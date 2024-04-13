@@ -2,40 +2,40 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TeamPublicProfileJsonResource extends JsonResource
 {
     /**
-     * リソースを配列に変換します。
+     * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
             'dataile' => [
-                'id' => $this->id,
-                'screen_name' => $this->screen_name,
-                'name' => $this->name,
-                'photo_url' => $this->team_logo_url,
-                'profile_url' => route('user.profile.show', $this->id),
+                'id' => $this->resource->id,
+                'screen_name' => $this->resource->screen_name,
+                'name' => $this->resource->name,
+                'photo_url' => $this->resource->team_logo_url,
+                'profile_url' => route('user.profile.show', $this->resource->id),
                 'location' => 'TODO',
-                'links' => $this->links->map(function ($link) {
+                'links' => $this->resource->links->map(function ($link) {
                     return [
                         'label' => $link->label,
                         'link' => $link->link,
                     ];
                 }),
-                'followers_count' => $this->followers_count,
+                'followers_count' => $this->resource->followers_count,
                 'content' => 'hogegegege',
-                'tags' => $this->tags->map(function ($tag) {
+                'tags' => $this->resource->tags->map(function ($tag) {
                     return [
                         'name' => $tag->name,
                     ];
                 }),
-                'badges' => $this->badges->map(function ($badge) {
+                'badges' => $this->resource->badges->map(function ($badge) {
                     return [
                         'name' => $badge->name,
                         'icon_class' => $badge->icon_class,
@@ -43,7 +43,7 @@ class TeamPublicProfileJsonResource extends JsonResource
                 }),
             ],
             'auth_user' => [
-                'is_followed' => $this->is_followed,
+                'is_followed' => $this->resource->is_followed,
             ],
         ];
     }

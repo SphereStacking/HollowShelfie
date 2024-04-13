@@ -9,7 +9,6 @@ use App\Http\Controllers\Event\GetManageEventController;
 use App\Http\Controllers\Event\GetRecruitingEventController;
 use App\Http\Controllers\Event\GetTimeLineEventController;
 use App\Http\Controllers\Event\ShowEventController;
-use App\Http\Controllers\Event\StoreEventController;
 use App\Http\Controllers\Event\UpdateEventController;
 use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;
@@ -104,8 +103,8 @@ Route::get('/event/{alias}/show', ShowEventController::class)->name('event.show'
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
     Route::get('/dashboard', GetDashboardController::class)->name('dashboard');
-    Route::get('/user/{user:alias_name}/bookmark', GetBookmarkController::class, 'bookmark')->name('user.bookmark');
-    Route::get('/user/{user:alias_name}/good', GetGoodController::class, 'good')->name('user.good');
+    Route::get('/user/{user:alias_name}/bookmark', GetBookmarkController::class)->name('user.bookmark');
+    Route::get('/user/{user:alias_name}/good', GetGoodController::class)->name('user.good');
     Route::get('/user/{user:alias_name}/following', GetFollowingController::class)->name('user.following');
     Route::get('/user/{user:alias_name}/follower', GetFollowerController::class)->name('user.follower');
 
@@ -115,7 +114,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/event/recruiting', GetRecruitingEventController::class)->name('event.recruiting');
     Route::get('/event/manage', GetManageEventController::class)->name('event.manage');
 
-    Route::put('/event', StoreEventController::class)->name('event.store');
     Route::delete('/event/fryer', DestroyEventFryerController::class)->name('event.fryer.destroy');
     Route::get('/event/create', GetCreateEventController::class)->name('event.create');
     Route::get('/event/{alias}/edit', GetEditEventController::class)->name('event.edit');

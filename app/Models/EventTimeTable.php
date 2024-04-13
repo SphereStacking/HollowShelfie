@@ -5,6 +5,8 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EventTimeTable extends Model
 {
@@ -19,38 +21,59 @@ class EventTimeTable extends Model
         'performance_time',
     ];
 
+    /**
+     * @var array<int, string>
+     */
     protected $fillable = [
         'start_time',
         'end_time',
         'description',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
 
-    public function getPerformanceTimeAttribute()
+    /**
+     * 出演時間
+     */
+    public function getPerformanceTimeAttribute(): string
     {
         return $this->start_time.' ~ '.$this->end_time;
     }
 
-    public function getStartTimeAttribute($value)
+    /**
+     * 開始時間
+     */
+    public function getStartTimeAttribute($value): string
     {
         return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
     }
 
-    public function getEndTimeAttribute($value)
+    /**
+     * 終了時間
+     */
+    public function getEndTimeAttribute($value): string
     {
         return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
     }
 
-    public function event()
+    /**
+     * イベント
+     */
+    public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }
 
-    public function performers()
+    /**
+     * 出演者
+     */
+    public function performers(): HasMany
     {
         return $this->hasMany(TimeTablePerformers::class);
     }

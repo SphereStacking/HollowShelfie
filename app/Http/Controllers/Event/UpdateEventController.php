@@ -9,17 +9,16 @@ use App\Services\EventService;
 
 class UpdateEventController extends Controller
 {
-    private $eventService;
-
-    public function __construct(EventService $eventService)
-    {
-        $this->eventService = $eventService;
+    public function __construct(
+        private readonly EventService $eventService
+    ) {
     }
 
     public function __invoke(EventUpdateRequest $request, $id)
     {
         $attributes = $request->getAttributes();
-         $event = $this->eventService->updateEventByAlias($id, $attributes);
+        $event = $this->eventService->updateEventByAlias($id, $attributes);
+
         return redirect()->back()->with([
             'response' => [
                 'status' => 'success',

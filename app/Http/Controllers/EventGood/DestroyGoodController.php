@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\EventGood;
 
-use App\Services\EventService;
-use App\Services\EventGoodService;
 use App\Http\Controllers\Controller;
+use App\Services\EventGoodService;
+use App\Services\EventService;
 use Illuminate\Support\Facades\Auth;
 
 class DestroyGoodController extends Controller
 {
     protected $eventService;
+
     protected $eventGoodService;
 
-    public function __construct(EventService $eventService,EventGoodService $eventGoodService)
+    public function __construct(EventService $eventService, EventGoodService $eventGoodService)
     {
         $this->eventService = $eventService;
         $this->eventGoodService = $eventGoodService;

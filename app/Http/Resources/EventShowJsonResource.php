@@ -3,43 +3,43 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventShowJsonResource extends JsonResource
 {
     /**
-     * リソースを配列に変換します。
+     * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'alias' => $this->alias,
-            'created_at' => $this->created_at,
-            'title' => $this->title,
-            'description' => $this->description,
-            'category_names' => $this->category_names,
-            'tags' => $this->tags,
-            'status' => $this->status,
-            'status_label' => $this->status_label,
-            'create_user' => $this->event_create_user,
-            'event_timeline_status' => $this->event_timeline_status,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'formatted_start_date' => $this->getFormattedStartDateAttribute(),
-            'formatted_end_date' => $this->getFormattedEndDateAttribute(),
-            'good_count' => $this->good_count,
-            'short_good_count' => $this->short_good_count,
-            'files' => $this->files->map(function ($file) {
+            'id' => $this->resource->id,
+            'alias' => $this->resource->alias,
+            'created_at' => $this->resource->created_at,
+            'title' => $this->resource->title,
+            'description' => $this->resource->description,
+            'category_names' => $this->resource->category_names,
+            'tags' => $this->resource->tags,
+            'status' => $this->resource->status,
+            'status_label' => $this->resource->status_label,
+            'create_user' => $this->resource->event_create_user,
+            'event_timeline_status' => $this->resource->event_timeline_status,
+            'start_date' => $this->resource->start_date,
+            'end_date' => $this->resource->end_date,
+            'formatted_start_date' => $this->resource->getFormattedStartDateAttribute(),
+            'formatted_end_date' => $this->resource->getFormattedEndDateAttribute(),
+            'good_count' => $this->resource->good_count,
+            'short_good_count' => $this->resource->short_good_count,
+            'files' => $this->resource->files->map(function ($file) {
                 return [
                     'id' => $file->id,
                     'public_url' => $file->public_url,
                 ];
             }),
-            'organizers' => $this->organizers->map(function ($organizeble) {
+            'organizers' => $this->resource->organizers->map(function ($organizeble) {
                 return [
                     'profile_url' => $organizeble->event_organizeble->profile_url,
                     'id' => $organizeble->event_organizeble_id,
@@ -48,15 +48,15 @@ class EventShowJsonResource extends JsonResource
                         ? $organizeble->event_organizeble->profile_photo_url
                         : $organizeble->event_organizeble->team_logo_url,
                     'name' => $organizeble->event_organizeble->name,
-                    'links' => $organizeble->event_organizeble->links->map(function ($link) {
-                        return [
-                            'label' => $link->label,
-                            'link' => $link->link,
-                        ];
-                    }),
+                    // 'links' => $organizeble->event_organizeble->links->map(function ($link) {
+                    //     return [
+                    //         'label' => $link->label,
+                    //         'link' => $link->link,
+                    //     ];
+                    // }),
                 ];
             }),
-            'performers' => $this->event_time_tables->flatMap(function ($time_table) {
+            'performers' => $this->resource->event_time_tables->flatMap(function ($time_table) {
                 return $time_table->performers;
             })->unique(function ($performer) {
                 return $performer->performable_type.$performer->performable_id;
@@ -65,12 +65,12 @@ class EventShowJsonResource extends JsonResource
                     'id' => $performer->performable_id,
                     'profile_url' => $performer->performable->profile_url,
                     'name' => $performer->performable->name,
-                    'links' => $performer->performable->links->map(function ($link) {
-                        return [
-                            'label' => $link->label,
-                            'link' => $link->link,
-                        ];
-                    }),
+                    // 'links' => $performer->performable->links->map(function ($link) {
+                    //     return [
+                    //         'label' => $link->label,
+                    //         'link' => $link->link,
+                    //     ];
+                    // }),
                     'type' => $performer->performable_type,
                     'image_url' => $performer->performable_type === User::class
                         ? $performer->performable->profile_photo_url
@@ -78,7 +78,7 @@ class EventShowJsonResource extends JsonResource
                 ];
             }
             )->values(),
-            'time_table' => $this->event_time_tables->map(function ($time_table) {
+            'time_table' => $this->resource->event_time_tables->map(function ($time_table) {
                 return [
                     'id' => $time_table->id,
                     'description' => $time_table->description,
@@ -90,12 +90,12 @@ class EventShowJsonResource extends JsonResource
                             'id' => $performer->performable->id,
                             'profile_url' => $performer->performable->profile_url,
                             'name' => $performer->performable->name,
-                            'links' => $performer->performable->links->map(function ($link) {
-                                return [
-                                    'label' => $link->label,
-                                    'link' => $link->link,
-                                ];
-                            }),
+                            // 'links' => $performer->performable->links->map(function ($link) {
+                            //     return [
+                            //         'label' => $link->label,
+                            //         'link' => $link->link,
+                            //     ];
+                            // }),
                             'type' => $performer->performable->performable_type,
                             'image_url' => $performer->performable_type === User::class
                                 ? $performer->performable->profile_photo_url
@@ -104,7 +104,7 @@ class EventShowJsonResource extends JsonResource
                     }),
                 ];
             }),
-            'instances' => $this->instances->map(function ($instance) {
+            'instances' => $this->resource->instances->map(function ($instance) {
                 return [
                     'instance_type' => $instance->instance_type_name,
                     'access_url' => $instance->access_url,
@@ -112,8 +112,8 @@ class EventShowJsonResource extends JsonResource
                 ];
             }),
             'auth_user' => [
-                'is_good' => $this->is_good ?? false,
-                'is_bookmark' => $this->is_bookmark ?? false,
+                'is_good' => $this->resource->is_good ?? false,
+                'is_bookmark' => $this->resource->is_bookmark ?? false,
             ],
 
         ];

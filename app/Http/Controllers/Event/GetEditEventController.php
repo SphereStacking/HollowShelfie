@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers\Event;
 
-use Inertia\Inertia;
-use App\Models\Event;
-use Inertia\Response;
+use App\Exceptions\CannotOperateEventException;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\EventEditJsonResource;
+use App\Http\Resources\InstanceTypeResource;
 use App\Models\Category;
 use App\Models\InstanceType;
 use App\Services\EventService;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\InstanceTypeResource;
-use App\Http\Resources\EventEditJsonResource;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class GetEditEventController extends Controller
 {
-    private EventService $eventService;
-
-    public function __construct(EventService $eventService)
-    {
-        $this->eventService = $eventService;
+    public function __construct(
+        private readonly EventService $eventService,
+    ) {
     }
 
     public function __invoke($alias): Response

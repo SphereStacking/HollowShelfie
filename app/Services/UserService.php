@@ -21,15 +21,11 @@ class UserService
 
     /**
      * プロフィールデータを事前ロードする
-     *
-     * @return User
      */
-    public function preloadProfileData(User $user)
+    public function preloadProfileData(User $user): User
     {
-        $user->load(['links', 'tags']);
-        $user->is_followed = $user->isFollowedByCurrentUser();
-        $user->followers_count = $user->followersCount();
-
+        // $user->links();
+        // $user->tags();
         return $user;
     }
 

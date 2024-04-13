@@ -2,36 +2,36 @@
 
 namespace App\Models;
 
-use App\Traits\HasFollowable;
-use Laravel\Scout\Searchable;
-use Laravel\Jetstream\HasTeams;
-use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\UserRelations;
 use App\Traits\HasCustomIdentifiable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
+use App\Traits\HasFollowable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use JoelButcher\Socialstream\HasConnectedAccounts;
-use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use JoelButcher\Socialstream\HasConnectedAccounts;
+use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\HasTeams;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasConnectedAccounts;
+    use HasCustomIdentifiable;
     use HasFactory;
+    use HasFollowable;
     use HasProfilePhoto {
         HasProfilePhoto::profilePhotoUrl as getPhotoUrl;
     }
     use HasTeams;
-    use HasCustomIdentifiable;
-    use HasFollowable;
     use Notifiable;
+    use Searchable;
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
-    use Searchable;
     use UserRelations;
 
     /**
@@ -78,7 +78,6 @@ class User extends Authenticatable
         'screen_name',
     ];
 
-
     /**
      * Get the URL to the user's profile photo.
      */
@@ -91,25 +90,24 @@ class User extends Authenticatable
 
     /**
      * 関連付けられているlink
-     *
-     * @return string|null
      */
-    public function getLinksAttribute()
+    public function getLinksAttribute(): array
     {
-        return $this->links()->get();
+        return $this->links()->get()->toArray();
     }
 
-    public function getProfileUrlAttribute()
+    /**
+     * profileページへのURL
+     */
+    public function getProfileUrlAttribute(): string
     {
-        return route('user.profile.show', $this->customIdentifiable->alias_name);
+        return route('user.profile.show', $this->getScreenNameAttribute());
     }
 
     /**
      * MeiliSearch 検索可能な配列に変換します。
-     *
-     * @return array
      */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         $array = $this->only(
             [
@@ -118,8 +116,13 @@ class User extends Authenticatable
                 'bio',
             ]
         );
-        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        $array['tags'] = $this->tags()->pluck('name')->toArray();
 
         return $array;
+    }
+
+    public function getRouteBindingRelations(): array
+    {
+        return ['links', 'tags'];
     }
 }

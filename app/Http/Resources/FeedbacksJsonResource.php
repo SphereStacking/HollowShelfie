@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FeedbacksJsonResource extends JsonResource
@@ -9,9 +10,9 @@ class FeedbacksJsonResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @return array<int, mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         $processedResponses = [];
         foreach ($this->resource as $response) {

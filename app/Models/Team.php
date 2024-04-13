@@ -90,7 +90,7 @@ class Team extends JetstreamTeam
                 'bio',
             ]
         );
-        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        $array['tags'] = $this->tags()->pluck('name')->toArray();
 
         return $array;
     }
