@@ -2,9 +2,9 @@
 
 namespace App\Models\Traits;
 
-use DateTime;
-use Carbon\Carbon;
 use App\Enums\EventStatus;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +33,7 @@ trait EventGetters
     public function getIsBookmarkAttribute(): bool
     {
         $user = Auth::user();
+
         return $user ? $user->bookmark_events->contains($this->id) : false;
 
     }
@@ -43,20 +44,20 @@ trait EventGetters
     public function getIsGoodAttribute(): bool
     {
         $user = Auth::user();
+
         return $user ? $user->good_events->contains($this->id) : false;
     }
 
     /**
      * 関連付けられているカテゴリの中から最初の名前を返す
      */
-    public function getCategoryNameAttribute(): string|null
+    public function getCategoryNameAttribute(): ?string
     {
         return $this->categories->first() ? $this->categories->first()->name : null;
     }
 
     /**
      * 関連付けられているカテゴリの名前を返す
-     *
      */
     public function getCategoryNamesAttribute(): array
     {

@@ -9,7 +9,6 @@ use App\Http\Controllers\Event\GetManageEventController;
 use App\Http\Controllers\Event\GetRecruitingEventController;
 use App\Http\Controllers\Event\GetTimeLineEventController;
 use App\Http\Controllers\Event\ShowEventController;
-use App\Http\Controllers\Event\StoreEventController;
 use App\Http\Controllers\Event\UpdateEventController;
 use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;

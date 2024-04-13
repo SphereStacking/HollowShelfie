@@ -17,7 +17,6 @@ use Inertia\Response;
 
 class GetManageEventController extends Controller
 {
-
     public function __construct(
         private readonly EventEloquentSearchService $eventEloquentSearchService,
         private readonly TagService $tagService

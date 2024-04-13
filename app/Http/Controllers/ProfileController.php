@@ -36,7 +36,7 @@ class ProfileController extends Controller
     /**
      * ユーザーのプロファイルを表示します。
      */
-    public function user(User $user) :Response
+    public function user(User $user): Response
     {
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
@@ -66,7 +66,7 @@ class ProfileController extends Controller
     /**
      * チームのプロファイルを表示します。
      */
-    public function team(Team $team) :Response
+    public function team(Team $team): Response
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す

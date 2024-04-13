@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class EventOrganizer extends Model
 {
@@ -15,7 +15,6 @@ class EventOrganizer extends Model
      * @var array<int, string>
      */
     protected $fillable = ['event_id', 'event_organizeble_type', 'event_organizeble_id'];
-
 
     /**
      * イベント

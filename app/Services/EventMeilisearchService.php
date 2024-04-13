@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\Event;
-use App\Params\EventSearchParams;
 use App\Models\Traits\EventScopes;
-use Meilisearch\Endpoints\Indexes;
-use Illuminate\Support\Facades\Log;
+use App\Params\EventSearchParams;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Meilisearch\Endpoints\Indexes;
 
 /**
  * イベント検索サービス
@@ -44,7 +43,7 @@ class EventMeilisearchService
     /**
      * 公開イベント検索を取得
      */
-    public function getPublishedEventSearch(EventSearchParams $params):LengthAwarePaginator
+    public function getPublishedEventSearch(EventSearchParams $params): LengthAwarePaginator
     {
         $queryParams = [];
         foreach ($params->queryParams as $item) {
@@ -60,6 +59,7 @@ class EventMeilisearchService
             callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
                 $options['filter'] =
                     'published_at < '.Carbon::now()->getTimestamp().$filterString;
+
                 return $meilisearch->rawSearch(
                     $query,
                     $options,

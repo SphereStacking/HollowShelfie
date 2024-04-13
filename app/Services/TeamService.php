@@ -14,6 +14,7 @@ class TeamService
     public function preloadProfileData(Team $team)
     {
         $team->load(['links', 'event_organizers']);
+
         return $team;
     }
 }

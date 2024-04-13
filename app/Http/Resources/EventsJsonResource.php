@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventsJsonResource extends JsonResource

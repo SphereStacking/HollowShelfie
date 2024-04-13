@@ -3,7 +3,6 @@
 namespace App\Models\Traits;
 
 use App\Enums\EventStatus;
-
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Laravel\Scout\Builder as ScoutBuilder;
 
@@ -76,7 +75,6 @@ trait EventScopes
 
     /**
      * トレンドのイベントを取得するスコープ
-
      */
     public function scopeOrderByTrendiness(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
     {
