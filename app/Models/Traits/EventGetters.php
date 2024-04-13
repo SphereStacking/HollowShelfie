@@ -4,7 +4,7 @@ namespace App\Models\Traits;
 
 use App\Enums\EventStatus;
 use Carbon\Carbon;
-use DateTime;
+use DateTimeImmutable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,9 +77,9 @@ trait EventGetters
      */
     public function getEventTimelineStatusAttribute(): string
     {
-        $now = new DateTime();
-        $startDate = new DateTime($this->start_date);
-        $endDate = new DateTime($this->end_date);
+        $now = new DateTimeImmutable();
+        $startDate = new DateTimeImmutable($this->start_date);
+        $endDate = new DateTimeImmutable($this->end_date);
 
         // イベントが開催中かどうかを確認
         if ($now >= $startDate && $now <= $endDate) {
@@ -118,7 +118,7 @@ trait EventGetters
             'year' => $startDate->format('Y'),
             'month' => $startDate->format('m'),
             'day' => $startDate->format('d'),
-            'weekday' => strtolower($startDate->format('D')),
+            'weekday' => mb_strtolower($startDate->format('D')),
             'time' => $startDate->format('H:i'),
         ];
     }
@@ -135,7 +135,7 @@ trait EventGetters
             'year' => $endDate->format('Y'),
             'month' => $endDate->format('m'),
             'day' => $endDate->format('d'),
-            'weekday' => strtolower($endDate->format('D')),
+            'weekday' => mb_strtolower($endDate->format('D')),
             'time' => $endDate->format('H:i'),
         ];
     }

@@ -9,6 +9,7 @@ use App\Models\Traits\EventScopes;
 use App\Models\Traits\EventSetters;
 use App\Traits\HasFileable;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -115,7 +116,7 @@ class Event extends Model
     /**
      * タグを同期する。
      *
-     * @param  array  $tagNames タグ名の配列
+     * @param  array $tagNames タグ名の配列
      * @return void
      */
     public function syncTagsByNames(array $tagNames)
@@ -146,7 +147,7 @@ class Event extends Model
     /**
      * オーガナイザーを同期する
      *
-     * @param  array  $organizersData オーガナイザーのデータ配列
+     * @param array $organizersData オーガナイザーのデータ配列
      */
     public function syncOrganizers(array $organizersData)
     {
@@ -218,7 +219,7 @@ class Event extends Model
                 break;
 
             default:
-                throw new \Exception('Invalid status');
+                throw new Exception('Invalid status');
         }
     }
 
