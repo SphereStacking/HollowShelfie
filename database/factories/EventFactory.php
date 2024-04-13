@@ -53,9 +53,9 @@ class EventFactory extends Factory
                     case EventStatus::CANCELED:
                     case EventStatus::CLOSED:
                     case EventStatus::DRAFT:
-                        return null;
+                        return;
                     default:
-                        return null;
+                        return;
                 }
             },
             'alias' => $this->faker->unique()->slug(2),

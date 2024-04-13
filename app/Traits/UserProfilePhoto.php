@@ -11,7 +11,7 @@ trait UserProfilePhoto
     /**
      * Update the user's profile photo.
      *
-     * @param  string  $storagePath
+     * @param  string $storagePath
      * @return void
      */
     public function updateProfilePhoto(UploadedFile $photo, $storagePath = 'profile-photos')

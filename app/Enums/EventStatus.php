@@ -64,7 +64,7 @@ enum EventStatus: string
     /**
      * ラベルを元にステータス文字列を取得します。
      *
-     * @param  string  $label ラベル
+     * @param  string      $label ラベル
      * @return string|null ラベルに対応するステータス文字列
      */
     public static function getRawStatus(string $label): ?string
@@ -81,7 +81,7 @@ enum EventStatus: string
     /**
      * ステータス文字列を元にラベルを取得します。
      *
-     * @param  string  $status ステータス文字列
+     * @param  string      $status ステータス文字列
      * @return string|null ステータス文字列に対応するラベル
      */
     public static function getStatusLabel(string $status): ?string

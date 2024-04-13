@@ -11,7 +11,7 @@ trait TeamLogo
     /**
      * Update the user's logo photo.
      *
-     * @param  string  $storagePath
+     * @param  string $storagePath
      * @return void
      */
     public function updateTeamLogo(UploadedFile $photo, $storagePath = 'team-logos')

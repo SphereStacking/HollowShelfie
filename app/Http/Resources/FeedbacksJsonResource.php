@@ -19,7 +19,7 @@ class FeedbacksJsonResource extends JsonResource
             $answers = [];
             $answers['debug'] = $response;
             $answers['respondentEmail'] = $response->getRespondentEmail();
-            $answers['gravatar_url'] = config('external_services.gravatar.profile').md5(strtolower(trim($response->getRespondentEmail())));
+            $answers['gravatar_url'] = config('external_services.gravatar.profile').md5(mb_strtolower(trim($response->getRespondentEmail())));
             $answers['comment'] = $response['answers']['35fdddf5']['textAnswers']['answers'][0]->value;
             $processedResponses[] = $answers;
         }

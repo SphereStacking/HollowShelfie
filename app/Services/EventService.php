@@ -8,6 +8,7 @@ use App\Exceptions\EventNotPublishedException;
 use App\Models\Event;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class EventService
     {
         DB::beginTransaction();
         try {
-            $event = new Event;
+            $event = new Event();
             $event->title = $attributes['title'];
             $event->description = $attributes['description'];
             $event->start_date = $attributes['dates'][0] ?? null;
@@ -72,7 +73,7 @@ class EventService
 
             return $event;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             throw $e;
         }
@@ -105,7 +106,7 @@ class EventService
 
             return $event;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
             throw $e;
@@ -209,7 +210,7 @@ class EventService
             DB::rollBack();
             Log::warning($e->getMessage());
             throw $e;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
             throw $e;
@@ -219,7 +220,7 @@ class EventService
     /**
      * 指定されたユーザーがオーガナイザーになっているイベントをページネーション付きで取得
      *
-     * @param  User  $user ユーザーインスタンス
+     * @param  User                                        $user ユーザーインスタンス
      * @return \Illuminate\Pagination\LengthAwarePaginator ページネーションされたイベント
      */
     public function getPaginatedEventsForOrganizer(User $user)
