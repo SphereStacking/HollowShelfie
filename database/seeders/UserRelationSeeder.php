@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Badge;
-use App\Models\Event;
 use App\Models\Link;
 use App\Models\Tag;
 use App\Models\User;
+use Closure;
 use Illuminate\Database\Seeder;
 
 class UserRelationSeeder extends Seeder
@@ -35,8 +35,6 @@ class UserRelationSeeder extends Seeder
 
     /**
      * ランダムなモデルをイベントに紐づける。
-     *
-     * @param    $event
      */
     private function attachRandomModels($model, string $relationMethod, string $modelClass, int $count): void
     {
@@ -46,10 +44,8 @@ class UserRelationSeeder extends Seeder
 
     /**
      * ランダムなモデルをイベントに紐づける。際にpivotデータを紐づける。
-     *
-     * @param  Event  $event
      */
-    private function attachRandomModelsPivot($model, string $relationMethod, string $modelClass, int $count, \Closure $func): void
+    private function attachRandomModelsPivot($model, string $relationMethod, string $modelClass, int $count, Closure $func): void
     {
         $ids = $modelClass::inRandomOrder()->limit($count)->pluck('id');
         $attachData = call_user_func($func, $model);

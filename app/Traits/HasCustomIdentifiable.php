@@ -74,7 +74,7 @@ trait HasCustomIdentifiable
     /**
      * カスタム識別子を更新する
      *
-     * @param  string  $newAliasName
+     * @param string $newAliasName
      *
      * @throws ValidationException
      */
@@ -92,7 +92,7 @@ trait HasCustomIdentifiable
     /**
      * カスタム識別子を更新できるかどうかを判断する
      *
-     * @param  string  $newAliasName
+     * @param  string $newAliasName
      * @return bool
      */
     public function canUpdateCustomIdentifiable($newAliasName)
@@ -124,7 +124,7 @@ trait HasCustomIdentifiable
     /**
      * バリデーションルールを取得する
      *
-     * @param  string  $newAliasName
+     * @param  string $newAliasName
      * @return array
      */
     protected function getValidationRules($newAliasName)

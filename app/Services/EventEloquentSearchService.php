@@ -213,7 +213,7 @@ class DateQueryParam extends QueryParam implements IQueryParam
 
     public function formatValue($value)
     {
-        if (is_string($value) && strpos($value, '~') !== false) {
+        if (is_string($value) && mb_strpos($value, '~') !== false) {
             [$start, $end] = explode('~', $value);
 
             return [$start, $end];

@@ -24,7 +24,7 @@ class FollowRequest extends FormRequest
     {
         return [
             'id' => 'required',
-            'type' => ['required', new FollowableType],
+            'type' => ['required', new FollowableType()],
         ];
     }
 }

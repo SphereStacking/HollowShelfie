@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\File;
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -10,12 +11,12 @@ class FileService
 {
     public function uploadFile(UploadedFile $uploadedFile, $fileable): File
     {
-        $folderName = strtolower(class_basename($fileable)).'/'.$fileable->id;
+        $folderName = mb_strtolower(class_basename($fileable)).'/'.$fileable->id;
         $filename = $uploadedFile->hashName();
         $savePath = Storage::disk('public')->putFileAs($folderName, $uploadedFile, $filename);
 
         if (! $savePath) {
-            throw new \Exception('ファイルの保存に失敗しました。');
+            throw new Exception('ファイルの保存に失敗しました。');
         }
 
         $file = $fileable->files()->create([

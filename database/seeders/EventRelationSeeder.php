@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\TimeTablePerformers;
 use App\Models\User;
 use Carbon\Carbon;
+use Closure;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -93,8 +94,6 @@ class EventRelationSeeder extends Seeder
 
     /**
      * ランダムなモデルをイベントに紐づける。
-     *
-     * @param    $event
      */
     private function attachRandomModels($model, string $relationMethod, string $modelClass, int $count): void
     {
@@ -104,10 +103,8 @@ class EventRelationSeeder extends Seeder
 
     /**
      * ランダムなモデルをイベントに紐づける。際にpivotデータを紐づける。
-     *
-     * @param  Event  $event
      */
-    private function attachRandomModelsPivot($model, string $relationMethod, string $modelClass, int $count, \Closure $func): void
+    private function attachRandomModelsPivot($model, string $relationMethod, string $modelClass, int $count, Closure $func): void
     {
         $ids = $modelClass::inRandomOrder()->limit($count)->pluck('id');
         $attachData = call_user_func($func, $model);
@@ -121,8 +118,8 @@ class EventRelationSeeder extends Seeder
     /**
      * 主催者データを生成するヘルパーメソッド
      *
-     * @param  int  $eventId
-     * @param  string  $modelClass
+     * @param  int    $eventId
+     * @param  string $modelClass
      * @return array
      */
     private function createOrganizerData($eventId, $modelClass)
@@ -130,7 +127,7 @@ class EventRelationSeeder extends Seeder
         $modelInstance = $modelClass::inRandomOrder()->first();
         if (is_null($modelInstance)) {
             // レコードが見つからない場合はnullを返す
-            return null;
+            return;
         }
 
         return [

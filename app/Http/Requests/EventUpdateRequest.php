@@ -78,7 +78,7 @@ class EventUpdateRequest extends FormRequest
         $errorsPerRow = [];
         foreach ($validator->errors()->getMessages() as $field => $messages) {
             // 'instances.*'にマッチするフィールド名の場合、エラーを集約する
-            if (strpos($field, 'instances.') === 0) {
+            if (mb_strpos($field, 'instances.') === 0) {
                 $errorsPerRow['instances'][] = $messages[0];
             } else {
                 $errorsPerRow[$field] = $messages;
