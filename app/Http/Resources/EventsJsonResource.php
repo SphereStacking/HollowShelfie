@@ -3,17 +3,18 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventsJsonResource extends JsonResource
 {
     /**
-     * リソースを配列に変換します。
+     * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         return $this->resource->map(function ($item) {
             return [
@@ -38,18 +39,18 @@ class EventsJsonResource extends JsonResource
                 'organizers' => $item->organizers->map(function ($organizeble) {
                     return [
                         'profile_url' => $organizeble->event_organizeble->profile_url,
-                        'id' => $organizeble->event_organizeble_id,
-                        'type' => $organizeble->event_organizeble_type,
-                        'image_url' => $organizeble->event_organizeble_type === User::class
+                        'id' => $organizeble->event_organizeble->id,
+                        'type' => $organizeble->event_organizeble->type,
+                        'image_url' => $organizeble->event_organizeble->type === User::class
                             ? $organizeble->event_organizeble->profile_photo_url
                             : $organizeble->event_organizeble->team_logo_url,
                         'name' => $organizeble->event_organizeble->name,
-                        'links' => $organizeble->event_organizeble->links->map(function ($link) {
-                            return [
-                                'label' => $link->label,
-                                'link' => $link->link,
-                            ];
-                        }),
+                        // 'links' => $organizeble->event_organizeble->links->map(function ($link) {
+                        //     return [
+                        //         'label' => $link->label,
+                        //         'link' => $link->link,
+                        //     ];
+                        // }),
                     ];
                 }),
                 'performers' => $item->event_time_tables->flatMap(function ($time_table) {
@@ -61,12 +62,12 @@ class EventsJsonResource extends JsonResource
                         'id' => $performer->performable_id,
                         'profile_url' => $performer->performable->profile_url,
                         'name' => $performer->performable->name,
-                        'links' => $performer->performable->links->map(function ($link) {
-                            return [
-                                'label' => $link->label,
-                                'link' => $link->link,
-                            ];
-                        }),
+                        // 'links' => $performer->performable->links->map(function ($link) {
+                        //     return [
+                        //         'label' => $link->label,
+                        //         'link' => $link->link,
+                        //     ];
+                        // }),
                         'type' => $performer->performable_type,
                         'image_url' => $performer->performable_type === User::class
                             ? $performer->performable->profile_photo_url
@@ -86,6 +87,6 @@ class EventsJsonResource extends JsonResource
                     'is_bookmark' => $item->is_bookmark ?? false,
                 ],
             ];
-        });
+        })->toArray();
     }
 }

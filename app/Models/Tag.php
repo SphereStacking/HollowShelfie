@@ -2,38 +2,41 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
 {
     use HasFactory;
     use Searchable;
 
+    /**
+     * @var array<int, string>
+     */
     protected $fillable = ['name'];
 
-    public function taggables()
+    public function taggables(): HasMany
     {
         return $this->hasMany(Taggable::class);
     }
 
-    public function events()
+    public function events(): MorphToMany
     {
         return $this->morphedByMany(Event::class, 'taggable');
     }
 
-    public function users()
+    public function users(): MorphToMany
     {
         return $this->morphedByMany(User::class, 'taggable');
     }
 
     /**
      * MeiliSearch 検索可能な配列に変換します。
-     *
-     * @return array
      */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         $array = $this->only(
             [

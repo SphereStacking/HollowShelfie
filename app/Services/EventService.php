@@ -52,8 +52,6 @@ class EventService
     {
         DB::beginTransaction();
         try {
-            Log::debug($attributes);
-
             $event = new Event;
             $event->title = $attributes['title'];
             $event->description = $attributes['description'];
@@ -76,7 +74,6 @@ class EventService
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
             throw $e;
         }
     }
@@ -245,7 +242,8 @@ class EventService
     {
         $status = $status ?? EventStatus::PUBLIC_SEARCH_STATUSES;
 
-        return Event::where('published_at', '<=', Carbon::now())
+        return Event::with(['organizers.event_organizeble'])
+            ->where('published_at', '<=', Carbon::now())
             ->whereIn('status', $status)
             ->inRandomOrder()
             ->limit($limit)

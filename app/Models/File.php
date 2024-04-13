@@ -2,34 +2,47 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class File extends Model
 {
     use HasFactory;
 
+    /**
+     * @var array<int, string>
+     */
     protected $fillable = ['path', 'type', 'name', 'original_name'];
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $appends = [
         'public_url',
     ];
 
-    public function getPublicUrlAttribute()
+    /**
+     * ファイルへのアクセスURL
+     */
+    public function getPublicUrlAttribute(): string
     {
         return Storage::disk('public')->url($this->path.'/'.$this->name);
     }
 
-    public function deleteFile()
+    /**
+     * ファイルの削除
+     */
+    public function deleteFile(): void
     {
         Storage::disk('public')->delete($this->path.'/'.$this->name);
     }
 
-    public function fileable()
+    /**
+     * file
+     */
+    public function fileable(): MorphTo
     {
         return $this->morphTo();
     }

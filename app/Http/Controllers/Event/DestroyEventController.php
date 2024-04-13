@@ -7,11 +7,9 @@ use App\Services\EventService;
 
 class DestroyEventController extends Controller
 {
-    private $eventService;
-
-    public function __construct(EventService $eventService)
-    {
-        $this->eventService = $eventService;
+    public function __construct(
+        private readonly EventService $eventService,
+    ) {
     }
 
     public function __invoke($alias)

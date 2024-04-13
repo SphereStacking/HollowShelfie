@@ -10,12 +10,12 @@ use App\Models\Traits\EventScopes;
 use App\Models\Traits\EventGetters;
 use App\Models\Traits\EventSetters;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Traits\EventRelations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Event extends Model
@@ -30,12 +30,12 @@ class Event extends Model
     use SoftDeletes;
 
     /**
-     * @var array 可変の属性
+     * @var array<int, string>
      */
     protected $fillable = ['title', 'description', 'status '];
 
     /**
-     * @var array
+     * @var array<int, string>
      */
     protected $appends = [
         'created_user', 'status_label', 'tags', 'category_names',
@@ -43,6 +43,9 @@ class Event extends Model
         'short_good_count', 'event_timeline_status',
     ];
 
+    /**
+     * @var array<string, string>
+     */
     protected $casts = [
         'published_at' => 'datetime',
     ];
@@ -70,10 +73,8 @@ class Event extends Model
 
     /**
      * ルートバインディングを解決する
-     *
-     * @return Model|null
      */
-    public function resolveRouteBinding($value, $field = null)
+    public function resolveRouteBinding($value, $field = null): Model|null
     {
         return $this->where('alias', $value)->first();
     }
@@ -81,10 +82,8 @@ class Event extends Model
 
     /**
      * MeiliSearch 検索可能な配列に変換します。
-     *
-     * @return array
      */
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         $array = $this->only(
             [
@@ -100,14 +99,14 @@ class Event extends Model
         $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;
         $array['start_date'] = $this->published_at ? Carbon::parse($this->start_date)->getTimestamp() : null;
         $array['end_date'] = $this->published_at ? Carbon::parse($this->end_date)->getTimestamp() : null;
-        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
+        $array['tags'] = $this->tags()->pluck('name')->toArray();
         $array['instances'] = $this->instances()->get()->map(function ($instance) {
             return [
-                'location' => $instance->location,
+                'location' => $instance->display_name,
                 'instance_type_name' => $instance->instance_type_name,
             ];
         })->toArray();
-        $array['categories'] = $this->categories()->get()->pluck('name')->toArray();
+        $array['categories'] = $this->categories()->pluck('name')->toArray();
         $array['organizers'] = $this->organizers->pluck('event_organizeble.name')->toArray();
         $array['performers'] = $this->event_time_tables->flatMap(function ($time_table) {
             return $time_table->performers->pluck('performable.name');
@@ -136,10 +135,8 @@ class Event extends Model
     /**
      * カテゴリを同期する。
      *
-     * @param  array  $categoryIds カテゴリIDの配列
-     * @return void
      */
-    public function syncCategoriesByNames(array $categoryNames)
+    public function syncCategoriesByNames(array $categoryNames) : void
     {
         $existingCategories = Category::whereIn('name', $categoryNames)->get()->keyBy('name');
         $categoryIds = collect($categoryNames)->map(function ($categoryName) use ($existingCategories) {
@@ -177,24 +174,17 @@ class Event extends Model
 
     /**
      * タイムテーブルを同期する。
-     *
-     * @param  array  $categoryIds カテゴリIDの配列
-     * @return void
      */
-    public function syncTimeTables(array $timeTables)
+    public function syncTimeTables(array $timeTables) : void
     {
-
         // EventTimeTableのIDを取得
         $timeTableIds = $this->event_time_tables()->pluck('id');
         // 関連するTimeTablePerformersを一括で削除
         TimeTablePerformers::whereIn('event_time_table_id', $timeTableIds)->delete();
 
         $this->event_time_tables()->delete();
-        Log::debug('timeTables');
         // 新しいタイムテーブルデータ作成
         foreach ($timeTables as $timeTable) {
-            Log::debug($timeTable);
-
             $eventTimeTable = $this->event_time_tables()->create([
                 'start_time' => $timeTable['times'][0] ?? null,
                 'end_time' => $timeTable['times'][1] ?? null,
@@ -214,7 +204,7 @@ class Event extends Model
         }
     }
 
-    public function updateEventStatus(EventStatus $newStatus)
+    public function updateEventStatus(EventStatus $newStatus) : void
     {
 
         switch ($newStatus) {
@@ -257,7 +247,7 @@ class Event extends Model
         if ($user === null) {
             return false;
         }
-        return $this->event_create_user_id === $user->id;
+        return $this->event_create_user_id === $user->getAuthIdentifier();
     }
 
     /**
@@ -274,7 +264,7 @@ class Event extends Model
             return true;
         }
         // ログインユーザーがイベントの作成者か
-        return $this->event_create_user_id === $user?->id;
+        return $this->event_create_user_id === $user?->getAuthIdentifier();
     }
 
 }

@@ -56,7 +56,6 @@ class EventUpdateRequest extends FormRequest
     public function rules(): array
     {
 
-        \Log::debug($this->all());
         //ドラフトのとき
         if ($this->input('status') == EventStatus::DRAFT->value) {
             return [];

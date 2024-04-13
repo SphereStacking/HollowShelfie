@@ -28,31 +28,31 @@ class UpdateViewCounts extends Command
      */
     public function handle()
     {
-        $keys = Redis::keys('*:viewcount');
-        $updates = [];
-        foreach ($keys as $key) {
-            // list($prefix, $viewable_type, $viewable_id, $countKey) = explode(':', $key);
-            $value = Redis::get($key);
-            Log::debug($key);
-            Log::debug($value);
-            // $view = View::where('viewable_type', $viewable_type)
-            //     ->where('viewable_id', $viewable_id)
-            //     ->first();
-            // if ($view && $value) {
-            //     $updates[] = [
-            //         'id' => $view->id,
-            //         'count' => $value
-            //     ];
-            // }
-        }
+        // $keys = Redis::keys('*:viewcount');
+        // $updates = [];
+        // foreach ($keys as $key) {
+        //     list($prefix, $viewable_type, $viewable_id, $countKey) = explode(':', $key);
+        //     $value = Redis::get($key);
+        //     Log::debug($key);
+        //     Log::debug($value);
+        //     $view = View::where('viewable_type', $viewable_type)
+        //         ->where('viewable_id', $viewable_id)
+        //         ->first();
+        //     if ($view && $value) {
+        //         $updates[] = [
+        //             'id' => $view->id,
+        //             'count' => $value
+        //         ];
+        //     }
+        // }
 
-        if (! empty($updates)) {
-            foreach ($updates as $update) {
-                View::where('id', $update['id'])->update(['count' => $update['count']]);
-            }
-        }
+        // if (! empty($updates)) {
+        //     foreach ($updates as $update) {
+        //         View::where('id', $update['id'])->update(['count' => $update['count']]);
+        //     }
+        // }
 
         // デバッグログを出力
-        Log::debug('View counts updated', ['updates' => $updates]);
+        // Log::debug('View counts updated', ['updates' => $updates]);
     }
 }

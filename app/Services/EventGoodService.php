@@ -16,7 +16,7 @@ class EventGoodService
         }
     }
 
-    public function detachEvent(User| Authenticatable | null $user, Event $event): bool
+    public function detachEvent(User| Authenticatable | null $user, Event $event): int
     {
         return $user->good_events()->detach($event->id);
     }

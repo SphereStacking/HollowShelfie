@@ -11,15 +11,10 @@ use Inertia\Response;
 
 class ShowEventController extends Controller
 {
-    private $eventService;
-
-    private $tagService;
-
-    public function __construct(EventService $eventService, TagService $tagService)
-    {
-        $this->eventService = $eventService;
-        $this->tagService = $tagService;
-    }
+    public function __construct(
+        private readonly EventService $eventService,
+        private readonly TagService $tagService
+    ) {}
 
     public function __invoke($alias): Response
     {

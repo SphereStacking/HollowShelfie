@@ -5,17 +5,17 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\Event;
 use App\Enums\EventStatus;
-use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * イベントブックマークサービスクラス
  */
-class eventBookmarkService
+class EventBookmarkService
 {
     /**
      * ユーザーがイベントをブックマークする
      */
-    public function attachEvent(User| Authenticatable | null $user, Event $event)
+    public function attachEvent(User| Authenticatable | null $user, Event $event): void
     {
         if (! $this->isEventBookmarkedByUser($user, $event)) {
             $user->bookmark_events()->attach($event->id);

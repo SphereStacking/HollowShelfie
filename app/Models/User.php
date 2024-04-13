@@ -91,25 +91,25 @@ class User extends Authenticatable
 
     /**
      * 関連付けられているlink
-     *
-     * @return string|null
      */
-    public function getLinksAttribute()
+    public function getLinksAttribute(): array
     {
-        return $this->links()->get();
-    }
-
-    public function getProfileUrlAttribute()
-    {
-        return route('user.profile.show', $this->customIdentifiable->alias_name);
+        return $this->links()->get()->toArray();
     }
 
     /**
-     * MeiliSearch 検索可能な配列に変換します。
-     *
-     * @return array
+     * profileページへのURL
      */
-    public function toSearchableArray()
+    public function getProfileUrlAttribute(): string
+    {
+        return route('user.profile.show', $this->getScreenNameAttribute());
+    }
+
+
+    /**
+     * MeiliSearch 検索可能な配列に変換します。
+     */
+    public function toSearchableArray(): array
     {
         $array = $this->only(
             [
@@ -118,8 +118,13 @@ class User extends Authenticatable
                 'bio',
             ]
         );
-        $array['tags'] = $this->tags()->get()->pluck('name')->toArray();
-
+        $array['tags'] = $this->tags()->pluck('name')->toArray();
         return $array;
+    }
+
+
+    public function getRouteBindingRelations(): array
+    {
+        return ['links', 'tags'];
     }
 }

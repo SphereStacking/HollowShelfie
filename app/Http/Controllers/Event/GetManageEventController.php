@@ -17,14 +17,11 @@ use Inertia\Response;
 
 class GetManageEventController extends Controller
 {
-    private EventEloquentSearchService $eventEloquentSearchService;
 
-    private TagService $tagService;
-
-    public function __construct(EventEloquentSearchService $eventEloquentSearchService, TagService $tagService)
-    {
-        $this->eventEloquentSearchService = $eventEloquentSearchService;
-        $this->tagService = $tagService;
+    public function __construct(
+        private readonly EventEloquentSearchService $eventEloquentSearchService,
+        private readonly TagService $tagService
+    ) {
     }
 
     public function __invoke(Request $request): Response
@@ -42,7 +39,7 @@ class GetManageEventController extends Controller
         return Inertia::render('Event/EventManage', [
             'events' => new EventsPaginatedJsonResource($events),
             'categories' => fn () => Category::all(),
-            'instanceTypes' => fn () => InstanceType::all()->pluck('name'),
+            'instanceTypes' => fn () => InstanceType::query()->pluck('name'),
             'statuses' => fn () => EventStatus::ADMIN_SEARCH_STATUSES,
             'trendTags' => fn () => $this->tagService->getTrendTagNames(),
         ]);

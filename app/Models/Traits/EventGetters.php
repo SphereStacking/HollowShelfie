@@ -2,29 +2,26 @@
 
 namespace App\Models\Traits;
 
-use App\Enums\EventStatus;
-use Carbon\Carbon;
 use DateTime;
+use Carbon\Carbon;
+use App\Enums\EventStatus;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 trait EventGetters
 {
     /**
      * イベントのオーガナイザー名を取得
-     *
-     * @return string
      */
-    public function getCreatedUserAttribute()
+    public function getCreatedUserAttribute(): string
     {
         return $this->event_create_user->name;
     }
 
     /**
      * イベントのタグ名を取得
-     *
-     * @return array
      */
-    public function getTagsAttribute()
+    public function getTagsAttribute(): array
     {
         // タグのnameプロパティだけを配列にして返す
         return $this->tags()->pluck('name')->toArray();
@@ -32,30 +29,27 @@ trait EventGetters
 
     /**
      * ユーザーがイベントを"bookmark"しているか確認
-     *
-     * @return bool
      */
-    public function getIsBookmarkAttribute()
+    public function getIsBookmarkAttribute(): bool
     {
-        return Auth::user() ? Auth::user()->bookmark_events->contains($this->id) : false;
+        $user = Auth::user();
+        return $user ? $user->bookmark_events->contains($this->id) : false;
+
     }
 
     /**
      * ユーザーがイベントを"good"しているか確認
-     *
-     * @return bool
      */
-    public function getIsGoodAttribute()
+    public function getIsGoodAttribute(): bool
     {
-        return Auth::user() ? Auth::user()->good_events->contains($this->id) : false;
+        $user = Auth::user();
+        return $user ? $user->good_events->contains($this->id) : false;
     }
 
     /**
      * 関連付けられているカテゴリの中から最初の名前を返す
-     *
-     * @return string|null
      */
-    public function getCategoryNameAttribute()
+    public function getCategoryNameAttribute(): string|null
     {
         return $this->categories->first() ? $this->categories->first()->name : null;
     }
@@ -63,29 +57,24 @@ trait EventGetters
     /**
      * 関連付けられているカテゴリの名前を返す
      *
-     * @return string|null
      */
-    public function getCategoryNamesAttribute()
+    public function getCategoryNamesAttribute(): array
     {
-        return $this->categories ? $this->categories->pluck('name')->toArray() : null;
+        return $this->categories->pluck('name')->toArray();
     }
 
     /**
-     * 関連付けられているインスタンスの中から最初の名前を返す
-     *
-     * @return string|null
+     * 関連付けられているインスタンス
      */
-    public function getInstancesAttribute()
+    public function getInstancesAttribute(): Collection
     {
         return $this->instances()->get();
     }
 
     /**
      * 現在からイベント開始までの時間（時間単位）を取得
-     *
-     * @return float
      */
-    public function getEventTimelineStatusAttribute()
+    public function getEventTimelineStatusAttribute(): string
     {
         $now = new DateTime();
         $startDate = new DateTime($this->start_date);
@@ -118,10 +107,8 @@ trait EventGetters
 
     /**
      * 開始日をフォーマット
-     *
-     * @return array
      */
-    public function getFormattedStartDateAttribute()
+    public function getFormattedStartDateAttribute(): array
     {
         $startDate = new Carbon($this->start_date);
         $startDate->setLocale('ja');
@@ -137,10 +124,8 @@ trait EventGetters
 
     /**
      * 終了日をフォーマット
-     *
-     * @return array
      */
-    public function getFormattedEndDateAttribute()
+    public function getFormattedEndDateAttribute(): array
     {
         $endDate = new Carbon($this->end_date);
         $endDate->setLocale('ja');
@@ -156,10 +141,8 @@ trait EventGetters
 
     /**
      * Event開催期間
-     *
-     * @return string
      */
-    public function getPeriodAttribute()
+    public function getPeriodAttribute(): string
     {
         $startDate = new Carbon($this->start_date);
         $endDate = new Carbon($this->end_date);
@@ -172,14 +155,18 @@ trait EventGetters
         }
     }
 
-    // good数を取得する
-    public function getGoodCountAttribute()
+    /**
+     * good数 省略無し
+     */
+    public function getGoodCountAttribute(): int
     {
         return $this->good_users()->count();
     }
 
-    // good数を短い形式で取得する
-    public function getShortGoodCountAttribute()
+    /**
+     * good数の短い表記
+     */
+    public function getShortGoodCountAttribute(): string
     {
         $count = $this->good_users()->count();
         $suffix = '';
@@ -195,8 +182,10 @@ trait EventGetters
         return round($count, 1).$suffix;
     }
 
-    // ステータスのlabelを返す
-    public function getStatusLabelAttribute()
+    /**
+     * statusのlabel
+     */
+    public function getStatusLabelAttribute(): string
     {
         return EventStatus::getStatusLabel($this->status);
     }
