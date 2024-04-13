@@ -13,7 +13,7 @@ class FollowBaseController extends Controller
     /**
      * レスポンスを生成します。
      *
-     * @param  string  $message
+     * @param  string                                                          $message
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function generateResponse($message, $target)

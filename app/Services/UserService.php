@@ -32,8 +32,7 @@ class UserService
     /**
      * フォローページネーションを取得する
      *
-     * @param  int  $perPage
-     * @return mixed
+     * @param int $perPage
      */
     public function getFollowPagination(User $user, $perPage = 10)
     {
@@ -50,8 +49,7 @@ class UserService
     /**
      * フォロワーページネーションを取得する
      *
-     * @param  int  $perPage
-     * @return mixed
+     * @param int $perPage
      */
     public function getFollowerPagination(User $user, $perPage = 10)
     {

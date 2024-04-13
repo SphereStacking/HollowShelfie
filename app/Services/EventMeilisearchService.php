@@ -81,9 +81,6 @@ class EventMeilisearchService
 
     /**
      * 検索クエリを処理
-     *
-     * @param $query
-     * @param $item
      */
     private function makeFilter(array $queryParams)
     {
@@ -189,7 +186,7 @@ class DateScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 
     public function formatValue()
     {
-        if (is_string($this->value) && strpos($this->value, '~') !== false) {
+        if (is_string($this->value) && mb_strpos($this->value, '~') !== false) {
             [$start, $end] = explode('~', $this->value);
 
             return [Carbon::parse($start)->getTimestamp(), Carbon::parse($end)->getTimestamp()];

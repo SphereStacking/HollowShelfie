@@ -18,7 +18,7 @@ class UpdateConnectedAccount implements UpdatesConnectedAccounts
         Gate::forUser($user)->authorize('update', $connectedAccount);
 
         $connectedAccount->forceFill([
-            'provider' => strtolower($provider),
+            'provider' => mb_strtolower($provider),
             'provider_id' => $providerUser->getId(),
             'name' => $providerUser->getName(),
             'nickname' => $providerUser->getNickname(),

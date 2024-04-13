@@ -14,8 +14,8 @@ class ViewCountService
     /**
      * モデルのビューカウントを増やす
      *
-     * @param  Model  $model ビューカウントを増やすモデル
-     * @param  bool  $skipSessionCheck セッションチェックをスキップするかどうか
+     * @param Model $model            ビューカウントを増やすモデル
+     * @param bool  $skipSessionCheck セッションチェックをスキップするかどうか
      */
     public function incrementCount(Model $model, $skipSessionCheck = false)
     {

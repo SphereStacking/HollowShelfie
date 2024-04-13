@@ -16,7 +16,7 @@ class CreateConnectedAccount implements CreatesConnectedAccounts
     {
         return Socialstream::connectedAccountModel()::forceCreate([
             'user_id' => $user->id,
-            'provider' => strtolower($provider),
+            'provider' => mb_strtolower($provider),
             'provider_id' => $providerUser->getId(),
             'name' => $providerUser->getName(),
             'nickname' => $providerUser->getNickname(),
