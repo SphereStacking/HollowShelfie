@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TagWithCountJsonResource extends JsonResource

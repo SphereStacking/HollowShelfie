@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use App\Enums\EventStatus;
-use App\Traits\HasFileable;
-use Laravel\Scout\Searchable;
-use App\Models\Traits\EventScopes;
 use App\Models\Traits\EventGetters;
-use App\Models\Traits\EventSetters;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Traits\EventRelations;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Traits\EventScopes;
+use App\Models\Traits\EventSetters;
+use App\Traits\HasFileable;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 class Event extends Model
 {
@@ -74,11 +72,10 @@ class Event extends Model
     /**
      * ルートバインディングを解決する
      */
-    public function resolveRouteBinding($value, $field = null): Model|null
+    public function resolveRouteBinding($value, $field = null): ?Model
     {
         return $this->where('alias', $value)->first();
     }
-
 
     /**
      * MeiliSearch 検索可能な配列に変換します。
@@ -134,9 +131,8 @@ class Event extends Model
 
     /**
      * カテゴリを同期する。
-     *
      */
-    public function syncCategoriesByNames(array $categoryNames) : void
+    public function syncCategoriesByNames(array $categoryNames): void
     {
         $existingCategories = Category::whereIn('name', $categoryNames)->get()->keyBy('name');
         $categoryIds = collect($categoryNames)->map(function ($categoryName) use ($existingCategories) {
@@ -175,7 +171,7 @@ class Event extends Model
     /**
      * タイムテーブルを同期する。
      */
-    public function syncTimeTables(array $timeTables) : void
+    public function syncTimeTables(array $timeTables): void
     {
         // EventTimeTableのIDを取得
         $timeTableIds = $this->event_time_tables()->pluck('id');
@@ -204,7 +200,7 @@ class Event extends Model
         }
     }
 
-    public function updateEventStatus(EventStatus $newStatus) : void
+    public function updateEventStatus(EventStatus $newStatus): void
     {
 
         switch ($newStatus) {
@@ -242,11 +238,12 @@ class Event extends Model
     /**
      * 指定されたユーザーがイベントを操作できるかどうかをチェックします。
      */
-    public function canUserOperate(User | Authenticatable | Null $user): bool
+    public function canUserOperate(User|Authenticatable|null $user): bool
     {
         if ($user === null) {
             return false;
         }
+
         return $this->event_create_user_id === $user->getAuthIdentifier();
     }
 
@@ -257,14 +254,14 @@ class Event extends Model
      * - イベントが公開されている（published_atが過去の日時）
      * - イベントが非公開の場合、イベントの作成者であれば表示可能
      */
-    public function canUserShow(User | Authenticatable | Null $user): bool
+    public function canUserShow(User|Authenticatable|null $user): bool
     {
         // イベントが公開されているか
         if (isset($this->published_at) && $this->published_at->isPast()) {
             return true;
         }
+
         // ログインユーザーがイベントの作成者か
         return $this->event_create_user_id === $user?->getAuthIdentifier();
     }
-
 }

@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\Models\User;
-use Inertia\Inertia;
-use App\Services\UserService;
-use App\Params\EventSearchParams;
 use App\Http\Controllers\Controller;
-use App\Services\EventMeilisearchService;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
+use App\Models\User;
+use App\Params\EventSearchParams;
+use App\Services\EventMeilisearchService;
+use App\Services\UserService;
+use Inertia\Inertia;
 
 class GetUserProfileController extends Controller
 {
     public function __construct(
         private UserService $userService,
         private EventMeilisearchService $eventMeilisearchService
-    ) {}
-
+    ) {
+    }
 
     /**
      * ユーザーのプロファイルを表示します。

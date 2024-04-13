@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\Event;
 use App\Enums\EventStatus;
+use App\Models\Event;
+use App\Models\User;
 use App\Params\EventEloquentSearchParams;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -41,7 +41,7 @@ class EventEloquentSearchService
     /**
      * Userイベント検索を取得
      */
-    public function getEventSearchByUser(User|Authenticatable $user, EventEloquentSearchParams $params) :LengthAwarePaginator
+    public function getEventSearchByUser(User|Authenticatable $user, EventEloquentSearchParams $params): LengthAwarePaginator
     {
         $query = $user->create_events();
 

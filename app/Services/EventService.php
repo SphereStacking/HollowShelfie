@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Event;
 use App\Enums\EventStatus;
-use Illuminate\Support\Str;
+use App\Exceptions\CannotOperateEventException;
+use App\Exceptions\EventNotPublishedException;
+use App\Models\Event;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
-use App\Exceptions\EventNotPublishedException;
-use App\Exceptions\CannotOperateEventException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 
 class EventService
 {
@@ -140,7 +140,6 @@ class EventService
 
     }
 
-
     /**
      * イベントをリレーション含めて詳細を取得する。
      */
@@ -157,7 +156,7 @@ class EventService
         $user = Auth::user();
 
         // イベントが未公開（公開日が未来）かつログインユーザーがイベントの作成者でない場合、エラーを投げる
-        if (!$event->canUserShow($user)) {
+        if (! $event->canUserShow($user)) {
             throw new EventNotPublishedException('イベントはまだ公開されていません。');
         }
 
@@ -177,7 +176,7 @@ class EventService
             throw new ModelNotFoundException('Eventが見つかりませんでした。');
         }
         $user = Auth::user();
-        if (!$event->canUserShow($user)) {
+        if (! $event->canUserShow($user)) {
             throw new EventNotPublishedException('イベントはまだ公開されていません。');
         }
 

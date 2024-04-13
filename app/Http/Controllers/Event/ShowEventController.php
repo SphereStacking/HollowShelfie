@@ -14,7 +14,8 @@ class ShowEventController extends Controller
     public function __construct(
         private readonly EventService $eventService,
         private readonly TagService $tagService
-    ) {}
+    ) {
+    }
 
     public function __invoke($alias): Response
     {

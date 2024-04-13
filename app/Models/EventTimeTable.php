@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EventTimeTable extends Model
 {
@@ -41,7 +41,7 @@ class EventTimeTable extends Model
     /**
      * 出演時間
      */
-    public function getPerformanceTimeAttribute() : string
+    public function getPerformanceTimeAttribute(): string
     {
         return $this->start_time.' ~ '.$this->end_time;
     }
@@ -49,7 +49,7 @@ class EventTimeTable extends Model
     /**
      * 開始時間
      */
-    public function getStartTimeAttribute($value) : string
+    public function getStartTimeAttribute($value): string
     {
         return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
     }
@@ -57,7 +57,7 @@ class EventTimeTable extends Model
     /**
      * 終了時間
      */
-    public function getEndTimeAttribute($value) : string
+    public function getEndTimeAttribute($value): string
     {
         return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
     }
@@ -77,5 +77,4 @@ class EventTimeTable extends Model
     {
         return $this->hasMany(TimeTablePerformers::class);
     }
-
 }

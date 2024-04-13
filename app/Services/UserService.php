@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 /**
  * ユーザーサービスクラス
@@ -22,9 +21,8 @@ class UserService
 
     /**
      * プロフィールデータを事前ロードする
-     * @return User
      */
-    public function preloadProfileData(User $user) : User
+    public function preloadProfileData(User $user): User
     {
         // $user->links();
         // $user->tags();

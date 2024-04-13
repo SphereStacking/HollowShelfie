@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Instance extends Model
 {
@@ -33,7 +33,7 @@ class Instance extends Model
     /**
      * インスタンスの名前を返す
      */
-    public function getInstanceTypeNameAttribute(): string|null
+    public function getInstanceTypeNameAttribute(): ?string
     {
         return $this->instance_type->name;
     }
@@ -41,7 +41,7 @@ class Instance extends Model
     /**
      * イベントに紐づくinstance
      */
-    public function instance_type():BelongsTo
+    public function instance_type(): BelongsTo
     {
         return $this->belongsTo(InstanceType::class);
     }

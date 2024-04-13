@@ -15,7 +15,6 @@ use Inertia\Inertia;
 
 class GetEventSearchController extends Controller
 {
-
     public function __construct(
         private readonly EventMeilisearchService $eventMeilisearchService,
         private readonly TagService $tagService,

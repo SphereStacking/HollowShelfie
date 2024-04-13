@@ -2,16 +2,16 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Tag;
-use App\Models\Link;
 use App\Models\Badge;
 use App\Models\Event;
-use App\Models\SocialAccount;
 use App\Models\EventOrganizer;
+use App\Models\Link;
+use App\Models\SocialAccount;
+use App\Models\Tag;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * ユーザー関連のトレイト
@@ -21,7 +21,7 @@ trait UserRelations
     /**
      * 外部認証アカウントリレーション
      */
-    public function social_accounts() :HasMany
+    public function social_accounts(): HasMany
     {
         return $this->hasMany(SocialAccount::class);
     }
@@ -29,7 +29,7 @@ trait UserRelations
     /**
      * ブックマークイベントリレーション
      */
-    public function bookmark_events() :BelongsToMany
+    public function bookmark_events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_user_bookmark');
     }
@@ -37,7 +37,7 @@ trait UserRelations
     /**
      * グッドイベントリレーション
      */
-    public function good_events() :BelongsToMany
+    public function good_events(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_user_good');
     }
@@ -45,7 +45,7 @@ trait UserRelations
     /**
      * グッドイベントリレーション
      */
-    public function create_events() :HasMany
+    public function create_events(): HasMany
     {
         return $this->hasMany(Event::class, 'event_create_user_id');
     }
@@ -53,7 +53,7 @@ trait UserRelations
     /**
      * このUserがオーガナイザーしているイベントを取得
      */
-    public function event_organizers() :MorphMany
+    public function event_organizers(): MorphMany
     {
         return $this->morphMany(EventOrganizer::class, 'event_organizeble');
     }
@@ -61,7 +61,7 @@ trait UserRelations
     /**
      * リンクリレーション
      */
-    public function links() :MorphMany
+    public function links(): MorphMany
     {
         return $this->morphMany(Link::class, 'linkable');
     }
@@ -69,7 +69,7 @@ trait UserRelations
     /**
      * バッジリレーション
      */
-    public function badges() :MorphToMany
+    public function badges(): MorphToMany
     {
         return $this->morphToMany(Badge::class, 'badgeable');
     }
@@ -77,7 +77,7 @@ trait UserRelations
     /**
      * タグとのリレーション
      */
-    public function tags() :MorphToMany
+    public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }

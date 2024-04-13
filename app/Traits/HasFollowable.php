@@ -2,21 +2,20 @@
 
 namespace App\Traits;
 
-use App\Models\Team;
-use App\Models\User;
 use App\Models\Followable;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Auth;
 
 trait HasFollowable
 {
     /**
      * ログインUserがフォローしているか
      */
-    public function getIsFollowedAttribute() : bool
+    public function getIsFollowedAttribute(): bool
     {
         return $this->isFollowedByCurrentUser();
     }
@@ -29,11 +28,10 @@ trait HasFollowable
         return $this->followersCount();
     }
 
-
     /**
      * このモデルがフォローしているFollowableモデルのリレーションを返します。
      */
-    public function follows():HasMany
+    public function follows(): HasMany
     {
         return $this->hasMany(Followable::class, 'user_id');
     }
@@ -41,7 +39,7 @@ trait HasFollowable
     /**
      * モデルにフォロー機能を追加します。
      */
-    public function followables() : MorphMany
+    public function followables(): MorphMany
     {
         return $this->morphMany(Followable::class, 'followable');
     }
@@ -64,9 +62,8 @@ trait HasFollowable
 
     /**
      * このモデルのフォローを解除します。
-     *
      */
-    public function unfollow(Model $unfollowTarget): bool|null
+    public function unfollow(Model $unfollowTarget): ?bool
     {
         if (! Auth::check()) {
             throw new AuthenticationException('');
@@ -95,7 +92,6 @@ trait HasFollowable
     {
         return $this->followables()->count();
     }
-
 
     /**
      * このモデルがフォローしている数を取得します。

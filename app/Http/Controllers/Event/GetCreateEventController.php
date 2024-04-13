@@ -10,7 +10,8 @@ class GetCreateEventController extends Controller
 {
     public function __construct(
         private readonly EventService $eventService,
-    ) {}
+    ) {
+    }
 
     public function __invoke(): RedirectResponse
     {

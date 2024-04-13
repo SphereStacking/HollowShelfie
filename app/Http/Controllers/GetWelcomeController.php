@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\EventStatus;
 use App\Http\Resources\EventsJsonResource;
 use App\Http\Resources\FeedbacksJsonResource;
-use App\Http\Resources\UserPublicProfileJsonResource;
 use App\Models\Event;
 use App\Models\User;
 use App\Services\EventService;

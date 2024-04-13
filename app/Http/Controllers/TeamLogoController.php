@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Team;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Http\RedirectResponse;
 
 class TeamLogoController extends Controller
 {
@@ -25,9 +25,8 @@ class TeamLogoController extends Controller
 
     /**
      * Delete the current Team's logo.
-     *
      */
-    public function destroy(Team $team) :RedirectResponse
+    public function destroy(Team $team): RedirectResponse
     {
         $team->deleteTeamLogo();
 

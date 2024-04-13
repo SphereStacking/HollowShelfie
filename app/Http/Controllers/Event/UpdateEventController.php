@@ -11,12 +11,14 @@ class UpdateEventController extends Controller
 {
     public function __construct(
         private readonly EventService $eventService
-    ) {}
+    ) {
+    }
 
     public function __invoke(EventUpdateRequest $request, $id)
     {
         $attributes = $request->getAttributes();
-         $event = $this->eventService->updateEventByAlias($id, $attributes);
+        $event = $this->eventService->updateEventByAlias($id, $attributes);
+
         return redirect()->back()->with([
             'response' => [
                 'status' => 'success',

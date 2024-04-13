@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\EventBookmark;
 
-use App\Services\EventService;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Services\EventBookmarkService;
+use App\Services\EventService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class DestroyBookmarkController extends Controller
 {
-
     public function __construct(
         private EventService $eventService,
         private EventBookmarkService $eventBookmarkService
-    ) {}
+    ) {
+    }
 
     public function __invoke($alias)
     {
