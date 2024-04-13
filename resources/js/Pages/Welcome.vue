@@ -107,13 +107,13 @@ const columns = computed(() => {
       </div>
     </section>
     <section class="overflow-hidden whitespace-nowrap py-32">
-      <div class="inline-block animate-slide-infinite p-5">
-        <CardEvent
+      <div class=" flex animate-slide-infinite flex-row p-5">
+        <CardEventCompact
           v-for="event in events" :key="event.id" :event="event"
-          class="m-5 inline-block w-40" />
-        <CardEvent
+          class="m-5  w-40" />
+        <CardEventCompact
           v-for="event in events" :key="event.id" :event="event"
-          class="m-5 inline-block w-40" />
+          class="m-5 w-40" />
       </div>
     </section>
     <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-5 py-32">
