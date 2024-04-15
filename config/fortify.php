@@ -74,7 +74,9 @@ return [
     |
     */
 
-    'home' => RouteServiceProvider::HOME,
+    // NOTE:認証が必要なルートじゃないとemailの確認画面でないためDashboardに飛ばす。
+    // 'home' => RouteServiceProvider::HOME,
+    'home' => '/dashboard',
 
     /*
     |--------------------------------------------------------------------------
@@ -147,7 +149,7 @@ return [
     'features' => [
         Features::registration(),
         Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([
