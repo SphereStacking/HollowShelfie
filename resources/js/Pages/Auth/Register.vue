@@ -80,11 +80,11 @@ const submit = () => {
               (
               <a
                 target="_blank" :href="route('legal', 'terms-of-service')"
-                class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                class="rounded-md text-sm  text-base-content underline">
                 {{ $t('Terms of Service') }}
               </a>
               &nbsp;
-              <a target="_blank" :href="route('legal', 'privacy-policy')" class="rounded-md text-sm  underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              <a target="_blank" :href="route('legal', 'privacy-policy')" class="rounded-md text-sm  text-base-content underline">
                 {{ $t('Privacy Policy') }}
               </a>
               )
