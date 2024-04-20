@@ -31,10 +31,9 @@ class EventFactory extends Factory
         $dateTime = $this->faker->dateTimeBetween('-1 month', '+1 month');
         $formattedDateTime = Carbon::instance($dateTime)->format('Ymd\THis\Z');
 
-        // 開始時間から2時間後を終了時間とする
-        $endDateTime = Carbon::instance($dateTime)->addHours(2)->format('Ymd\THis\Z');
+        // 開始時間からランダムに2~6時間後を終了時間とする
+        $endDateTime = Carbon::instance($dateTime)->addHours(rand(2, 6))->format('Ymd\THis\Z');
         $status = Arr::random(EventStatus::cases());
-
         return [
             'event_create_user_id' => User::inRandomOrder()->first()->id,
             'title' => $this->faker->text(20),
