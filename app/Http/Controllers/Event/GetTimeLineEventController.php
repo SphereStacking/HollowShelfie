@@ -2,22 +2,30 @@
 
 namespace App\Http\Controllers\Event;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Inertia\Inertia;
+use App\Models\Event;
 use Inertia\Response;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\EventTimelineJsonResource;
 
 class GetTimeLineEventController extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        $section = $request->input('section');
-        $tags = $request->input('tags');
-        $per_page = $request->input('per_page', 24);
+        // リクエストから開始日と終了日を取得、もしくはデフォルト値を設定
+        $startDate = $request->has('start_date') ? Carbon::parse($request->input('start_date')) : Carbon::today()->subDay();
+        $endDate = $request->has('end_date') ? Carbon::parse($request->input('end_date')) : Carbon::today()->addDay();
 
-        return Inertia::render(
-            'Event/Timeline',
-            []
+        // 指定された日付範囲でイベントを取得
+        $events = Event::with(['event_time_tables.performers.performable'])->whereBetween('start_date', [$startDate, $endDate])->get();
+
+        return Inertia::render('Event/Timeline',[
+                'events' => new EventTimelineJsonResource($events),
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+            ]
         );
     }
 }
