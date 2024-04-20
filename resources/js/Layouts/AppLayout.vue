@@ -78,6 +78,10 @@ const isLogin = ref(auth_user.value !== null)
                 <!-- <NavLink :href="route('home')" :active="route().current('articles')">
                   Articles
                 </NavLink> -->
+                <NavLink :href="route('event.timeline.show')" :active="route().current('event.timeline.show')">
+                  <IconTypeMapper type="timeline" class="mr-0.5 text-xl" />
+                  timeline
+                </NavLink>
               </div>
             </div>
 
