@@ -8,6 +8,7 @@ module.exports = {
     'plugin:vue/vue3-recommended',
     'plugin:vue/vue3-essential',
     'plugin:tailwindcss/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   'overrides': [
     {
@@ -17,19 +18,25 @@ module.exports = {
       'files': [
         '.eslintrc.{js,cjs}'
       ],
-      'parserOptions': {
-        'sourceType': 'script'
-      }
-    }
+    },
+    {
+    // Vueファイル用のoverridesを追加
+      files: ['*.vue'],
+      parser: 'vue-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+      },
+    },
   ],
   'parserOptions': {
     'ecmaVersion': 'latest',
-    'sourceType': 'module'
+    'sourceType': 'module',
   },
   'plugins': [
-    'vue'
+    'vue',
+    '@typescript-eslint'
   ],
-  'globals': {
+  globals: {
     'require': 'readonly',
     // Inertia
     'route': 'readonly',
@@ -54,6 +61,8 @@ module.exports = {
     'useSlots': 'readonly'
   },
   rules: {
+    // jsとts併用のため設定
+    '@typescript-eslint/no-var-requires': 'off',
     // タグの最後で改行しないで
     'vue/html-closing-bracket-newline': [2, { 'multiline': 'never' }],
     // 不要なカッコは消す
@@ -115,6 +124,9 @@ module.exports = {
         order: ['script', 'template', 'style'],
       },
     ],
+    'vue/multi-word-component-names': ['error', {
+      'ignores': ['Index', 'Create', 'Edit', 'Show', 'Delete']
+    }],
     'vue/html-indent': ['error', 2, {
       'attribute': 1,
       'baseIndent': 1,
