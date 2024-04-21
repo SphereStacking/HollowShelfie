@@ -1,0 +1,46 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "strict": true,
+      "moduleResolution": "node",
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "outDir": "./dist",
+      "types": [
+        "node"
+      ],
+      "lib": [
+        "es6"
+      ],
+      "paths": {
+        "@/*": ["./resources/js/*"]
+      },
+      // jsと共存するために必要
+      "checkJs": false,
+      "allowJs": true,
+      "declaration": false,
+
+      // 型チェック
+      "noImplicitAny": false,
+      "noImplicitReturns": false,
+      "noImplicitThis": false,
+      "noUnusedLocals": true,
+      "strictNullChecks": false,
+      "strictFunctionTypes": false,
+      "strictBindCallApply": false,
+      "strictPropertyInitialization": false
+    },
+
+    "include": [
+        "resources/js/types/components.d.ts",
+        "resources/js/types/auto-imports.d.ts",
+        "resources/js/**/*.ts",
+        "resources/js/**/*.vue",
+    ],
+    "exclude": [
+        "node_modules",
+    ]
+  }

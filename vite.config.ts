@@ -21,9 +21,14 @@ export default defineConfig({
     }),
     AutoImport({
       imports: ['vue'],
+      dts: 'resources/js/types/auto-imports.d.ts',
+      eslintrc: {
+        enabled: true,
+      },
     }),
     Components({
       dirs: ['resources/js'],
+      dts: 'resources/js/types/components.d.ts',
       resolvers: [
         (name) => {
           if (name == 'Icon')
