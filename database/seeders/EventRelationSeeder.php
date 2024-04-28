@@ -41,29 +41,6 @@ class EventRelationSeeder extends Seeder
             // カテゴリーをランダムに紐づける
             $this->attachRandomModels($event, 'categories', Category::class, 1);
 
-            //--------------------------------------------------------
-            // Performerをランダムに紐づける
-            // $this->attachRandomModelsPivot($event, 'performers', User::class, $count, function ($event) {
-            //     $date = Carbon::parse($event->start_date);
-            //     $startTime = (clone $date)->addHours(rand(0, 1));
-            //     $endTime = (clone $startTime)->addMinutes(rand(30, 60));
-            //     return [
-            //         'start_time' => $startTime->format('Y-m-d H:i:s'),
-            //         'end_time' => $endTime->format('Y-m-d H:i:s')
-            //     ];
-            // });
-
-            // ランダムでrand(2 ,4)で複数のタイムテーブルを作成
-            for ($i = 0; $i < rand(2, 4); $i++) {
-                $eventTimeTable = EventTimeTable::factory()->create([
-                    'event_id' => $event->id,
-                ]);
-                // TimeTablePerformersはrand(1 ,2)の範囲で作成
-                TimeTablePerformers::factory()->count(rand(1, 2))->create([
-                    'event_time_table_id' => $eventTimeTable->id,
-                ]);
-            }
-
             for ($i = 0; $i < rand(1, 4); $i++) {
                 $randomFile = Arr::random($files); // ランダムに一つ選択
                 $fileName = basename($randomFile); // ファイル名のみを取得

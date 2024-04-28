@@ -22,7 +22,8 @@ defineProps({
         イベントタイムライン
       </h2>
     </template>
-    <TestTimeline :events="events" :start-date="startDate" :end-date="endDate" />
+    <EventTimeline :events="events" :start-date="startDate" :end-date="endDate" />
+    <!-- <TestTimeline :events="events" :start-date="startDate" :end-date="endDate" /> -->
   </AppLayout>
 </template>
 <style>

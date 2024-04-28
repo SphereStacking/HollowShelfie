@@ -24,6 +24,7 @@ class EventTimelineJsonResource extends JsonResource
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
                 'status_label' => $item->status_label,
+                'route' => route('event.show', $item->alias),
                 'files' => $item->files->map(function ($file) {
                     return [
                         'id' => $file->id,

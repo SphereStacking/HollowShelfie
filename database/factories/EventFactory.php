@@ -2,30 +2,23 @@
 
 namespace Database\Factories;
 
-use App\Enums\EventStatus;
-use App\Models\Event;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\File;
+use App\Models\User;
+use App\Models\Event;
+use App\Enums\EventStatus;
 use Illuminate\Support\Arr;
+use App\Models\EventTimeTable;
+use App\Models\TimeTablePerformers;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Event>
  */
 class EventFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Event::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         $dateTime = $this->faker->dateTimeBetween('-1 month', '+1 month');
@@ -61,15 +54,46 @@ class EventFactory extends Factory
         ];
     }
 
-    /**
-     * Indicate that the event should have a file.
-     *
-     * @return $this
-     */
     public function withFile()
     {
         return $this->afterCreating(function (Event $event) {
             $event->files()->save(File::factory()->make());
+        });
+    }
+
+    public function withEventTimeTable()
+    {
+        return $this->afterCreating(function (Event $event) {
+            $startDate = Carbon::createFromFormat('Ymd\THis\Z', $event->start_date);
+            $endDate = Carbon::createFromFormat('Ymd\THis\Z', $event->end_date);
+
+            while ($startDate->lessThan($endDate)) {
+                $duration = rand(30, 60); // 30分から60分のランダムな期間
+                $endTime = $startDate->copy()->addMinutes($duration);
+
+                if ($endTime->greaterThanOrEqualTo($endDate)) {
+                    break; // 終了時間がイベントの終了時間を超える場合はループを終了
+                }
+
+                $eventTimeTable = EventTimeTable::factory()->make([
+                    'event_id' => $event->id,
+                    'start_time' => $startDate->copy(),
+                    'end_time' => $endTime
+                ]);
+                $event->event_time_tables()->save($eventTimeTable);
+
+                // TimeTablePerformersはrand(1 ,2)の範囲で作成
+                TimeTablePerformers::factory()->count(rand(1, 3))->create([
+                    'event_time_table_id' => $eventTimeTable->id,
+                ]);
+                // 次のイベントタイムテーブルの開始時間を設定
+                $startDate = $endTime;
+                // 4分の1の確率で10分から30分の間隔を開ける
+                if (rand(1, 4) === 1) {
+                    $additionalMinutes = rand(10, 30);
+                    $startDate->addMinutes($additionalMinutes);
+                }
+            }
         });
     }
 }

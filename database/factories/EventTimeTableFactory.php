@@ -11,18 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EventTimeTableFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = EventTimeTable::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         // 開始時間として16:00から18:00の間でランダムな時間を生成
