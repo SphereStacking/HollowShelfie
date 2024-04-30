@@ -30,17 +30,6 @@ const logout = () => {
   router.post(route('logout'))
 }
 
-onMounted(() => {
-  themeChange(false)
-})
-
-const themes = [
-  'mytheme', 'dim', 'nord', 'light', 'dark', 'cupcake', 'emerald',
-  'garden', 'pastel',
-  'wireframe', 'cmyk',
-  'lemonade', 'night', 'winter',
-]
-
 const auth_user = ref(page.props.auth.user ?? null)
 const isTeam = ref(auth_user.value?.current_team != null)
 const isLogin = ref(auth_user.value !== null)
@@ -67,7 +56,7 @@ const isLogin = ref(auth_user.value !== null)
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <NavLink :href="route('home')" :active="route().current('home')">
+                <NavLink :href="route('home')" :active="route().current('home')" c>
                   <IconTypeMapper type="home" class="mr-0.5 text-xl" />
                   home
                 </NavLink>
@@ -89,15 +78,6 @@ const isLogin = ref(auth_user.value !== null)
               <a class="btn btn-sm" :href="route('event.search.index')">
                 <Icon icon="mdi:magnify" class="mx-2 text-sm" />
               </a>
-              <!-- TODO: テーマ変更 位置はあとからfix -->
-              <div class="dropdown dropdown-bottom">
-                <label tabindex="0" class="btn btn-sm m-1">theme</label>
-                <ul tabindex="0" class="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow">
-                  <li v-for="(theme, index) in themes" :key="index">
-                    <a herf="#" :data-set-theme="theme" data-act-class="ACTIVECLASS">{{ theme }}</a>
-                  </li>
-                </ul>
-              </div>
               <template v-if="!isLogin">
                 <Link :href="route('login')" class="btn  btn-sm">
                   {{ $t('Login') }}
