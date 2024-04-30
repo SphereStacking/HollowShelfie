@@ -14,8 +14,7 @@ interface DecomposeDateFormat {
 // ブラウザのタイムゾーンで日時を変換する関数
 export function parseToBrowserTz(dateISOString: string): Date {
   if (!isValid(parseISO(dateISOString))) {
-    console.error('Invalid date input:', '無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
-    return new Date()
+    throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
   const date = new Date(dateISOString)
@@ -25,8 +24,7 @@ export function parseToBrowserTz(dateISOString: string): Date {
 // ブラウザのタイムゾーンで日時を変換する関数
 export function formattedToBrowserTz(dateISOString: string, formatStr: string = 'yyyy-MM-dd HH:mm:ss'): string {
   if (!isValid(parseISO(dateISOString))) {
-    console.error('Invalid date input:', '無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
-    return ''
+    throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
 
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -39,16 +37,14 @@ export function formattedToBrowserTz(dateISOString: string, formatStr: string = 
 // 二つの日付から詳細な期間を求める関数
 export function getDurationBetweenDates(startDateISOString: string, endDateISOString: string): Duration {
   if (!startDateISOString || !endDateISOString) {
-    console.error('Invalid date input:', { startDateISOString, endDateISOString })
-    return null
+    throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
 
   const startDate = parseISO(startDateISOString)
   const endDate = parseISO(endDateISOString)
 
   if (!startDate || !endDate || isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-    console.error('Invalid date input:', '無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
-    return null
+    throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
 
   return intervalToDuration({ start: startDate, end: endDate })
@@ -57,14 +53,12 @@ export function getDurationBetweenDates(startDateISOString: string, endDateISOSt
 // 日付を分解して詳細情報を返す関数
 export function decomposeDate(dateISOString: string, formatStr: DecomposeDateFormat = { year: 'yyyy', month: 'MM', day: 'dd', weekday: 'EEEE', hour: 'HH', minute: 'mm', second: 'ss' }): DecomposeDateFormat {
   if (!dateISOString) {
-    console.error('Invalid date input:', { dateISOString })
-    return null
+    throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
   const date = parseISO(dateISOString)
 
   if (!date || isNaN(date.getTime())) {
-    console.error('Invalid date input:', '無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
-    return null
+    throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
 
   return {
