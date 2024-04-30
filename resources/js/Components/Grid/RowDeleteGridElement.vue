@@ -1,6 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
 defineProps({

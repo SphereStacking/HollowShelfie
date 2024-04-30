@@ -26,7 +26,8 @@ class EventUpdateRequest extends FormRequest
             'categories' => $this->input('categories') ?? [],
             'tags' => $this->input('tags') ?? [],
             'description' => $this->input('description') ?? '',
-            'dates' => $this->input('dates') ?? [],
+            'start_date' => $this->input('start_date') ?? '',
+            'end_date' => $this->input('end_date') ?? '',
             'organizers' => $this->input('organizers') ?? [],
             'performers' => $this->input('performers') ?? [],
             'time_tables' => $this->input('time_tables') ?? [],
@@ -64,6 +65,8 @@ class EventUpdateRequest extends FormRequest
         //ドラフト以外
         return [
             'title' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
             'description' => 'required|string',
             'categories' => 'required|array|min:1',
             'instances' => 'required|array|max:1',

@@ -1,42 +1,29 @@
 <script setup>
 const props=defineProps({
-  id: {
-    type: String,
-    default: ''
-  },
-  label: {
-    type: String,
-    required: true
-  },
-  labelIconType: {
-    type: String,
-    default: ''
-  },
   modelValue: {
     type: String,
     default: ''
   },
-  placeholder: {
-    type: String,
-    default: ''
-  },
-  help: {
-    type: String,
-    default: null
-  },
-  error: {
-    type: String,
-    default: null
-  },
-
+  templateOptions: {
+    type: Object,
+    default: ()=>{},
+  }
 })
 
 const modelValue= ref(props.modelValue)
 
+const emit = defineEmits(['update:modelValue'])
+
+watch(modelValue, ()=>{
+  emit('update:modelValue', modelValue.value)
+})
 </script>
 
 <template>
-  <input v-model="modelValue" class="input  h-full w-full">
+  <input
+    v-model="modelValue"
+    v-bind="templateOptions"
+    class="input input-sm h-full w-full">
 </template>
 
 <style lang="">

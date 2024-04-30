@@ -2,18 +2,19 @@
 
 namespace App\Services;
 
-use App\Enums\EventStatus;
-use App\Exceptions\CannotOperateEventException;
-use App\Exceptions\EventNotPublishedException;
-use App\Models\Event;
-use App\Models\User;
-use Carbon\Carbon;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
+use DateTimeZone;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Event;
+use App\Enums\EventStatus;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use App\Exceptions\EventNotPublishedException;
+use App\Exceptions\CannotOperateEventException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EventService
 {
@@ -23,7 +24,8 @@ class EventService
 
     public function __construct(
         FileService $fileService,
-        ViewCountService $viewCountService
+        ViewCountService $viewCountService,
+        private readonly DateTimeZone $dateTimeZone
     ) {
         $this->fileService = $fileService;
         $this->viewCountService = $viewCountService;
@@ -90,12 +92,11 @@ class EventService
             }
             $event->title = $attributes['title'];
             $event->description = $attributes['description'];
-            $event->start_date = $attributes['dates'][0] ?? null;
-            $event->end_date = $attributes['dates'][1] ?? null;
+            $event->start_date = new Carbon($attributes['start_date'], $this->dateTimeZone);
+            $event->end_date = new Carbon($attributes['end_date'], $this->dateTimeZone);
             $event->event_create_user_id = Auth::user()->id;
             $event->updateEventStatus($attributes['status'] ?? EventStatus::DRAFT);
             $event->save();
-
             $event->syncTagsByNames($attributes['tags'] ?? []);
             $event->syncCategoriesByNames($attributes['categories'] ?? []);
             $event->syncOrganizers($attributes['organizers'] ?? []);
@@ -104,7 +105,10 @@ class EventService
 
             DB::commit();
 
-            return $event;
+            return Event::with([
+                'organizers.event_organizeble',
+                'event_time_tables.performers.performable',
+            ])->find($event->id);
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -190,7 +194,7 @@ class EventService
      * 内部参照用
      * イベント取得
      */
-    private function findOrFailByAlias($alias): Event
+    public function findOrFailByAlias($alias): Event
     {
         return Event::where('alias', $alias)->firstOrFail();
     }

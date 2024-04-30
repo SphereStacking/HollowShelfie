@@ -16,18 +16,19 @@ defineProps({
     </div>
     <div class="flex w-full flex-col rounded-xl bg-base-200">
       <template v-for="(instance, index) in instances" :key="index">
-        <component
-          :is="instance.access_url ? 'a' : 'div'"
-          :href="instance.access_url || undefined"
-          class="mx-2 my-1 flex flex-row gap-2 p-2"
-          :class="{ 'link': instance.access_url }">
+        <div class="flex flex-row gap-2 p-2">
           <div class="badge badge-primary">
             {{ instance.instance_type }}
           </div>
-          <div class="overflow-hidden whitespace-nowrap">
-            {{ instance.display_name }}
-          </div>
-        </component>
+          <component
+            :is="instance.access_url ? 'a' : 'div'"
+            :href="instance.access_url || undefined"
+            :class="{ 'link': instance.access_url }">
+            <div class="overflow-hidden whitespace-nowrap">
+              {{ instance.display_name }}
+            </div>
+          </component>
+        </div>
       </template>
     </div>
   </div>
