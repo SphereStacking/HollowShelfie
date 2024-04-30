@@ -1,6 +1,7 @@
 
 <script setup>
 import { Link, router} from '@inertiajs/vue3'
+import { getEventPeriod } from '@/Utill/Event'
 
 const props = defineProps({
   event: {
@@ -19,7 +20,7 @@ const incrementImageIndex = () => {
 const shareData = computed(() => {
   return {
     title: props.event.title,
-    period: props.event.period,
+    period: getEventPeriod(props.event.start_date, props.event.end_date),
     instances: props.event.instances.map((instance) => instance.instance_type_name),
     organizers: props.event.organizers.map((organizer) => organizer.name),
     performers: props.event.performers.map((performer) => performer.name),

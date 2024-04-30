@@ -45,20 +45,21 @@ const props = defineProps({
 })
 
 function getShareText() {
-  return '[ #vShelf ] \n' +
+  return `[ --- 👻 #${appName} --- ] \n` +
    `✨ ${props.title}\n` +
    `🗓 ${props.period}\n` +
-   `📍 ${props.instanceNames.join('')}\n` +
-   `👥 ${props.organizerNames.join('')}\n` +
-   `🎤 ${props.performerNames.join('')}\n` +
-   `🧺 ${props.categoryNames.join('')}\n` +
+   `📍 ${props.instanceNames.join(' ')}\n` +
+   `👥 ${props.organizerNames.join(' ')}\n` +
+   `🎤 ${props.performerNames.join(' ')}\n` +
+   `🧺 ${props.categoryNames.join(' ')}\n` +
    `🏷 ${props.tags.map((name) => name).join(' ')}\n` +
-   `🔗 ${props.route}\n`
+   '\n' +
+   `${props.route}`
 }
 
 function openShareUrl() {
   // 新しいウィンドウでシェアURLを開く
-  window.open(generateTwitterUrl({text: getShareText(), hashtags: [appName]}), '_blank')
+  window.open(generateTwitterUrl({text: getShareText()}), '_blank')
 }
 
 </script>

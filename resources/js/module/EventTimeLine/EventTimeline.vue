@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { format, differenceInMinutes, startOfDay, addHours, eachDayOfInterval} from 'date-fns'
+import { differenceInMinutes } from 'date-fns'
 import type { TimeLineItem } from './EventTimeLineTypes'
 
 const props = defineProps({
@@ -46,6 +46,8 @@ const handleMouseMove = (event) => {
 }
 
 //-----------------------------------------------
+const EVENT_ITEM_MINUTE_SPAN = 15
+const COLUMNS_PER_HOUR = Math.floor(60 / EVENT_ITEM_MINUTE_SPAN)
 
 const startDate = computed(() => {
   return new Date(props.startDate)
@@ -54,7 +56,7 @@ const endDate = computed(() => {
   return new Date(props.endDate)
 })
 const hoursBetween = computed(() => {
-  return differenceInMinutes(endDate.value, startDate.value) / 15 + 1
+  return differenceInMinutes(endDate.value, startDate.value) / EVENT_ITEM_MINUTE_SPAN + 1
 })
 
 const calculateGridPosition = (eventStartDate, eventEndDate) => {
@@ -62,8 +64,8 @@ const calculateGridPosition = (eventStartDate, eventEndDate) => {
   const eventStartDateTime = new Date(eventStartDate)
   const eventEndDateTime = new Date(eventEndDate)
 
-  const startMinuteOffset = Math.floor(differenceInMinutes(eventStartDateTime, baseStartDate) / 15)
-  const endMinuteOffset = Math.floor(differenceInMinutes(eventEndDateTime, baseStartDate) / 15) + 1
+  const startMinuteOffset = Math.floor(differenceInMinutes(eventStartDateTime, baseStartDate) / EVENT_ITEM_MINUTE_SPAN)
+  const endMinuteOffset = Math.floor(differenceInMinutes(eventEndDateTime, baseStartDate) / EVENT_ITEM_MINUTE_SPAN) + 1
 
   const output = {
     start: startMinuteOffset + 1,
@@ -104,13 +106,13 @@ const getGridColumnSpan = (startDate, endDate) => {
 
 <template>
   <div
-    :style="`grid-template-columns: repeat(${hoursBetween},1.5rem);`"
+    :style="`grid-template-columns: repeat(${hoursBetween},1rem);`"
     class="grid select-none grid-flow-dense gap-1 overflow-y-auto p-4 scrollbar-hide"
     @mousedown="startDragging"
     @mouseup="stopDragging"
     @mouseleave="stopDragging"
     @mousemove="handleMouseMove">
-    <TimeLineHeader :start-date="startDate" :end-date="endDate" />
+    <TimeLineHeader :columns-per-hour="COLUMNS_PER_HOUR" :start-date="startDate" :end-date="endDate" />
     <TimeLineItem
       v-for="event in timeLineItems" :key="event"
       :style="getGridColumnSpan(event.startDate, event.endDate)"

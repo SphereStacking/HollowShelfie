@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { format, addHours, eachDayOfInterval} from 'date-fns'
+import { parseToBrowserTz } from '@/Utill/Date'
 
 const props = defineProps({
+  columnsPerHour: {
+    type: Number,
+    required: true,
+  },
   startDate: {
     type: Date,
     required: true,
@@ -14,22 +19,29 @@ const props = defineProps({
 
 //-----------------------------------------------
 
+const startDate = new Date(props.startDate)
+const endDate = new Date(props.endDate)
+console.log('getHours props.startDate : ', props.startDate)
+console.log('getHours props.endDate   : ', props.endDate)
+
 const timeRanges = computed(() => {
-  const days = eachDayOfInterval({ start: new Date(props.startDate), end: new Date(props.endDate) })
+  console.log('getHours start : ', startDate)
+  console.log('getHours end   : ', endDate)
+  const days = eachDayOfInterval({ start: startDate, end: endDate })
   return days.map((day, index, array) => {
-    const date = format(day, 'yyyy-MM-dd')
-    let hours
-    if (index === 0) { // 最初の日
-      hours = 24 - new Date(props.startDate).getHours()
-    } else if (index === array.length - 1) { // 最後の日
-      hours = new Date(props.endDate).getHours()
-      // 終了日が開始日と同じで、かつ終了時間が開始時間よりも前の場合、24時間を基準に計算
-      if (hours <= new Date(props.startDate).getHours() && days.length === 1) {
-        hours = 24 - new Date(props.startDate).getHours() + new Date(props.endDate).getHours()
-      }
-    } else { // 中間の日
-      hours = 24
+    const date = format(day, 'M/d')
+    const hours = []
+    const startHour = index === 0 ? startDate.getHours() : 0
+    const endHour = index === array.length - 1 ? endDate.getHours() : 23
+
+    for (let hour = startHour; hour <= endHour; hour++) {
+      hours.push(format(addHours(day, hour), 'HH:mm'))
     }
+    // 最後の時間を追加するための条件
+    if (index === array.length - 1 && endDate.getMinutes() > 0) {
+      hours.push(format(endDate, 'HH:mm'))
+    }
+
     return { date, hours }
   })
 })
@@ -37,14 +49,14 @@ const timeRanges = computed(() => {
 </script>
 
 <template>
-  <template v-for="timeRange in timeRanges" :key="timeRange.date">
-    <div class="row-start-1 w-full" :style="` grid-column: span ${timeRange.hours * 4} / span ${timeRange.hours * 4}; `">
+  <template v-for="timeRange in timeRanges" :key="timeRange">
+    <div class="row-start-1 w-full" :style="` grid-column: span ${timeRange.hours.length * columnsPerHour} / span ${timeRange.hours.length * columnsPerHour}; `">
       <div class="sticky left-0 mr-2 inline text-nowrap text-xl">
         {{ timeRange.date }}
       </div>
     </div>
     <div v-for="hour in timeRange.hours" :key="hour" class="sticky top-auto col-span-4 row-start-2 rounded-md bg-base-200 py-1 text-center">
-      {{ format(addHours(startDate, hour - 1), 'HH:mm') }}
+      {{ hour }}
     </div>
   </template>
 </template>

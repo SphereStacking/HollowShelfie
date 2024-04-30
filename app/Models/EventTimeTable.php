@@ -18,15 +18,15 @@ class EventTimeTable extends Model
      * @var array<int, string>
      */
     protected $appends = [
-        'performance_time',
+        'duration',
     ];
 
     /**
      * @var array<int, string>
      */
     protected $fillable = [
-        'start_time',
-        'end_time',
+        'start_date',
+        'end_date',
         'description',
     ];
 
@@ -38,28 +38,13 @@ class EventTimeTable extends Model
         'end_date' => 'datetime',
     ];
 
-    /**
-     * 出演時間
-     */
-    public function getPerformanceTimeAttribute(): string
+    public function getDurationAttribute(): ?int
     {
-        return $this->start_time.' ~ '.$this->end_time;
-    }
+        if ($this->start_date === null || $this->end_date === null) {
+            return null;
+        }
 
-    /**
-     * 開始時間
-     */
-    public function getStartTimeAttribute($value): string
-    {
-        return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
-    }
-
-    /**
-     * 終了時間
-     */
-    public function getEndTimeAttribute($value): string
-    {
-        return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
+        return $this->end_date->diffInMinutes($this->start_date);
     }
 
     /**

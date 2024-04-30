@@ -16,15 +16,15 @@ class EventTimeTableFactory extends Factory
     public function definition(): array
     {
         // 開始時間として16:00から18:00の間でランダムな時間を生成
-        $startTime = $this->faker->time($format = 'H:i:s', $max = '18:00:00');
+        $startDate = $this->faker->dateTimeBetween('-1 month', '+1 month')->setTime(rand(16, 18), 0);
         // 終了時間として開始時間から最大2時間後の時間を生成
-        $endTime = date('H:i:s', strtotime($startTime) + rand(1, 2) * 3600);
+        $endDate = (clone $startDate)->modify('+'.rand(0, 120).' minutes');
 
         return [
             'event_id' => Event::inRandomOrder()->first()->id,
             'description' => $this->faker->text(10),
-            'start_time' => $startTime,
-            'end_time' => $endTime,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ];
     }
 }

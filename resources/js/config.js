@@ -116,11 +116,15 @@ export const ItemsConfig = {
     buttonClass: ''
   },
   organizer: {
-    icon: 'mdi:ghost',
+    icon: 'mdi:chef-hat',
     buttonClass: ''
   },
   performer: {
     icon: 'mdi:food',
+    buttonClass: ''
+  },
+  unknownUser: {
+    icon: 'mdi:ghost',
     buttonClass: ''
   },
   wysiwygEditor: {

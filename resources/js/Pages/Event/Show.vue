@@ -1,5 +1,6 @@
 <script setup>
-
+import { decomposeDate, getDurationBetweenDates } from '@/Utill/Date'
+import { getEventPeriod } from '@/Utill/Event'
 const props = defineProps({
   event: {
     type: String,
@@ -23,6 +24,37 @@ defineEmits(
 )
 
 const supportings = props.config.supportings ?? []
+
+const formattedStartDate = decomposeDate(props.event.start_date)
+const eventPeriod = computed(() => {
+  let durationString = ''
+  try {
+    const duration = getDurationBetweenDates(props.event.start_date, props.event.end_date)
+    // duration オブジェクトのキーをチェックして、存在するものだけ文字列に追加
+    if (duration.hours) durationString += duration.hours + 'h '
+    if (duration.minutes) durationString += duration.minutes + 'm '
+    if (duration.seconds) durationString += duration.seconds + 's '
+  } catch (error) {
+    console.error(error)
+  }
+  // 末尾の空白を削除し、必要に応じて ' - ' を追加
+  durationString = durationString.trim()
+  if (durationString) {
+    durationString = ' - ' + durationString
+  }
+  return `[${formattedStartDate.weekday}] ${formattedStartDate.hour}:${formattedStartDate.minute}:${formattedStartDate.second} ${durationString}`
+})
+
+const snsShare = {
+  title: props.event.title,
+  period: getEventPeriod(props.event.start_date, props.event.end_date),
+  route: route('event.show', props.event.alias),
+  instances: props.event.instances.map((instance) => instance.display_name),
+  organizers: props.event.organizers.map((organizer) => organizer.name),
+  performers: props.event.performers.map((performer) => performer.name),
+  categoryNames: props.event.category_names,
+  tags: props.event.tags.map((tag) => '#'+tag),
+}
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -37,15 +69,15 @@ const supportings = props.config.supportings ?? []
         <div class="flex flex-row items-center ">
           <div class="relative w-5">
             <p class="absolute w-4 grow-0 -rotate-90 text-2xl font-normal ">
-              {{ event.formatted_start_date.year }}
+              {{ formattedStartDate.year }}
             </p>
           </div>
           <div class="mr-2 flex flex-col items-center justify-center border-l-2 border-base-content pl-1">
             <div class="text-3xl font-normal">
-              {{ event.formatted_start_date.month }}
+              {{ formattedStartDate.month }}
             </div>
             <div class="text-3xl font-normal">
-              {{ event.formatted_start_date.day }}
+              {{ formattedStartDate.day }}
             </div>
           </div>
           <div class="flex grow flex-col ">
@@ -55,8 +87,7 @@ const supportings = props.config.supportings ?? []
             <div class="flex flex-row items-center justify-between">
               <div class="flex flex-row items-center gap-2">
                 <div class="text-xs font-light ">
-                  [{{ event.formatted_start_date.weekday }}] {{ event.formatted_start_date.time }}
-                  -{{ event.formatted_end_date.time }}
+                  {{ eventPeriod }}
                 </div>
                 <BadgeEventStatus
                   class="rounded-md lg:col-start-1 lg:row-start-2" :status="event.status"
@@ -67,7 +98,10 @@ const supportings = props.config.supportings ?? []
                 <BtnSwapEventGood
                   :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
                   show-count />
-                <Icon icon="mdi:share-variant" class="text-xl" />
+                <BtnSnsShareEventToX
+                  :title="snsShare.title" :period="snsShare.period" :instance-names="snsShare.instances"
+                  :organizer-names="snsShare.organizers" :performer-names="snsShare.performers"
+                  :category-names="snsShare.categoryNames" :tags="snsShare.tags" :route="snsShare.route" />
               </div>
             </div>
           </div>

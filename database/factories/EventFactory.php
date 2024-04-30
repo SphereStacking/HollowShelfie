@@ -64,8 +64,9 @@ class EventFactory extends Factory
     public function withEventTimeTable()
     {
         return $this->afterCreating(function (Event $event) {
-            $startDate = Carbon::createFromFormat('Ymd\THis\Z', $event->start_date);
-            $endDate = Carbon::createFromFormat('Ymd\THis\Z', $event->end_date);
+
+            $startDate = new Carbon($event->start_date);
+            $endDate = new Carbon($event->end_date);
 
             while ($startDate->lessThan($endDate)) {
                 $duration = rand(30, 60); // 30分から60分のランダムな期間
@@ -77,13 +78,13 @@ class EventFactory extends Factory
 
                 $eventTimeTable = EventTimeTable::factory()->make([
                     'event_id' => $event->id,
-                    'start_time' => $startDate->copy(),
-                    'end_time' => $endTime
+                    'start_date' => $startDate->copy(),
+                    'end_date' => $endTime
                 ]);
                 $event->event_time_tables()->save($eventTimeTable);
 
                 // TimeTablePerformersはrand(1 ,2)の範囲で作成
-                TimeTablePerformers::factory()->count(rand(1, 3))->create([
+                TimeTablePerformers::factory()->count(rand(1, 2))->create([
                     'event_time_table_id' => $eventTimeTable->id,
                 ]);
                 // 次のイベントタイムテーブルの開始時間を設定

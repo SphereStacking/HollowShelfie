@@ -19,7 +19,10 @@ class GetTimeLineEventController extends Controller
         $endDate = $request->has('end_date') ? Carbon::parse($request->input('end_date')) : Carbon::today()->addDay();
 
         // 指定された日付範囲でイベントを取得
-        $events = Event::with(['event_time_tables.performers.performable'])->whereBetween('start_date', [$startDate, $endDate])->get();
+        $events = Event::with(['event_time_tables.performers.performable'])
+            ->whereBetween('start_date', [$startDate, $endDate])
+            ->withStatusPublished()
+            ->get();
 
         return Inertia::render('Event/Timeline',[
                 'events' => new EventTimelineJsonResource($events),
