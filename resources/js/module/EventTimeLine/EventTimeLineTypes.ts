@@ -13,8 +13,8 @@ export type Performer = {
 export type TimeTable = {
   id: number,
   performers: Performer[],
-  start_time: string,
-  end_time: string,
+  start_date: string,
+  end_date: string,
 };
 
 export type TimeLineItem = {

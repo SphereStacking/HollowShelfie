@@ -11,9 +11,8 @@ defineProps({
 <template>
   <CardArticle>
     <template #content>
-      <div class=" prose lg:prose-xl">
-        {{ description }}
-      </div>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <article class=" prose h-full  overflow-y-auto" v-html="description"></article>
     </template>
   </CardArticle>
 </template>

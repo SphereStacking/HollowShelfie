@@ -19,7 +19,7 @@ defineProps<Props>()
       {{ performer.name }}
     </Link>     -->
     <Link
-      v-for="performer in performers" :key="performer.id" href="#"
+      v-for="performer in performers" :key="performer.id" :href="performer.profile_url"
       class="truncate text-nowrap text-center text-xs transition-all duration-200 hover:text-accent hover:underline ">
       {{ performer.name }}
     </Link>

@@ -2,7 +2,6 @@
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
-const date = ref('')
 </script>
 
 <template>
@@ -14,6 +13,7 @@ const date = ref('')
     <template #dp-input="{ value,onInput }">
       <div class="relative">
         <input
+          v-bind="$attrs"
           type="text" :value="value" class="input input-sm w-full"
           @input="onInput">
       </div>

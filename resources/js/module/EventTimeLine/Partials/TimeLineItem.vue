@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { differenceInMinutes } from 'date-fns'
+import { getEventPeriod } from '@/Utill/Event'
+import { parseToBrowserTz } from '@/Utill/Date'
 import type { TimeLineItem } from '../EventTimeLineTypes'
 import { Good, SnsShare, Bookmark } from '../../EventOtherBtn/BtnDropDownOtherTypes'
 import { Link } from '@inertiajs/vue3'
@@ -16,31 +18,26 @@ const calculateTotalColumns = (startDate, endDate) => {
   const durationInMinutes = (end - start) / 60000 // ミリ秒を分に変換
   return Math.ceil(durationInMinutes / 10) // 10分ごとに1カラム
 }
-const calculateGridSpan = (startTime, endTime) => {
-  const startDate = new Date(props.timeLineItem.startDate)
-  let startDateTime = new Date(`${startDate.toISOString().split('T')[0]}T${startTime}:00`)
-  let endDateTime = new Date(`${startDate.toISOString().split('T')[0]}T${endTime}:00`)
 
-  // endTimeがstartTimeより小さい場合、翌日にまたがると見なして日付を1日進める
-  if (endDateTime <= startDateTime) {
-    endDateTime.setDate(endDateTime.getDate() + 1)
-  }
+// eventStartDate ~eventEndDateによって
+// 10分ごとに区切られたgridが存在しており
+// 各eventItemStartDate ~eventItemEndDate
+// startColumnとendColumnを計算する処理を作成して
+const calculateGridSpan = (startDate, endDate) => {
+  let eventStartDate = parseToBrowserTz(props.timeLineItem.startDate)
+  let eventItemStartDate = parseToBrowserTz(startDate)
+  let eventItemEndDate = parseToBrowserTz(endDate)
 
-  // イベントの開始時間がstartTimeやendTimeよりも後の場合、イベントの開始日を1日戻す
-  if (startDate > startDateTime) {
-    startDate.setDate(startDate.getDate() - 1)
-  }
+  // イベント全体の開始から各アイテムの開始までの分数を計算
+  const startDiff = differenceInMinutes(new Date(eventItemStartDate), new Date(eventStartDate))
+  // イベント全体の開始から各アイテムの終了までの分数を計算
+  const endDiff = differenceInMinutes(new Date(eventItemEndDate), new Date(eventStartDate))
 
-  console.log('Converted Dates - Start:', startDateTime, 'End:', endDateTime, 'Event Start:', startDate)
+  // 10分ごとに1カラムなので、10で割って1を足す（1-indexed）
+  const startColumn = Math.floor(startDiff / 10) + 1
+  const endColumn = Math.floor(endDiff / 10) + 1
 
-  if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime())) {
-    console.error('Invalid date detected')
-    return 'grid-column: 1 / 1;' // Fallback to default column span
-  }
-
-  const startColumn = Math.ceil(differenceInMinutes(startDateTime, startDate) / 10)
-  const endColumn = Math.ceil(differenceInMinutes(endDateTime, startDate) / 10)
-  console.log('Calculated Columns - Start:', startColumn, 'End:', endColumn)
+  // console.log('Calculated Columns - Start:', startColumn, 'End:', endColumn)
 
   return `grid-column: ${startColumn} / ${endColumn};`
 }
@@ -51,15 +48,13 @@ const good: Good = {
 }
 const sns: SnsShare = {
   title: props.timeLineItem.title,
-  period: props.timeLineItem.period,
-  instances: props.timeLineItem.instances,
-  // organizers: props.timeLineItem.organizers,
-  // performers: props.timeLineItem.performers,
-  organizers: [],
-  performers: [],
+  period: getEventPeriod(props.timeLineItem.startDate, props.timeLineItem.endDate),
+  route: route('event.show', props.timeLineItem.alias),
+  // instances: props.timeLineItem.instances.map((instance) => instance.display_name),
+  // organizers: props.timeLineItem.organizers.map((organizer) => organizer.name),
+  // performers: props.timeLineItem.performers.map((performer) => performer.name),
   categoryNames: props.timeLineItem.categoryNames,
-  tags: props.timeLineItem.tags,
-  route: props.timeLineItem.route,
+  tags: props.timeLineItem.tags.map((tag) => '#'+tag),
 }
 const bookmark: Bookmark = {
   isBookmark: props.timeLineItem.authUser.isBookmark,
@@ -70,9 +65,9 @@ const bookmark: Bookmark = {
   <div class="rounded-md bg-base-200 p-2 text-base-content" @click="console.log(timeLineItem)">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-2">
-        <div v-for="organizer in timeLineItem.organizers" :key="organizer.id">
+        <Link v-for="organizer in timeLineItem.organizers" :key="organizer.id" :href="organizer.profile_url">
           <img :src="organizer.image_url" class="h-6 rounded-md">
-        </div>
+        </Link>
       </div>
       <Link :href="timeLineItem.route" class="transition-all duration-200 hover:text-accent hover:underline ">
         {{ timeLineItem.title }}
@@ -88,9 +83,10 @@ const bookmark: Bookmark = {
       :style="`grid-template-columns: repeat(${calculateTotalColumns(timeLineItem.startDate, timeLineItem.endDate)}, minmax(0, 1fr));`">
       <template v-for="item in timeLineItem.timeTable" :key="item.id">
         <TimeLineItemPerformers
-          :style="calculateGridSpan(item.start_time, item.end_time)"
+          v-if="item.performers.length > 0"
+          :style="calculateGridSpan(item.start_date, item.end_date)"
           :performers="item.performers"
-          @click="console.log(item.start_time,item.end_time)" />
+          @click="console.log(item.start_date,item.end_date)" />
       </template>
     </div>
   </div>
