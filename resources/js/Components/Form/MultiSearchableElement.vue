@@ -27,6 +27,9 @@ const props = defineProps({
     :label="label" :help="help" :error="error"
     :label-icon-type="labelIconType">
     <MultiSearchable v-bind="$attrs">
+      <template #viewItem="{ element, handleDelete }">
+        <slot :element="element" :handle-delete="handleDelete" name="viewItem"></slot>
+      </template>
       <template #searchItem="{ item, handleAdd}">
         <slot :item="item" :handle-add="handleAdd" name="searchItem"></slot>
       </template>

@@ -38,32 +38,14 @@ const setNestedValue = (obj, path, value) => {
   lastObj[lastKey] = value
 }
 
-//引数のcolumnDefsをもとに、再帰的に「'field名'=''」の連想配列を生成する。
-const parseGridHeaderRecursivelyAndAddLine = (newData, columnDefs)=>{
-  console.log(columnDefs)
-
-  // if (Array.isArray(columnDefs)){ return newData }
-  for (let i=0 ; i < columnDefs?.length ; i++){
-    let item = columnDefs[i]
-    if (item['children'] != null){
-      parseGridHeaderRecursivelyAndAddLine(newData, columnDefs['children'])
-    } else {
-      //fieldが空の時は追加しない。
-      console.log(item['field'])
-      if (item['field'] != ''){ newData[item['field']] }
-    }
-  }
-  return newData
-}
-
 const rowDelete = (index) => {
   rowData.value = [...rowData.value.slice(0, index), ...rowData.value.slice(index + 1)]
 }
 
-const createNewRow = (columDefs) => {
+const createNewRow = () => {
   const newRow = {}
 
-  columDefs.forEach(col => {
+  props.columDefs.forEach(col => {
     if (col.field && col.field.includes('.')) {
       const keys = col.field.split('.')
       let currentPart = newRow
@@ -77,13 +59,17 @@ const createNewRow = (columDefs) => {
         }
       })
     } else if (col.field) {
-      newRow[col.field] = null
+      newRow[col.field] = col.getNewRowValue? col.getNewRowValue() : null
     }
   })
 
   rowData.value.push(newRow)
 }
 
+const emit = defineEmits(['update:modelValue'])
+watch(rowData, () => {
+  emit('update:modelValue', rowData.value)
+})
 </script>
 <template>
   <div class=" w-full rounded-lg ">
@@ -98,7 +84,7 @@ const createNewRow = (columDefs) => {
           </td>
         </tr>
       </thead>
-      <tbody class="bg-base-100">
+      <tbody class="bg-base-300/50">
         <tr v-for="(row,rowIndex) in rowData" :key="'row-'+row.rowIndex">
           <td v-for="col in columDefs " :key="'col-'+col.field">
             <!-- コンポーネントを動的にレンダリング -->
@@ -121,7 +107,7 @@ const createNewRow = (columDefs) => {
         <tr>
           <td :colspan="columDefs.length">
             <div class="flex w-full flex-row gap-2 py-1">
-              <button class="btn btn-primary btn-sm" @click="createNewRow(columDefs)">
+              <button class="btn btn-primary btn-sm" @click="createNewRow()">
                 ADD row
               </button>
             </div>
@@ -129,7 +115,7 @@ const createNewRow = (columDefs) => {
         </tr>
       </tbody>
     </table>
-    <div class="h-2 rounded-b-lg bg-base-100">
+    <div class="h-2 rounded-b-lg bg-base-300">
     </div>
   </div>
 </template>

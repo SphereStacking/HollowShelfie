@@ -98,6 +98,7 @@ Route::get('/mention/search', GetMentionSuggestionController::class)
     ->name('mention.suggestion');
 
 Route::get('/event/{alias}/show', ShowEventController::class)->name('event.show');
+Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.show');
 
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -126,7 +127,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('/event/{alias}/bookmark', StoreBookmarkController::class)->name('event.bookmark');
     Route::delete('/event/{alias}/bookmark', DestroyBookmarkController::class)->name('event.unbookmark');
 
-    Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.show');
 });
 
 // Route::get('/information', [InformationController::class, 'index'])->name('information.index');

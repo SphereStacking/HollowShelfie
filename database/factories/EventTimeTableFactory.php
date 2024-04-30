@@ -11,30 +11,21 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class EventTimeTableFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = EventTimeTable::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         // 開始時間として16:00から18:00の間でランダムな時間を生成
-        $startTime = $this->faker->time($format = 'H:i:s', $max = '18:00:00');
+        // 開始日時として現在から1ヶ月前後でランダムな日時を生成し、時間は16時から18時の間で設定
+        $startDate = $this->faker->dateTimeBetween('-1 month', '+1 month')->setTime(rand(16, 18), 0);
         // 終了時間として開始時間から最大2時間後の時間を生成
-        $endTime = date('H:i:s', strtotime($startTime) + rand(1, 2) * 3600);
+        $endDate = (clone $startDate)->modify('+'.rand(0, 120).' minutes');
 
         return [
             'event_id' => Event::inRandomOrder()->first()->id,
             'description' => $this->faker->text(10),
-            'start_time' => $startTime,
-            'end_time' => $endTime,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
         ];
     }
 }

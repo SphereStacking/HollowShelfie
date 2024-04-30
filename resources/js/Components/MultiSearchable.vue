@@ -128,25 +128,27 @@ const getLabel = (item) => {
         v-model="items"
         group="items"
         item-key="id"
-        class="flex  flex-wrap gap-2"
+        class="flex  flex-wrap gap-2 py-2"
         @start="dragging=true"
         @end="dragging=false">
         <template #item="{element}">
-          <BtnConditionTypeMapper
-            :type="itemType"
-            @click="clickTagDelete(element)">
-            <div class="relative">
-              <IconTypeMapper
-                :type="itemType"
-                class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
-              <Icon
-                icon="mdi:close"
-                class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
-              <div class="pl-6">
-                {{ getLabel(element) }}
+          <slot name="viewItem" :element="element" :handle-delete="clickTagDelete">
+            <BtnConditionTypeMapper
+              :type="itemType"
+              @click="clickTagDelete(element)">
+              <div class="relative">
+                <IconTypeMapper
+                  :type="itemType"
+                  class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+                <Icon
+                  icon="mdi:close"
+                  class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
+                <div class="pl-6">
+                  {{ getLabel(element) }}
+                </div>
               </div>
-            </div>
-          </BtnConditionTypeMapper>
+            </BtnConditionTypeMapper>
+          </slot>
         </template>
       </draggable>
 

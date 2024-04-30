@@ -2,10 +2,11 @@
 <script setup>
 
 import {useForm, usePage} from '@inertiajs/vue3'
-
+import { addMinutes } from 'date-fns'
+import { parseToBrowserTz } from '@/Utill/Date'
 import SearchPerformersGridElement from '@/Components/Grid/SearchPerformersGridElement.vue'
-import PickerTimeGridElement from '@/Components/Grid/PickerTimeGridElement.vue'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
+import PickerDateElement from '@/Components/Form/PickerDateElement.vue'
 
 const categoryNames = usePage().props.categories.map(category => category.name)
 const instanceTypeNames = usePage().props.instanceTypes
@@ -29,18 +30,27 @@ const form = useForm({
   time_tables: [],
   images: [],
   status: '',
+
+  //追加
+  start_date: null,
+  end_date: null,
 })
 
 const getFilteredDataFunc =(response) => {
   return response.data.suggestions.data
 }
 const addFormatData = (item) => {
-  return { id: item.identifiable_id, type: item.identifiable_type, name: item.name }
+  return { id: item.identifiable_id, type: item.identifiable_type, name: item.name, image_url: item.image_url, alias_name: item.alias_name}
 }
 
 const columDefs = [
-  { template: RowDeleteGridElement, headerName: '-', width: '10px' },
-  { field: 'times', headerName: '出演時間', width: '170px', template: PickerTimeGridElement},
+  { template: RowDeleteGridElement, headerName: '-', width: '50px' },
+  { field: 'duration', headerName: '出演時間(分)', width: '100px', template: 'input',
+    getNewRowValue: () => { return 60 },
+    templateOptions: {
+      type: 'number',
+    }
+  },
   { field: 'performers', headerName: 'パフォーマー', width: '200px', template: SearchPerformersGridElement,
     templateOptions: {
       route: route('mention.suggestion'),
@@ -48,7 +58,8 @@ const columDefs = [
       addFormatDataFunc: addFormatData,
     }
   },
-  { field: 'description', headerName: '説明', width: '200px', template: 'textarea'},
+  { field: 'description', headerName: '備考', width: '200px', template: 'input'},
+
 ]
 
 const emit = defineEmits(['success', 'error'])
@@ -57,6 +68,19 @@ const formCard = ref(null)
 
 const formSubmit = (status)=>{
   form.status=status
+  let currentTime = new Date(form.start_date)
+  form.time_tables = form.time_tables.map(timeTable => {
+    const duration = timeTable.duration
+    const startDate = new Date(currentTime)
+    currentTime = addMinutes(currentTime, duration)
+    const endDate = new Date(currentTime)
+    return {
+      ...timeTable,
+      start_date: startDate,
+      end_date: endDate
+    }
+  })
+
   form.put(route('event.update', event.alias), {
     preserveScroll: true,
     onSuccess: () => {
@@ -70,6 +94,7 @@ const formSubmit = (status)=>{
 }
 
 onBeforeMount(() => {
+
   form.title = event.title
   form.categories = event.category_names
   if (event.instances && event.instances.length > 0) {
@@ -80,11 +105,30 @@ onBeforeMount(() => {
   }
   form.tags = event.tags
   form.description = event.description
-  form.dates = [new Date(event.start_date), new Date(event.end_date)]
+  form.start_date = event.start_date ? parseToBrowserTz(event.start_date) : new Date(),
+  form.end_date = event.end_date ? parseToBrowserTz(event.end_date) : new Date(),
   form.organizers = event.organizers
   form.time_tables = event.time_table
   form.images = event.files
 })
+
+watch(() => form.time_tables, () => {
+  updateEndDate()
+}, { deep: true })
+
+watch(() => form.start_date, () => {
+  updateEndDate()
+}, { deep: true })
+
+const updateEndDate = () => {
+  if (form.time_tables.length > 0) {
+    const startTime = new Date(form.start_date)
+    const totalMinutes = form.time_tables.reduce((total, item) => total + item.duration, 0)
+    form.end_date = addMinutes(startTime, totalMinutes)
+  } else {
+    form.end_date = new Date(form.start_date)
+  }
+}
 
 </script>
 
@@ -127,13 +171,6 @@ onBeforeMount(() => {
       </template>
     </SelectElement>
 
-    <PickerFullDayRangeElement
-      v-model="form.dates"
-      :error="form.errors.dates"
-      label-icon-type="date"
-      label="日時"
-      help="" />
-
     <MultiSelectElement
       v-model="form.categories"
       label="カテゴリ"
@@ -161,6 +198,8 @@ onBeforeMount(() => {
       :route="route('tag.suggestion')"
       label-key="name"
       :get-filtered-data-func="getFilteredDataFunc">
+      <template #viewItem="{ element, handleDelete }">
+      </template>
       <template #searchItem="{ item, handleAdd}">
         <div
           class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm"
@@ -192,6 +231,9 @@ onBeforeMount(() => {
       :route="route('mention.suggestion')"
       label-key="name"
       :get-filtered-data-func="getFilteredDataFunc">
+      <template #viewItem="{ element, handleDelete }">
+        <PerformerBadge :performer="element" @click="handleDelete(element)" />
+      </template>
       <template #searchItem="{ item, handleAdd}">
         <div
           class="btn btn-md flex w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
@@ -219,6 +261,27 @@ onBeforeMount(() => {
         </button>
       </template>
     </MultiSearchableElement>
+
+    <!-- <PickerFullDayRangeElement
+      v-model="form.dates"
+      :error="form.errors.dates"
+      label-icon-type="date"
+      label="開催日時"
+      help="" /> -->
+    <div class="grid grid-cols-2 gap-2">
+      <PickerDateElement
+        v-model="form.start_date"
+        :error="form.errors.start_date"
+        label-icon-type="date"
+        label="開始日時" />
+
+      <PickerDateElement
+        v-model="form.end_date"
+        :error="form.errors.end_date"
+        label="終了日時"
+        help="タイムテーブルを入力したら自動で入力されます。"
+        disabled />
+    </div>
 
     <GridElement
       v-model="form.time_tables"

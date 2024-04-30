@@ -54,26 +54,11 @@ watch(performers, (value) => {
     :route="route"
     label-key="name"
     :get-filtered-data-func="getFilteredDataFunc">
+    <template #viewItem="{ element, handleDelete }">
+      <PerformerBadge :performer="element" @click="handleDelete(element)" />
+    </template>
     <template #searchItem="{ item, handleAdd}">
-      <div
-        class="btn btn-md flex h-full w-full flex-row  items-center justify-start gap-2 py-1 text-sm"
-        @click="handleAdd(addFormatDataFunc(item))">
-        <div class="avatar">
-          <div class="w-10 rounded-xl" :class="item.image_url ? '' : 'skeleton'">
-            <img v-if="item.image_url" :src="item.image_url">
-          </div>
-        </div>
-        <div class="flex flex-col justify-start text-left ">
-          <div class="font-bold">
-            {{ item.name }}
-          </div>
-          <div class="text-xs opacity-30">
-            <template v-if="item.alias_name">
-              @{{ item.alias_name }}
-            </template>
-          </div>
-        </div>
-      </div>
+      <PerformerBadge :performer="item" @click="handleAdd(addFormatDataFunc(item))" />
     </template>
     <template #notExist>
       <button class="btn btn-md w-full gap-2 py-1 text-sm" disabled>

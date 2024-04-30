@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use App\Enums\EventStatus;
-use App\Models\Traits\EventGetters;
-use App\Models\Traits\EventRelations;
-use App\Models\Traits\EventScopes;
-use App\Models\Traits\EventSetters;
-use App\Traits\HasFileable;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Enums\EventStatus;
+use App\Traits\HasFileable;
+use Laravel\Scout\Searchable;
+use App\Models\Traits\EventScopes;
+use App\Models\Traits\EventGetters;
+use App\Models\Traits\EventSetters;
+use Illuminate\Support\Facades\Log;
+use App\Models\Traits\EventRelations;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
-use Laravel\Scout\Searchable;
 
 class Event extends Model
 {
@@ -47,6 +48,8 @@ class Event extends Model
      */
     protected $casts = [
         'published_at' => 'datetime',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     protected static function boot()
@@ -182,11 +185,13 @@ class Event extends Model
         $this->event_time_tables()->delete();
         // 新しいタイムテーブルデータ作成
         foreach ($timeTables as $timeTable) {
+            Log::info($timeTable);
             $eventTimeTable = $this->event_time_tables()->create([
-                'start_time' => $timeTable['times'][0] ?? null,
-                'end_time' => $timeTable['times'][1] ?? null,
+                'start_date' => $timeTable['start_date'] ?? null,
+                'end_date' => $timeTable['end_date'] ?? null,
                 'description' => $timeTable['description'] ?? '',
             ]);
+            Log::info($eventTimeTable);
 
             $performersData = collect($timeTable['performers'])->map(function ($performer) use ($eventTimeTable) {
                 return [

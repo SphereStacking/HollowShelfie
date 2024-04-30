@@ -61,6 +61,21 @@ export default {
         }
       })
       addUtilities(newUtilities, ['responsive', 'hover'])
+    },
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.scrollbar-hide': {
+          /* Webkit ブラウザ用 */
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          /* Firefox */
+          'scrollbar-width': 'none',
+          /* IEおよびEdge */
+          '-ms-overflow-style': 'none',
+        },
+      }
+      addUtilities(newUtilities, ['responsive'])
     }
   ],
   daisyui: {

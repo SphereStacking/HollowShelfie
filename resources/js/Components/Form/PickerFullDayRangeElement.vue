@@ -116,7 +116,6 @@ watch(dates, (newDates) => {
   <Wrapper :label="label" :help="help" :error="error">
     <DatePickerWrapper
       v-model="dates"
-      locale="ja"
       :format="formatDate"
       :text-input="textInputOptions"
       :placeholder="placeholder"

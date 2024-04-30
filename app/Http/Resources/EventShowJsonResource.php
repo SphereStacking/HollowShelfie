@@ -29,8 +29,6 @@ class EventShowJsonResource extends JsonResource
             'event_timeline_status' => $this->resource->event_timeline_status,
             'start_date' => $this->resource->start_date,
             'end_date' => $this->resource->end_date,
-            'formatted_start_date' => $this->resource->getFormattedStartDateAttribute(),
-            'formatted_end_date' => $this->resource->getFormattedEndDateAttribute(),
             'good_count' => $this->resource->good_count,
             'short_good_count' => $this->resource->short_good_count,
             'files' => $this->resource->files->map(function ($file) {
@@ -82,9 +80,8 @@ class EventShowJsonResource extends JsonResource
                 return [
                     'id' => $time_table->id,
                     'description' => $time_table->description,
-                    'start_time' => $time_table->start_time,
-                    'end_time' => $time_table->end_time,
-                    'performance_time' => $time_table->performance_time,
+                    'start_date' => $time_table->start_date,
+                    'end_date' => $time_table->end_date,
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [
                             'id' => $performer->performable->id,

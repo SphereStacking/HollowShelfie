@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->integer('event_id');
             $table->text('description')->nullable();
-            $table->time('start_time')->nullable();
-            $table->time('end_time')->nullable();
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
         });
     }
 

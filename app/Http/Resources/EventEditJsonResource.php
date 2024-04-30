@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,9 +29,6 @@ class EventEditJsonResource extends JsonResource
             'event_timeline_status' => $this->resource->event_timeline_status,
             'start_date' => $this->resource->start_date,
             'end_date' => $this->resource->end_date,
-            'period' => $this->resource->period,
-            'formatted_start_date' => $this->resource->formatted_start_date,
-            'formatted_end_date' => $this->resource->formatted_end_date,
             'good_count' => $this->resource->good_count,
             'short_good_count' => $this->resource->short_good_count,
             'files' => $this->resource->files->map(function ($file) {
@@ -44,21 +42,28 @@ class EventEditJsonResource extends JsonResource
                     'id' => $organizeble->event_organizeble_id,
                     'type' => $organizeble->event_organizeble_type,
                     'name' => $organizeble->event_organizeble->name,
+                    'alias_name' => $organizeble->event_organizeble->screen_name,
+                    'image_url' => $organizeble->event_organizeble_type === User::class
+                        ? $organizeble->event_organizeble->profile_photo_url
+                        : $organizeble->event_organizeble->team_logo_url,
                 ];
             }),
             'time_table' => $this->resource->event_time_tables->map(function ($time_table) {
                 return [
                     'id' => $time_table->id,
                     'description' => $time_table->description,
-                    'times' => [
-                        $time_table->start_time,
-                        $time_table->end_time,
-                    ],
+                    'duration' => $time_table->duration,
+                    'start_date' => $time_table->start_date,
+                    'end_date' => $time_table->end_date,
                     'performers' => $time_table->performers->map(function ($performer) {
                         return [
                             'id' => $performer->performable_id,
                             'type' => $performer->performable_type,
                             'name' => $performer->performable->name,
+                            'alias_name' => $performer->performable->screen_name,
+                            'image_url' => $performer->performable_type === User::class
+                                ? $performer->performable->profile_photo_url
+                                : $performer->performable->team_logo_url,
                         ];
                     }),
                 ];

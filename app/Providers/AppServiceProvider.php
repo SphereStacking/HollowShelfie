@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use DateTimeZone;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,9 +15,14 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
             \Laravel\Telescope\Telescope::night();
         }
+
+        $this->app
+            ->when(DateTimeZone::class)
+            ->needs('$timezone')
+            ->giveConfig('app.timezone');
+
     }
 
     /**

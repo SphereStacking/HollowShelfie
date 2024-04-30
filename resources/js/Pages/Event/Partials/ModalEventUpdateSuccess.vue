@@ -1,4 +1,6 @@
 <script setup>
+import { getEventPeriod } from '@/Utill/Event'
+
 const IsOpenModal = ref(false)
 
 //Modal閉じる。
@@ -11,22 +13,19 @@ const item = ref({})
 //Modal表示する。
 const onBtnOpenModal = (newItem) => {
   IsOpenModal.value = true
-  console.log(newItem)
   item.value = {
     id: newItem.id,
     alias: newItem.alias,
     title: newItem.title,
     status: newItem.status,
     status_label: newItem.status_label,
-    start_date: newItem.start_date,
-    end_date: newItem.end_date,
-    period: newItem.period,
+    period: getEventPeriod(newItem.start_date, newItem.end_date),
     url: route('event.show', newItem.alias),
-    instances: newItem.instances.join(''),
-    organizers: newItem.organizers.join(''),
-    performers: newItem.performers.join(''),
-    category_names: newItem.category_names.join('、'),
-    tags: newItem.tags.map((tag) => '#'+tag).join(' '),
+    instances: newItem.instances.map((instance) => instance.display_name),
+    organizers: newItem.organizers.map((organizer) => organizer.name),
+    performers: newItem.performers.map((performer) => performer.name),
+    category_names: newItem.category_names,
+    tags: newItem.tags.map((tag) => '#'+tag),
   }
 }
 
