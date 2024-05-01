@@ -12,7 +12,8 @@ const pages = {
   About: [
     { url: route('about', 'app'), label: appName, target: '_self' },
     { url: route('about', 'operation'), label: '運営', target: '_self' },
-    { url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' }
+    { url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
+    { url: route('about', 'advertisement'), label: '広告掲載', target: '_self' }
   ],
   Guides: [
     { url: route('guide', 'how-to-use'), label: '使い方', target: '_self' },
