@@ -96,18 +96,19 @@ const editor = new Editor({
       className: 'bg-base-300/25',
       mode: 'all',
     }),
-    Mention.configure({
-      HTMLAttributes: {
-        class: 'rounded-md bg-base-300 my-1 px-2 text-sm',
-      },
-      suggestion: suggestionMention,
-    }),
-    Mention.configure({
-      HTMLAttributes: {
-        class: 'rounded-md bg-base-300 my-1 px-2 text-sm',
-      },
-      suggestion: suggestionTag,
-    }),
+    // TODO: 一旦機能初期リリースの機能から外す。
+    // Mention.configure({
+    //   HTMLAttributes: {
+    //     class: 'rounded-md bg-base-300 my-1 p-2 text-sm',
+    //   },
+    //   suggestion: suggestionMention,
+    // }),
+    // Mention.configure({
+    //   HTMLAttributes: {
+    //     class: 'rounded-md bg-base-300 my-1 p-2 text-sm',
+    //   },
+    //   suggestion: suggestionTag,
+    // }),
     TaskList,
     TaskItem.configure({
       nested: true,
