@@ -43,10 +43,12 @@ const isShowAlign = computed(() => {
           <!-- <editor-menu-image-element :editor="editor" class="join-item" /> -->
           <editor-menu-link-element :editor="editor" class="join-item" />
         </div>
-        <div class="join">
+
+        <!-- TODO: 一旦機能初期リリースの機能から外す。 -->
+        <!-- <div class="join">
           <EditorMenuAtElement :editor="editor" class="join-item" />
           <EditorMenuHashElement :editor="editor" class="join-item" />
-        </div>
+        </div> -->
 
         <editor-menu-divider-element :editor="editor" />
         <!-- 選択nodeによってメニュを変える。 -->
