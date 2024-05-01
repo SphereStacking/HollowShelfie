@@ -5,6 +5,7 @@ const appName = page.props.config.appName ?? null
 const credit = page.props.config.credit ?? null
 const Twitter = page.props.config.twitter ?? null
 const GitHub = page.props.config.github ?? null
+const DiscordInvite = page.props.config.discordInvite ?? null
 const issueForms = page.props.config.issueForms ?? []
 
 const pages = {
@@ -20,6 +21,7 @@ const pages = {
   Links: [
     { url: Twitter, label: 'Twitter', target: '_blank' },
     { url: GitHub, label: 'GitHub', target: '_blank' },
+    { url: DiscordInvite, label: 'Discord', target: '_blank' }
   ],
   Legal: [
     { url: route('legal', 'terms-of-service'), label: '利用規約', target: '_self' },
