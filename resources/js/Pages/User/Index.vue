@@ -65,38 +65,23 @@ const querySetter = (value, type) => {
                   </div>
                 </div>
               </div>
-              <div class="flex w-full flex-col pt-10">
+              <div class="flex w-full flex-col gap-1 pt-10">
                 <div class="flex flex-row justify-between">
                   <p class="text-center text-2xl  font-bold lg:text-left">
                     {{ dataile.name }}
                   </p>
                   <div class="flex items-end gap-4">
-                    <button class="btn btn-circle btn-primary btn-sm">
-                      <Icon icon="line-md:bell" class="text-xl" />
-                    </button>
                     <BtnSwapFollowing
                       :follow-route="route('users.follow', { id: dataile.screen_name })"
                       :unfollow-route="route('users.unfollow', { id: dataile.screen_name })"
                       :count="dataile.followers_count"
                       :is-followed="authUser.is_followed" />
-                    <button class="btn btn-neutral btn-sm flex flex-row ">
-                      <Icon icon="line-md:email" class="text-xl" />
-                      Connect
-                    </button>
                   </div>
                 </div>
                 <div class="flex flex-row justify-between">
                   <div class="flex items-center py-2">
                     <LinkExts class="flex gap-1" :links="dataile.links" />
                   </div>
-                  <div class="flex items-center gap-2">
-                    <template v-for="badge in dataile.badges">
-                      <Icon :icon="badge.icon_class" class="text-xl" />
-                    </template>
-                  </div>
-                </div>
-                <div class="parse h-full w-full rounded-lg bg-base-300 p-2">
-                  {{ dataile.content }}
                 </div>
                 <div>
                   <div class="flex flex-row items-center gap-1">
@@ -109,6 +94,9 @@ const querySetter = (value, type) => {
                       </template>
                     </div>
                   </div>
+                </div>
+                <div class="parse h-full w-full rounded-lg bg-base-300 p-2">
+                  {{ dataile.content }}
                 </div>
               </div>
             </div>
