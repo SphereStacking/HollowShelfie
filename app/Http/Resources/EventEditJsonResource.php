@@ -42,7 +42,7 @@ class EventEditJsonResource extends JsonResource
                     'id' => $organizeble->event_organizeble_id,
                     'type' => $organizeble->event_organizeble_type,
                     'name' => $organizeble->event_organizeble->name,
-                    'alias_name' => $organizeble->event_organizeble->screen_name,
+                    'screen_name' => $organizeble->event_organizeble->screen_name,
                     'image_url' => $organizeble->event_organizeble_type === User::class
                         ? $organizeble->event_organizeble->profile_photo_url
                         : $organizeble->event_organizeble->team_logo_url,
@@ -60,7 +60,7 @@ class EventEditJsonResource extends JsonResource
                             'id' => $performer->performable_id,
                             'type' => $performer->performable_type,
                             'name' => $performer->performable->name,
-                            'alias_name' => $performer->performable->screen_name,
+                            'screen_name' => $performer->performable->screen_name,
                             'image_url' => $performer->performable_type === User::class
                                 ? $performer->performable->profile_photo_url
                                 : $performer->performable->team_logo_url,

@@ -30,7 +30,7 @@ trait HasCustomIdentifiable
 
     public function getScreenNameAttribute()
     {
-        return $this->customIdentifiable->alias_name;
+        return $this->customIdentifiable->screen_name;
     }
 
     /**
@@ -50,7 +50,7 @@ trait HasCustomIdentifiable
      */
     public function getRouteKeyName()
     {
-        return 'customIdentifiable.alias_name';
+        return 'customIdentifiable.screen_name';
     }
 
     /**
@@ -59,7 +59,7 @@ trait HasCustomIdentifiable
     public function resolveRouteBinding(mixed $value, mixed $field = null): ?Model
     {
         return $this->whereHas('customIdentifiable', function ($query) use ($value) {
-            $query->where('alias_name', $value);
+            $query->where('screen_name', $value);
         })->first() ?? abort(404, 'Not found');
     }
 
@@ -80,13 +80,13 @@ trait HasCustomIdentifiable
      */
     public function updateCustomIdentifiable($newAliasName)
     {
-        $validator = Validator::make(['alias_name' => $newAliasName], $this->getValidationRules($newAliasName));
+        $validator = Validator::make(['screen_name' => $newAliasName], $this->getValidationRules($newAliasName));
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
 
-        $this->customIdentifiable()->update(['alias_name' => $newAliasName]);
+        $this->customIdentifiable()->update(['screen_name' => $newAliasName]);
     }
 
     /**
@@ -97,10 +97,11 @@ trait HasCustomIdentifiable
      */
     public function canUpdateCustomIdentifiable($newAliasName)
     {
-        $validator = Validator::make(['alias_name' => $newAliasName], $this->getValidationRules($newAliasName));
+        $validator = Validator::make(['screen_name' => $newAliasName], $this->getValidationRules($newAliasName));
 
         return ! $validator->fails();
     }
+
 
     /**
      * カスタム識別子を作成する
@@ -110,8 +111,8 @@ trait HasCustomIdentifiable
         retry(
             config('retry.custom_identifiable.attempts', 20),
             function () {
-                $alias_name = bin2hex(random_bytes(config('retry.custom_identifiable.random_bytes', 8)));
-                $this->customIdentifiable()->create(['alias_name' => $alias_name]);
+                $screen_name = bin2hex(random_bytes(config('retry.custom_identifiable.random_bytes', 8)));
+                $this->customIdentifiable()->create(['screen_name' => $screen_name]);
             },
             config('retry.custom_identifiable.sleep_milliseconds', 100),
             function ($e) {
@@ -122,22 +123,29 @@ trait HasCustomIdentifiable
     }
 
     /**
-     * バリデーションルールを取得する
+     * バリデーション
      *
      * @param  string $newAliasName
      * @return array
      */
-    protected function getValidationRules($newAliasName)
+    public function updateValidate($newAliasName)
     {
-        return [
-            'alias_name' => [
-                'alpha_dash',
-                new ReservedWord(),
-                Rule::unique('custom_identifiables')->where(function ($query) use ($newAliasName) {
-                    return $query->where('alias_name', $newAliasName)
-                        ->where('identifiable_type', get_class($this));
-                }),
-            ],
-        ];
+        $validator = Validator::make(['screen_name' => $newAliasName], [
+            'alpha_dash',
+            'min:3',
+            'max:14',
+            new ReservedWord(),
+            Rule::unique('custom_identifiables')->where(function ($query) use ($newAliasName) {
+                return $query->where('screen_name', $newAliasName)
+                    ->where('identifiable_type', get_class($this));
+            }),
+        ]);
+        \Log::info('updateValidate', ['newAliasName' => $newAliasName]);
+
+        if ($validator->fails()) {
+            \Log::info('Validation failed');
+            return $validator->errors(); // バリデーションエラーを返す
+        }
+        return $validator->validate();
     }
 }

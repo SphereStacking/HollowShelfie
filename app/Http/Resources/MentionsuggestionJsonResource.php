@@ -35,7 +35,7 @@ class MentionsuggestionJsonResource extends JsonResource
                 return [
                     'identifiable_id' => $item->identifiable_id,
                     'identifiable_type' => $item->identifiable_type,
-                    'alias_name' => $item->alias_name,
+                    'screen_name' => $item->screen_name,
                     'name' => $item->aliasable->name,
                     'image_url' => $item->identifiable_type === User::class
                         ? $item->aliasable->profile_photo_url

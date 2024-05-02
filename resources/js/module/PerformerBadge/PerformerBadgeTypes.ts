@@ -4,5 +4,5 @@ export type Performer = {
   name: string,
   image_url: string,
   profile_url: string,
-  alias_name: string,
+  screen_name: string,
 };
