@@ -40,6 +40,7 @@ use App\Http\Controllers\Follow\DestroyUserFollowController;
 use App\Http\Controllers\TeamLogo\DestroyTeamLogoController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;
 use App\Http\Controllers\EventFryer\StoreEventFryerController;
+use App\Http\Controllers\Profile\GetTestUserProfileController;
 use App\Http\Controllers\EventBookmark\StoreBookmarkController;
 use App\Http\Controllers\EventFryer\DestroyEventFryerController;
 use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
@@ -85,7 +86,7 @@ Route::get('/credits', function () {
     return Inertia::render('Credits/Index');
 })->name('credits');
 
-Route::get('/user/{user:screen_name}', GetUserProfileController::class)->name('user.profile.show');
+Route::get('/user/{user:screen_name}', GetTestUserProfileController::class)->name('user.profile.show');
 Route::get('/team/{team:screen_name}', GetTeamProfileController::class)->name('team.profile.show');
 Route::get('/event', GetIndexEventController::class)->name('event.index');
 Route::get('/event/search', GetEventSearchController::class)->name('event.search.index');

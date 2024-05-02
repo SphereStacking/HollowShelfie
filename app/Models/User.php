@@ -8,7 +8,6 @@ use Laravel\Scout\Searchable;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\UserRelations;
-use App\Traits\HasCustomIdentifiable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
@@ -24,7 +23,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     use HasApiTokens;
     use HasConnectedAccounts;
-    use HasCustomIdentifiable;
     use HasFactory;
     use HasFollowable;
     use HasProfilePhoto {
@@ -36,6 +34,16 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use UserRelations;
+
+    /**
+     * ルートキー名を取得する
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'screen_name';
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -78,8 +86,20 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'profile_photo_url',
         'links',
         'profile_url',
-        'screen_name',
     ];
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            do {
+                $randomScreenName = bin2hex(random_bytes(7));
+            } while (User::where('screen_name', $randomScreenName)->exists());
+            $user->screen_name = $randomScreenName;
+        });
+    }
 
     /**
      * Get the URL to the user's profile photo.
@@ -104,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function getProfileUrlAttribute(): string
     {
-        return route('user.profile.show', $this->getScreenNameAttribute());
+        return route('user.profile.show', $this->screen_name);
     }
 
     /**
