@@ -14,6 +14,10 @@ console.log(page.props)
 
 defineProps({
   title: String,
+  pageContentClass: {
+    type: String,
+    default: 'mt-4 px-4 sm:px-6 lg:px-8',
+  },
 })
 
 const showingNavigationDropdown = ref(false)
@@ -322,7 +326,7 @@ const isLogin = ref(auth_user.value !== null)
         </div>
       </header>
       <!-- Page Content -->
-      <main class="mt-4 px-4 sm:px-6 lg:px-8">
+      <main :class="pageContentClass">
         <slot></slot>
       </main>
     </div>
