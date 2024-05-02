@@ -4,3 +4,5 @@
 !dummy/*
 !sponsor/
 !sponsor/*
+!images/
+!images/**/*

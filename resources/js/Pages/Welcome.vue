@@ -1,7 +1,6 @@
 <script setup>
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
-
 import { usePage, Link } from '@inertiajs/vue3'
 const page = usePage()
 const developer = page.props.developer ?? null
@@ -12,11 +11,13 @@ const issueForms = page.props.config.issueForms ?? []
 const supportings = page.props.config.supportings ?? []
 const feedbacks = page.props.feedbacks ?? []
 const sponsors = page.props.sponsors ?? []
+const images = page.props.images
+
 // アイコンタイプ、ラベル、説明のデータ構造を定義
 const AppStatuses = [
-  { type: 'trend', label: 'PV', description: 'サイトへのアクセス数です。', count: 0 },
-  { type: 'organizer', label: 'User', description: '登録されているユーザー数です。', count: userCount },
-  { type: 'event', label: 'Event', description: '開催予定のイベント数です。', count: eventCount },
+  // { type: 'trend', label: 'PV', description: 'サイトへのアクセス数です。', count: 0 },
+  { type: 'organizer', label: 'User', image: images.smiling_face, description: '累計ユーザー数', count: userCount },
+  { type: 'event', label: 'Event', image: images.cracker, description: '累計イベント数', count: eventCount },
 ]
 const features = [
   { icon: 'good', description: '評価' },
@@ -24,7 +25,7 @@ const features = [
   { icon: 'event', description: 'イベントの掲載' },
   { icon: 'search', description: 'イベントの検索' },
   { icon: 'follow', description: 'フォロー'},
-  { icon: 'timeline', description: 'タイムライン表示', plan: 'free / coming soon', isComingSoon: true },
+  { icon: 'timeline', description: 'タイムライン表示' },
   { icon: 'team', description: 'チーム', plan: 'standard / coming soon', isComingSoon: true },
   { icon: 'matching', description: '主催者と演者のマッチング', plan: 'standard / coming soon', isComingSoon: true },
   { icon: 'advertisement', description: 'バナー掲載', plan: 'premium / coming soon', isComingSoon: true },
@@ -71,42 +72,50 @@ const columns = computed(() => {
 </script>
 
 <template>
-  <AppLayout>
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-5 pt-20">
+  <AppLayout page-content-class="mt-4 ">
+    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-10 pt-20">
       <div class="flex flex-col items-center">
         <ApplicationLogo class=" h-24" />
       </div>
-      <div class="mt-20 flex flex-row items-center justify-around">
-        <div class=" items-center text-2xl font-bold">
+      <div class="mt-20 flex flex-col items-center justify-around gap-10 md:flex-row md:gap-0">
+        <div class=" items-center text-4xl font-bold">
           <div>
             新しい出会い、感動、そして冒険。<br>
-            あなたの次の体験を、ここから見つけて始めよう。<br>
+            <br>
+            あなたの次の体験を、<br>
+            ここから見つけて始めよう。<br>
             <br>
             未知なるイベントの世界へ踏み出そう！
           </div>
         </div>
-        <div class="flex flex-col gap-2">
-          <Link href="/home" class="btn btn-primary btn-lg ">
-            イベントを探す
-          </Link>
-          <Link href="/home" class="btn btn-link btn-sm ">
-            今すぐ登録
-          </Link>
+        <div class="flex flex-row items-center gap-20 md:flex-col md:gap-4">
+          <img :src="images.ghost">
+          <div class="flex flex-col gap-2">
+            <Link href="/home" class="btn btn-primary btn-lg ">
+              イベントを探す
+            </Link>
+            <Link href="/register" class="btn btn-link btn-sm ">
+              今すぐ登録
+            </Link>
+          </div>
         </div>
       </div>
     </section>
-    <section class=" flex flex-row items-center justify-around py-32">
-      <div v-for="status in AppStatuses" :key="status.type" class="group ">
-        <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-300 transition-all duration-200 group-hover:bg-accent">
-          <IconTypeMapper :type="status.type" class="h-10 w-10 transition-all duration-200 group-hover:text-accent-content" />
-        </div>
-        <div class="text-center">
-          {{ status.label }}
-          {{ status.count }}
+    <section class=" flex flex-row items-center justify-around  py-20 md:p-32">
+      <div v-for="status in AppStatuses" :key="status.type" class="group">
+        <div class="flex flex-row items-center justify-center gap-2">
+          <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-300 transition-all duration-200 group-hover:bg-accent">
+            <!-- <IconTypeMapper :type="status.type" class="h-10 w-10 transition-all duration-200 group-hover:text-accent-content" /> -->
+            <img :src="status.image" class="h-10 w-10 transition-all duration-200 group-hover:text-accent-content">
+          </div>
+          <div class="text-left">
+            {{ status.description }} <br>
+            {{ status.count }}
+          </div>
         </div>
       </div>
     </section>
-    <section class="overflow-hidden whitespace-nowrap py-32">
+    <section class="overflow-hidden whitespace-nowrap py-10 md:py-20">
       <div class=" flex animate-slide-infinite flex-row p-5">
         <CardEventCompact
           v-for="event in events" :key="event.id" :event="event"
@@ -116,7 +125,7 @@ const columns = computed(() => {
           class="m-5 w-40" />
       </div>
     </section>
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-5 py-32">
+    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <div class="rounded-md py-10 text-center font-neon text-3xl font-black text-yellow-500-neon">
         Pricing
       </div>
@@ -148,7 +157,7 @@ const columns = computed(() => {
         </div>
       </div>
     </section>
-    <section class=" relative mx-auto w-full max-w-screen-lg overflow-x-clip px-5 py-32">
+    <section class=" relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
@@ -200,7 +209,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-5 py-32">
+    <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <div class="grid grid-cols-1 gap-4">
         <TransitionInViewportObserver
           v-for="(feature, index) in featureBanners"
@@ -217,7 +226,7 @@ const columns = computed(() => {
         </TransitionInViewportObserver>
       </div>
     </section>
-    <section class="relative mx-auto  w-full max-w-screen-lg overflow-x-clip px-5 py-32">
+    <section class="relative mx-auto  w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
@@ -239,7 +248,7 @@ const columns = computed(() => {
           Our Premium<br>
           Supporter
         </div>
-        <div class=" grid grid-cols-3 gap-5 p-10 text-base-content md:col-span-1 md:px-52">
+        <div class="grid grid-cols-3 gap-5 p-10 text-base-content md:col-span-1 md:px-52">
           <TransitionInViewportObserver
             v-for="supporter in sponsors"
             :key="supporter"
@@ -267,7 +276,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-5 py-32">
+    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
@@ -285,7 +294,7 @@ const columns = computed(() => {
         <div class=" rotate-12 bg-sky-200/10"></div>
       </TransitionInViewportObserver>
       <div class="grid auto-rows-min grid-cols-1 gap-2 rounded-3xl  border-4 border-sky-300  p-10 text-base-content shadow-xl shadow-sky-500/50 md:grid-cols-3 md:gap-10">
-        <div class="col-span-1 rounded-md p-4 text-center font-neon text-3xl font-black text-sky-500-neon md:col-span-3">
+        <div class="col-span-2 rounded-md p-4 text-center font-neon text-3xl font-black text-sky-500-neon md:col-span-3">
           Service<br>
           Feedback
         </div>
@@ -310,7 +319,7 @@ const columns = computed(() => {
           </div>
         </div>
 
-        <div class="col-span-1 mt-20 flex flex-col items-center md:col-span-3">
+        <div class="col-span-2 mt-20 flex flex-col items-center md:col-span-3">
           <a :href="issueForms.feedback" target="_blank" class="btn btn-outline btn-lg border-sky-300">
             フィードバックを送る
           </a>
@@ -318,7 +327,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="mx-auto my-20 flex flex-row items-center  justify-center gap-10 py-32">
+    <section class="mx-auto my-20 flex flex-row items-center  justify-center gap-10 py-10 md:py-20">
       <div class="relative font-neon text-5xl text-emerald-300-neon">
         <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
         developer
