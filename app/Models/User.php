@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Panel;
 use App\Traits\HasFollowable;
 use Laravel\Scout\Searchable;
 use Laravel\Jetstream\HasTeams;
@@ -10,6 +11,7 @@ use App\Models\Traits\UserRelations;
 use App\Traits\HasCustomIdentifiable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -18,7 +20,7 @@ use JoelButcher\Socialstream\SetsProfilePhotoFromUrl;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     use HasApiTokens;
     use HasConnectedAccounts;
@@ -125,5 +127,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRouteBindingRelations(): array
     {
         return ['links', 'tags'];
+    }
+
+
+    /**
+     * Filament のアクセスできるか
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return in_array($this->email, config('app.admin.emails')) && $this->hasVerifiedEmail();
     }
 }
