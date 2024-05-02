@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('teams', function (Blueprint $table) {
+            $table->string('screen_name', 14)->unique();
+        });
     }
 
     /**
@@ -19,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('teams', function (Blueprint $table) {
+            $table->dropColumn('screen_name');
+        });
     }
 };

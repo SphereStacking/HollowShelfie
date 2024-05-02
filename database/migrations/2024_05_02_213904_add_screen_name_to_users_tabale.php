@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('custom_identifiables', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('screen_name');
-            $table->morphs('identifiable');
-            $table->unique(['screen_name', 'identifiable_type']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('screen_name', 14)->unique();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('custom_identifiables');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('screen_name');
+        });
     }
 };
