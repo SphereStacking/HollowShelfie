@@ -12,6 +12,7 @@ use App\Http\Controllers\EventGood\GetGoodController;
 use App\Http\Controllers\Event\DestroyEventController;
 use App\Http\Controllers\Event\GetEditEventController;
 use App\Http\Controllers\Follow\GetFollowerController;
+use App\Http\Controllers\Follow\StoreFollowController;
 use App\Http\Controllers\User\GetUserSearchController;
 use App\Http\Controllers\Event\GetIndexEventController;
 use App\Http\Controllers\EventGood\StoreGoodController;
@@ -19,14 +20,23 @@ use App\Http\Controllers\Follow\GetFollowingController;
 use App\Http\Controllers\Event\GetCreateEventController;
 use App\Http\Controllers\Event\GetEventSearchController;
 use App\Http\Controllers\Event\GetManageEventController;
+use App\Http\Controllers\Follow\DestroyFollowController;
 use App\Http\Controllers\GetMentionSuggestionController;
 use App\Http\Controllers\EventGood\DestroyGoodController;
+use App\Http\Controllers\Markdown\GetAboutPageController;
+use App\Http\Controllers\Markdown\GetGuidePageController;
+use App\Http\Controllers\Markdown\GetLegalPageController;
 use App\Http\Controllers\Event\GetTimeLineEventController;
+use App\Http\Controllers\Follow\StoreTeamFollowController;
+use App\Http\Controllers\Follow\StoreUserFollowController;
+use App\Http\Controllers\Markdown\GetCreditPageController;
 use App\Http\Controllers\Profile\GetTeamProfileController;
 use App\Http\Controllers\Profile\GetUserProfileController;
 use App\Http\Controllers\TeamLogo\StoreTeamLogoController;
 use App\Http\Controllers\CustomId\UpdateCustomIdController;
 use App\Http\Controllers\Event\GetRecruitingEventController;
+use App\Http\Controllers\Follow\DestroyTeamFollowController;
+use App\Http\Controllers\Follow\DestroyUserFollowController;
 use App\Http\Controllers\TeamLogo\DestroyTeamLogoController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;
 use App\Http\Controllers\EventFryer\StoreEventFryerController;
@@ -86,6 +96,12 @@ Route::get('/mention/search', GetMentionSuggestionController::class)->name('ment
 Route::get('/event/{alias}/show', ShowEventController::class)->name('event.show');
 Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.show');
 
+
+Route::get('/about/{about}', GetAboutPageController::class)->name('about');
+Route::get('/guide/{guides}', GetGuidePageController::class)->name('guide');
+Route::get('/legal/{legal}', GetLegalPageController::class)->name('legal');
+Route::get('/credit', GetCreditPageController::class)->name('credit');
+
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
@@ -112,6 +128,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::delete('/event/{alias}/good', DestroyGoodController::class)->name('event.ungood');
     Route::post('/event/{alias}/bookmark', StoreBookmarkController::class)->name('event.bookmark');
     Route::delete('/event/{alias}/bookmark', DestroyBookmarkController::class)->name('event.unbookmark');
+
+
+    // フォロー
+    Route::post('/follow', StoreFollowController::class)->name('follow');
+    Route::post('/users/{user}/follow', StoreUserFollowController::class)->name('users.follow');
+    Route::post('/teams/{team}/follow', StoreTeamFollowController::class)->name('teams.follow');
+
+    // フォロー解除
+    Route::delete('/unfollow', DestroyFollowController::class)->name('unfollow');
+    Route::delete('/users/{user}/unfollow', DestroyUserFollowController::class)->name('users.unfollow');
+    Route::delete('/teams/{team}/unfollow', DestroyTeamFollowController::class)->name('teams.unfollow');
 
 });
 
