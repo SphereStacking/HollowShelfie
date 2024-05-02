@@ -196,6 +196,7 @@ return [
     */
     'twitter' => env('APP_TWITTER'),
     'github' => env('APP_GITHUB'),
+    'discord_invite' => env('APP_DISCORD_INVITE'),
 
     /*
     |--------------------------------------------------------------------------
