@@ -15,12 +15,13 @@ const pages = {
     { url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
     { url: route('about', 'advertisement'), label: '広告掲載', target: '_self' }
   ],
-  Guides: [
-    { url: route('guide', 'how-to-use'), label: '使い方', target: '_self' },
-    { url: route('guide', 'frequently-asked-questions'), label: 'よくある質問と回答', target: '_self' }
-  ],
+  // しばらくは必要ないためコメントアウト
+  // Guides: [
+  //   { url: route('guide', 'how-to-use'), label: '使い方', target: '_self' },
+  //   { url: route('guide', 'frequently-asked-questions'), label: 'よくある質問と回答', target: '_self' }
+  // ],
   Links: [
-    { url: Twitter, label: 'Twitter', target: '_blank' },
+    { url: Twitter, label: 'X', target: '_blank' },
     { url: GitHub, label: 'GitHub', target: '_blank' },
     { url: DiscordInvite, label: 'Discord', target: '_blank' }
   ],
