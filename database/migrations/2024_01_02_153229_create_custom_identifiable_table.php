@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('custom_identifiables', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('alias_name');
+            $table->string('screen_name');
             $table->morphs('identifiable');
-            $table->unique(['alias_name', 'identifiable_type']);
+            $table->unique(['screen_name', 'identifiable_type']);
         });
     }
 

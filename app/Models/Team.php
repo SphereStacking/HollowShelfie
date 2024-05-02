@@ -63,7 +63,7 @@ class Team extends JetstreamTeam
 
     public function getProfileUrlAttribute()
     {
-        return route('team.profile.show', $this->customIdentifiable->alias_name);
+        return route('team.profile.show', $this->customIdentifiable->screen_name);
     }
 
     /**

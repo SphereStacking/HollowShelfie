@@ -85,8 +85,8 @@ Route::get('/credits', function () {
     return Inertia::render('Credits/Index');
 })->name('credits');
 
-Route::get('/user/{user:alias_name}', GetUserProfileController::class)->name('user.profile.show');
-Route::get('/team/{team:alias_name}', GetTeamProfileController::class)->name('team.profile.show');
+Route::get('/user/{user:screen_name}', GetUserProfileController::class)->name('user.profile.show');
+Route::get('/team/{team:screen_name}', GetTeamProfileController::class)->name('team.profile.show');
 Route::get('/event', GetIndexEventController::class)->name('event.index');
 Route::get('/event/search', GetEventSearchController::class)->name('event.search.index');
 Route::get('/user/search', GetUserSearchController::class)->name('user.search.index');
@@ -106,10 +106,10 @@ Route::get('/credit', GetCreditPageController::class)->name('credit');
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
     Route::get('/dashboard', GetDashboardController::class)->name('dashboard');
-    Route::get('/user/{user:alias_name}/bookmark', GetBookmarkController::class)->name('user.bookmark');
-    Route::get('/user/{user:alias_name}/good', GetGoodController::class)->name('user.good');
-    Route::get('/user/{user:alias_name}/following', GetFollowingController::class)->name('user.following');
-    Route::get('/user/{user:alias_name}/follower', GetFollowerController::class)->name('user.follower');
+    Route::get('/user/{user:screen_name}/bookmark', GetBookmarkController::class)->name('user.bookmark');
+    Route::get('/user/{user:screen_name}/good', GetGoodController::class)->name('user.good');
+    Route::get('/user/{user:screen_name}/following', GetFollowingController::class)->name('user.following');
+    Route::get('/user/{user:screen_name}/follower', GetFollowerController::class)->name('user.follower');
 
     Route::delete('/team/{team}/logo', DestroyTeamLogoController::class)->name('current-team-logo.destroy');
     Route::put('/team/{team}/logo', StoreTeamLogoController::class)->name('current-team-logo.update');

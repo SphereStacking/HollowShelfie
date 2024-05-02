@@ -12,7 +12,7 @@ class CustomIdentifiable extends Model
     use HasFactory;
     use Searchable;
 
-    protected $fillable = ['alias_name'];
+    protected $fillable = ['screen_name'];
 
     public function aliasable(): MorphTo
     {
@@ -26,7 +26,7 @@ class CustomIdentifiable extends Model
     {
         return $this->only(
             [
-                'alias_name',
+                'screen_name',
             ]
         );
 
