@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\EventStatus;
-use App\Http\Resources\EventsJsonResource;
-use App\Http\Resources\FeedbacksJsonResource;
-use App\Models\Event;
 use App\Models\User;
+use Inertia\Inertia;
+use App\Models\Event;
+use App\Enums\EventStatus;
+use App\Services\UserService;
 use App\Services\EventService;
 use App\Services\GoogleFormsService;
-use App\Services\UserService;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\EventsJsonResource;
+use App\Http\Resources\FeedbacksJsonResource;
 
 class GetWelcomeController extends Controller
 {
@@ -43,6 +44,11 @@ class GetWelcomeController extends Controller
             'userCount' => fn () => User::count(),
             'feedbacks' => fn () => new FeedbacksJsonResource($this->googleFormsService->getFormResponses(config('external_services.issue_forms.feedback.id'))),
             'sponsors' => fn () => config('sponsors.users'),
+            'images' => fn () => [
+                'ghost' => Storage::disk('public')->url('images/microsoft-teams/ghost_120x120.png'),
+                'cracker' => Storage::disk('public')->url('images/microsoft-teams/cracker_120x120.png'),
+                'smiling_face' => Storage::disk('public')->url('images/microsoft-teams/smiling_face_120x120.png'),
+            ],
         ]);
     }
 }
