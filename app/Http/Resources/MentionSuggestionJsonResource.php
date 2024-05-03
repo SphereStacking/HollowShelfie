@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MentionsuggestionJsonResource extends JsonResource
+class MentionSuggestionJsonResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -31,15 +31,12 @@ class MentionsuggestionJsonResource extends JsonResource
                 'total' => $this->resource->total(),
             ],
             'data' => $this->resource->map(function ($item) {
-                // UserやTeamをfollowしているためfollowableに入れる。
                 return [
-                    'identifiable_id' => $item->identifiable_id,
-                    'identifiable_type' => $item->identifiable_type,
-                    'alias_name' => $item->alias_name,
-                    'name' => $item->aliasable->name,
-                    'image_url' => $item->identifiable_type === User::class
-                        ? $item->aliasable->profile_photo_url
-                        : $item->aliasable->team_logo_url,
+                    'id' => $item->id,
+                    'screen_name' => $item->screen_name,
+                    'name' => $item->name,
+                    'image_url' => $item->profile_photo_url,
+                    'type' => User::class
                 ];
             }),
         ];

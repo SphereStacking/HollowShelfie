@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\MentionsuggestionJsonResource;
-use App\Models\CustomIdentifiable;
-use Illuminate\Http\JsonResponse;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Resources\MentionSuggestionJsonResource;
 
 class GetMentionSuggestionController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-        $searchResults = CustomIdentifiable::search($request->input('q'))->query(function ($builder) {
-            $builder->with(['aliasable']);
-        })->paginate(10);
+        // Userの検索
+        $query = $request->input('q');
+        $users = User::query()
+            ->where('screen_name', 'like', "%{$query}%")
+            ->orWhere('name', 'like', "%{$query}%")
+            ->paginate(15);
 
         return response()->json([
             'status' => 'success',
-            'suggestions' => new MentionsuggestionJsonResource($searchResults),
+            'suggestions' => new MentionSuggestionJsonResource($users),
         ]);
     }
 }

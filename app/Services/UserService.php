@@ -120,4 +120,11 @@ class UserService
             'unfollowed' => $model,
         ];
     }
+
+
+
+    public function getUserByTestScreenName(string $screenName) : User
+    {
+        return User::where('screen_name', $screenName)->firstOrFail();
+    }
 }

@@ -18,12 +18,14 @@ class GetBookmarkController extends Controller
 
     public function __invoke()
     {
+
+        $user = auth()->user();
+        $bookmarkedEvents = $user->bookmark_events()->paginate(12);
+
         return Inertia::render(
             'Dashboard/Bookmark',
             [
-                'events' => new EventsPaginatedJsonResource(
-                    $this->eventBookmarkService->getBookmarkedEventsByUser(auth()->user())
-                ),
+                'events' => new EventsPaginatedJsonResource($bookmarkedEvents),
             ]
         );
     }

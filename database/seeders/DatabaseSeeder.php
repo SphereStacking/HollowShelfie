@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         Artisan::call('scout:flush', ['model' => 'App\\Models\\User']);
         Artisan::call('scout:flush', ['model' => 'App\\Models\\Team']);
         Artisan::call('scout:flush', ['model' => 'App\\Models\\Tag']);
-        Artisan::call('scout:flush', ['model' => 'App\\Models\\CustomIdentifiable']);
 
         $this->call([
             AdminUserSeeder::class,
@@ -48,6 +47,5 @@ class DatabaseSeeder extends Seeder
         Artisan::call('scout:import', ['model' => 'App\\Models\\User']);
         Artisan::call('scout:import', ['model' => 'App\\Models\\Team']);
         Artisan::call('scout:import', ['model' => 'App\\Models\\Tag']);
-        Artisan::call('scout:import', ['model' => 'App\\Models\\CustomIdentifiable']);
     }
 }

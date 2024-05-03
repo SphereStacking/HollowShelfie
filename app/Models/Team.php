@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Traits\TeamRelations;
-use App\Traits\HasCustomIdentifiable;
 use App\Traits\HasFollowable;
 use App\Traits\TeamLogo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,12 +14,21 @@ use Laravel\Scout\Searchable;
 
 class Team extends JetstreamTeam
 {
-    use HasCustomIdentifiable;
     use HasFactory;
     use HasFollowable;
     use Searchable;
     use TeamLogo;
     use TeamRelations;
+
+    /**
+     * ルートキー名を取得する
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'screen_name';
+    }
 
     /**
      * The attributes that should be cast.
@@ -58,12 +66,26 @@ class Team extends JetstreamTeam
      * @var array<int, string>
      */
     protected $appends = [
-        'team_logo_url', 'links', 'profile_url', 'screen_name',
+        'team_logo_url', 'links', 'profile_url',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            do {
+                $randomScreenName = bin2hex(random_bytes(7));
+            } while (User::where('screen_name', $randomScreenName)->exists());
+            $user->screen_name = $randomScreenName;
+        });
+    }
+
+
 
     public function getProfileUrlAttribute()
     {
-        return route('team.profile.show', $this->customIdentifiable->alias_name);
+        return route('team.profile.show', $this->screen_name);
     }
 
     /**
