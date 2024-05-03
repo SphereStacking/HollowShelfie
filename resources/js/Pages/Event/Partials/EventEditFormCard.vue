@@ -40,7 +40,7 @@ const getFilteredDataFunc =(response) => {
   return response.data.suggestions.data
 }
 const addFormatData = (item) => {
-  return { id: item.identifiable_id, type: item.identifiable_type, name: item.name, image_url: item.image_url, alias_name: item.alias_name}
+  return { id: item.id, type: item.type, name: item.name, image_url: item.image_url, screen_name: item.screen_name}
 }
 
 const columDefs = [
@@ -248,8 +248,8 @@ const updateEndDate = () => {
               {{ item.name }}
             </div>
             <div class="text-xs opacity-30">
-              <template v-if="item.alias_name">
-                @{{ item.alias_name }}
+              <template v-if="item.screen_name">
+                @{{ item.screen_name }}
               </template>
             </div>
           </div>

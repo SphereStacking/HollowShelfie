@@ -25,8 +25,8 @@ defineProps<Props>()
         {{ performer.name }}
       </div>
       <div class="text-xs opacity-30">
-        <template v-if="performer.alias_name">
-          @{{ performer.alias_name }}
+        <template v-if="performer.screen_name">
+          @{{ performer.screen_name }}
         </template>
       </div>
     </div>

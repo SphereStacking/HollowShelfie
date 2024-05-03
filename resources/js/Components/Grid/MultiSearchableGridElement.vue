@@ -52,8 +52,8 @@ const route = props.templateOptions['route']
             {{ item.name }}
           </div>
           <div class="text-xs opacity-30">
-            <template v-if="item.alias_name">
-              @{{ item.alias_name }}
+            <template v-if="item.screen_name">
+              @{{ item.screen_name }}
             </template>
           </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Rules\ReservedWord;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -21,6 +22,15 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'screen_name' => [
+                'required',
+                'string',
+                'alpha_dash',
+                'min:3',
+                'max:14',
+                Rule::unique('users')->ignore($user->id),
+                new ReservedWord(),
+            ],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -34,6 +44,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'screen_name' => $input['screen_name'],
             ])->save();
         }
     }
