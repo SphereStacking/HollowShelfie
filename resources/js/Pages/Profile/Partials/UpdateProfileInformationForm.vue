@@ -18,6 +18,7 @@ const form = useForm({
   name: props.user.name,
   email: props.user.email,
   photo: null,
+  screen_name: props.user.screen_name,
 })
 
 const verificationLinkSent = ref(null)
@@ -122,6 +123,19 @@ const clearPhotoFileInput = () => {
         </SecondaryButton>
 
         <InputError :message="form.errors.photo" class="mt-2" />
+      </div>
+
+      <!-- User Id -->
+      <div class="col-span-6 sm:col-span-4">
+        <InputLabel for="user_id" :value="$t('User ID')" />
+        <TextInput
+          id="user_id"
+          v-model="form.screen_name"
+          type="text"
+          class="mt-1 block w-full"
+          required
+          autocomplete="id" />
+        <InputError :message="form.errors.screen_name" class="mt-2" />
       </div>
 
       <!-- Name -->
