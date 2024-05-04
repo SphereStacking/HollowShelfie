@@ -20,15 +20,15 @@ const props = defineProps({
         <ProviderIcon :provider="provider" classes="h-6 w-6 me-2" />
 
         <div class="ml-2">
-          <div class="text-sm font-semibold text-gray-600 dark:text-gray-400">
+          <div class="font-sgmibold text-sm text-base-content">
             {{ provider.name }}
           </div>
 
-          <div v-if="createdAt !== null" class="text-xs text-gray-500">
+          <div v-if="createdAt !== null" class="text-xs text-base-content">
             Connected {{ createdAt }}
           </div>
 
-          <div v-else class="text-xs text-gray-500">
+          <div v-else class="text-xs text-base-content">
             Not connected.
           </div>
         </div>

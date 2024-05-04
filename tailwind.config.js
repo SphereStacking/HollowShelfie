@@ -19,14 +19,11 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        'title': ['Figtree', 'cursive'],
         'monoton': ['Monoton', 'cursive'],
         'limelight': ['Limelight', 'cursive'],
         'frijole': ['Frijole', 'cursive'],
         'neon': ['Neon', 'cursive'],
-      },
-      colors: {
-        'vtd-primary': colors.sky, // Light mode Datepicker color
-        'vtd-secondary': colors.gray, // Dark mode Datepicker color
       },
       aspectRatio: {
         'a4': '1 / 1.414', // A4サイズの縦横比
@@ -88,9 +85,9 @@ export default {
           'accent': 'oklch(90% 0.300 300)',
           'neutral': 'oklch(26% 0.015 260)',
           'neutral-content': 'oklch(70% 0.015 260)',
-          'base-100': 'oklch(20% 0.015 260)',
-          'base-200': 'oklch(17% 0.015 260)',
-          'base-300': 'oklch(15% 0.015 260)',
+          'base-100': 'oklch(22% 0.015 260)',
+          'base-200': 'oklch(18% 0.015 260)',
+          'base-300': 'oklch(14% 0.015 260)',
           'base-content': '#9fb9d0',
           'info': '#89e0eb',
           'success': '#addfad',

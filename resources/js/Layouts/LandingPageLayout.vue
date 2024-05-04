@@ -21,7 +21,7 @@ defineProps({
 
     <Banner />
 
-    <div class="min-h-screen bg-base-100 pb-4">
+    <div class="min-h-screen bg-base-300 pb-4">
       <NavigationMenu />
 
       <!-- Page Heading -->
@@ -31,7 +31,7 @@ defineProps({
         </div>
       </header>
       <!-- Page Content -->
-      <main class="mt-4 px-6 sm:px-12">
+      <main class="mt-4 ">
         <slot></slot>
       </main>
     </div>

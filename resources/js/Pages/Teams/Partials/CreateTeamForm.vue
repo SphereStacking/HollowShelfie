@@ -36,10 +36,10 @@ const createTeam = () => {
           <img class="h-12 w-12 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
 
           <div class="ml-4 leading-tight">
-            <div class="text-gray-900">
+            <div class="text-base-content">
               {{ $page.props.auth.user.name }}
             </div>
-            <div class="text-sm text-gray-700">
+            <div class="text-sm text-base-content">
               {{ $page.props.auth.user.email }}
             </div>
           </div>

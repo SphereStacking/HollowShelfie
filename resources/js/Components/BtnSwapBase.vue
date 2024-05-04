@@ -4,9 +4,6 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
-  showCount: {
-    type: Boolean,
-  },
   onIcon: {
     type: String,
     required: true

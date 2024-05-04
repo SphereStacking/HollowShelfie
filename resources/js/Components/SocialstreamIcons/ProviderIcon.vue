@@ -21,7 +21,7 @@ const providerIconMap = {
 </script>
 
 <template>
-  <div class="text-gray-900 dark:text-gray-100">
+  <div class="text-base-content">
     <component :is="providerIconMap[provider.id]" :class="classes" />
   </div>
 </template>

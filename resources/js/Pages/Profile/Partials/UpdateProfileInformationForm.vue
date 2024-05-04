@@ -177,7 +177,7 @@ const clearPhotoFileInput = () => {
             </Link>
           </p>
 
-          <div v-show="verificationLinkSent" class="mt-2 text-sm font-medium text-green-600">
+          <div v-show="verificationLinkSent" class="mt-2 text-sm font-medium text-success">
             {{ $t('A new verification link has been sent to your email address.') }}
           </div>
         </div>

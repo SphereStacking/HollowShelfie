@@ -44,22 +44,21 @@ const addFormatData = (item) => {
 }
 
 const columDefs = [
-  { template: RowDeleteGridElement, headerName: '-', width: '50px' },
+  { template: RowDeleteGridElement, headerName: '', width: '40px' },
   { field: 'duration', headerName: '出演時間(分)', width: '100px', template: 'input',
     getNewRowValue: () => { return 60 },
     templateOptions: {
       type: 'number',
     }
   },
-  { field: 'performers', headerName: 'パフォーマー', width: '200px', template: SearchPerformersGridElement,
+  { field: 'performers', headerName: 'パフォーマー', width: '250px', template: SearchPerformersGridElement,
     templateOptions: {
       route: route('mention.suggestion'),
       getFilteredDataFunc: getFilteredDataFunc,
       addFormatDataFunc: addFormatData,
     }
   },
-  { field: 'description', headerName: '備考', width: '200px', template: 'input'},
-
+  { field: 'description', headerName: '備考', width: 'auto', template: 'input'},
 ]
 
 const emit = defineEmits(['success', 'error'])

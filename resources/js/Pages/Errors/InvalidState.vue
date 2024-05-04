@@ -8,7 +8,7 @@ import { Link } from '@inertiajs/vue3'
       <h1 class="mb-4 text-center text-3xl font-bold">
         認証エラー
       </h1>
-      <p class="text-center text-lg text-gray-700">
+      <p class="text-center text-lg text-base-content">
         認証プロセス中に問題が発生しました。もう一度お試しください。
       </p>
       <Link href="/" class="btn ml-4">

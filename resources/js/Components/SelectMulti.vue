@@ -63,7 +63,7 @@ const removeTag = (tag) => {
             <div class="flex-1">
               <input
                 placeholder=""
-                class="h-full w-full appearance-none bg-transparent p-1 px-2 text-gray-800 outline-none">
+                class="h-full w-full appearance-none bg-transparent p-1 px-2 text-base-content outline-none">
             </div>
           </div>
         </div>

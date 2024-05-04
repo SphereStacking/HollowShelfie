@@ -72,50 +72,51 @@ watch(rowData, () => {
 })
 </script>
 <template>
-  <div class=" w-full rounded-lg ">
-    <div class="h-2 rounded-t-lg bg-base-300">
+  <div class="w-full rounded-lg bg-base-100 ">
+    <div class="h-2 rounded-t-lg">
     </div>
-    <table class="table table-xs w-full rounded-lg">
+    <table class="table table-xs w-full rounded-lg ">
       <!-- head -->
-      <thead class=" bg-base-300">
+      <thead class="">
         <tr>
           <td v-for="(col, colIndex) in columDefs" :key="'col-head-' + colIndex" :style="{ width: col['width'] }">
             {{ col['headerName'] }}
           </td>
         </tr>
       </thead>
-      <tbody class="bg-base-300/50">
+      <tbody class="">
         <tr v-for="(row,rowIndex) in rowData" :key="'row-'+row.rowIndex">
           <td v-for="col in columDefs " :key="'col-'+col.field">
-            <!-- コンポーネントを動的にレンダリング -->
-            <component
-              :is="resolveComponent(col.template)"
-              v-if="col.template"
-              :key="row"
-              :row-index="rowIndex"
-              :model-value="getNestedValue(row, col.field)"
-              :template-options="col['templateOptions']"
-              :data="row"
-              @update:model-value="(value) => setNestedValue(row, col.field, value)"
-              @row-delete="rowDelete" />
-            <!-- テンプレートが指定されていない場合は通常のテキストを表示 -->
-            <span v-else>
-              {{ getNestedValue(row, col.field) }}
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td :colspan="columDefs.length">
-            <div class="flex w-full flex-row gap-2 py-1">
-              <button class="btn btn-primary btn-sm" @click="createNewRow()">
-                ADD row
-              </button>
+            <div class=" flex h-full w-full items-center justify-center ">
+              <!-- コンポーネントを動的にレンダリング -->
+              <component
+                :is="resolveComponent(col.template)"
+                v-if="col.template"
+                :key="row"
+                :row-index="rowIndex"
+                :model-value="getNestedValue(row, col.field)"
+                :template-options="col['templateOptions']"
+                :data="row"
+                @update:model-value="(value) => setNestedValue(row, col.field, value)"
+                @row-delete="rowDelete" />
+              <!-- テンプレートが指定されていない場合は通常のテキストを表示 -->
+              <span v-else>
+                {{ getNestedValue(row, col.field) }}
+              </span>
             </div>
           </td>
         </tr>
+        <tr></tr>
       </tbody>
     </table>
-    <div class="h-2 rounded-b-lg bg-base-300">
+    <div class="rounded-b-lg p-2">
+      <slot name="footer" :create-new-row="createNewRow">
+        <div class="flex w-full flex-row gap-2 py-1">
+          <button class="btn btn-primary btn-sm" @click="createNewRow()">
+            ADD row
+          </button>
+        </div>
+      </slot>
     </div>
   </div>
 </template>
