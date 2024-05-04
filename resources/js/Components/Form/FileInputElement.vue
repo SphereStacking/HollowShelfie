@@ -158,7 +158,7 @@ const itemsToShow = computed(() => {
           class="input flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-dashed">
           <div class="flex flex-col items-center justify-center pb-6 pt-5">
             <IconTypeMapper type="upload" class="text-5xl" />
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+            <p class="mb-2 text-sm text-base-content">
               <span class="font-semibold">Click to upload</span> or drag and drop
             </p>
             <div v-if="errorMessage" class=" text-error">

@@ -120,67 +120,65 @@ const getLabel = (item) => {
 </script>
 
 <template>
-  <div class="w-full">
-    <!-- タグ入力ボックス -->
-    <div class="input input-sm flex h-full w-full flex-wrap items-center gap-2 text-base-content">
-      <!-- タグ表示 -->
-      <draggable
-        v-model="items"
-        group="items"
-        item-key="id"
-        class="flex  flex-wrap gap-2 py-2"
-        @start="dragging=true"
-        @end="dragging=false">
-        <template #item="{element}">
-          <slot name="viewItem" :element="element" :handle-delete="clickTagDelete">
-            <BtnConditionTypeMapper
-              :type="itemType"
-              @click="clickTagDelete(element)">
-              <div class="relative">
-                <IconTypeMapper
-                  :type="itemType"
-                  class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
-                <Icon
-                  icon="mdi:close"
-                  class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
-                <div class="pl-6">
-                  {{ getLabel(element) }}
-                </div>
+  <!-- タグ入力ボックス -->
+  <div class="input input-sm  flex h-full w-full flex-wrap items-center gap-2 text-base-content">
+    <!-- タグ表示 -->
+    <draggable
+      v-model="items"
+      group="items"
+      item-key="id"
+      class="flex  flex-wrap gap-2 py-2"
+      @start="dragging=true"
+      @end="dragging=false">
+      <template #item="{element}">
+        <slot name="viewItem" :element="element" :handle-delete="clickTagDelete">
+          <BtnConditionTypeMapper
+            :type="itemType"
+            @click="clickTagDelete(element)">
+            <div class="relative">
+              <IconTypeMapper
+                :type="itemType"
+                class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+              <Icon
+                icon="mdi:close"
+                class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
+              <div class="pl-6">
+                {{ getLabel(element) }}
               </div>
-            </BtnConditionTypeMapper>
+            </div>
+          </BtnConditionTypeMapper>
+        </slot>
+      </template>
+    </draggable>
+
+    <!-- 検索結果表示 -->
+    <div class="relative grow">
+      <input
+        ref="inputRef"
+        v-model="inputText" class="input input-sm m-0 w-full border-none p-0" :placeholder="placeholder"
+        @keydown.enter="handleAdd(inputText)">
+      <!-- 検索結果をbutton表示 -->
+      <div :class="[isOpen ? 'block' : 'hidden']" class="absolute left-0 z-40 mt-4 flex max-h-64 min-w-48 flex-col gap-0.5 overflow-y-auto rounded-md  bg-base-300 p-2 shadow-lg">
+        <template v-for="(item, index) in filteredItems" :key="index">
+          <slot
+            name="searchItem" :item="item" :handle-add="handleAdd"
+            :is-searching="isSearching">
+            <div
+              class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm "
+              @click="handleAdd(item)">
+              <div> {{ getLabel(item) }}</div>
+            </div>
           </slot>
         </template>
-      </draggable>
-
-      <!-- 検索結果表示 -->
-      <div class="relative grow">
-        <input
-          ref="inputRef"
-          v-model="inputText" class="input input-sm m-0 w-full border-none p-0" :placeholder="placeholder"
-          @keydown.enter="handleAdd(inputText)">
-        <!-- 検索結果をbutton表示 -->
-        <div :class="[isOpen ? 'block' : 'hidden']" class="absolute left-0 z-40 mt-4 flex max-h-64 min-w-48 flex-col gap-0.5 overflow-y-auto rounded-md  bg-base-300 p-2 shadow-lg">
-          <template v-for="(item, index) in filteredItems" :key="index">
-            <slot
-              name="searchItem" :item="item" :handle-add="handleAdd"
-              :is-searching="isSearching">
-              <div
-                class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm "
-                @click="handleAdd(item)">
-                <div> {{ getLabel(item) }}</div>
-              </div>
-            </slot>
-          </template>
-          <div v-if="!isExists">
-            <slot
-              name="notExist" :handle-add="handleAdd" :input-text="inputText">
-              <div
-                class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm"
-                @click="handleAdd(inputText)">
-                Nothing {{ inputText }}
-              </div>
-            </slot>
-          </div>
+        <div v-if="!isExists">
+          <slot
+            name="notExist" :handle-add="handleAdd" :input-text="inputText">
+            <div
+              class="btn btn-sm flex w-full justify-between px-5 py-1  text-sm"
+              @click="handleAdd(inputText)">
+              Nothing {{ inputText }}
+            </div>
+          </slot>
         </div>
       </div>
     </div>

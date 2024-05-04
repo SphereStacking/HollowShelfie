@@ -147,13 +147,7 @@ const snsShare = {
       <!-- Main -->
       <!-- RightSide -->
       <div class="lg:col-start-10 lg:col-end-13 lg:row-span-2 lg:row-start-1 ">
-        <Card class="h-full w-full border bg-transparent">
-          <template #title>
-            <h4 class="font-bold uppercase ">
-              広告を募集中!
-            </h4>
-          </template>
-        </Card>
+        <AreaAdvertisementRecruitment class="h-full w-full" />
       </div>
       <div class="mx-auto w-full  lg:col-start-10 lg:col-end-13  lg:row-span-3 lg:row-start-3">
         <aside class="sticky top-12" aria-labelledby="sidebar-right">
@@ -194,13 +188,9 @@ const snsShare = {
                 </div>
               </template>
             </Card>
-            <Card class="h-32 w-full border bg-transparent">
-              <template #title>
-                <h4 class="font-bold uppercase ">
-                  広告を募集中!
-                </h4>
-              </template>
-            </Card>
+            <AreaAdvertisementRecruitment class="h-32 w-full" />
+            <AreaAdvertisementRecruitment class="h-32 w-full" />
+            <AreaAdvertisementRecruitment class="h-32 w-full" />
           </div>
         </aside>
       </div>

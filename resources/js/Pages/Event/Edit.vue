@@ -15,7 +15,7 @@ const openModal = (value) => { modal.value.onBtnOpenModal(value) }
 <template>
   <AppLayout title="Dashboard">
     <template #header>
-      <h2 class="text-xl font-semibold  leading-tight text-neutral">
+      <h2 class="text-xl font-semibold  leading-tight text-base-content">
         イベント
       </h2>
     </template>

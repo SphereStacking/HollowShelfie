@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="card card-compact bg-base-200 shadow-xl">
+  <div class="card card-compact bg-base-300 shadow-xl">
     <template v-if="$slots.header">
       <slot name="header"></slot>
     </template>

@@ -62,31 +62,46 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
         イベント
       </h2>
     </template>
+    <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6">
+      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 md:col-span-4">
+        <div class="h-full w-full p-8">
+          開催中
+        </div>
+      </div>
+      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 md:col-span-4">
+        <div class="h-full w-full p-8">
+          開催予定
+        </div>
+      </div>
+      <AreaAdvertisementRecruitment class="col-span-12 h-36 md:col-span-4" />
 
-    <div class="mx-auto mt-5 flex max-w-7xl flex-col gap-10">
-      <div class="flex flex-wrap justify-center gap-2">
+      <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
           <IconTypeMapper type="category" />
           Category
         </div>
-        <BtnEventSearchItem
-          v-for="(category) in trendCategories" :key="category.id"
-          :button-text-setter="getButtonText" :query-setter="querySetter" :value="category"
-          type="category" is-navigate />
+        <div class="flex flex-wrap gap-2">
+          <BtnEventSearchItem
+            v-for="(category) in trendCategories" :key="category.id"
+            :button-text-setter="getButtonText" :query-setter="querySetter" :value="category"
+            type="category" is-navigate />
+        </div>
       </div>
-      <div class="flex flex-wrap justify-center gap-2">
-        <div class="divider divider-start  mt-5 w-full text-3xl font-bold  ">
+
+      <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
+        <div class="divider divider-start mt-5 w-full text-3xl font-bold  ">
           <IconTypeMapper type="tag" />
           tag
         </div>
-
-        <BtnEventSearchItem
-          v-for="(tag) in trendTags" :key="tag.id" :button-text-setter="getButtonText"
-          :query-setter="querySetter" :value="tag" type="tag"
-          is-navigate />
+        <div class="flex flex-wrap gap-2">
+          <BtnEventSearchItem
+            v-for="(tag) in trendTags" :key="tag.id" :button-text-setter="getButtonText"
+            :query-setter="querySetter" :value="tag" type="tag"
+            is-navigate />
+        </div>
       </div>
 
-      <div v-for="(items, index) in eventItems" :key="index" class="flex flex-col gap-5">
+      <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
           <Icon :icon="items.icon" />
           <h4 class="font-bold">
@@ -96,14 +111,15 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
         <CarouselEventHero :events="items.events" />
 
-        <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
+        <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4  md:gap-6 xl:grid-cols-5">
           <CardEvent
             v-for="(event, index) in items.events" :key="index" :event="event"
             class="my-2" />
         </div>
-        <Link class=" btn btn-neutral mt-10 w-full" :href="items.url">
+        <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
           show more!
         </Link>
+        <AreaAdvertisementRecruitment class="col-span-12 h-40" />
       </div>
     </div>
   </AppLayout>

@@ -105,7 +105,7 @@ const deleteApiToken = () => {
             <div v-for="permission in availablePermissions" :key="permission">
               <label class="flex items-center">
                 <Checkbox v-model:checked="createApiTokenForm.permissions" :value="permission" />
-                <span class="ml-2 text-sm text-gray-600">{{ permission }}</span>
+                <span class="ml-2 text-sm text-base-content">{{ permission }}</span>
               </label>
             </div>
           </div>
@@ -146,18 +146,18 @@ const deleteApiToken = () => {
                 </div>
 
                 <div class="ml-2 flex items-center">
-                  <div v-if="token.last_used_ago" class="text-sm text-gray-400">
+                  <div v-if="token.last_used_ago" class="text-sm text-base-content">
                     {{ $t('Last used') }} {{ token.last_used_ago }}
                   </div>
 
                   <button
                     v-if="availablePermissions.length > 0"
-                    class="ml-6 cursor-pointer text-sm text-gray-400 underline"
+                    class="ml-6 cursor-pointer text-sm text-base-content underline"
                     @click="manageApiTokenPermissions(token)">
                     {{ $t('Permissions') }}
                   </button>
 
-                  <button class="ml-6 cursor-pointer text-sm text-red-500" @click="confirmApiTokenDeletion(token)">
+                  <button class="ml-6 cursor-pointer text-sm text-error" @click="confirmApiTokenDeletion(token)">
                     {{ $t('Delete') }}
                   </button>
                 </div>
@@ -179,7 +179,7 @@ const deleteApiToken = () => {
           {{ $t('Please copy your new API token. For your security, it won\'t be shown again.') }}
         </div>
 
-        <div v-if="$page.props.jetstream.flash.token" class="mt-4 break-all rounded bg-gray-100 px-4 py-2 font-mono text-sm text-gray-500">
+        <div v-if="$page.props.jetstream.flash.token" class="mt-4 break-all rounded bg-gray-100 px-4 py-2 font-mono text-sm text-base-content">
           {{ $page.props.jetstream.flash.token }}
         </div>
       </template>
@@ -202,7 +202,7 @@ const deleteApiToken = () => {
           <div v-for="permission in availablePermissions" :key="permission">
             <label class="flex items-center">
               <Checkbox v-model:checked="updateApiTokenForm.permissions" :value="permission" />
-              <span class="ml-2 text-sm text-gray-600">{{ permission }}</span>
+              <span class="ml-2 text-sm text-base-content">{{ permission }}</span>
             </label>
           </div>
         </div>

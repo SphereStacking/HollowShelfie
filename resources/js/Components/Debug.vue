@@ -23,7 +23,7 @@ const objectOrPage = computed(() => {
     <li v-for="(value, key) in objectOrPage " :key="key">
       <span
         v-if="typeof value === 'object'" class=" cursor-pointer text-primary transition-all hover:text-accent"
-        :class="{ 'text-blue-500': typeof value === 'object' }" @click="toggle(key)">{{ key }}:</span>
+        :class="{ 'text-info': typeof value === 'object' }" @click="toggle(key)">{{ key }}:</span>
       <span v-else class="felx-row flex">
         <div class=" text-primary">{{ key }}</div>
         <div>: {{ value }}</div>
