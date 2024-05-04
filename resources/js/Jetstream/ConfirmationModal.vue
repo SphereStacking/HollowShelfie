@@ -32,7 +32,7 @@ const close = () => {
         <div
           class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
           <svg
-            class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+            class="h-6 w-6 text-error" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5" stroke="currentColor">
             <path
@@ -42,11 +42,11 @@ const close = () => {
         </div>
 
         <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-          <h3 class="text-lg font-medium text-gray-900">
+          <h3 class="text-lg font-medium text-base-content">
             <slot name="title"></slot>
           </h3>
 
-          <div class="mt-4 text-sm text-gray-600">
+          <div class="mt-4 text-sm text-base-content">
             <slot name="content"></slot>
           </div>
         </div>

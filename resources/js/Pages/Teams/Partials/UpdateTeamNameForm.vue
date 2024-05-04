@@ -43,10 +43,10 @@ const updateTeamName = () => {
           <img class="h-12 w-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
 
           <div class="ml-4 leading-tight">
-            <div class="text-gray-900">
+            <div class="text-base-content">
               {{ team.owner.name }}
             </div>
-            <div class="text-sm text-gray-700">
+            <div class="text-sm text-base-content">
               {{ team.owner.email }}
             </div>
           </div>

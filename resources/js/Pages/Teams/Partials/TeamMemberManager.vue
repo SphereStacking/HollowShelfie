@@ -109,7 +109,7 @@ const displayableRole = (role) => {
 
         <template #form>
           <div class="col-span-6">
-            <div class="max-w-xl text-sm text-gray-600">
+            <div class="max-w-xl text-sm text-base-content">
               {{ $t('Please provide the email address of the person you would like to add to this team.') }}
             </div>
           </div>
@@ -141,12 +141,12 @@ const displayableRole = (role) => {
                 <div :class="{'opacity-50': addTeamMemberForm.role && addTeamMemberForm.role != role.key}">
                   <!-- Role Name -->
                   <div class="flex items-center">
-                    <div class="text-sm text-gray-600" :class="{'font-semibold': addTeamMemberForm.role == role.key}">
+                    <div class="text-sm text-base-content" :class="{'font-semibold': addTeamMemberForm.role == role.key}">
                       {{ role.name }}
                     </div>
 
                     <svg
-                      v-if="addTeamMemberForm.role == role.key" class="ml-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg"
+                      v-if="addTeamMemberForm.role == role.key" class="ml-2 h-5 w-5 text-success" xmlns="http://www.w3.org/2000/svg"
                       fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                       stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -154,7 +154,7 @@ const displayableRole = (role) => {
                   </div>
 
                   <!-- Role Description -->
-                  <div class="mt-2 text-left text-xs text-gray-600">
+                  <div class="mt-2 text-left text-xs text-base-content">
                     {{ role.description }}
                   </div>
                 </div>
@@ -192,7 +192,7 @@ const displayableRole = (role) => {
         <template #content>
           <div class="space-y-6">
             <div v-for="invitation in team.team_invitations" :key="invitation.id" class="flex items-center justify-between">
-              <div class="text-gray-600">
+              <div class="text-base-content">
                 {{ invitation.email }}
               </div>
 
@@ -200,7 +200,7 @@ const displayableRole = (role) => {
                 <!-- Cancel Team Invitation -->
                 <button
                   v-if="userPermissions.canRemoveTeamMembers"
-                  class="ml-6 cursor-pointer text-sm text-red-500 focus:outline-none"
+                  class="ml-6 cursor-pointer text-sm text-error focus:outline-none"
                   @click="cancelTeamInvitation(invitation)">
                   {{ $t('Cancel') }}
                 </button>
@@ -239,19 +239,19 @@ const displayableRole = (role) => {
                 <!-- Manage Team Member Role -->
                 <button
                   v-if="userPermissions.canUpdateTeamMembers && availableRoles.length"
-                  class="ml-2 text-sm text-gray-400 underline"
+                  class="ml-2 text-sm text-base-content underline"
                   @click="manageRole(user)">
                   {{ displayableRole(user.membership.role) }}
                 </button>
 
-                <div v-else-if="availableRoles.length" class="ml-2 text-sm text-gray-400">
+                <div v-else-if="availableRoles.length" class="ml-2 text-sm text-base-content">
                   {{ displayableRole(user.membership.role) }}
                 </div>
 
                 <!-- Leave Team -->
                 <button
                   v-if="$page.props.auth.user.id === user.id"
-                  class="ml-6 cursor-pointer text-sm text-red-500"
+                  class="ml-6 cursor-pointer text-sm text-error"
                   @click="confirmLeavingTeam">
                   Leave
                 </button>
@@ -259,7 +259,7 @@ const displayableRole = (role) => {
                 <!-- Remove Team Member -->
                 <button
                   v-else-if="userPermissions.canRemoveTeamMembers"
-                  class="ml-6 cursor-pointer text-sm text-red-500"
+                  class="ml-6 cursor-pointer text-sm text-error"
                   @click="confirmTeamMemberRemoval(user)">
                   Remove
                 </button>
@@ -289,12 +289,12 @@ const displayableRole = (role) => {
               <div :class="{'opacity-50': updateRoleForm.role && updateRoleForm.role !== role.key}">
                 <!-- Role Name -->
                 <div class="flex items-center">
-                  <div class="text-sm text-gray-600" :class="{'font-semibold': updateRoleForm.role === role.key}">
+                  <div class="text-sm text-base-content" :class="{'font-semibold': updateRoleForm.role === role.key}">
                     {{ role.name }}
                   </div>
 
                   <svg
-                    v-if="updateRoleForm.role == role.key" class="ml-2 h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg"
+                    v-if="updateRoleForm.role == role.key" class="ml-2 h-5 w-5 text-success" xmlns="http://www.w3.org/2000/svg"
                     fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -302,7 +302,7 @@ const displayableRole = (role) => {
                 </div>
 
                 <!-- Role Description -->
-                <div class="mt-2 text-xs text-gray-600">
+                <div class="mt-2 text-xs text-base-content">
                   {{ role.description }}
                 </div>
               </div>

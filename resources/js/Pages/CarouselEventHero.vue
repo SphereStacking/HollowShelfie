@@ -59,7 +59,7 @@ const getEventShow = (event) => {
       v-model="currentSlide" :autoplay="5000" wrap-around
       class=" absolute flex flex-col" pause-autoplay-on-hover>
       <Slide v-for="(event, index) in events" :key="index">
-        <div class="carousel__item hero  rounded-md bg-base-200 ">
+        <div class="carousel__item hero  rounded-md bg-base-300 ">
           <div class="hero-content flex-col lg:flex-row">
             <div class=" relative aspect-a4 h-80">
               <template v-if="event.files.length>0">
@@ -107,7 +107,7 @@ const getEventShow = (event) => {
                   <Icon icon="mdi:food" class="text-md" />
                   <div>organizers</div>
                 </div>
-                <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-200 p-2">
+                <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-300 p-2">
                   <a
                     v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
@@ -122,7 +122,7 @@ const getEventShow = (event) => {
                   <Icon icon="mdi:food" class="text-md" />
                   <div>performers</div>
                 </div>
-                <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-200 p-2">
+                <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-300 p-2">
                   <a
                     v-for="(performer, index ) in event.performers" :key="index" :href="performer.profile_url"
                     class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"

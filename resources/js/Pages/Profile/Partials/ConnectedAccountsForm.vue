@@ -1,7 +1,6 @@
 <script setup>
 import {ref} from 'vue'
 import {useForm, usePage} from '@inertiajs/vue3'
-import ActionLink from '@/Components/ActionLink.vue'
 import ActionSection from '@/Jetstream/ActionSection.vue'
 import ConnectedAccount from '@/Components/ConnectedAccount.vue'
 import DangerButton from '@/Jetstream/DangerButton.vue'
@@ -95,9 +94,9 @@ const closeModal = () => {
               </template>
 
               <template v-else>
-                <ActionLink :href="route('oauth.redirect', { provider })">
+                <Link class="btn btn-outline btn-sm" :href="route('oauth.redirect', { provider })">
                   {{ $t('Connect') }}
-                </ActionLink>
+                </Link>
               </template>
             </template>
           </ConnectedAccount>
