@@ -1,7 +1,14 @@
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
 <img src="/.images/mamehinata.png" width="600" alt="mame">
+</p>
+
+<p align="center">
+  <a href="https://forge.laravel.com/servers/785617/sites/2338620">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F283c02c4-a46e-49f9-b8b0-d35d436be3e4%3Fdate%3D1%26commit%3D1&style=plastic" alt="SphereStacking" />
+  </a>
 </p>
 
 ## about
