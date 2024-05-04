@@ -1,6 +1,4 @@
 <script setup>
-import IconTypeMapper from '@/Components/IconTypeMapper.vue'
-import AppLayout from '@/Layouts/AppLayout.vue'
 import { usePage, Link } from '@inertiajs/vue3'
 const page = usePage()
 const developer = page.props.developer ?? null
@@ -72,10 +70,10 @@ const columns = computed(() => {
 </script>
 
 <template>
-  <AppLayout page-content-class="mt-4 ">
+  <LandingPageLayout>
     <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-10 pt-20">
       <div class="flex flex-col items-center">
-        <ApplicationLogo class=" h-24" />
+        <ApplicationLogo class=" h-24 text-base-content" />
       </div>
       <div class="mt-20 flex flex-col items-center justify-around gap-10 md:flex-row md:gap-0">
         <div class=" items-center text-4xl font-bold">
@@ -104,9 +102,8 @@ const columns = computed(() => {
     <section class=" flex flex-row items-center justify-around  py-20 md:p-32">
       <div v-for="status in AppStatuses" :key="status.type" class="group">
         <div class="flex flex-row items-center justify-center gap-2">
-          <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-300 transition-all duration-200 group-hover:bg-accent">
-            <!-- <IconTypeMapper :type="status.type" class="h-10 w-10 transition-all duration-200 group-hover:text-accent-content" /> -->
-            <img :src="status.image" class="h-10 w-10 transition-all duration-200 group-hover:text-accent-content">
+          <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-100 transition-all duration-200">
+            <img :src="status.image" class="h-10 w-10 transition-all duration-200">
           </div>
           <div class="text-left">
             {{ status.description }} <br>
@@ -132,7 +129,7 @@ const columns = computed(() => {
       <div class="grid grid-cols-1 gap-4  md:grid-cols-3 ">
         <div
           v-for="plan in plans" :key="plan"
-          class="relative flex flex-col justify-between rounded-lg bg-base-300 p-6 shadow-lg">
+          class="relative flex flex-col justify-between rounded-lg bg-base-200 p-6 shadow-lg">
           <div v-if="plan.isComingSoon" class="absolute left-0 top-0 h-full w-full rounded-lg bg-base-300/80"></div>
           <div>
             <h3 class="mb-2 text-3xl font-black">
@@ -178,7 +175,7 @@ const columns = computed(() => {
         <div class="rounded-md pt-10 text-center font-neon text-3xl font-black text-teal-500-neon">
           Features
         </div>
-        <div class=" grid grid-cols-2 gap-5 p-10 text-base-content md:px-52">
+        <div class=" grid grid-cols-1 gap-5 p-10 text-base-content md:grid-cols-2 md:px-52">
           <TransitionInViewportObserver
             v-for="(feature, index) in features"
             :key="feature"
@@ -293,8 +290,8 @@ const columns = computed(() => {
         leave-to-class="opacity-0">
         <div class=" rotate-12 bg-sky-200/10"></div>
       </TransitionInViewportObserver>
-      <div class="grid auto-rows-min grid-cols-1 gap-2 rounded-3xl  border-4 border-sky-300  p-10 text-base-content shadow-xl shadow-sky-500/50 md:grid-cols-3 md:gap-10">
-        <div class="col-span-2 rounded-md p-4 text-center font-neon text-3xl font-black text-sky-500-neon md:col-span-3">
+      <div class="grid auto-rows-min  gap-2 rounded-3xl  border-4 border-sky-300  p-10 text-base-content shadow-xl shadow-sky-500/50 md:grid-cols-3 md:gap-10">
+        <div class="rounded-md p-4 text-center font-neon text-3xl font-black text-sky-500-neon md:col-span-3">
           Service<br>
           Feedback
         </div>
@@ -319,7 +316,7 @@ const columns = computed(() => {
           </div>
         </div>
 
-        <div class="col-span-2 mt-20 flex flex-col items-center md:col-span-3">
+        <div class="col-span-1 mt-20 flex flex-col items-center md:col-span-3">
           <a :href="issueForms.feedback" target="_blank" class="btn btn-outline btn-lg border-sky-300">
             フィードバックを送る
           </a>
@@ -336,5 +333,5 @@ const columns = computed(() => {
         <img :src="developer.image" class="h-40 rounded-md">
       </a>
     </section>
-  </AppLayout>
+  </LandingPageLayout>
 </template>

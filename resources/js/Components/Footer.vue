@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 const page = usePage()
 const appName = page.props.config.appName ?? null
 const credit = page.props.config.credit ?? null
@@ -10,10 +10,10 @@ const issueForms = page.props.config.issueForms ?? []
 
 const pages = {
   About: [
-    { url: route('about', 'app'), label: appName, target: '_self' },
-    { url: route('about', 'operation'), label: '運営', target: '_self' },
-    { url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
-    { url: route('about', 'advertisement'), label: '広告掲載', target: '_self' }
+    { component: Link, url: route('about', 'app'), label: appName, target: '_self' },
+    { component: Link, url: route('about', 'operation'), label: '運営', target: '_self' },
+    { component: Link, url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
+    { component: Link, url: route('about', 'advertisement'), label: '広告掲載', target: '_self' }
   ],
   // しばらくは必要ないためコメントアウト
   // Guides: [
@@ -21,19 +21,19 @@ const pages = {
   //   { url: route('guide', 'frequently-asked-questions'), label: 'よくある質問と回答', target: '_self' }
   // ],
   Links: [
-    { url: Twitter, label: 'X', target: '_blank' },
-    { url: GitHub, label: 'GitHub', target: '_blank' },
-    { url: DiscordInvite, label: 'Discord', target: '_blank' }
+    { component: 'a', url: Twitter, label: 'X', target: '_blank' },
+    { component: 'a', url: GitHub, label: 'GitHub', target: '_blank' },
+    { component: 'a', url: DiscordInvite, label: 'Discord', target: '_blank' }
   ],
   Legal: [
-    { url: route('legal', 'terms-of-service'), label: '利用規約', target: '_self' },
-    { url: route('legal', 'privacy-policy'), label: 'プライバシーポリシー', target: '_self' },
-    { url: route('legal', 'commercial-transaction-law'), label: '特商法表記', target: '_self' }
+    { component: Link, url: route('legal', 'terms-of-service'), label: '利用規約', target: '_self' },
+    { component: Link, url: route('legal', 'privacy-policy'), label: 'プライバシーポリシー', target: '_self' },
+    { component: Link, url: route('legal', 'commercial-transaction-law'), label: '特商法表記', target: '_self' }
   ],
   Issue: [
-    { url: issueForms.feedback, label: 'フィードバックを送る', target: '_blank' },
-    { url: issueForms.bug_report, label: 'バグを報告する', target: '_blank' },
-    { url: issueForms.new_feature, label: '新機能のリクエスト', target: '_blank' }
+    { component: 'a', url: issueForms.feedback, label: 'フィードバックを送る', target: '_blank' },
+    { component: 'a', url: issueForms.bug_report, label: 'バグを報告する', target: '_blank' },
+    { component: 'a', url: issueForms.new_feature, label: '新機能のリクエスト', target: '_blank' }
   ]
 }
 
@@ -48,7 +48,11 @@ const pages = {
         </p>
         <ul class="list-none">
           <li v-for="link in links" :key="link.url">
-            <a :href="link.url" class="text-sm hover:underline" :target="link.target">{{ link.label }}</a>
+            <component
+              :is="link.component" :href="link.url" class="text-sm hover:underline"
+              :target="link.target">
+              {{ link.label }}
+            </component>
           </li>
         </ul>
       </div>

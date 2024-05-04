@@ -23,7 +23,7 @@ watch(modelValue, ()=>{
   <input
     v-model="modelValue"
     v-bind="templateOptions"
-    class="input input-sm h-full w-full">
+    class=" input input-bordered h-full w-full">
 </template>
 
 <style lang="">

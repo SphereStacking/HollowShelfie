@@ -15,7 +15,7 @@ defineExpose({ scrollToTop })
 </script>
 
 <template>
-  <div ref="formCardElement" class="card card-compact bg-base-200 p-4 shadow-xl">
+  <div ref="formCardElement" class="card card-compact bg-base-300 p-4 shadow-xl">
     <slot name="header"></slot>
     <div class="card-body gap-5">
       <h2 v-if="hasTitle" class="card-title">

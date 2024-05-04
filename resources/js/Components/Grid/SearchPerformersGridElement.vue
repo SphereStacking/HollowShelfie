@@ -49,7 +49,7 @@ watch(performers, (value) => {
 <template>
   <MultiSearchable
     v-model="performers"
-    class="h-full"
+    class="input input-bordered h-full"
     item-type="performer"
     :route="route"
     label-key="name"

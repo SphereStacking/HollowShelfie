@@ -90,7 +90,7 @@ const closeModal = () => {
               <div class="text-xs ">
                 {{ session.ip_address }},
 
-                <span v-if="session.is_current_device" class="font-semibold text-green-500">This device</span>
+                <span v-if="session.is_current_device" class="font-semibold text-success">This device</span>
                 <span v-else>Last active {{ session.last_active }}</span>
               </div>
             </div>

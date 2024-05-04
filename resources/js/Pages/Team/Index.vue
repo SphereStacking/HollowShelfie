@@ -43,10 +43,6 @@ const querySetter = (value, type) => {
 </script>
 <template>
   <AppLayout title="Dashboard">
-    <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-neutral">
-      </h2>
-    </template>
     <div class="mx-auto my-6 flex max-w-7xl flex-col gap-4">
       <Card class="mt-10">
         <template #header>

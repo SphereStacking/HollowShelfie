@@ -171,6 +171,10 @@ export const ItemsConfig = {
     icon: 'mdi:newspaper-variant-multiple',
     buttonClass: ''
   },
+  menu: {
+    icon: 'mdi:hamburger-menu',
+    buttonClass: ''
+  },
 
   default: {
     icon: '',
