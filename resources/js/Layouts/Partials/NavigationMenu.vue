@@ -31,16 +31,19 @@ const headerButtons = [
     href: route('home'),
     active: route().current('home'),
     icon: 'home',
+    label: 'Home',
   },
   {
     href: route('dashboard'),
     active: route().current('dashboard'),
     icon: 'dashboard',
+    label: 'Dashboard',
   },
   {
     href: route('event.timeline.show'),
     active: route().current('event.timeline.show'),
     icon: 'timeline',
+    label: 'Timeline',
   },
 ]
 </script>
@@ -67,7 +70,7 @@ const headerButtons = [
               class="btn btn-ghost no-animation btn-sm"
               :class="{ 'btn-active': button.active }">
               <IconTypeMapper :type="button.icon" class="mr-0.5 text-xl" />
-              {{ button.icon }}
+              {{ button.label }}
             </Link>
           </div>
         </div>
@@ -206,7 +209,11 @@ const headerButtons = [
             :href="button.href"
             :active="route().current(button.href)">
             <IconTypeMapper :type="button.icon" class="mr-0.5 text-xl" />
-            {{ button.icon }}
+            {{ button.label }}
+          </ResponsiveNavLink>
+          <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('event.search.index')">
+            <IconTypeMapper type="search" class="mx-0.5 text-xl" />
+            Search
           </ResponsiveNavLink>
         </div>
 
