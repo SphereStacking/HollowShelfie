@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Inertia\Inertia;
 use Laravel\Socialite\Two\InvalidStateException;
 use Throwable;
+use Sentry\Laravel\Integration;
 
 class Handler extends ExceptionHandler
 {
@@ -43,6 +44,10 @@ class Handler extends ExceptionHandler
             return Inertia::render('Errors/403Error', [
                 'message' => '権限がありません。',
             ]);
+        });
+
+        $this->reportable(function (Throwable $e) {
+            Integration::captureUnhandledException($e);
         });
     }
 }
