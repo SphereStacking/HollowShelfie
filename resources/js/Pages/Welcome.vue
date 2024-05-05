@@ -41,7 +41,7 @@ const plans = [
     supplement: '含まれる',
     features: ['基本機能'],
     isComingSoon: false,
-    link: { label: '登録', url: '' }
+    link: { label: '登録', url: '/register' }
   },
   {
     title: 'Standard',
@@ -49,7 +49,7 @@ const plans = [
     supplement: '基本の全てに加えて、',
     features: ['チーム', 'マッチング掲載', '記事投稿', 'カスタムurl'],
     isComingSoon: true,
-    link: { label: '', url: '' }
+    link: { label: 'coming soon...?', url: '#' }
   },
   {
     title: 'Premium',
@@ -57,7 +57,7 @@ const plans = [
     supplement: 'スタンダードの全てに加えて、',
     features: ['広告掲載', 'バナー掲載件', 'イベントレコメンド', ],
     isComingSoon: true,
-    link: { label: '', url: '' }
+    link: { label: 'coming soon...?', url: '#' }
   },
 ]
 // フィードバックを3つの列に分割する計算プロパティ
@@ -148,8 +148,9 @@ const columns = computed(() => {
             </ul>
           </div>
           <a
-            href="#" class="btn btn-outline w-full">
-            {{ plan.isComingSoon ? 'coming soon...?' : '選択' }}
+            :href="plan.link.url"
+            class="btn btn-outline w-full">
+            {{ plan.link.label }}
           </a>
         </div>
       </div>
@@ -184,8 +185,8 @@ const columns = computed(() => {
             :enter-from-class="index % 2 === 0 ? '-translate-x-20 opacity-0' : 'translate-x-20 opacity-0'"
             leave-to-class="opacity-0">
             <div
-              class="indicator flex  w-full flex-row items-center rounded-md bg-base-200 p-4"
-              :class="feature.isComingSoon ? 'bg-base-300/20' : 'bg-base-300'">
+              class="indicator flex  w-full flex-row items-center rounded-md p-4"
+              :class="feature.isComingSoon ? 'bg-base-100/30' : 'bg-base-100'">
               <span v-if="feature.plan" class="badge indicator-item translate-x-2 text-base-content">
                 {{ feature.plan }}
               </span>
@@ -324,14 +325,20 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="mx-auto my-20 flex flex-row items-center  justify-center gap-10 py-10 md:py-20">
-      <div class="relative font-neon text-5xl text-emerald-300-neon">
-        <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
-        developer
-      </div>
+    <section class="mx-auto my-20 flex flex-col-reverse items-center justify-center gap-8 py-10 md:flex-row md:gap-10 md:py-20">
       <a :href="developer.link" target="_blank">
         <img :src="developer.image" class="h-40 rounded-xl">
       </a>
+      <div class="relative font-neon text-5xl text-emerald-300-neon">
+        <TransitionInViewportObserver
+          enter-active-class="transition-all duration-1000"
+          leave-active-class="transition-all duration-1000"
+          enter-from-class="translate-x-20 opacity-0"
+          leave-to-class="opacity-0">
+          <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
+        </TransitionInViewportObserver>
+        developer
+      </div>
     </section>
   </LandingPageLayout>
 </template>
