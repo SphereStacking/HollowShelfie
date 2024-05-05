@@ -330,7 +330,7 @@ const columns = computed(() => {
         developer
       </div>
       <a :href="developer.link" target="_blank">
-        <img :src="developer.image" class="h-40 rounded-md">
+        <img :src="developer.image" class="h-40 rounded-xl">
       </a>
     </section>
   </LandingPageLayout>
