@@ -51,7 +51,7 @@ onMounted(() => {
   <AppLayout title="Dashboard">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
-        ダッシュボード
+        フォロー
       </h2>
     </template>
     <div class="flex w-1/2 flex-col gap-2">

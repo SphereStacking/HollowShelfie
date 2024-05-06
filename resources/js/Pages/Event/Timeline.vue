@@ -17,10 +17,10 @@ defineProps({
 
 </script>
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Event TimeLine">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
-        イベントタイムライン
+        Event TimeLine
       </h2>
     </template>
     <EventTimeline :events="events" :start-date="startDate" :end-date="endDate" />

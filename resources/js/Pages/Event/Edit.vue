@@ -12,11 +12,12 @@ const modal = ref()
 const openModal = (value) => { modal.value.onBtnOpenModal(value) }
 
 </script>
+
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Event Edit">
     <template #header>
       <h2 class="text-xl font-semibold  leading-tight text-base-content">
-        イベント
+        Event Edit
       </h2>
     </template>
     <div class="mx-auto mt-10 flex max-w-4xl flex-col gap-5 ">
