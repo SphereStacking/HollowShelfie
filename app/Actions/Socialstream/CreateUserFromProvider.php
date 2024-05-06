@@ -43,7 +43,8 @@ class CreateUserFromProvider implements CreatesUserFromProvider
 
                 $this->createsConnectedAccounts->create($user, $provider, $providerUser);
 
-                $this->createTeam($user);
+                // user作成時にteamを作成しない。
+                // $this->createTeam($user);
             });
         });
     }
