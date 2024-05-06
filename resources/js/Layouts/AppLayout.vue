@@ -18,11 +18,10 @@ defineProps({
     <Banner />
 
     <div class="min-h-screen bg-base-100 pb-4">
-      <NavigationMenu />
-
+      <NavigationMenu class=" sticky top-0 z-30 " />
       <!-- Page Heading -->
-      <header v-if="$slots.header" class="mb-4 bg-base-300 shadow-2xl shadow-emerald-200 ">
-        <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+      <header v-if="$slots.header" class="sticky top-0 z-20 mb-10 bg-base-300 shadow-2xl shadow-emerald-200 ">
+        <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8 ">
           <slot name="header"></slot>
         </div>
       </header>
