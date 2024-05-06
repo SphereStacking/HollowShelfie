@@ -1,7 +1,7 @@
 <script setup>
-import { ItemsConfig } from '@/config'
+import { ItemsConfig } from '@/icon-mapping'
 
-const props = defineProps({
+defineProps({
   type: {
     type: String,
     required: true

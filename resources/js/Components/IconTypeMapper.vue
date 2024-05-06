@@ -1,8 +1,8 @@
 <script setup>
 import { defineProps } from 'vue'
-import { ItemsConfig } from '@/config'
+import { ItemsConfig } from '@/icon-mapping'
 
-const props = defineProps({
+defineProps({
   type: {
     type: String,
     required: true

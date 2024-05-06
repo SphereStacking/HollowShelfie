@@ -1,7 +1,7 @@
 <script setup>
-import { ItemsConfig } from '@/config.js' // '@/config.js' のパスはプロジェクトの設定によって異なる場合があります。
+import { ItemsConfig } from '@/icon-mapping.js'
 
-const props = defineProps({
+defineProps({
   check: {
     type: Boolean,
     required: true
