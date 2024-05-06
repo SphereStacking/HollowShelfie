@@ -45,7 +45,7 @@ const onAnimate = () => {
 
   <AuthenticationCard>
     <template #logo>
-      <AuthenticationCardLogo />
+      <AuthenticationCardLogo class=" h-20 w-20 " />
     </template>
     <div v-if="status" class="mb-4 text-sm font-medium text-success">
       {{ status }}
