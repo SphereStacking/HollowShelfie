@@ -24,7 +24,7 @@ defineProps({
             <slot name="message"></slot>
           </div>
 
-          <Link href="/" class="btn w-40">
+          <Link :href="route('welcome')" class="btn w-40">
             ホーム
           </Link>
           <button class="btn w-40" @click="goBack">
