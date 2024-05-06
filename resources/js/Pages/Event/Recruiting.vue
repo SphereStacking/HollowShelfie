@@ -7,15 +7,12 @@ const props = defineProps({
 </script>
 
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Event Recruiting">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
-        イベント
+        Event Recruiting (WIP)
       </h2>
     </template>
-    <div class="mx-auto mt-2 flex max-w-7xl flex-col gap-2">
-      イベント出演者募集中
-    </div>
   </AppLayout>
 </template>
 

@@ -16,7 +16,7 @@ defineProps({
   <AppLayout :title="$t('Team Settings')">
     <template #header>
       <h2 class="text-xl font-semibold  leading-tight">
-        {{ $t('Team Settings') }}
+        Team Settings
       </h2>
     </template>
 

@@ -51,10 +51,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Event Search">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
-        イベント
+        Event Search
       </h2>
     </template>
     <div class="mx-auto flex max-w-6xl flex-col gap-2">
