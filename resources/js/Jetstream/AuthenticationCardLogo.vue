@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
-  <Link :href="'/'">
-    <ApplicationMark />
+  <Link :href="route('welcome')">
+    <ApplicationMark v-bind="$attrs" />
   </Link>
 </template>
