@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
                 ],
                 'supportings' => [
                     'fanbox' => fn () => config('external_services.supportings.fanbox'),
+                    'patreon' => fn () => config('external_services.supportings.patreon'),
                 ],
             ],
             'response' => $request->session()->get('response'),
