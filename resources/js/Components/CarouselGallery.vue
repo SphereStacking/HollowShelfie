@@ -47,14 +47,14 @@ const prev = () => {
       </template>
       <template v-else>
         <div class="h-full w-full bg-base-300">
-          <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
+          <IconTypeMapper type="imageOff" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
         </div>
       </template>
     </div>
 
     <div class=" flex flex-row items-center justify-between gap-1">
       <button class="btn btn-square  btn-md" @click="next">
-        <Icon icon="mdi:chevron-left" class="text-4xl" />
+        <IconTypeMapper type="arrowLeft" class="text-4xl" />
       </button>
       <Carousel
         ref="carousel" v-model="currentSlide" :items-to-show="4"
@@ -66,7 +66,7 @@ const prev = () => {
         </Slide>
       </Carousel>
       <button class="btn btn-square  btn-md" @click="prev">
-        <Icon icon="mdi:chevron-right" class="text-4xl" />
+        <IconTypeMapper type="arrowRight" class="text-4xl" />
       </button>
     </div>
     <slot name="footer"></slot>

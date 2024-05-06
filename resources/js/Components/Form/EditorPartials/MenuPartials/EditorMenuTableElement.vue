@@ -1,7 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
-
 defineProps({
   editor: {
     type: Object,
@@ -19,7 +17,7 @@ defineProps({
     }"
     :disabled="!editor.can().chain().focus().undo().run()"
     @click="editor.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: true })">
-    <Icon icon="mdi:table-large" class="text-lg" />
+    <IconTypeMapper type="tableLarge" class="text-lg" />
   </button>
 </template>
 

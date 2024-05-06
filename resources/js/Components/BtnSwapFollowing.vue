@@ -71,8 +71,8 @@ const buttonLabel = computed(() => {
     ]"
     @mouseover="isFollowedBtnOver = true" @mouseleave="isFollowedBtnOver = false"
     @click="follow">
-    <Icon
-      :icon="isFollowed ? isFollowedBtnOver ? 'line-md:account-remove' : 'line-md:account-small' : 'line-md:account-add'"
+    <IconTypeMapper
+      :type="isFollowed ? isFollowedBtnOver ? 'unFollowing' : 'followNeutral' : 'onFollowing'"
       class="text-xl" />
     {{ buttonLabel }}
     <div v-if="!hasCount" class="badge">

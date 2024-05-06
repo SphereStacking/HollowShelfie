@@ -19,25 +19,29 @@ defineExpose({
 <template>
   <DialogModal :show="IsDispModal" @close="onBtnCloseModal">
     <template #title>
-      <slot>
-      </slot>
+      検索条件について
     </template>
 
     <template #content>
-      <div class="prose">
-        <h4>検索条件にprefix記号を使用するとADD先を制御することができます</h4>
-        <p>
-          <strong class="rounded-md bg-neutral px-2 text-error">+:</strong> または <br>
-          ex) 「+:apple」と入力しADDすると「または」に「apple」条件が追加されます。
-        </p>
-        <p>
-          <strong class="rounded-md  bg-neutral px-2 text-error">*:</strong> かつ <br>
-          ex) 「*:apple」と入力しADDすると「かつ」に「apple」が追加されます。
-        </p>
-        <p>
-          <strong class="rounded-md  bg-neutral px-2 text-error">-:</strong> 除く<br>
-          ex) 「-:apple」と入力しADDすると「除く」に「apple」が追加されます。
-        </p>
+      <div class="flex flex-col gap-2 text-sm">
+        <div class="flex flex-col">
+          <div class="flex flex-row">
+            <IconTypeMapper type="union" class="text-xl" /> 「または」
+          </div>
+          いずれかの条件に一致する結果を表示します。
+        </div>
+        <div class="flex flex-col">
+          <div class="flex flex-row">
+            <IconTypeMapper type="intersect" class="text-xl" /> 「かつ」
+          </div>
+          全ての条件に一致する結果のみを表示します。
+        </div>
+        <div class="flex flex-col">
+          <div class="flex flex-row">
+            <IconTypeMapper type="exclude" class="text-xl" /> 「除く」
+          </div>
+          特定の条件を除外して結果を表示します。
+        </div>
       </div>
     </template>
 

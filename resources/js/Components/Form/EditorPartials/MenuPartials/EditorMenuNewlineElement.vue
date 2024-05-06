@@ -1,5 +1,4 @@
 <script setup>
-import {Icon} from '@iconify/vue'
 
 defineProps({
   editor: {
@@ -13,7 +12,7 @@ defineProps({
 <template>
   <button
     class="btn btn-xs" @click="editor.chain().focus().setHardBreak().run()">
-    <Icon icon="mdi:arrow-left-bottom-bold" class="text-lg" />
+    <IconTypeMapper type="arrowLeftBottomBold" class="text-lg" />
   </button>
 </template>
 

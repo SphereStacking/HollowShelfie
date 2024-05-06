@@ -144,8 +144,8 @@ const onClickOutsideHandler= ()=>{
                 <IconTypeMapper
                   :type="itemType"
                   class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
-                <Icon
-                  icon="mdi:close"
+                <IconTypeMapper
+                  type="close"
                   class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
                 <div class="pl-6">
                   {{ element }}

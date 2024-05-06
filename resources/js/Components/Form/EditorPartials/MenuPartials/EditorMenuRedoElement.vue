@@ -1,7 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
-
 defineProps({
   editor: {
     type: Object,
@@ -19,7 +17,7 @@ defineProps({
     }"
     :disabled="!editor.can().chain().focus().redo().run()"
     @click="editor.chain().focus().redo().run()">
-    <Icon icon="mdi:redo" class="text-lg" />
+    <IconTypeMapper type="redo" class="text-lg" />
   </button>
 </template>
 

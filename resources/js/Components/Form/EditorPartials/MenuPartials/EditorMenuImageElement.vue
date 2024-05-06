@@ -1,5 +1,4 @@
 <script setup>
-import {Icon} from '@iconify/vue'
 
 const props= defineProps({
   editor: {
@@ -23,7 +22,7 @@ const addImage = () => {
   <button
     class="btn btn-xs"
     @click="addImage">
-    <Icon icon="mdi:image" class="text-lg" />
+    <IconTypeMapper type="image" class="text-lg" />
   </button>
 </template>
 

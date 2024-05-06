@@ -65,7 +65,7 @@ function openShareUrl() {
 </script>
 <template>
   <button class="btn btn-xs" @click="openShareUrl()">
-    <Icon icon="ri:twitter-x-fill" class="text-xl" />
+    <IconTypeMapper type="twitter" class="text-xl" />
   </button>
 </template>
 <style lang="">

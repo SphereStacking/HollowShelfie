@@ -8,6 +8,7 @@ import ConditionTag from './ConditionTag.vue'
 import ConditionOrganizer from './ConditionOrganizer.vue'
 import ConditionPerformer from './ConditionPerformer.vue'
 import ConditionOther from './ConditionOther.vue'
+import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
 const props = defineProps({
   text: {
@@ -75,9 +76,9 @@ const filterMaps = [
 ]
 
 const includeLabels = {
-  'and': { label: 'かつ', tooltip: 'すべての条件を満たすものを検索', icon: 'fluent:shape-intersect-24-filled' },
-  'or': { label: 'または', tooltip: 'いずれかの条件を満たすものを検索', icon: 'fluent:shape-union-20-filled' },
-  'not': { label: '除く', tooltip: '指定した条件を除外して検索', icon: 'fluent:shape-exclude-20-filled' },
+  'and': { label: 'かつ', tooltip: 'すべての条件を満たすものを検索', icon: 'intersect' },
+  'or': { label: 'または', tooltip: 'いずれかの条件を満たすものを検索', icon: 'union' },
+  'not': { label: '除く', tooltip: '指定した条件を除外して検索', icon: 'exclude' },
 }
 const cycleSearchCondition = (index) => {
   const item = { ...conditions.value[index] } // Create a new object
@@ -176,14 +177,14 @@ onMounted(() => {
           <div class="join w-full">
             <input v-model="text" type="text" class="input input-sm join-item input-bordered w-full">
             <button class="btn btn-outline join-item btn-sm" @click="emitExecuteSearch()">
-              <Icon icon="mdi:magnify" class="mx-2 text-xl" />
+              <IconTypeMapper type="search" class="mx-2 text-xl" />
             </button>
           </div>
           <BtnSwapOpenFilter
             v-model:check="isOpenFilter" class="btn indicator btn-neutral btn-sm w-16"
             swap-effect="rotate" on-color="text-neutral-content" off-color="text-neutral-content">
             <div v-if="hasSearchConditions" class="badge indicator-item badge-info" @click="emitExecuteSearch()">
-              <Icon :icon="isSameCondition ? 'mdi:check' : 'line-md:uploading-loop'" class=" text-sm " />
+              <IconTypeMapper :type="isSameCondition ? 'check' : 'uploading'" class=" text-sm " />
             </div>
           </BtnSwapOpenFilter>
         </div>
@@ -193,14 +194,14 @@ onMounted(() => {
         <!-- 表示エリア start -->
         <div class="flex flex-row items-center gap-1">
           filters
-          <Icon icon="mdi:information-slab-circle" class="text-xl text-accent" @click="infoOpenModal" />
+          <IconTypeMapper type="info" class="text-xl text-accent" @click="infoOpenModal" />
         </div>
         <div v-if="isOpenFilter" class="flex h-auto min-h-[2.7rem] w-full flex-wrap gap-2 rounded-md border-2 p-2">
           <div
             v-for="( item, index ) in conditions" :key="index"
             class="flex flex-row items-center">
             <button class="btn btn-ghost btn-xs p-0">
-              <Icon :icon="includeLabels[item.include].icon" class="text-xl" @click="cycleSearchCondition(index)" />
+              <IconTypeMapper :type="includeLabels[item.include].icon" class="text-xl" @click="cycleSearchCondition(index)" />
             </button>
             <span class="mx-0.5">:</span>
             <BtnEventSearchItem
@@ -228,15 +229,15 @@ onMounted(() => {
               <button
                 class="btn btn-accent btn-xs" :class="{ 'btn-disabled': !canGoBackInHistory() }"
                 @click="goBackInHistory">
-                <Icon icon="mdi:chevron-left" class="text-xl" />
+                <IconTypeMapper type="arrowLeft" class="text-xl" />
               </button>
               <button
                 class="btn btn-accent btn-xs" :class="{ 'btn-disabled': !canGoForwardInHistory() }"
                 @click="goForwardInHistory">
-                <Icon icon="mdi:chevron-right" class="text-xl" />
+                <IconTypeMapper type="arrowRight" class="text-xl" />
               </button>
               <button class=" btn btn-accent btn-xs" :class="{ 'btn-disabled': !canCleared() }" @click="clearConditions">
-                <Icon icon="mdi:delete-empty-outline" class="text-xl" />
+                <IconTypeMapper type="trashBox" class="text-xl" />
               </button>
             </div>
             <div v-if="isOpenFilter" class="h-full w-full  rounded-xl border-2 p-4">

@@ -22,6 +22,7 @@ return [
     ],
     'supportings' => [
         'fanbox' => 'https://spherestacking.fanbox.cc',
+        'patreon' => 'https://www.patreon.com/SphereStacking',
     ],
     'gravatar' => [
         'profile' => 'https://www.gravatar.com/avatar/',

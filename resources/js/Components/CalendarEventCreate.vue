@@ -37,12 +37,12 @@ const create = (type) => {
     <ul tabindex="0" class="menu dropdown-content z-[1] mt-3 rounded-box bg-base-100 p-2 shadow ">
       <li>
         <a @click="create('google')">
-          <Icon icon="bxl:google" class="text-xl" />
+          <IconTypeMapper type="googleCalendar" class="text-xl" />
         </a>
       </li>
       <li>
         <a @click="create('outlook')">
-          <Icon icon="ph:microsoft-outlook-logo" class="text-xl" />
+          <IconTypeMapper type="microsoftOutlook" class="text-xl" />
         </a>
       </li>
     </ul>

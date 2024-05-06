@@ -5,6 +5,7 @@ import ApplicationMark from '@/Jetstream/ApplicationMark.vue'
 import Dropdown from '@/Jetstream/Dropdown.vue'
 import DropdownLink from '@/Jetstream/DropdownLink.vue'
 import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
+import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
 const page = usePage()
 
@@ -92,14 +93,8 @@ const headerButtons = [
               <template #trigger>
                 <span class="inline-flex rounded-md">
                   <button type="button" class="btn btn-secondary btn-active no-animation btn-sm">
-                    {{ auth_user.current_team ? auth_user.current_team.name : 'チームを作成' }}
-                    <svg
-                      class="-mr-0.5 ml-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                      viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path
-                        stroke-linecap="round" stroke-linejoin="round"
-                        d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                    </svg>
+                    {{ auth_user.current_team ? auth_user.current_team.name : $t('Create Team') }}
+                    <IconTypeMapper type="arrowDown" class="-mr-0.5 ml-1 text-xl" />
                   </button>
                 </span>
               </template>

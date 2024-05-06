@@ -61,7 +61,7 @@ const navigateToType = (searchValue, type) => {
         </template>
         <template v-else>
           <div class="h-full w-full bg-base-300">
-            <Icon icon="mdi:image-off" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
+            <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
           </div>
         </template>
         <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
@@ -82,7 +82,7 @@ const navigateToType = (searchValue, type) => {
             show-count />
           <div class="dropdown dropdown-end dropdown-bottom">
             <div tabindex="0" role="button" class="btn btn-ghost btn-xs p-0">
-              <Icon icon="mdi:dots-vertical" class="text-xl" />
+              <IconTypeMapper type="overflowMenu" class="text-xl" />
             </div>
             <ul tabindex="0" class="menu dropdown-content z-[1] w-auto rounded-box bg-base-200 p-2 shadow">
               <li>
