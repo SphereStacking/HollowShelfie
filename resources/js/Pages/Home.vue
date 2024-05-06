@@ -58,7 +58,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
   <AppLayout title="Dashboard">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
-        イベント
+        Home
       </h2>
     </template>
     <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6">

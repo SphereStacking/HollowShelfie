@@ -54,10 +54,10 @@ const snsShare = {
 }
 </script>
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Event Detail">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight">
-        イベント詳細
+        Event Detail
       </h2>
     </template>
     <div class="mx-auto grid max-w-7xl auto-rows-min gap-4 pt-4 lg:grid-cols-12 lg:gap-2">
