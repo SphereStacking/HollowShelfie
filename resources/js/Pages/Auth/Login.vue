@@ -21,6 +21,7 @@ const form = useForm({
 })
 
 const submit = () => {
+  onAnimate()
   form.transform(data => ({
     ...data,
     remember: form.remember ? 'on' : '',
@@ -28,16 +29,24 @@ const submit = () => {
     onFinish: () => form.reset('password'),
   })
 }
+
+const animationGhost = ref(null)
+const onAnimate = () => {
+  if (animationGhost.value) {
+    animationGhost.value.animationStart()
+  }
+}
 </script>
 
 <template>
   <Head :title="$t('Log in')" />
 
+  <AnimationGhost ref="animationGhost" />
+
   <AuthenticationCard>
     <template #logo>
       <AuthenticationCardLogo />
     </template>
-
     <div v-if="status" class="mb-4 text-sm font-medium text-success">
       {{ status }}
     </div>
@@ -73,7 +82,8 @@ const submit = () => {
           {{ $t('Forgot your password?') }}
         </Link>
 
-        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+        <PrimaryButton
+          class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           {{ $t('Log in') }}
         </PrimaryButton>
       </div>
