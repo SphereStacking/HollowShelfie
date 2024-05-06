@@ -33,9 +33,16 @@ export default {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' }, // 2セット分の半分を移動
         },
+        wiggleAndPulse: {
+          '0%, 100%': { transform: 'rotate(-4deg)', opacity: 1 },
+          '25%': { transform: 'rotate(6deg)', opacity: 0.25 },
+          '50%': { transform: 'rotate(-6deg)', opacity: 1 },
+          '75%': { transform: 'rotate(4deg)', opacity: 0.75 },
+        }
       },
       animation: {
         'slide-infinite': 'slide 40s linear infinite',
+        'wiggle-pulse': 'wiggleAndPulse 3s ease-in-out infinite',
       },
     },
   },
