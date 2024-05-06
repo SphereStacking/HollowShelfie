@@ -9,6 +9,13 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
 const page = usePage()
 
+defineProps({
+  isLandingPage: {
+    type: Boolean,
+    default: false,
+  },
+})
+
 const showingNavigationDropdown = ref(false)
 
 const switchToTeam = (team) => {
@@ -77,13 +84,17 @@ const headerButtons = [
         </div>
 
         <div class="hidden sm:ml-6 sm:flex sm:items-center sm:gap-2">
-          <Link class="btn btn-primary btn-active no-animation btn-sm " :href="route('event.search.index')">
+          <Link class="btn  btn-active no-animation btn-sm" :class="isLandingPage ? '' : 'btn-primary'" :href="route('event.search.index')">
             <IconTypeMapper type="search" class="mx-2 text-xl" />
           </Link>
-          <Link v-if="!isLogin" :href="route('login')" class=" btn btn-primary btn-sm">
+          <Link
+            v-if="!isLogin" :href="route('login')" class=" btn btn-sm"
+            :class="isLandingPage ? '' : 'btn-primary'">
             {{ $t('Login') }}
           </Link>
-          <Link v-if="!isLogin" :href="route('register')" class="btn btn-secondary btn-sm">
+          <Link
+            v-if="!isLogin" :href="route('register')" class="btn btn-sm"
+            :class="isLandingPage ? '' : 'btn-secondary'">
             {{ $t('Register') }}
           </Link>
 

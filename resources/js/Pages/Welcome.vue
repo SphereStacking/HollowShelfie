@@ -72,19 +72,37 @@ const columns = computed(() => {
 
 <template>
   <LandingPageLayout>
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-10 pt-20">
-      <div class="flex flex-col items-center">
-        <ApplicationLogo class=" h-24 text-base-content" />
+    <section class="flex min-h-[calc(100vh-4rem)] items-center justify-center px-2 text-center">
+      <ApplicationLogo class="sticky top-10 h-20 py-2 text-base-content md:flex-row" />
+    </section>
+    <section class=" flex min-h-[calc(100vh-4rem)] items-center justify-center px-2 text-center">
+      <div class=" sticky top-10 text-center text-7xl font-black">
+        <div class="text-center font-title text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
+          <div class=" inline-grid">
+            <div class="pointer-events-none col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text text-center blur-xl [-webkit-text-fill-color:transparent] [transform:translate3d(0,0,0)] before:content-[attr(data-text)] [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
+              フライヤーを飾れる
+              <br>
+              イベント共有サービス
+            </div>
+            <div class="relative col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text text-center [-webkit-text-fill-color:transparent] [&::selection]:bg-blue-700/20 [&::selection]:text-base-content [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
+              フライヤーを飾れる
+              <br>
+              イベント共有サービス
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <section class="min-h-[calc(100vh-4rem)] w-full overflow-x-clip px-20 ">
       <div class="mt-20 flex flex-col items-center justify-around gap-10 md:flex-row md:gap-0">
         <div class=" items-center text-4xl font-bold">
           <div>
-            新しい出会い、感動、そして冒険。<br>
+            新しい体験を<br>
             <br>
-            あなたの次の体験を、<br>
-            ここから見つけて始めよう。<br>
+            ここから見つけよう！<br>
             <br>
-            未知なるイベントの世界へ踏み出そう！
+            未知なるイベントの世界へ
           </div>
         </div>
         <div class="flex flex-row items-center gap-20 md:flex-col md:gap-4">
@@ -99,21 +117,20 @@ const columns = computed(() => {
           </div>
         </div>
       </div>
-    </section>
-    <section class=" flex flex-row items-center justify-around  py-20 md:p-32">
-      <div v-for="status in AppStatuses" :key="status.type" class="group">
-        <div class="flex flex-row items-center justify-center gap-2">
-          <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-100 transition-all duration-200">
-            <img :src="status.image" class="h-10 w-10 transition-all duration-200">
-          </div>
-          <div class="text-left">
-            {{ status.description }} <br>
-            {{ status.count }}
+      <div class="flex flex-row items-center justify-around  py-20 md:p-32">
+        <div v-for="status in AppStatuses" :key="status.type" class="group">
+          <div class="flex flex-row items-center justify-center gap-2">
+            <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-100 transition-all duration-200">
+              <img :src="status.image" class="h-10 w-10 transition-all duration-200">
+            </div>
+            <div class="text-left">
+              {{ status.description }} <br>
+              {{ status.count }}
+            </div>
           </div>
         </div>
       </div>
-    </section>
-    <section class="overflow-hidden whitespace-nowrap py-10 md:py-20">
+
       <div class=" flex animate-slide-infinite flex-row p-5">
         <CardEventCompact
           v-for="event in events" :key="event.id" :event="event"
@@ -124,25 +141,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
-      <div class=" text-center text-7xl font-black">
-        <div class="text-center font-title text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
-          <div class=" inline-grid">
-            <div class="pointer-events-none col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text blur-xl [-webkit-text-fill-color:transparent] [transform:translate3d(0,0,0)] before:content-[attr(data-text)] [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
-              フライヤーを飾れる
-              <br>
-              イベント共有サービス
-            </div>
-            <div class="relative col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text [-webkit-text-fill-color:transparent] [&::selection]:bg-blue-700/20 [&::selection]:text-base-content [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
-              フライヤーを飾れる
-              <br>
-              イベント共有サービス
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class=" relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class=" relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
@@ -217,7 +216,7 @@ const columns = computed(() => {
         </TransitionInViewportObserver>
       </div>
     </section>
-    <section class="relative mx-auto  w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class="relative mx-auto  min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
@@ -267,7 +266,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class="relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
@@ -317,7 +316,7 @@ const columns = computed(() => {
         </div>
       </div>
     </section>
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20">
       <div class="rounded-md py-10 text-center font-neon text-3xl font-black text-yellow-500-neon">
         Pricing
       </div>
@@ -350,19 +349,31 @@ const columns = computed(() => {
         </div>
       </div>
     </section>
-    <section class="mx-auto my-20 flex flex-col-reverse items-center justify-center gap-8 py-10 md:flex-row md:gap-10 md:py-20">
-      <a :href="developer.link" target="_blank">
-        <img :src="developer.image" class="h-40 rounded-xl">
-      </a>
-      <div class="relative font-neon text-5xl text-emerald-300-neon">
-        <TransitionInViewportObserver
-          enter-active-class="transition-all duration-1000"
-          leave-active-class="transition-all duration-1000"
-          enter-from-class="translate-x-20 opacity-0"
-          leave-to-class="opacity-0">
-          <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
-        </TransitionInViewportObserver>
-        developer
+    <section class="mx-auto flex min-h-[calc(100vh-4rem)] flex-col   items-center justify-center gap-8 py-10  md:gap-10 md:py-20">
+      <TransitionInViewportObserver
+        enter-active-class="transition-all duration-1000"
+        leave-active-class="transition-all duration-1000"
+        enter-from-class=" scale-30 opacity-0"
+        leave-to-class="opacity-0">
+        <ApplicationLogo class="sticky top-0 h-20 py-2 text-base-content md:flex-row" />
+      </TransitionInViewportObserver>
+      <div class="flex flex-col items-center justify-center gap-8  py-10 md:flex-row md:gap-10">
+        <div class="relative font-neon text-5xl text-emerald-300-neon">
+          <TransitionInViewportObserver
+            enter-active-class="transition-all duration-1000"
+            leave-active-class="transition-all duration-1000"
+            enter-from-class="translate-x-20 opacity-0"
+            leave-to-class="opacity-0">
+            <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
+          </TransitionInViewportObserver>
+          developer
+        </div>
+
+        <a
+          :href="developer.link" target="_blank" class="tooltip"
+          data-tip="sphere">
+          <img :src="developer.image" class="h-40 rounded-xl">
+        </a>
       </div>
     </section>
   </LandingPageLayout>

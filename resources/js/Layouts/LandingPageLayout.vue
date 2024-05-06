@@ -18,7 +18,7 @@ defineProps({
     <Banner />
 
     <div class="min-h-screen bg-base-300 pb-4">
-      <NavigationMenu />
+      <NavigationMenu is-landing-page />
 
       <!-- Page Heading -->
       <header v-if="$slots.header" class="mb-4 bg-base-300 shadow-2xl ">
