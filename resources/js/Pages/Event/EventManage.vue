@@ -26,10 +26,8 @@ const conditions = ref([])
 const order = ref('')
 
 const orderMaps = [
-  { type: 'new', icon: 'mdi:new-box', label: 'new' },
-  { type: 'good', icon: 'mdi:thumb-up', label: 'good' },
-  // { type: 'views', icon: 'mdi:eye', label: 'view' },
-  // { type: 'trend', icon: 'mdi:fire', label: 'trend' },
+  { type: 'new', icon: 'new', label: 'new' },
+  { type: 'good', icon: 'good', label: 'good' },
 ]
 const executeSearch = () => {
   router.visit(
@@ -68,15 +66,15 @@ onMounted(() => {
       <template #TopPaginationRight>
         <div class="dropdown dropdown-end ">
           <div tabindex="0" class=" btn indicator  btn-neutral btn-sm w-16 px-2">
-            <Icon icon="mdi:sort" class="text-xl transition-all" />
+            <IconTypeMapper type="sort" class="text-xl transition-all" />
             <div v-if="order.icon" class="badge indicator-item badge-info">
-              <Icon :icon="order.icon" class=" text-sm " />
+              <IconTypeMapper :type="order.icon" class="text-sm" />
             </div>
           </div>
           <ul tabindex="0" class="menu dropdown-content z-[1] w-28 rounded-box bg-base-100 p-2 shadow">
             <li v-for="(orderItem, index) in orderMaps" :key="index" @click="order = orderItem; executeSearch()">
               <div>
-                <Icon :icon="orderItem.icon" />
+                <IconTypeMapper :type="orderItem.icon" class="text-xl transition-all" />
                 {{ orderItem.label }}
               </div>
             </li>

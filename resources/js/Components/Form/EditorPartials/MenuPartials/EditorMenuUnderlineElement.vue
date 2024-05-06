@@ -14,7 +14,7 @@ defineProps({
     class="btn btn-xs"
     :class="{ 'is-active': editor.isActive('underline') }"
     @click="editor.chain().focus().toggleUnderline().run()">
-    <Icon icon="mdi:format-underline" class="text-lg" />
+    <IconTypeMapper type="formatUnderline" class="text-lg" />
   </button>
 </template>
 

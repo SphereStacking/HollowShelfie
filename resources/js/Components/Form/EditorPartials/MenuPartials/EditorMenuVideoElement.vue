@@ -1,7 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
-
 const props = defineProps({
   editor: {
     type: Object,
@@ -28,7 +26,7 @@ const addVideo= () => {
   <button
     class="btn btn-xs"
     @click="addVideo">
-    <Icon icon="mdi:youtube" class="text-lg" />
+    <IconTypeMapper type="youtube" class="text-lg" />
   </button>
 </template>
 

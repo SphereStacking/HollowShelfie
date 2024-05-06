@@ -1,7 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
-
 defineProps({
   editor: {
     type: Object,
@@ -17,17 +15,17 @@ defineProps({
     <button
       class="btn join-item btn-xs"
       :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }" @click="editor.chain().focus().setTextAlign('left').run()">
-      <icon icon="mdi:format-align-left" class="text-lg" />
+      <IconTypeMapper type="formatAlignLeft" class="text-lg" />
     </button>
     <button class="btn join-item btn-xs" :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }" @click="editor.chain().focus().setTextAlign('center').run()">
-      <icon icon="mdi:format-align-center" class="text-lg" />
+      <IconTypeMapper type="formatAlignCenter" class="text-lg" />
     </button>
     <button
       class="btn join-item btn-xs" :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }" @click="editor.chain().focus().setTextAlign('right').run()">
-      <icon icon="mdi:format-align-right" class="text-lg" />
+      <IconTypeMapper type="formatAlignRight" class="text-lg" />
     </button>
     <!--    <button class="btn join-item btn-xs" :class="{ 'is-active': editor.isActive({ textAlign: 'justify' }) }" @click="editor.chain().focus().setTextAlign('justify').run()">-->
-    <!--      <icon icon="mdi:format-align-justify" class="text-lg" />-->
+    <!--      <IconTypeMapper type="formatAlignJustify" class="text-lg" />-->
     <!--    </button>-->
     <!--    <button class="btn join-item btn-xs" @click="editor.chain().focus().unsetTextAlign().run()">-->
     <!--      unsetTextAlign-->

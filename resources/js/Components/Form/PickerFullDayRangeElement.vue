@@ -171,19 +171,19 @@ watch(dates, (newDates) => {
             :step="step" />
           <div class=" mt-2 grid grid-cols-5 gap-1">
             <button class="btn btn-primary btn-xs rounded-sm" @click="adjustSlideValue(0, -1)">
-              <Icon icon="mdi:chevron-left" class="text-xl" />
+              <IconTypeMapper type="arrowLeft" class="text-xl" />
             </button>
             <button class="btn btn-primary btn-xs rounded-sm" @click="adjustSlideValue(0, 1)">
-              <Icon icon="mdi:chevron-right" class="text-xl" />
+              <IconTypeMapper type="arrowRight" class="text-xl" />
             </button>
 
             <div></div>
 
             <button class="btn btn-primary btn-xs  rounded-sm" @click="adjustSlideValue(1, -1)">
-              <Icon icon="mdi:chevron-left" class="text-xl" />
+              <IconTypeMapper type="arrowLeft" class="text-xl" />
             </button>
             <button class="btn btn-primary btn-xs   rounded-sm" @click="adjustSlideValue(1, 1)">
-              <Icon icon="mdi:chevron-right" class="text-xl" />
+              <IconTypeMapper type="arrowRight" class="text-xl" />
             </button>
           </div>
         </div>

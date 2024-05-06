@@ -1,7 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
-
 defineProps({
   editor: {
     type: Object,
@@ -20,7 +18,7 @@ defineProps({
       'btn-disabled': !editor.can().chain().focus().toggleBold().run(),
     }"
     @click="editor.chain().focus().toggleBold().run()">
-    <Icon icon="mdi:format-bold" class="text-lg" />
+    <IconTypeMapper type="formatBold" class="text-lg" />
   </button>
 </template>
 

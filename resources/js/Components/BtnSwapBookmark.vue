@@ -15,7 +15,7 @@ const props = defineProps({
 })
 </script>
 <template>
-  <BtnSwapBase off-icon="mdi:bookmark-outline" on-icon="mdi:bookmark" :check="props.check">
+  <BtnSwapBase off-icon="offBookmark" on-icon="onBookmark" :check="props.check">
     <template #after>
       <div v-if="showCount" class="badge badge-xs">
         {{ count }}

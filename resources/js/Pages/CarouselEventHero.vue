@@ -48,12 +48,12 @@ const getEventShow = (event) => {
     <button
       class="absolute -left-10  top-1/2 z-10 -translate-y-1/2  rounded-md opacity-0 transition-all duration-200   hover:bg-accent hover:text-accent-content  group-hover:left-0 group-hover:opacity-100"
       @click="prev">
-      <Icon icon="mdi:chevron-left" class="text-4xl" />
+      <IconTypeMapper type="arrowLeft" class="text-4xl" />
     </button>
     <button
       class=" absolute -right-10 top-1/2  z-10 -translate-y-1/2 rounded-md opacity-0 transition-all duration-200  hover:bg-accent hover:text-accent-content  group-hover:right-0 group-hover:opacity-100"
       @click="next">
-      <Icon icon="mdi:chevron-right" class="text-4xl" />
+      <IconTypeMapper type="arrowRight" class="text-4xl" />
     </button>
     <Carousel
       v-model="currentSlide" :autoplay="5000" wrap-around
@@ -67,7 +67,7 @@ const getEventShow = (event) => {
               </template>
               <template v-else>
                 <div class="h-full w-full bg-base-300">
-                  <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
+                  <IconTypeMapper type="imageOff" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
                 </div>
               </template>
             </div>
@@ -104,7 +104,7 @@ const getEventShow = (event) => {
               <!-- organizers -->
               <div class="flex w-full flex-col justify-center">
                 <div class="flex flex-row items-center gap-1">
-                  <Icon icon="mdi:food" class="text-md" />
+                  <IconTypeMapper type="organizer" class="text-md" />
                   <div>organizers</div>
                 </div>
                 <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-300 p-2">
@@ -119,7 +119,7 @@ const getEventShow = (event) => {
               <!-- performers -->
               <div class="flex flex-col justify-center ">
                 <div class="flex flex-row items-center gap-1">
-                  <Icon icon="mdi:food" class="text-md" />
+                  <IconTypeMapper type="performer" class="text-md" />
                   <div>performers</div>
                 </div>
                 <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-300 p-2">

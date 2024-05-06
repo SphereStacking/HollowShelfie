@@ -13,7 +13,7 @@ defineProps({
   <button
     class="btn btn-xs"
     @click="editor.chain().focus().insertContent('#').run()">
-    <Icon icon="mdi:hashtag" class="text-lg" />
+    <IconTypeMapper type="hashtag" class="text-lg" />
   </button>
 </template>
 

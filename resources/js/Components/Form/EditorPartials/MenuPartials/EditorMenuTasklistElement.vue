@@ -14,7 +14,7 @@ defineProps({
     class="btn btn-xs"
     :class="{ 'is-active': editor.isActive('taskList') }"
     @click="editor.chain().focus().toggleTaskList().run()">
-    <Icon icon="mdi:format-list-checks" class="text-lg" />
+    <IconTypeMapper type="formatListChecks" class="text-lg" />
   </button>
 </template>
 

@@ -1,7 +1,6 @@
 <script setup>
 
 import { Link } from '@inertiajs/vue3'
-import 'vue3-carousel/dist/carousel.css'
 
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
@@ -49,9 +48,9 @@ const querySetter = (value, type) => {
   ]
 }
 const eventItems = ref([])
-eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'mdi:door-open' })
-eventItems.value.push({ url: props.recentEventsUrl, events: props.recentEvents, title: 'Recent', icon: 'mdi:timelapse' })
-eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'NEW', icon: 'mdi:new-box' })
+eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'eventOpen' })
+eventItems.value.push({ url: props.recentEventsUrl, events: props.recentEvents, title: 'Recent', icon: 'eventRecent' })
+eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'NEW', icon: 'new' })
 
 </script>
 
@@ -103,7 +102,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
       <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <Icon :icon="items.icon" />
+          <IconTypeMapper :type="items.icon" />
           <h4 class="font-bold">
             {{ items.title }}
           </h4>

@@ -13,7 +13,7 @@ defineProps({
   <button
     class="btn btn-xs"
     @click="editor.chain().focus().insertContent('@').run()">
-    <Icon icon="mdi:at" class="text-lg" />
+    <IconTypeMapper type="at" class="text-lg" />
   </button>
 </template>
 

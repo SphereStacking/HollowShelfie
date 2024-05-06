@@ -1,7 +1,5 @@
 <script setup>
 
-import {Icon} from '@iconify/vue'
-
 defineProps({
   editor: {
     type: Object,
@@ -19,7 +17,7 @@ defineProps({
     }"
     :disabled="!editor.can().chain().focus().undo().run()"
     @click="editor.chain().focus().undo().run()">
-    <Icon icon="mdi:undo" class="text-lg" />
+    <IconTypeMapper type="undo" class="text-lg" />
   </button>
 </template>
 
