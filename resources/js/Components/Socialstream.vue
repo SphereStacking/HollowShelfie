@@ -18,9 +18,27 @@ defineProps({
     type: Object,
   }
 })
+
+const animationGhost = ref(null)
+const onAnimate = () => {
+  if (animationGhost.value) {
+    animationGhost.value.animationStart()
+  }
+}
+const animationDuration = 1000 // アニメーションの期間をミリ秒で設定
+
+const goToLogin = (providerId) => {
+  onAnimate()
+  setTimeout(() => {
+    window.location.href = route('oauth.redirect', providerId)
+  }, animationDuration)
+}
+
 </script>
 
 <template>
+  <AnimationGhost ref="animationGhost" />
+
   <div v-if="providers.length" class="mb-2 mt-6 space-y-6">
     <div class="divider">
       {{ prompt }}
@@ -29,13 +47,13 @@ defineProps({
     <InputError v-if="error" :message="error" class="text-center" />
 
     <div class="grid gap-4">
-      <a
+      <button
         v-for="provider in providers" :key="provider.id"
         class="btn btn-outline"
-        :href="route('oauth.redirect', provider.id)">
+        @click="goToLogin(provider.id)">
         <ProviderIcon :provider="provider" classes="h-6 w-6 mx-2" />
         <span class="block text-sm font-medium ">{{ provider.buttonLabel || provider.name }}</span>
-      </a>
+      </button>
     </div>
   </div>
 </template>
