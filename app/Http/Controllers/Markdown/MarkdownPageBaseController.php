@@ -18,6 +18,7 @@ class MarkdownPageBaseController extends Controller
         $content = File::get(resource_path("markdown/{$category}/{$page}.md"));
 
         return Inertia::render('Markdown/Index', [
+            'title' => $page,
             'content' => Str::markdown($content),
         ]);
     }

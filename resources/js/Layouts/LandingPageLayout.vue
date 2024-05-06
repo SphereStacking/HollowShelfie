@@ -7,10 +7,6 @@ console.log(page.props)
 
 defineProps({
   title: String,
-  pageContentClass: {
-    type: String,
-    default: 'mt-4 px-6 sm:px-12',
-  },
 })
 
 </script>
@@ -25,13 +21,13 @@ defineProps({
       <NavigationMenu />
 
       <!-- Page Heading -->
-      <header v-if="$slots.header" class="bg-base-300 shadow-2xl">
+      <header v-if="$slots.header" class="mb-4 bg-base-300 shadow-2xl ">
         <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <slot name="header"></slot>
         </div>
       </header>
       <!-- Page Content -->
-      <main class="mt-4 ">
+      <main class="">
         <slot></slot>
       </main>
     </div>
