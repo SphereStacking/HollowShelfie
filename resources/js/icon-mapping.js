@@ -324,6 +324,9 @@ export const ItemsConfig = {
   twitter: {
     icon: 'ph:twitter-x-fill',
   },
+  notification: {
+    icon: 'mdi:bell',
+  },
   default: {
     icon: '',
   }

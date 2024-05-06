@@ -24,6 +24,7 @@ const features = [
   { icon: 'search', description: 'イベントの検索' },
   { icon: 'follow', description: 'フォロー'},
   { icon: 'timeline', description: 'タイムライン表示' },
+  { icon: 'notification', description: '通知', plan: 'free / coming soon', isComingSoon: true },
   { icon: 'team', description: 'チーム', plan: 'standard / coming soon', isComingSoon: true },
   { icon: 'matching', description: '主催者と演者のマッチング', plan: 'standard / coming soon', isComingSoon: true },
   { icon: 'advertisement', description: 'バナー掲載', plan: 'premium / coming soon', isComingSoon: true },
@@ -122,36 +123,22 @@ const columns = computed(() => {
           class="m-5 w-40" />
       </div>
     </section>
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
-      <div class="rounded-md py-10 text-center font-neon text-3xl font-black text-yellow-500-neon">
-        Pricing
-      </div>
-      <div class="grid grid-cols-1 gap-4  md:grid-cols-3 ">
-        <div
-          v-for="plan in plans" :key="plan"
-          class="relative flex flex-col justify-between rounded-lg bg-base-200 p-6 shadow-lg">
-          <div v-if="plan.isComingSoon" class="absolute left-0 top-0 h-full w-full rounded-lg bg-base-300/80"></div>
-          <div>
-            <h3 class="mb-2 text-3xl font-black">
-              {{ plan.title }}
-            </h3>
-            <p class="mb-4 text-lg">
-              {{ plan.price }}
-            </p>
-            <ul class="mb-4">
-              <li class="text-lg">
-                {{ plan.supplement }}
-              </li>
-              <li v-for="feature in plan.features" :key="feature" class="text-lg">
-                ✅{{ feature }}
-              </li>
-            </ul>
+
+    <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+      <div class=" text-center text-7xl font-black">
+        <div class="text-center font-title text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
+          <div class=" inline-grid">
+            <div class="pointer-events-none col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text blur-xl [-webkit-text-fill-color:transparent] [transform:translate3d(0,0,0)] before:content-[attr(data-text)] [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
+              フライヤーを飾れる
+              <br>
+              イベント共有サービス
+            </div>
+            <div class="relative col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text [-webkit-text-fill-color:transparent] [&::selection]:bg-blue-700/20 [&::selection]:text-base-content [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
+              フライヤーを飾れる
+              <br>
+              イベント共有サービス
+            </div>
           </div>
-          <a
-            :href="plan.link.url"
-            class="btn btn-outline w-full">
-            {{ plan.link.label }}
-          </a>
         </div>
       </div>
     </section>
@@ -208,18 +195,24 @@ const columns = computed(() => {
     </section>
 
     <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
-      <div class="grid grid-cols-1 gap-4">
+      <div class="grid grid-cols-1 gap-32">
         <TransitionInViewportObserver
           v-for="(feature, index) in featureBanners"
           :key="feature.title"
-          class="h-52"
           enter-active-class="transition-all duration-1000"
           leave-active-class="transition-all duration-1000"
           :enter-from-class="index % 2 === 0 ? 'translate-x-20 opacity-0' : '-translate-x-20 opacity-0'"
           leave-to-class="opacity-0">
-          <div class="bg-base-300 p-4 ">
-            {{ feature.title }}
-            {{ feature.description }}
+          <div class="flex justify-between gap-4" :class="index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'">
+            <div class="flex flex-col gap-2">
+              <div class=" text-4xl font-black">
+                {{ feature.title }}
+              </div>
+              <div class="text-base">
+                {{ feature.description }}
+              </div>
+            </div>
+            <img class="aspect-video" src="https://placehold.jp/400x225.png">
           </div>
         </TransitionInViewportObserver>
       </div>
@@ -324,7 +317,39 @@ const columns = computed(() => {
         </div>
       </div>
     </section>
-
+    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+      <div class="rounded-md py-10 text-center font-neon text-3xl font-black text-yellow-500-neon">
+        Pricing
+      </div>
+      <div class="grid grid-cols-1 gap-4  md:grid-cols-3 ">
+        <div
+          v-for="plan in plans" :key="plan"
+          class="relative flex flex-col justify-between rounded-lg bg-base-200 p-6 shadow-lg">
+          <div v-if="plan.isComingSoon" class="absolute left-0 top-0 h-full w-full rounded-lg bg-base-300/80"></div>
+          <div>
+            <h3 class="mb-2 text-3xl font-black">
+              {{ plan.title }}
+            </h3>
+            <p class="mb-4 text-lg">
+              {{ plan.price }}
+            </p>
+            <ul class="mb-4">
+              <li class="text-lg">
+                {{ plan.supplement }}
+              </li>
+              <li v-for="feature in plan.features" :key="feature" class="text-lg">
+                ✅{{ feature }}
+              </li>
+            </ul>
+          </div>
+          <a
+            :href="plan.link.url"
+            class="btn btn-outline w-full">
+            {{ plan.link.label }}
+          </a>
+        </div>
+      </div>
+    </section>
     <section class="mx-auto my-20 flex flex-col-reverse items-center justify-center gap-8 py-10 md:flex-row md:gap-10 md:py-20">
       <a :href="developer.link" target="_blank">
         <img :src="developer.image" class="h-40 rounded-xl">
