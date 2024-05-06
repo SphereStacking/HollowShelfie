@@ -14,7 +14,7 @@ defineProps({
     class="btn btn-xs"
     :class="{ 'is-active': editor.isActive('bulletList') }"
     @click="editor.chain().focus().toggleBulletList().run()">
-    <Icon icon="mdi:format-list-bulleted" class="text-lg" />
+    <IconTypeMapper type="formatListBulleted" class="text-lg" />
   </button>
 </template>
 

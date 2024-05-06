@@ -17,7 +17,7 @@ defineProps<{
       show-count /> -->
     <div class="dropdown dropdown-end dropdown-bottom">
       <div tabindex="0" role="button" class="btn btn-ghost btn-xs p-0">
-        <Icon icon="mdi:dots-vertical" class="text-xl" />
+        <IconTypeMapper type="overflowMenu" class="text-xl" />
       </div>
       <ul tabindex="0" class="menu dropdown-content z-[1] w-auto rounded-box bg-base-200 p-2 shadow">
         <li>

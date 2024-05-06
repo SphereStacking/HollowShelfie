@@ -1,8 +1,8 @@
 <script setup>
 import { defineProps } from 'vue'
-import { ItemsConfig } from '@/config'
+import { ItemsConfig } from '@/icon-mapping'
 
-const props = defineProps({
+defineProps({
   type: {
     type: String,
     required: true
@@ -10,9 +10,10 @@ const props = defineProps({
 })
 
 const getIconForType = (type) => ItemsConfig[type]?.icon || ItemsConfig.default.icon
+const getColorForType = (type) => ItemsConfig[type]?.color || ItemsConfig.default.color
 </script>
 
 <template>
-  <Icon :icon="getIconForType(type)" />
+  <Icon :icon="getIconForType(type)" :color="getColorForType(type)" />
 </template>
 

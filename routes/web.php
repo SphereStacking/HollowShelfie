@@ -13,7 +13,6 @@ use App\Http\Controllers\Event\DestroyEventController;
 use App\Http\Controllers\Event\GetEditEventController;
 use App\Http\Controllers\Follow\GetFollowerController;
 use App\Http\Controllers\Follow\StoreFollowController;
-use App\Http\Controllers\User\GetUserSearchController;
 use App\Http\Controllers\Event\GetIndexEventController;
 use App\Http\Controllers\EventGood\StoreGoodController;
 use App\Http\Controllers\Follow\GetFollowingController;
@@ -90,7 +89,6 @@ Route::get('/user/{user:screen_name}', GetTestUserProfileController::class)->nam
 Route::get('/team/{team:screen_name}', GetTeamProfileController::class)->name('team.profile.show');
 Route::get('/event', GetIndexEventController::class)->name('event.index');
 Route::get('/event/search', GetEventSearchController::class)->name('event.search.index');
-Route::get('/user/search', GetUserSearchController::class)->name('user.search.index');
 Route::get('/tag/suggestion', GetTagSuggestionController::class)->name('tag.suggestion');
 Route::get('/mention/search', GetMentionSuggestionController::class)->name('mention.suggestion');
 

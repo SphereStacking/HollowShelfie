@@ -1,5 +1,4 @@
 <script setup>
-import {Icon} from '@iconify/vue'
 
 defineProps({
   editor: {
@@ -14,7 +13,7 @@ defineProps({
   <button
     class="btn btn-xs"
     @click="editor.chain().focus().setHorizontalRule().run()">
-    <Icon icon="mdi:divide" class="text-lg" />
+    <IconTypeMapper type="divide" class="text-lg" />
   </button>
 </template>
 

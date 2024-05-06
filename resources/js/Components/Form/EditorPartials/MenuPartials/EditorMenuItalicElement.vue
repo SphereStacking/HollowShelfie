@@ -18,7 +18,7 @@ defineProps({
     }"
     class="btn btn-xs"
     @click="!editor.chain().focus().toggleItalic().run()">
-    <icon icon="mdi:format-italic" class="text-lg" />
+    <IconTypeMapper type="formatItalic" class="text-lg" />
   </button>
 </template>
 

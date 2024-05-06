@@ -14,7 +14,7 @@ defineProps({
     class="btn btn-sm"
     :class="{ 'is-active': editor.isActive('strike') }"
     @click="editor.chain().focus().toggleStrike().run()">
-    <Icon icon="mdi:format-strikethrough-variant" class="text-lg" />
+    <IconTypeMapper type="strikethrough" class="text-lg" />
   </button>
 </template>
 

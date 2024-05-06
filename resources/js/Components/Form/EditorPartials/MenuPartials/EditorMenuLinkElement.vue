@@ -1,5 +1,4 @@
 <script setup>
-import {Icon} from '@iconify/vue'
 
 const props= defineProps({
   editor: {
@@ -29,7 +28,7 @@ const setLink = () => {
   <button
     class="btn btn-xs"
     @click="setLink">
-    <Icon icon="mdi:link-variant" class="text-lg" />
+    <IconTypeMapper type="link" class="text-lg" />
   </button>
 </template>
 
