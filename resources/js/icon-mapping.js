@@ -1,4 +1,7 @@
 export const ItemsConfig = {
+  appMark: {
+    icon: 'wpf:ghost',
+  },
   category: {
     icon: 'mdi:shape',
     buttonClass: 'btn-primary'
@@ -31,6 +34,7 @@ export const ItemsConfig = {
     icon: 'mdi:dots-hexagon',
     buttonClass: 'btn-info'
   },
+
   bookmarks: {
     icon: 'mdi:bookmark-multiple',
   },
@@ -39,6 +43,9 @@ export const ItemsConfig = {
   },
   offBookmark: {
     icon: 'mdi:bookmark',
+  },
+  new: {
+    icon: 'mdi:new-box',
   },
   good: {
     icon: 'mdi:thumb-up',
@@ -66,6 +73,15 @@ export const ItemsConfig = {
   },
   follow: {
     icon: 'mdi:account-arrow-right',
+  },
+  followNeutral: {
+    icon: 'mdi:user',
+  },
+  onFollowing: {
+    icon: 'mdi:user-add',
+  },
+  unFollowing: {
+    icon: 'mdi:user-minus',
   },
   team: {
     icon: 'mdi:account-group',
@@ -112,6 +128,9 @@ export const ItemsConfig = {
   delete: {
     icon: 'mdi:close',
   },
+  trashBox: {
+    icon: 'mdi:delete-outline',
+  },
   close: {
     icon: 'mdi:close',
   },
@@ -142,8 +161,168 @@ export const ItemsConfig = {
   menu: {
     icon: 'mdi:hamburger-menu',
   },
-  createTeamMenu: {
+  arrowDown: {
     icon: 'mdi:keyboard-arrow-down',
+  },
+  arrowUp: {
+    icon: 'mdi:keyboard-arrow-up',
+  },
+  arrowLeft: {
+    icon: 'mdi:keyboard-arrow-left',
+  },
+  arrowRight: {
+    icon: 'mdi:keyboard-arrow-right',
+  },
+  check: {
+    icon: 'mdi:check',
+  },
+  uploading: {
+    icon: 'line-md:uploading-loop',
+  },
+  info: {
+    icon: 'mdi:information-outline',
+  },
+  intersect: {
+    icon: 'fluent:shape-intersect-24-filled'
+  },
+  union: {
+    icon: 'fluent:shape-union-20-filled'
+  },
+  exclude: {
+    icon: 'fluent:shape-exclude-20-filled'
+  },
+  sort: {
+    icon: 'mdi:sort',
+  },
+  eventOpen: {
+    icon: 'mdi:door-open',
+  },
+  eventRecent: {
+    icon: 'mdi:timelapse',
+  },
+  image: {
+    icon: 'mdi:image',
+  },
+  imageOn: {
+    icon: 'mdi:image',
+  },
+  imageOff: {
+    icon: 'mdi:image-off',
+  },
+  overflowMenu: {
+    icon: 'mdi:dots-vertical',
+  },
+  hashtag: {
+    icon: 'mdi:hashtag',
+  },
+  youtube: {
+    icon: 'mdi:youtube',
+  },
+  undo: {
+    icon: 'mdi:undo',
+  },
+  redo: {
+    icon: 'mdi:redo',
+  },
+  divide: {
+    icon: 'mdi:divide',
+  },
+  at: {
+    icon: 'mdi:at',
+  },
+  formatText: {
+    icon: 'mdi:format-text',
+  },
+  formatHeader1: {
+    icon: 'mdi:format-header-1',
+  },
+  formatHeader2: {
+    icon: 'mdi:format-header-2',
+  },
+  formatHeader3: {
+    icon: 'mdi:format-header-3',
+  },
+  formatAlignRight: {
+    icon: 'mdi:format-align-right',
+  },
+  formatAlignLeft: {
+    icon: 'mdi:format-align-left',
+  },
+  formatAlignCenter: {
+    icon: 'mdi:format-align-center',
+  },
+  formatAlignJustify: {
+    icon: 'mdi:format-align-justify',
+  },
+  formatUnderline: {
+    icon: 'mdi:format-underline',
+  },
+  formatListChecks: {
+    icon: 'mdi:format-list-checks',
+  },
+  formatListNumbered: {
+    icon: 'mdi:format-list-numbered',
+  },
+  formatListBulleted: {
+    icon: 'mdi:format-list-bulleted',
+  },
+  formatBold: {
+    icon: 'mdi:format-bold',
+  },
+  tableColumnPlusBefore: {
+    icon: 'mdi:table-column-plus-before',
+  },
+  arrowLeftBottomBold: {
+    icon: 'mdi:arrow-left-bottom-bold',
+  },
+  link: {
+    icon: 'mdi:link',
+  },
+  formatItalic: {
+    icon: 'mdi:format-italic',
+  },
+  tableColumnPlusAfter: {
+    icon: 'mdi:table-column-plus-after',
+  },
+  tableColumnRemove: {
+    icon: 'mdi:table-column-remove',
+  },
+  tableRowPlusBefore: {
+    icon: 'mdi:table-row-plus-before',
+  },
+  tableRowPlusAfter: {
+    icon: 'mdi:table-row-plus-after',
+  },
+  tableRowRemove: {
+    icon: 'mdi:table-row-remove',
+  },
+  tableRemove: {
+    icon: 'mdi:table-remove',
+  },
+  tableMergeCells: {
+    icon: 'mdi:table-merge-cells',
+  },
+  tableSplitCell: {
+    icon: 'mdi:table-split-cell',
+  },
+  toggleHeaderCell: {
+    icon: 'mdi:format-color-fill',
+  },
+  tableLarge: {
+    icon: 'mdi:table-large',
+  },
+  strikethrough: {
+    icon: 'mdi:format-strikethrough-variant',
+  },
+  googleCalendar: {
+    icon: 'logos:google-calendar',
+  },
+  microsoftOutlook: {
+    icon: 'mdi:microsoft-outlook',
+    color: '#0087e7'
+  },
+  twitter: {
+    icon: 'ph:twitter-x-fill',
   },
   default: {
     icon: '',

@@ -6,10 +6,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  recommendEvents: {
-    type: Array,
-    default: () => []
-  },
+
   trendTags: {
     type: Array,
     default: () => []
@@ -165,32 +162,21 @@ const snsShare = {
                 </template>
               </div>
             </Card>
-            <!-- 関連記事 -->
-            <Card class="w-full">
-              <template #title>
-                関連イベント
-              </template>
-              <template #content>
-                <div v-for="event in recommendEvents" :key="event.id">
-                  {{ event.title }}
-                </div>
-              </template>
-            </Card>
+            <AreaAdvertisementRecruitment class="h-32 w-full" />
+            <AreaAdvertisementRecruitment class="h-32 w-full" />
+            <AreaAdvertisementRecruitment class="h-32 w-full" />
             <!-- コミュニティスポンサー -->
             <Card class="w-full">
               <template #title>
                 <div class="flex w-full flex-row justify-between gap-2">
-                  サポーター募集！
-                  <a
-                    class="btn btn-circle btn-accent btn-sm" :href="supportings.fanbox">
-                    <Icon icon="mdi:plus" />
-                  </a>
+                  支援する
                 </div>
               </template>
+              <div>
+                <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.fanbox">pixiv fanbox </a>
+                <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.patreon">patreon </a>
+              </div>
             </Card>
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
           </div>
         </aside>
       </div>

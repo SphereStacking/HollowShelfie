@@ -79,8 +79,13 @@ const querySetter = (value, type) => {
                   </div>
                 </div>
                 <div class="flex flex-row justify-between">
-                  <div class="flex items-center py-2">
-                    <LinkExts class="flex gap-1" :links="dataile.links" />
+                  <div class="flex items-center gap-1 py-2">
+                    <a
+                      v-for="item in dataile.links" :key="item.id" class="fel-row link flex items-center gap-0.5"
+                      :href="item.link">
+                      <IconTypeMapper type="link" class="text-xl" />
+                      {{ item.label }}
+                    </a>
                   </div>
                 </div>
                 <div>

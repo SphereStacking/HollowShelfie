@@ -94,7 +94,7 @@ const headerButtons = [
                 <span class="inline-flex rounded-md">
                   <button type="button" class="btn btn-secondary btn-active no-animation btn-sm">
                     {{ auth_user.current_team ? auth_user.current_team.name : $t('Create Team') }}
-                    <IconTypeMapper type="createTeamMenu" class="-mr-0.5 ml-1 text-xl" />
+                    <IconTypeMapper type="arrowDown" class="-mr-0.5 ml-1 text-xl" />
                   </button>
                 </span>
               </template>
