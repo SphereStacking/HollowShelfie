@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
             InitCategorySeeder::class,
             InitTagSeeder::class,
             InitInstanceTypeSeeder::class,
-            InitBadgeSeeder::class,
         ]);
 
         User::factory(100)->create();

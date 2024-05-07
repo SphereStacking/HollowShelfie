@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Badge;
 use App\Models\Link;
 use App\Models\Tag;
 use App\Models\User;
@@ -22,10 +21,6 @@ class UserRelationSeeder extends Seeder
             //--------------------------------------------------------
             $links = Link::factory($count)->make();
             $user->links()->saveMany($links);
-
-            //--------------------------------------------------------
-            // ユーザーにランダムに「badge」を紐づける
-            $this->attachRandomModels($user, 'badges', Badge::class, $count);
 
             //--------------------------------------------------------
             // タグをランダムに紐づける

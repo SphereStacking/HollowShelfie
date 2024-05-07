@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Badge;
 use App\Models\EventOrganizer;
 use App\Models\Link;
 use App\Models\Tag;
@@ -28,14 +27,6 @@ trait TeamRelations
     public function links(): MorphMany
     {
         return $this->morphMany(Link::class, 'linkable');
-    }
-
-    /**
-     * バッジリレーション
-     */
-    public function badges(): MorphToMany
-    {
-        return $this->morphToMany(Badge::class, 'badgeable');
     }
 
     /**

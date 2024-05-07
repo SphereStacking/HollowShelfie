@@ -35,12 +35,6 @@ class TeamPublicProfileJsonResource extends JsonResource
                         'name' => $tag->name,
                     ];
                 }),
-                'badges' => $this->resource->badges->map(function ($badge) {
-                    return [
-                        'name' => $badge->name,
-                        'icon_class' => $badge->icon_class,
-                    ];
-                }),
             ],
             'auth_user' => [
                 'is_followed' => $this->resource->is_followed,
