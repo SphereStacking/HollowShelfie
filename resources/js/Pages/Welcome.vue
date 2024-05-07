@@ -258,9 +258,12 @@ const columns = computed(() => {
             </div>
           </TransitionInViewportObserver>
         </div>
-        <div class="col-span-3 mb-10 mt-20 flex flex-col items-center">
+        <div class="col-span-3 mb-10 mt-20 flex flex-row items-center justify-center gap-10">
           <a :href="supportings.fanbox" target="_blank" class="btn btn-outline btn-lg border-pink-300">
-            サポーターになる
+            Fanbox
+          </a>
+          <a :href="supportings.patreon" target="_blank" class="btn btn-outline btn-lg border-pink-300">
+            Patreon
           </a>
         </div>
       </div>
