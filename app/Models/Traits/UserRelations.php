@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Badge;
 use App\Models\Event;
 use App\Models\EventOrganizer;
 use App\Models\Link;
@@ -64,14 +63,6 @@ trait UserRelations
     public function links(): MorphMany
     {
         return $this->morphMany(Link::class, 'linkable');
-    }
-
-    /**
-     * バッジリレーション
-     */
-    public function badges(): MorphToMany
-    {
-        return $this->morphToMany(Badge::class, 'badgeable');
     }
 
     /**
