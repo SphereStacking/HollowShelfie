@@ -61,18 +61,18 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
         Home
       </h2>
     </template>
-    <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6">
-      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 md:col-span-4">
+    <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6 ">
+      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 shadow-xl shadow-base-200 md:col-span-4">
         <div class="h-full w-full p-8">
           開催中
         </div>
       </div>
-      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 md:col-span-4">
+      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 shadow-xl shadow-base-200 md:col-span-4">
         <div class="h-full w-full p-8">
           開催予定
         </div>
       </div>
-      <AreaAdvertisementRecruitment class="col-span-12 h-36 md:col-span-4" />
+      <AreaAdvertisementRecruitment class="col-span-12 h-36 shadow-xl shadow-base-200 md:col-span-4" />
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
@@ -118,7 +118,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
         <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
           show more!
         </Link>
-        <AreaAdvertisementRecruitment class="col-span-12 h-40" />
+        <AreaAdvertisementRecruitment class="col-span-12 h-40 shadow-xl shadow-base-200" />
       </div>
     </div>
   </AppLayout>

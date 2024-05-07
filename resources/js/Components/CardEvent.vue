@@ -45,7 +45,7 @@ const navigateToType = (searchValue, type) => {
 <template>
   <div class=" flex flex-col justify-start border border-transparent">
     <div class="flex flex-col justify-start border border-transparent">
-      <div class=" relative aspect-a4 min-w-40 rounded-md bg-base-300" @click.prevent="incrementImageIndex">
+      <div class=" relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200" @click.prevent="incrementImageIndex">
         <template v-if="event.files.length>0">
           <TransitionGroup
             enter-active-class="transition-all duration-300"
