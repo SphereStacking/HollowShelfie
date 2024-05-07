@@ -7,6 +7,6 @@
 
 <style scoped>
 .glow-effect {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+  filter: drop-shadow(0 0 8px rgb(187 255 204 / 0.5));
 }
 </style>

@@ -64,7 +64,7 @@ const headerButtons = [
         <div class="flex">
           <!-- Logo -->
           <div class="flex shrink-0 items-center">
-            <Link :href="route('home')">
+            <Link :href="route('welcome')">
               <ApplicationMark class="block h-9 w-auto" />
             </Link>
           </div>
