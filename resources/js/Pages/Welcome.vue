@@ -71,7 +71,7 @@ const columns = computed(() => {
 </script>
 
 <template>
-  <LandingPageLayout>
+  <LandingPageLayout title="welcome">
     <section class="flex min-h-[calc(100vh-4rem)] items-center justify-center px-2 text-center">
       <ApplicationLogo class="sticky top-10 h-20 py-2 text-base-content md:flex-row" />
     </section>
