@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue'
-import { Link, router, usePage } from '@inertiajs/vue3'
+import { Link, router, usePage, useForm } from '@inertiajs/vue3'
 import ApplicationMark from '@/Jetstream/ApplicationMark.vue'
 import Dropdown from '@/Jetstream/Dropdown.vue'
 import DropdownLink from '@/Jetstream/DropdownLink.vue'
 import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
+
+const form = useForm({})
 
 const page = usePage()
 
@@ -19,7 +21,7 @@ defineProps({
 const showingNavigationDropdown = ref(false)
 
 const switchToTeam = (team) => {
-  router.put(route('current-team.update'), {
+  form.put(route('current-team.update'), {
     team_id: team.id,
   }, {
     preserveState: false,
