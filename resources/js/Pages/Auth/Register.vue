@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import Checkbox from '@/Jetstream/Checkbox.vue'
@@ -10,6 +10,7 @@ import TextInput from '@/Jetstream/TextInput.vue'
 import Socialstream from '@/Components/Socialstream.vue'
 
 const form = useForm({
+  _token: usePage().props.csrf_token,
   name: '',
   email: '',
   password: '',
