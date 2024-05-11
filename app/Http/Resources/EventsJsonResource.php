@@ -22,8 +22,8 @@ class EventsJsonResource extends JsonResource
                 'created_at' => $item->created_at,
                 'title' => $item->title,
                 'description' => $item->description,
-                'category_name' => $item->category_name,
-                'tags' => $item->tags,
+                'category_names' => $item->categories->pluck('name')->toArray(),
+                'tags' => $item->tags->pluck('name')->toArray(),
                 'status' => $item->status,
                 'status_label' => $item->status_label,
                 'good_count' => $item->good_count,
@@ -46,12 +46,6 @@ class EventsJsonResource extends JsonResource
                             ? $organizeble->event_organizeble->profile_photo_url
                             : $organizeble->event_organizeble->team_logo_url,
                         'name' => $organizeble->event_organizeble->name,
-                        // 'links' => $organizeble->event_organizeble->links->map(function ($link) {
-                        //     return [
-                        //         'label' => $link->label,
-                        //         'link' => $link->link,
-                        //     ];
-                        // }),
                     ];
                 }),
                 'performers' => $item->event_time_tables->flatMap(function ($time_table) {
@@ -63,12 +57,6 @@ class EventsJsonResource extends JsonResource
                         'id' => $performer->performable_id,
                         'profile_url' => $performer->performable->profile_url,
                         'name' => $performer->performable->name,
-                        // 'links' => $performer->performable->links->map(function ($link) {
-                        //     return [
-                        //         'label' => $link->label,
-                        //         'link' => $link->link,
-                        //     ];
-                        // }),
                         'type' => $performer->performable_type,
                         'image_url' => $performer->performable_type === User::class
                             ? $performer->performable->profile_photo_url

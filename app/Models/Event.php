@@ -38,8 +38,8 @@ class Event extends Model
      * @var array<int, string>
      */
     protected $appends = [
-        'created_user', 'status_label', 'tags', 'category_names',
-        'is_bookmark', 'is_good', 'category_name', 'instances', 'good_count',
+        'created_user', 'status_label',
+        'is_bookmark', 'is_good', 'category_name', 'good_count',
         'short_good_count', 'event_timeline_status',
     ];
 

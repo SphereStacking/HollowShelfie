@@ -84,7 +84,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     protected $appends = [
         'profile_photo_url',
-        'links',
         'profile_url',
     ];
 
