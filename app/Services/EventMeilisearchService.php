@@ -66,7 +66,6 @@ class EventMeilisearchService
                 );
             },
         );
-
         if (array_key_exists($params->order, $this->orderScopes)) {
             $scopeMethod = $this->orderScopes[$params->order];
             $events = $this->$scopeMethod($events);
@@ -74,7 +73,20 @@ class EventMeilisearchService
 
         $events = $this->scopeWithStatusPublishedForScout($events);
 
-        return $events
+        return $events->query(function ($query) {
+                return $query->with([
+                    'organizers.event_organizeble',
+                    'event_time_tables.performers.performable',
+                    'files',
+                    'instances',
+                    'tags.taggables.tag',
+                    'categories',
+                    'good_users',
+                    'event_create_user',
+                ])->withCount([
+                    'good_users',
+                ]);
+            })
             ->paginate($params->paginate)
             ->appends(request()->query());
     }

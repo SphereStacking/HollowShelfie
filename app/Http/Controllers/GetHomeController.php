@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Enums\EventStatus;
-use App\Http\Resources\CategoryWithCountJsonResource;
-use App\Http\Resources\EventsJsonResource;
-use App\Http\Resources\TagWithCountJsonResource;
+use App\Services\TagService;
+use App\Services\EventService;
 use App\Params\EventSearchParams;
 use App\Services\CategoryService;
+use Illuminate\Support\Facades\Log;
 use App\Services\EventMeilisearchService;
-use App\Services\EventService;
-use App\Services\TagService;
-use Inertia\Inertia;
+use App\Http\Resources\EventsJsonResource;
+use App\Http\Resources\TagWithCountJsonResource;
+use App\Http\Resources\CategoryWithCountJsonResource;
 
 class GetHomeController extends Controller
 {
@@ -37,13 +38,6 @@ class GetHomeController extends Controller
 
     public function __invoke()
     {
-        $trendParams = new EventSearchParams(
-            '',
-            [],
-            12,
-            'new',
-        );
-
         $newParams = new EventSearchParams(
             '',
             [],
@@ -67,49 +61,39 @@ class GetHomeController extends Controller
             null,
         );
 
+        $ongoingEvents = $this->eventMeilisearchService
+            ->getPublishedEventSearch($ongoingParams);
+        $planningEventCount = $this->eventMeilisearchService
+            ->getPublishedEventSearch($recentParams);
+        $newEvents = $this->eventMeilisearchService
+            ->getPublishedEventSearch($newParams);
         return Inertia::render(
             'Home',
             [
-                'trendEvents' => new EventsJsonResource(
-                    $this->eventMeilisearchService
-                        ->getPublishedEventSearch($trendParams)
-                ),
-                'trendCategories' => new CategoryWithCountJsonResource(
-                    $this->categoryService->getTrendCategories()
-                ),
-                'trendTags' => new TagWithCountJsonResource(
-                    $this->tagService->getTrendTag()
-                ),
-                'newEventsUrl' => route('event.search.index', [
-                    't' => $newParams->text,
-                    'q' => $newParams->queryParams,
-                    'paginate' => $newParams->getDefaultPaginate(),
-                    'o' => $newParams->order,
-                ]),
-                'newEvents' => new EventsJsonResource(
-                    $this->eventMeilisearchService
-                        ->getPublishedEventSearch($newParams)
-                ),
-                'ongoingEventsUrl' => route('event.search.index', [
+                'trendCategories' => fn () => new CategoryWithCountJsonResource($this->categoryService->getTrendCategories(10)),
+                'trendTags' => fn () => new TagWithCountJsonResource($this->tagService->getTrendTag(10)),
+                'ongoingEvents' => fn () => new EventsJsonResource($ongoingEvents),
+                'ongoingEventsUrl' => fn () => route('event.search.index', [
                     't' => $ongoingParams->text,
                     'q' => $ongoingParams->queryParams,
                     'paginate' => $ongoingParams->getDefaultPaginate(),
                     'o' => $ongoingParams->order,
                 ]),
-                'ongoingEvents' => new EventsJsonResource(
-                    $this->eventMeilisearchService
-                        ->getPublishedEventSearch($ongoingParams)
-                ),
-                'recentEventsUrl' => route('event.search.index', [
+                'planningEvents' => fn () => new EventsJsonResource($planningEventCount),
+                'planningEventsUrl' => fn () => route('event.search.index', [
                     't' => $recentParams->text,
                     'q' => $recentParams->queryParams,
                     'paginate' => $recentParams->getDefaultPaginate(),
                     'o' => $recentParams->order,
                 ]),
-                'recentEvents' => new EventsJsonResource(
-                    $this->eventMeilisearchService
-                        ->getPublishedEventSearch($recentParams)
-                ),
+
+                'newEvents' => fn () => new EventsJsonResource($newEvents),
+                'newEventsUrl' => fn () => route('event.search.index', [
+                    't' => $newParams->text,
+                    'q' => $newParams->queryParams,
+                    'paginate' => $newParams->getDefaultPaginate(),
+                    'o' => $newParams->order,
+                ]),
             ]
         );
     }

@@ -18,14 +18,6 @@ trait EventGetters
         return $this->event_create_user->name;
     }
 
-    /**
-     * イベントのタグ名を取得
-     */
-    public function getTagsAttribute(): array
-    {
-        // タグのnameプロパティだけを配列にして返す
-        return $this->tags()->pluck('name')->toArray();
-    }
 
     /**
      * ユーザーがイベントを"bookmark"しているか確認
@@ -62,14 +54,6 @@ trait EventGetters
     public function getCategoryNamesAttribute(): array
     {
         return $this->categories->pluck('name')->toArray();
-    }
-
-    /**
-     * 関連付けられているインスタンス
-     */
-    public function getInstancesAttribute(): Collection
-    {
-        return $this->instances()->get();
     }
 
     /**
@@ -161,7 +145,7 @@ trait EventGetters
      */
     public function getGoodCountAttribute(): int
     {
-        return $this->good_users()->count();
+        return $this->good_users->count();
     }
 
     /**
@@ -169,7 +153,7 @@ trait EventGetters
      */
     public function getShortGoodCountAttribute(): string
     {
-        $count = $this->good_users()->count();
+        $count = $this->good_users->count();
         $suffix = '';
 
         if ($count >= 1000 && $count < 1000000) {
