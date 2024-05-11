@@ -1,6 +1,4 @@
 <script setup>
-import { ItemsConfig } from '@/icon-mapping.js'
-
 const props = defineProps({
   check: {
     type: Boolean,
@@ -11,8 +9,6 @@ const props = defineProps({
     default: '?'
   },
 })
-const onIcon = ItemsConfig.close.icon
-const offIcon = ItemsConfig.menu.icon
 
 const emit = defineEmits(['update:check'])
 
@@ -23,7 +19,7 @@ const updateCheck = (newCheck) => {
 <template>
   <BtnSwapBase
     class="btn btn-square btn-ghost btn-active btn-sm"
-    :on-icon="onIcon" :off-icon="offIcon" swap-effect="rotate"
+    on-icon="close" off-icon="menu" swap-effect="rotate"
     :check="props.check" on-color="white text-xl" off-color="white text-xl"
     @update:check="updateCheck" />
 </template>

@@ -60,7 +60,7 @@ const navigateToType = (searchValue, type) => {
           </TransitionGroup>
         </template>
         <template v-else>
-          <div class="h-full w-full bg-base-300">
+          <div class="size-full bg-base-300">
             <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
           </div>
         </template>
@@ -103,7 +103,7 @@ const navigateToType = (searchValue, type) => {
         <div class="flex items-center gap-1">
           <IconTypeMapper type="status" />
           <button class="btn btn-ghost btn-xs px-0.5 text-xs">
-            {{ event.status_label }}
+            {{ $t(event.status) }}
           </button>
         </div>
         <div>

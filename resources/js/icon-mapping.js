@@ -38,11 +38,11 @@ export const ItemsConfig = {
   bookmarks: {
     icon: 'mdi:bookmark-multiple',
   },
-  onBookmarks: {
+  onBookmark: {
     icon: 'mdi:bookmark',
   },
   offBookmark: {
-    icon: 'mdi:bookmark',
+    icon: 'mdi:bookmark-outline',
   },
   new: {
     icon: 'mdi:new-box',
@@ -322,7 +322,7 @@ export const ItemsConfig = {
     color: '#0087e7'
   },
   twitter: {
-    icon: 'ph:twitter-x-fill',
+    icon: 'ri:twitter-x-fill',
   },
   notification: {
     icon: 'mdi:bell',
