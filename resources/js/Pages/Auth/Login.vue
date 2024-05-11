@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
 import Checkbox from '@/Jetstream/Checkbox.vue'
@@ -15,7 +15,6 @@ defineProps({
 })
 
 const form = useForm({
-  _token: usePage().props.csrf_token,
   email: '',
   password: '',
   remember: false,
@@ -46,7 +45,7 @@ const onAnimate = () => {
 
   <AuthenticationCard>
     <template #logo>
-      <AuthenticationCardLogo class=" size-20 " />
+      <AuthenticationCardLogo class=" h-20 w-20 " />
     </template>
     <div v-if="status" class="mb-4 text-sm font-medium text-success">
       {{ status }}
