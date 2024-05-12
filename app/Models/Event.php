@@ -94,6 +94,7 @@ class Event extends Model
                 'description',
                 'created_user',
                 'good_count',
+                'is_forced_hidden',
             ]
         );
         $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;
@@ -249,8 +250,21 @@ class Event extends Model
         return $this->event_create_user_id === $user?->getAuthIdentifier();
     }
 
+
     /**
-     * 一般公開しているイベントのスコープ。
+     * 一般公開可能なイベントのステータス
+     */
+    public static function canGeneralSearchStatus(): array
+    {
+        return [
+            EventStatus::UPCOMING,
+            EventStatus::ONGOING,
+            EventStatus::CLOSED,
+        ];
+    }
+
+    /**
+     *  一般公開可能なイベントのステータス
      * - EventStatus::UPCOMING
      * - EventStatus::ONGOING
      * - EventStatus::CLOSED

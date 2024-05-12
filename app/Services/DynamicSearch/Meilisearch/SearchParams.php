@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Params;
+namespace App\Services\DynamicSearch\Meilisearch;
 
-class EventSearchParams extends Params
+class SearchParams
 {
     protected int $defaultPaginate = 32;
 
@@ -31,5 +31,10 @@ class EventSearchParams extends Params
     public function getDefaultPaginate(): int
     {
         return $this->defaultPaginate;
+    }
+
+    public function __toString()
+    {
+        return json_encode($this);
     }
 }

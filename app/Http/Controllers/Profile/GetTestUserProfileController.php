@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Models\User;
+use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
-use App\Models\User;
-use App\Params\EventSearchParams;
-use App\Services\EventMeilisearchService;
-use App\Services\UserService;
-use Inertia\Inertia;
+use App\Services\DynamicSearch\Meilisearch\SearchParams;
+use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
 class GetTestUserProfileController extends Controller
 {
     public function __construct(
-        private UserService $userService,
         private EventMeilisearchService $eventMeilisearchService
-    ) {
-    }
+    ) {}
 
     /**
      * ユーザーのプロファイルを表示します。
@@ -26,7 +23,7 @@ class GetTestUserProfileController extends Controller
     {
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
-        $EventSearchParams = new EventSearchParams(
+        $EventSearchParams = new SearchParams(
             '',
             [['include' => 'and', 'type' => 'user', 'value' => $user->name]],
             12,
@@ -35,11 +32,9 @@ class GetTestUserProfileController extends Controller
 
         return Inertia::render('User/Index', [
             'profile' => new UserPublicProfileJsonResource($user),
-            'events' => [],
-            // 'events' => new EventsPaginatedJsonResource(
-            //     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
-            // ),
-            'url'=>[],
+            'events' => new EventsPaginatedJsonResource(
+                $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
+            ),
             'url' => route('event.search.index', [
                 't' => $EventSearchParams->text,
                 'q' => $EventSearchParams->queryParams,

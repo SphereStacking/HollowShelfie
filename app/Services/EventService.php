@@ -243,7 +243,6 @@ class EventService
     {
 
         return Event::with(['organizers.event_organizeble'])
-            ->where('published_at', '<=', Carbon::now())
             ->generalPublished()
             ->inRandomOrder()
             ->limit($limit)

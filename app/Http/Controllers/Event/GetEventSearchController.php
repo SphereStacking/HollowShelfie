@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Event;
 
-use App\Enums\EventStatus;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\EventsPaginatedJsonResource;
+use Inertia\Inertia;
+use App\Models\Event;
 use App\Models\Category;
+use App\Enums\EventStatus;
 use App\Models\InstanceType;
-use App\Params\EventSearchParams;
-use App\Services\EventMeilisearchService;
 use App\Services\TagService;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Services\DynamicSearch\Meilisearch\SearchParams;
+use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
 class GetEventSearchController extends Controller
 {
@@ -23,7 +24,7 @@ class GetEventSearchController extends Controller
 
     public function __invoke(Request $request)
     {
-        $EventSearchParams = new EventSearchParams(
+        $EventSearchParams = new SearchParams(
             $request->input('t', null),
             $request->input('q', null),
             $request->input('paginate', null),
@@ -40,7 +41,7 @@ class GetEventSearchController extends Controller
                 'categories' => fn () => Category::all(),
                 'instanceTypes' => fn () => InstanceType::query()->select('name')->get(),
                 //TODO: Status関連のリファクタリングにより検索ができなくなっているので要修正
-                'statuses' => fn () => [],
+                'statuses' => fn () => Event::canGeneralSearchStatus(),
             ]
         );
     }

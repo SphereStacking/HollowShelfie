@@ -22,10 +22,10 @@ class EventMeilisearchService
      * @var array
      */
     private $queryParamClasses = [
-        'date' => DateScoutQueryParam::class,
-        // 'status' => StatusScoutQueryParam::class,
-        'tag' => TagScoutQueryParam::class,
-        'category' => CategoryScoutQueryParam::class,
+        'date' => DateScoutFilter::class,
+        // 'status' => StatusScoutFilter::class,
+        'tag' => TagScoutFilter::class,
+        'category' => CategoryScoutFilter::class,
     ];
 
     /**
@@ -108,7 +108,7 @@ class EventMeilisearchService
 /**
  * クエリパラメータインターフェース
  */
-interface IScoutQueryParam
+interface IScoutFilter
 {
     public function __construct($include, $type, $value);
 
@@ -120,7 +120,7 @@ interface IScoutQueryParam
 /**
  * クエリパラメータ抽象クラス
  */
-abstract class ScoutQueryParam
+abstract class ScoutFilter
 {
     protected $column;
 
@@ -192,7 +192,7 @@ abstract class ScoutQueryParam
 /**
  * 日付クエリパラメータクラス
  */
-class DateScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
+class DateScoutFilter extends ScoutFilter implements IScoutFilter
 {
     protected $column = 'start_date';
 
@@ -212,7 +212,7 @@ class DateScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 /**
  * ステータスクエリパラメータクラス
  */
-class StatusScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
+class StatusScoutFilter extends ScoutFilter implements IScoutFilter
 {
     // TODO:status_labelはなくなる
     protected $column = 'status_label';
@@ -226,7 +226,7 @@ class StatusScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 /**
  * タグクエリパラメータクラス
  */
-class TagScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
+class TagScoutFilter extends ScoutFilter implements IScoutFilter
 {
     protected $column = 'tags';
 
@@ -239,7 +239,7 @@ class TagScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 /**
  * カテゴリクエリパラメータクラス
  */
-class CategoryScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
+class CategoryScoutFilter extends ScoutFilter implements IScoutFilter
 {
     protected $column = 'categories';
 
