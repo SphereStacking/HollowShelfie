@@ -10,6 +10,7 @@ use App\Models\InstanceType;
 use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TagNamesJsonResource;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Services\DynamicSearch\Meilisearch\SearchParams;
 use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
@@ -34,13 +35,12 @@ class GetEventSearchController extends Controller
         return Inertia::render(
             'Search/Event',
             [
-                'trendTags' => fn () => $this->tagService->getTrendTagNames(),
+                'trendTags' => fn () => new TagNamesJsonResource($this->tagService->getTrendTag()),
                 'events' => new EventsPaginatedJsonResource(
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' => fn () => Category::all(),
                 'instanceTypes' => fn () => InstanceType::query()->select('name')->get(),
-                //TODO: Status関連のリファクタリングにより検索ができなくなっているので要修正
                 'statuses' => fn () => Event::canGeneralSearchStatus(),
             ]
         );
