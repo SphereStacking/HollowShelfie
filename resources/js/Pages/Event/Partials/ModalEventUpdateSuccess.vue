@@ -18,7 +18,6 @@ const onBtnOpenModal = (newItem) => {
     alias: newItem.alias,
     title: newItem.title,
     status: newItem.status,
-    status_label: newItem.status_label,
     period: getEventPeriod(newItem.start_date, newItem.end_date),
     url: route('event.show', newItem.alias),
     instances: newItem.instances.map((instance) => instance.display_name),

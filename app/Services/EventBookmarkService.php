@@ -51,21 +51,6 @@ class EventBookmarkService
     }
 
     /**
-     * ユーザーがブックマークした各ステータスのイベントの数を取得する
-     *
-     * @return array
-     */
-    public function getBookmarkedEventsCountByUserForAllStatuses(User|Authenticatable|null $user)
-    {
-        $counts = [];
-        foreach (EventStatus::cases() as $status) {
-            $counts[$status->value] = $user->bookmark_events()->where('status', $status->value)->count();
-        }
-
-        return $counts;
-    }
-
-    /**
      * ユーザーが特定のイベントをブックマークしているか確認する
      *
      * @return bool

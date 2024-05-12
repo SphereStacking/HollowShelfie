@@ -23,7 +23,7 @@ class EventMeilisearchService
      */
     private $queryParamClasses = [
         'date' => DateScoutQueryParam::class,
-        'status' => StatusScoutQueryParam::class,
+        // 'status' => StatusScoutQueryParam::class,
         'tag' => TagScoutQueryParam::class,
         'category' => CategoryScoutQueryParam::class,
     ];
@@ -71,7 +71,7 @@ class EventMeilisearchService
             $events = $this->$scopeMethod($events);
         }
 
-        $events = $this->scopeWithStatusPublishedForScout($events);
+        //TODO: Status関連のリファクタリングにStatusによる検索ができなくなっているので要修正
 
         return $events->query(function ($query) {
                 return $query->with([
@@ -208,11 +208,13 @@ class DateScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
     }
 }
 
+
 /**
  * ステータスクエリパラメータクラス
  */
 class StatusScoutQueryParam extends ScoutQueryParam implements IScoutQueryParam
 {
+    // TODO:status_labelはなくなる
     protected $column = 'status_label';
 
     public function formatValue()

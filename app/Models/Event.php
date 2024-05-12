@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Traits\EventRelations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,13 +33,13 @@ class Event extends Model
     /**
      * @var array<int, string>
      */
-    protected $fillable = ['title', 'description', 'status'];
+    protected $fillable = ['title', 'description',];
 
     /**
      * @var array<int, string>
      */
     protected $appends = [
-        'created_user', 'status_label',
+        'created_user',
         'is_bookmark', 'is_good', 'category_name', 'good_count',
         'short_good_count', 'event_timeline_status',
     ];
@@ -91,9 +92,7 @@ class Event extends Model
                 'id',
                 'title',
                 'description',
-                'status',
                 'created_user',
-                'status_label',
                 'good_count',
             ]
         );
@@ -206,27 +205,6 @@ class Event extends Model
         }
     }
 
-    public function updateEventStatus(EventStatus $newStatus): void
-    {
-
-        switch ($newStatus) {
-            case EventStatus::DRAFT:
-                $this->status = $newStatus->value;
-                $this->published_at = null;
-                break;
-            case EventStatus::CLOSED:
-            case EventStatus::UPCOMING:
-            case EventStatus::CANCELED:
-                $this->status = $newStatus->value;
-                if ($this->published_at === null) {
-                    $this->published_at = now();
-                }
-                break;
-
-            default:
-                throw new Exception('Invalid status');
-        }
-    }
 
     public function syncInstances(array $instances)
     {
@@ -269,5 +247,94 @@ class Event extends Model
 
         // ログインユーザーがイベントの作成者か
         return $this->event_create_user_id === $user?->getAuthIdentifier();
+    }
+
+    /**
+     * 一般公開しているイベントのスコープ。
+     * - EventStatus::UPCOMING
+     * - EventStatus::ONGOING
+     * - EventStatus::CLOSED
+     */
+    public function scopeGeneralPublished($query): Builder
+    {
+        return $query->where('is_forced_hidden', false)
+            ->where('published_at', '>=', now());
+    }
+
+    /**
+     * 一般公開しているClosedイベントのスコープ。
+     */
+    public function scopeClosedPublished($query): Builder
+    {
+        return $query->where('is_forced_hidden', false)
+            ->where('published_at', '>', now())
+            ->where('end_date', '<', now());
+    }
+
+    /**
+     * 一般公開しているOngoingイベントのスコープ。
+     */
+    public function scopeOngoingPublished($query): Builder
+    {
+        $now = now();
+        return $query->where('is_forced_hidden', false)
+            ->where('published_at', '>', $now)
+            ->where('start_date', '<=', $now)
+            ->where('end_date', '>=', $now);
+    }
+
+    /**
+     * 一般公開しているUpcomingイベントのスコープ。
+     */
+    public function scopeUpcomingPublished($query): Builder
+    {
+        return $query->where('is_forced_hidden', false)
+            ->where('published_at', '>', now())
+            ->where('start_date', '>', now());
+    }
+
+    /**
+     * イベントのオーナーが閲覧することができるイベントのスコープ。
+     */
+    public function scopeOwnerPublished($query): Builder
+    {
+        return $query->where('event_create_user_id', auth()->id());
+    }
+
+    public function getStatusAttribute(): EventStatus
+    {
+        $now = now();
+
+        // イベントが強制的に非公開にされている場合
+        if ($this->is_forced_hidden) {
+            return EventStatus::FORCED_HIDDEN;
+        }
+
+        // イベントが公開準備中（ドラフト）
+        if (is_null($this->published_at)) {
+            return EventStatus::DRAFT;
+        }
+
+        // イベントがまだ公開されていない場合
+        if ($this->published_at > $now) {
+            return EventStatus::UNPUBLISHED;
+        }
+
+        // イベントの開始前
+        if ($this->start_date > $now) {
+            return EventStatus::UPCOMING;
+        }
+
+        // イベントが進行中
+        if ($this->start_date <= $now && $this->end_date >= $now) {
+            return EventStatus::ONGOING;
+        }
+
+        // イベントが終了した
+        if ($this->end_date < $now) {
+            return EventStatus::CLOSED;
+        }
+
+        return EventStatus::DRAFT;
     }
 }

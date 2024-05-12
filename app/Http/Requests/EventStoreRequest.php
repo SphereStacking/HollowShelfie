@@ -29,7 +29,6 @@ class EventStoreRequest extends FormRequest
             'organizers' => $this->input('organizers') ?? [],
             'performers' => $this->input('performers') ?? [],
             'time_tables' => $this->input('time_tables') ?? [],
-            'status' => EventStatus::from($this->input('status', EventStatus::DRAFT->value)),
             'images' => $this->file('images') ?? [],
             'instances' => $this->input('instances') ?? [],
         ];
@@ -43,7 +42,7 @@ class EventStoreRequest extends FormRequest
     public function rules(): array
     {
         //ドラフトのとき
-        if ($this->input('status') === EventStatus::DRAFT->value) {
+        if ($this->input('publish_at') === null) {
             return [
                 'images.*' => 'file|max:30720', //30MB
             ];

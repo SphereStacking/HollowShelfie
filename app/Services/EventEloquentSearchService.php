@@ -105,7 +105,7 @@ class EventEloquentSearchService
         }
 
         return $query
-            ->withStatusPublished()
+            ->generalPublished()
             ->paginate($params->paginate)
             ->withQueryString();
     }

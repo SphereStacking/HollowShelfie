@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Event;
-use App\Enums\EventStatus;
-use Illuminate\Support\Arr;
 use App\Models\EventTimeTable;
 use App\Models\TimeTablePerformers;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,28 +24,20 @@ class EventFactory extends Factory
 
         // 開始時間からランダムに2~6時間後を終了時間とする
         $endDateTime = Carbon::instance($dateTime)->addHours(rand(2, 6))->format('Ymd\THis\Z');
-        $status = Arr::random(EventStatus::cases());
         return [
             'event_create_user_id' => User::inRandomOrder()->first()->id,
             'title' => $this->faker->text(20),
             'start_date' => $formattedDateTime,
             'end_date' => $endDateTime,
             'description' => $this->faker->paragraphs(5, true),
-            'status' => $status,
-            'published_at' => function () use ($status) {
-                switch ($status) {
-                    case EventStatus::UPCOMING:
-                        return $this->faker->dateTimeBetween('0 month', '+1 month');
-                    case EventStatus::ONGOING:
-                        return Carbon::now();
-                    case EventStatus::SCHEDULED:
-                        return $this->faker->dateTimeBetween('+1 month', '+2 month');
-                    case EventStatus::CANCELED:
-                    case EventStatus::CLOSED:
-                    case EventStatus::DRAFT:
-                        return;
-                    default:
-                        return;
+            'published_at' => function () {
+                $random = rand(1, 4);
+                if ($random === 1) {
+                    return null;
+                } elseif ($random === 2) {
+                    return $this->faker->dateTimeBetween('+1 day', '+1 month');
+                } else {
+                    return $this->faker->dateTimeBetween('-1 month', 'now');
                 }
             },
             'alias' => $this->faker->unique()->slug(2),

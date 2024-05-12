@@ -39,7 +39,8 @@ class GetEventSearchController extends Controller
                 ),
                 'categories' => fn () => Category::all(),
                 'instanceTypes' => fn () => InstanceType::query()->select('name')->get(),
-                'statuses' => fn () => EventStatus::PUBLISHED_STATUSES,
+                //TODO: Status関連のリファクタリングにより検索ができなくなっているので要修正
+                'statuses' => fn () => [],
             ]
         );
     }

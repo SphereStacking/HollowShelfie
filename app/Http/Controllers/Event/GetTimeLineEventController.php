@@ -21,7 +21,7 @@ class GetTimeLineEventController extends Controller
         // 指定された日付範囲でイベントを取得
         $events = Event::with(['event_time_tables.performers.performable'])
             ->whereBetween('start_date', [$startDate, $endDate])
-            ->withStatusPublished()
+            ->generalPublished()
             ->get();
 
         return Inertia::render('Event/Timeline',[

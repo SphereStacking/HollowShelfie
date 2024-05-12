@@ -23,7 +23,7 @@ class EventTimelineJsonResource extends JsonResource
                 'tags' => $item->tags,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
-                'status_label' => $item->status_label,
+                'status' => $item->status,
                 'route' => route('event.show', $item->alias),
                 'files' => $item->files->map(function ($file) {
                     return [

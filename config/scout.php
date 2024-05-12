@@ -142,8 +142,6 @@ return [
                     'description',
                     'published_at',
                     'start_date',
-                    'status',
-                    'status_label',
                     'tags',
                     'instances.*.location',
                     'instances.*.instance_type_name',

@@ -24,7 +24,6 @@ class EventEditJsonResource extends JsonResource
             'category_names' => $this->resource->category_names,
             'tags' => $this->resource->tags,
             'status' => $this->resource->status,
-            'status_label' => $this->resource->status_label,
             'create_user' => $this->resource->event_create_user,
             'event_timeline_status' => $this->resource->event_timeline_status,
             'start_date' => $this->resource->start_date,

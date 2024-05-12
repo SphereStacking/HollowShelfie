@@ -11,35 +11,6 @@ use Laravel\Scout\Builder as ScoutBuilder;
  */
 trait EventScopes
 {
-    /**
-     * 公開中のイベントを取得するスコープ
-     */
-    public function scopeWithStatusPublished(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
-    {
-        return $query->whereIn(
-            'status',
-            [
-                EventStatus::ONGOING,
-                EventStatus::UPCOMING,
-                EventStatus::CLOSED,
-            ]
-        );
-    }
-
-    /**
-     * Scout用の公開中のイベントを取得するスコープ
-     */
-    public function scopeWithStatusPublishedForScout(ScoutBuilder $query): ScoutBuilder
-    {
-        return $query->whereIn(
-            'status',
-            [
-                EventStatus::ONGOING->name,
-                EventStatus::UPCOMING->name,
-                EventStatus::CLOSED->name,
-            ]
-        );
-    }
 
     /**
      * 新しいイベントを取得するスコープ

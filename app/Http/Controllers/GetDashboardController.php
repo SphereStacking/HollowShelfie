@@ -43,7 +43,6 @@ class GetDashboardController extends Controller
             ['counts' => [
                 'bookmark' => [
                     'total' => $this->eventBookmarkService->getBookmarkedEventsCountByUser(auth()->user()),
-                    'statues' => $this->eventBookmarkService->getBookmarkedEventsCountByUserForAllStatuses(auth()->user()),
                 ],
                 'good' => $this->eventGoodService->getGoodEventsByUser(auth()->user())->count(),
                 'follow' => $this->userService->getFollowCount(auth()->user()),

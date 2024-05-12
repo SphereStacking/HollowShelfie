@@ -39,7 +39,8 @@ class GetManageEventController extends Controller
             'events' => new EventsPaginatedJsonResource($events),
             'categories' => fn () => Category::all(),
             'instanceTypes' => fn () => InstanceType::query()->pluck('name'),
-            'statuses' => fn () => EventStatus::ADMIN_SEARCH_STATUSES,
+            //TODO: Status関連のリファクタリングにより検索ができなくなっているので要修正
+            'statuses' => fn () => [],
             'trendTags' => fn () => $this->tagService->getTrendTagNames(),
         ]);
     }
