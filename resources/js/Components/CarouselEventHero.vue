@@ -66,7 +66,7 @@ const getEventShow = (event) => {
                 <img :src="event.files[0].public_url">
               </template>
               <template v-else>
-                <div class="h-full w-full bg-base-300">
+                <div class="size-full bg-base-300">
                   <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
                 </div>
               </template>
@@ -85,20 +85,20 @@ const getEventShow = (event) => {
               <h1 class="text-5xl font-bold">
                 {{ event.title }}
               </h1>
-              <div class=" mx-auto flex w-full flex-row gap-1 lg:col-span-7 lg:col-start-1 lg:row-start-2">
-                <!-- category -->
-                <div class="flex items-center gap-1 ">
-                  <IconTypeMapper type="category" class="text-xl" />
-                  <BtnEventSearchItem :value="event.category_name" type="category" is-navigate />
-                </div>
-                <!-- tag -->
-                <div class="flex flex-row items-center gap-1">
-                  <div class="mr-auto flex items-center gap-1  rounded-md">
-                    <IconTypeMapper type="tag" class="text-xl" />
-                    <template v-for="(tag, index) in event.tags" :key="index">
-                      <BtnEventSearchItem :value="tag" type="tag" is-navigate />
-                    </template>
-                  </div>
+              <!-- category -->
+              <div class="flex items-center gap-1 ">
+                <IconTypeMapper type="category" class="text-xl" />
+                <template v-for="category in event.category_names" :key="category">
+                  <BtnEventSearchItem :value="category" type="category" is-navigate />
+                </template>
+              </div>
+              <!-- tag -->
+              <div class="flex flex-row items-center gap-1">
+                <div class="mr-auto flex items-center gap-1  rounded-md">
+                  <IconTypeMapper type="tag" class="text-xl" />
+                  <template v-for="tag in event.tags" :key="tag">
+                    <BtnEventSearchItem :value="tag" type="tag" is-navigate />
+                  </template>
                 </div>
               </div>
               <!-- organizers -->
@@ -131,8 +131,7 @@ const getEventShow = (event) => {
                   </a>
                 </div>
               </div>
-              <!-- <p class="py-6">{{ event.description }}</p> -->
-              <button class=" btn btn-primary btn-sm w-full" @click="getEventShow(event)">
+              <button class=" btn btn-ghost btn-outline btn-sm w-full" @click="getEventShow(event)">
                 show more!
               </button>
             </div>
