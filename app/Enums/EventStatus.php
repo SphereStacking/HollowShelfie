@@ -20,10 +20,4 @@ enum EventStatus: string
     /** イベントが終了 */
     case CLOSED = 'closed';
 
-    /** 公開検索用のステータス */
-    public const PUBLIC_SEARCH_STATUSES = [
-        self::ONGOING,
-        self::CLOSED,
-        self::UPCOMING,
-    ];
 }
