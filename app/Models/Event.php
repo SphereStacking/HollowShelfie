@@ -250,6 +250,20 @@ class Event extends Model
         return $this->event_create_user_id === $user?->getAuthIdentifier();
     }
 
+    /**
+     * イベント管理者確認可能なイベントのステータス
+     */
+    public static function canManagerSearchStatus(): array
+    {
+        return [
+            EventStatus::DRAFT,
+            EventStatus::UPCOMING,
+            EventStatus::ONGOING,
+            EventStatus::CLOSED,
+            EventStatus::FORCED_HIDDEN,
+        ];
+    }
+
 
     /**
      * 一般公開可能なイベントのステータス
