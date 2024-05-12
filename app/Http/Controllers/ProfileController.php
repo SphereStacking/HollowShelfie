@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
+use App\Models\User;
+use Inertia\Inertia;
+use Inertia\Response;
+use App\Services\TeamService;
+use App\Services\UserService;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\TeamPublicProfileJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
-use App\Models\Team;
-use App\Models\User;
-use App\Params\EventSearchParams;
-use App\Services\EventMeilisearchService;
-use App\Services\TeamService;
-use App\Services\UserService;
-use Inertia\Inertia;
-use Inertia\Response;
+use App\Services\DynamicSearch\Meilisearch\SearchParams;
+use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
 class ProfileController extends Controller
 {
@@ -40,7 +40,7 @@ class ProfileController extends Controller
     {
         // User モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
-        $EventSearchParams = new EventSearchParams(
+        $EventSearchParams = new SearchParams(
             '',
             [['include' => 'and', 'type' => 'user', 'value' => $user->name]],
             12,
@@ -70,7 +70,7 @@ class ProfileController extends Controller
     {
         // Team モデルのルートモデルバインディングを使用してユーザーを取得
         // ユーザープロファイルのビューを返す
-        $EventSearchParams = new EventSearchParams(
+        $EventSearchParams = new SearchParams(
             '',
             [['include' => 'and', 'type' => 'user', 'value' => $team->name]],
             12,

@@ -40,7 +40,7 @@ const formatDate = computed(() => {
             <div class="mr-auto flex items-center gap-1  rounded-md">
               <IconTypeMapper type="status" class="shrink-0 text-xl" />
               <div class=" left-0 top-0 z-10">
-                <BadgeEventStatus :status="event.status" :label="event.status_label" />
+                <BadgeEventStatus :status="event.status" :label="$t(event.status)" />
               </div>
             </div>
           </div>

@@ -1,6 +1,4 @@
 <script setup>
-import { ItemsConfig } from '@/icon-mapping.js'
-
 const props = defineProps({
   check: {
     type: Boolean,
@@ -14,12 +12,10 @@ const props = defineProps({
     type: Boolean,
   },
 })
-const onIcon = ItemsConfig.onGood.icon
-const offIcon = ItemsConfig.offGood.icon
 </script>
 <template>
   <BtnSwapBase
-    :on-icon="onIcon" :off-icon="offIcon"
+    on-icon="onGood" off-icon="offGood"
     :check="props.check">
     <template #after>
       <div v-if="showCount" class="badge badge-xs ">

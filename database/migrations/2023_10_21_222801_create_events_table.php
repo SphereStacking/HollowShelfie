@@ -16,12 +16,12 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->timestamp('published_at')->nullable();
+            $table->boolean('is_forced_hidden')->default(false);
             $table->text('title');
             $table->integer('event_create_user_id');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->text('description');
-            $table->string('status')->default(\App\Enums\EventStatus::DRAFT);
             $table->string('alias')->unique();
         });
     }

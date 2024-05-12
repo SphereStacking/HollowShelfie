@@ -65,16 +65,6 @@ trait EventGetters
         $startDate = new DateTimeImmutable($this->start_date);
         $endDate = new DateTimeImmutable($this->end_date);
 
-        // イベントが開催中かどうかを確認
-        if ($now >= $startDate && $now <= $endDate) {
-            return '開催中';
-        }
-
-        // イベントが終了しているかどうかを確認
-        if ($now > $endDate) {
-            return '終了';
-        }
-
         $interval = $now->diff($startDate);
 
         // 時間単位で返す（小数点2以下は切り捨て）
@@ -173,5 +163,42 @@ trait EventGetters
     public function getStatusLabelAttribute(): string
     {
         return EventStatus::getStatusLabel($this->status);
+    }
+
+
+
+    public function getStatusAttribute()
+    {
+        $now = now();
+
+        // イベントが強制的に非公開にされている場合
+        if ($this->is_forced_hidden) {
+            return 'UNPUBLISHED';
+        }
+
+        // イベントが公開準備中（ドラフト）
+        if (is_null($this->publish_at)) {
+            return 'DRAFT';
+        }
+
+        // イベントがまだ公開されていない場合
+        if ($this->publish_at > $now) {
+            return 'UNPUBLISHED';
+        }
+
+        // イベントの開始前
+        if ($this->start_date > $now) {
+            return 'UPCOMING';
+        }
+
+        // イベントが進行中
+        if ($this->start_date <= $now && $this->end_date >= $now) {
+            return 'ONGOING';
+        }
+
+        // イベントが終了した
+        if ($this->end_date < $now) {
+            return 'CLOSED';
+        }
     }
 }

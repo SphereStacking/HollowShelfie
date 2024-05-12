@@ -9,12 +9,12 @@ defineProps({
 
 </script>
 <template>
-  <CardArticle>
-    <template #content>
+  <div class="flex w-full flex-col  justify-center">
+    <div class="rounded-xl bg-base-200 p-5">
       <!-- eslint-disable-next-line vue/no-v-html -->
       <article class=" prose h-full  overflow-y-auto" v-html="description"></article>
-    </template>
-  </CardArticle>
+    </div>
+  </div>
 </template>
 <style>
 

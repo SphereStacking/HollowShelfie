@@ -11,56 +11,19 @@ use Laravel\Scout\Builder as ScoutBuilder;
  */
 trait EventScopes
 {
-    /**
-     * 公開中のイベントを取得するスコープ
-     */
-    public function scopeWithStatusPublished(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
-    {
-        return $query->whereIn(
-            'status',
-            [
-                EventStatus::ONGOING,
-                EventStatus::UPCOMING,
-                EventStatus::CLOSED,
-            ]
-        );
-    }
-
-    /**
-     * Scout用の公開中のイベントを取得するスコープ
-     */
-    public function scopeWithStatusPublishedForScout(ScoutBuilder $query): ScoutBuilder
-    {
-        return $query->whereIn(
-            'status',
-            [
-                EventStatus::ONGOING->name,
-                EventStatus::UPCOMING->name,
-                EventStatus::CLOSED->name,
-            ]
-        );
-    }
 
     /**
      * 新しいイベントを取得するスコープ
      */
-    public function scopeOrderByNewest(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
+    public function scopeOrderByNewest(EloquentBuilder $query): EloquentBuilder
     {
         return $query->orderBy('published_at', 'desc');
     }
 
     /**
-     * Scout用 良い評価の多いイベントを取得するスコープ
-     */
-    public function scopeOrderByGoodUserCountForScout(ScoutBuilder $query): ScoutBuilder
-    {
-        return $query->orderBy('good_count', 'desc');
-    }
-
-    /**
      * 良い評価の多いイベントを取得するスコープ
      */
-    public function scopeOrderByGoodUserCount(EloquentBuilder|ScoutBuilder $query): EloquentBuilder|ScoutBuilder
+    public function scopeOrderByGoodUserCount(EloquentBuilder $query): EloquentBuilder
     {
         return $query->withCount('good_users')->orderBy('good_users_count', 'desc');
     }

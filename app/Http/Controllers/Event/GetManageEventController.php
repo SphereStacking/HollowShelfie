@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Event;
 
-use App\Enums\EventStatus;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\EventsPaginatedJsonResource;
+use Inertia\Inertia;
+use App\Models\Event;
+use Inertia\Response;
 use App\Models\Category;
+use App\Enums\EventStatus;
 use App\Models\InstanceType;
-use App\Params\EventEloquentSearchParams;
-use App\Services\EventEloquentSearchService;
 use App\Services\TagService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-use Inertia\Response;
+use App\Params\EventEloquentSearchParams;
+use App\Services\EventEloquentSearchService;
+use App\Http\Resources\EventsPaginatedJsonResource;
 
 class GetManageEventController extends Controller
 {
@@ -39,7 +40,7 @@ class GetManageEventController extends Controller
             'events' => new EventsPaginatedJsonResource($events),
             'categories' => fn () => Category::all(),
             'instanceTypes' => fn () => InstanceType::query()->pluck('name'),
-            'statuses' => fn () => EventStatus::ADMIN_SEARCH_STATUSES,
+            'statuses' => fn () => Event::canManagerSearchStatus(),
             'trendTags' => fn () => $this->tagService->getTrendTagNames(),
         ]);
     }

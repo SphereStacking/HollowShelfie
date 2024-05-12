@@ -6,13 +6,12 @@ use Inertia\Inertia;
 use App\Enums\EventStatus;
 use App\Services\TagService;
 use App\Services\EventService;
-use App\Params\EventSearchParams;
 use App\Services\CategoryService;
-use Illuminate\Support\Facades\Log;
-use App\Services\EventMeilisearchService;
 use App\Http\Resources\EventsJsonResource;
 use App\Http\Resources\TagWithCountJsonResource;
 use App\Http\Resources\CategoryWithCountJsonResource;
+use App\Services\DynamicSearch\Meilisearch\SearchParams;
+use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
 class GetHomeController extends Controller
 {
@@ -38,21 +37,21 @@ class GetHomeController extends Controller
 
     public function __invoke()
     {
-        $newParams = new EventSearchParams(
+        $newParams = new SearchParams(
             '',
             [],
             12,
             'new',
         );
 
-        $ongoingParams = new EventSearchParams(
+        $ongoingParams = new SearchParams(
             '',
             [['include' => 'or', 'type' => 'status', 'value' => EventStatus::ONGOING->name]],
             12,
             null,
         );
 
-        $recentParams = new EventSearchParams(
+        $recentParams = new SearchParams(
             '',
             [
                 ['include' => 'not', 'type' => 'status', 'value' => EventStatus::ONGOING->name],

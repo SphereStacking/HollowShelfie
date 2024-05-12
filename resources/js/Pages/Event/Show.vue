@@ -88,7 +88,7 @@ const snsShare = {
                 </div>
                 <BadgeEventStatus
                   class="rounded-md lg:col-start-1 lg:row-start-2" :status="event.status"
-                  :label="event.status_label" />
+                  :label="$t(event.status)" />
               </div>
               <div class="flex items-center gap-2 rounded-md p-1">
                 <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
@@ -144,7 +144,7 @@ const snsShare = {
       <!-- Main -->
       <!-- RightSide -->
       <div class="lg:col-start-10 lg:col-end-13 lg:row-span-2 lg:row-start-1 ">
-        <AreaAdvertisementRecruitment class="h-full w-full" />
+        <AreaAdvertisementRecruitment class="size-full" />
       </div>
       <div class="mx-auto w-full  lg:col-start-10 lg:col-end-13  lg:row-span-3 lg:row-start-3">
         <aside class="sticky top-12" aria-labelledby="sidebar-right">

@@ -1,3 +1,5 @@
+import IconTypeMapper from '@/Components/IconTypeMapper.vue';
+import { type } from '../types/auto-imports';
 <script setup>
 const props = defineProps({
   check: {
@@ -51,8 +53,8 @@ nextTick(() => {
   <button class="btn btn-xs px-1" @click="check = !check">
     <slot name="before"></slot>
     <label class="swap" :class="[computedSwapEffectClass, check ? 'swap-active' : '']">
-      <Icon :icon="onIcon" class="swap-on text-lg transition duration-200" :class="onColor" />
-      <Icon :icon="offIcon" class="swap-off text-lg text-base-content" :class="offColor" />
+      <IconTypeMapper :type="onIcon" class="swap-on text-lg transition duration-200" :class="onColor" />
+      <IconTypeMapper :type="offIcon" class="swap-off text-lg text-base-content" :class="offColor" />
     </label>
     <slot></slot>
     <slot name="after"></slot>

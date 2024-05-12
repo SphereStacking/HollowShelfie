@@ -7,8 +7,6 @@ defineProps({
     required: true
   },
 })
-const onIcon = ItemsConfig.close.icon
-const offIcon = ItemsConfig.filter.icon
 
 const emit = defineEmits(['update:check'])
 
@@ -18,7 +16,7 @@ const updateCheck = (newCheck) => {
 </script>
 <template>
   <BtnSwapBase
-    :on-icon="onIcon" :off-icon="offIcon"
+    on-icon="close" off-icon="filter"
     :check="check" @update:check="updateCheck">
     <slot></slot>
   </BtnSwapBase>

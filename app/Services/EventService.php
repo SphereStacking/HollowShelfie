@@ -42,7 +42,6 @@ class EventService
             'organizers' => [],
             'performers' => [],
             'time_tables' => [],
-            'status' => EventStatus::DRAFT,
             'images' => [],
             'instances' => [],
         ];
@@ -61,7 +60,6 @@ class EventService
             $event->start_date = $attributes['dates'][0] ?? null;
             $event->end_date = $attributes['dates'][1] ?? null;
             $event->event_create_user_id = Auth::user()->id;
-            $event->updateEventStatus($attributes['status'] ?? EventStatus::DRAFT);
             $event->alias = Str::ulid();
             $event->save();
 
@@ -95,7 +93,6 @@ class EventService
             $event->start_date = new Carbon($attributes['start_date'], $this->dateTimeZone);
             $event->end_date = new Carbon($attributes['end_date'], $this->dateTimeZone);
             $event->event_create_user_id = Auth::user()->id;
-            $event->updateEventStatus($attributes['status'] ?? EventStatus::DRAFT);
             $event->save();
             $event->syncTagsByNames($attributes['tags'] ?? []);
             $event->syncCategoriesByNames($attributes['categories'] ?? []);
@@ -242,13 +239,11 @@ class EventService
         return $paginatedEventOrganizers;
     }
 
-    public function getPublicRandomEvents($limit = 3, $status = null)
+    public function getPublicRandomEvents($limit = 3)
     {
-        $status = $status ?? EventStatus::PUBLIC_SEARCH_STATUSES;
 
         return Event::with(['organizers.event_organizeble'])
-            ->where('published_at', '<=', Carbon::now())
-            ->whereIn('status', $status)
+            ->generalPublished()
             ->inRandomOrder()
             ->limit($limit)
             ->get();

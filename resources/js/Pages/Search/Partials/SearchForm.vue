@@ -240,7 +240,7 @@ onMounted(() => {
                 <IconTypeMapper type="trashBox" class="text-xl" />
               </button>
             </div>
-            <div v-if="isOpenFilter" class="h-full w-full  rounded-xl border-2 p-4">
+            <div v-if="isOpenFilter" class="size-full rounded-xl  border-2 p-4">
               <component
                 :is="selectFilterType.component"
                 :items="selectFilterType.items"

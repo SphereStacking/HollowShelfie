@@ -9,15 +9,10 @@ use App\Models\User;
  */
 class UserService
 {
-    protected $eventMeilisearchService;
-
     /**
      * コンストラクタ
      */
-    public function __construct(EventMeilisearchService $eventMeilisearchService)
-    {
-        $this->eventMeilisearchService = $eventMeilisearchService;
-    }
+    public function __construct(){}
 
     /**
      * プロフィールデータを事前ロードする
