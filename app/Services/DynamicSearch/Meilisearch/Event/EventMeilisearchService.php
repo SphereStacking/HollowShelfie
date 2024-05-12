@@ -70,6 +70,26 @@ class EventMeilisearchService
             ->appends(request()->query());
     }
 
+    // 検索パラメータを作成する
+    private function createQueryParams(array $queryParams): array {
+        $result = [];
+        foreach ($queryParams as $item) {
+            $type = $item['type'];
+            if (isset($this->queryParamClasses[$type])) {
+                $class = $this->queryParamClasses[$type];
+                // 各タイプに応じたフィルタクラスをインスタンス化
+                $result[] = new $class($item['include'], $type, $item['value']);
+            }
+        }
+        return $result;
+    }
+    // クエリパラメータに基づいてフィルタ文字列を作成する
+    private function makeFilter(array $queryParams): string {
+        return array_reduce($queryParams, function ($carry, $item) {
+            return $carry . $item->makeQuery();
+        }, '');
+    }
+
     /**
      * オーダースコープを取得する
      *
