@@ -30,11 +30,12 @@ onBeforeUnmount(() => {
     leave-active-class=""
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
-    <AddConditionItem
-      v-if="isVisible"
-      :items="items"
-      type="category"
-      :add-condition-func="addConditionFunc" />
+    <div v-if="isVisible" class="flex flex-wrap gap-2">
+      <BtnEventSearchItem
+        v-for="item in items " :key="item" type="category"
+        :value="item"
+        @click="addConditionFunc({ type: 'category', value: item })" />
+    </div>
   </Transition>
 </template>
 <style lang="">

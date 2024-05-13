@@ -30,16 +30,31 @@ onBeforeUnmount(() => {
     leave-active-class=""
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
-    <div v-if="isVisible" class="flex flex-col gap-1">
-      <div class="flex flex-row gap-1">
-        <IconTypeMapper type="instance" class="text-xl" />
-        instance
+    <div v-if="isVisible" class="flex flex-col gap-2">
+      <div class="divider divider-start my-0 w-full">
+        <div class="flex flex-row items-center  gap-1">
+          <IconTypeMapper type="status" class="text-xl" />
+          status
+        </div>
       </div>
-      {{ items }}
-      <AddConditionItem
-        :items="items"
-        type="location"
-        :click-func="addConditionFunc" />
+      <div class="flex flex-wrap gap-2">
+        <BtnEventSearchItem
+          v-for="item in items.statuses " :key="item" type="status"
+          :value="item"
+          @click="addConditionFunc({ type: 'status', value: item })" />
+      </div>
+      <div class="divider divider-start my-0 mt-2 w-full">
+        <div class="flex flex-row items-center  gap-1">
+          <IconTypeMapper type="instance" class="text-xl" />
+          instance
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <BtnEventSearchItem
+          v-for="item in items.instanceTypes " :key="item" type="instance"
+          :value="item"
+          @click="addConditionFunc({ type: 'instance', value: item })" />
+      </div>
     </div>
   </Transition>
 </template>
