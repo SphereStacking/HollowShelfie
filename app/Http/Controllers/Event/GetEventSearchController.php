@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagNamesJsonResource;
 use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Http\Resources\InstanceTypeNamesJsonResource;
 use App\Services\DynamicSearch\Meilisearch\SearchParams;
 use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
@@ -40,7 +41,7 @@ class GetEventSearchController extends Controller
                     $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
                 ),
                 'categories' => fn () => Category::all(),
-                'instanceTypes' => fn () => InstanceType::query()->select('name')->get(),
+                'instanceTypes' => fn () => new InstanceTypeNamesJsonResource(InstanceType::all()),
                 'statuses' => fn () => Event::canGeneralSearchStatus(),
             ]
         );
