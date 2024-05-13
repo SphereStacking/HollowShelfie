@@ -14,12 +14,7 @@ class EventFilterDate extends MeilisearchFilter
 
     public function formatValue()
     {
-        if (is_string($this->value) && mb_strpos($this->value, '~') !== false) {
-            [$start, $end] = explode('~', $this->value);
-
-            return [Carbon::parse($start)->getTimestamp(), Carbon::parse($end)->getTimestamp()];
-        }
-
-        return $this->value;
+        ['start' => $start, 'end' => $end] = $this->value;
+        return [Carbon::parse($start)->getTimestamp(), Carbon::parse($end)->getTimestamp()];
     }
 }
