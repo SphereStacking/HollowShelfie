@@ -53,14 +53,13 @@ const navigateToType = () => {
   <BtnConditionTypeMapper :type="type" @click="navigateToType()">
     <template v-if="isIcon && isClose">
       <slot name="icon">
-        <div class="relative">
+        <div class="relative" @click="removeCondition">
           <IconTypeMapper
             v-if="isIcon" :type="type"
-            class="absolute left-0 top-0 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+            class="absolute left-0 top-1/2 -translate-y-1/2 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
           <IconTypeMapper
             type="close"
-            class="absolute left-0 top-0 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100"
-            @click="removeCondition" />
+            class="absolute left-0 top-1/2 -translate-y-1/2 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
           <div class="pl-6">
             {{ buttonTextSetter(value) }}
           </div>

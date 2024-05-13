@@ -31,12 +31,24 @@ onBeforeUnmount(() => {
     leave-active-class=""
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
-    <AddConditionSuggestion
-      v-if="isVisible"
-      placeholder="タグを検索"
-      :route="route('tag.suggestion')"
-      type="tag"
-      :add-condition-func="addConditionFunc" />
+    <div v-if="isVisible">
+      <AddConditionSuggestion
+        placeholder="タグを検索"
+        :route="route('tag.suggestion')"
+        type="tag"
+        :add-condition-func="addConditionFunc">
+        <div class="divider divider-start my-0 w-full">
+          <div class="flex flex-row items-center  gap-1">
+            <IconTypeMapper type="trend" class="text-xl" />
+            trend
+          </div>
+        </div>
+        <BtnEventSearchItem
+          v-for="item in items" :key="item" type="tag"
+          :value="item.name"
+          @click="addConditionFunc({ type: 'tag', value: item.name })" />
+      </AddConditionSuggestion>
+    </div>
   </Transition>
 </template>
 <style lang="">

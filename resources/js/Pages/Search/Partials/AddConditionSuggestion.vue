@@ -40,23 +40,31 @@ const computedItems = computed(() => {
 
 <template>
   <div class="flex flex-wrap gap-2">
-    <div class="join w-full">
+    <div class="join w-full  ">
       <InputSuggestion
         v-model="searchText"
         :placeholder="placeholder"
         :get-suggestions="(res) => {return res.data.suggestions.data}"
         :route="route" @suggestions="suggestions = $event" />
     </div>
-    <transition-group
-      tag="div" class="flex flex-wrap gap-2"
-      leave-active-class="transition ease-in duration-75 absolute"
-      leave-from-class="transform opacity-100"
-      leave-to-class="transform opacity-0">
-      <BtnEventSearchItem
-        v-for="item in computedItems" :key="item" :type="type"
-        :value="item"
-        @click="addConditionFunc({ type: type, value: item })" />
-    </transition-group>
+    <div class="divider divider-start my-0 w-full">
+      <div class="flex flex-row items-center  gap-1">
+        <IconTypeMapper type="search" class="text-xl" />
+        Searched
+      </div>
+    </div>
+    <div class="flex min-h-6 flex-wrap gap-2">
+      <transition-group
+        leave-active-class="transition ease-in "
+        leave-from-class="transform opacity-100"
+        leave-to-class="transform opacity-0">
+        <BtnEventSearchItem
+          v-for="item in computedItems" :key="item" :type="type"
+          :value="item"
+          @click="addConditionFunc({ type: type, value: item })" />
+      </transition-group>
+    </div>
+    <slot></slot>
   </div>
 </template>
 <style lang="">

@@ -86,10 +86,9 @@ export default {
     themes: [
       {
         mytheme: {
-          'color-scheme': 'dark',
           'primary': 'oklch(70% 0.300 180)',
           'secondary': 'oklch(70% 0.300 200)',
-          'accent': 'oklch(90% 0.300 300)',
+          'accent': 'oklch(80% 0.200 300)',
           'neutral': 'oklch(26% 0.015 260)',
           'neutral-content': 'oklch(70% 0.015 260)',
           'base-100': 'oklch(22% 0.015 260)',

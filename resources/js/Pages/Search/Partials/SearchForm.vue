@@ -2,13 +2,19 @@
 import { ref, watch, defineProps, defineEmits } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import ConditionDate from './ConditionDate.vue'
-import ConditionStatus from './ConditionStatus.vue'
 import ConditionCategory from './ConditionCategory.vue'
 import ConditionTag from './ConditionTag.vue'
 import ConditionOrganizer from './ConditionOrganizer.vue'
 import ConditionPerformer from './ConditionPerformer.vue'
 import ConditionOther from './ConditionOther.vue'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
+import FilterItemDate from './FilterItemDate.vue'
+import FilterItemCategory from './FilterItemCategory.vue'
+import FilterItemTag from './FilterItemTag.vue'
+import FilterItemOrganizer from './FilterItemOrganizer.vue'
+import FilterItemPerformer from './FilterItemPerformer.vue'
+import FilterItemInstance from './FilterItemInstance.vue'
+import FilterItemStatus from './FilterItemStatus.vue'
 
 const props = defineProps({
   text: {
@@ -60,20 +66,29 @@ const text = ref(props.text)
 const history = ref([]) // Added this line
 const currentPosition = ref(-1) // Added this line
 const categories = ref(props.categories ? props.categories.map(v => v.name) : [])
-const selectFilterType = ref('')
+const selectFilterType = ref('other')
 const isOpenFilter = ref(false)
 
 const includesOrder = ['and', 'or', 'not']
 
 const filterMaps = [
+  { type: 'other', label: 'other', component: ConditionOther, items: { 'statuses': props.statuses, 'instanceTypes': props.instanceTypes } },
   { type: 'category', label: 'category', component: ConditionCategory, items: categories },
   { type: 'tag', label: 'tags', component: ConditionTag, items: props.tags },
-  { type: 'status', label: 'status', component: ConditionStatus, items: props.statuses },
   { type: 'date', label: 'date', component: ConditionDate, items: [] },
   { type: 'organizer', label: 'organizer', component: ConditionOrganizer, items: props.organizers },
   { type: 'performer', label: 'performer', component: ConditionPerformer, items: props.performers },
-  { type: 'other', label: 'other', component: ConditionOther, items: props.instanceTypes },
 ]
+
+const filterItemMap={
+  status: FilterItemStatus,
+  category: FilterItemCategory,
+  date: FilterItemDate,
+  organizer: FilterItemOrganizer,
+  performer: FilterItemPerformer,
+  tag: FilterItemTag,
+  instance: FilterItemInstance,
+}
 
 const includeLabels = {
   'and': { label: 'かつ', tooltip: 'すべての条件を満たすものを検索', icon: 'intersect' },
@@ -99,11 +114,6 @@ const pushToHistory = () => {
 
 const addCondition = ({ type, value, include = includesOrder[0] }) => {
   if (value == '') { return }
-  const prefix = Object.keys(includeLabels).find(key => value.startsWith(key + ':'))
-  include = prefix || include
-  if (prefix) {
-    value = value.slice(prefix.length + 1).trim().toLowerCase()
-  }
   const itemExists = conditions.value.some(item => item.type === type && item.value === value)
   if (!itemExists) {
     conditions.value.push({ include, type, value })
@@ -204,27 +214,22 @@ onMounted(() => {
               <IconTypeMapper :type="includeLabels[item.include].icon" class="text-xl" @click="cycleSearchCondition(index)" />
             </button>
             <span class="mx-0.5">:</span>
-            <BtnEventSearchItem
-              :key="index" :type="item.type" :value="item.value"
-              is-close is-icon
-              @remove="removeCondition(index)" />
+            <component :is="filterItemMap[item.type]" :value="item.value" @click="removeCondition(index)" />
           </div>
         </div>
 
         <!-- セレクトエリア start -->
-        <div class="mt-2 grid grid-cols-4 gap-4 rounded-md bg-base-300  p-4">
-          <div class="col-span-1 flex flex-col gap-2">
-            <div class="menu w-full  rounded-box bg-base-200">
-              <button
-                v-for=" item in filterMaps" :key="item.type" class="btn justify-start"
-                :class="{ 'btn-primary': selectFilterType == item.type }"
-                @click="selectFilterType = item">
-                <IconTypeMapper :type="item.type" />
-                {{ item.label }}
-              </button>
-            </div>
+        <div class="mt-2 grid grid-cols-1 gap-4 rounded-md bg-base-300 p-4 md:grid-cols-4">
+          <div class="menu grid w-full grid-cols-3 gap-2 rounded-box bg-base-200 md:grid-cols-1">
+            <button
+              v-for=" item in filterMaps" :key="item.type" class="btn btn-sm justify-start md:btn-md"
+              :class="{ 'btn-accent': selectFilterType.type == item.type }"
+              @click="selectFilterType = item">
+              <IconTypeMapper :type="item.type" />
+              {{ item.label }}
+            </button>
           </div>
-          <div class="col-span-3 flex flex-col gap-2 ">
+          <div class="col-span-1 flex flex-col gap-2 md:col-span-3">
             <div class="flex flex-wrap justify-end gap-2">
               <button
                 class="btn btn-accent btn-xs" :class="{ 'btn-disabled': !canGoBackInHistory() }"
