@@ -90,11 +90,6 @@ const filterItemMap={
   instance: FilterItemInstance,
 }
 
-const buttonTextSetterMaps = {
-  date: (date) => { return date },
-  dateRange: (start_date, end_date) => { return start_date + ' ~ ' + end_date },
-}
-
 const includeLabels = {
   'and': { label: 'かつ', tooltip: 'すべての条件を満たすものを検索', icon: 'intersect' },
   'or': { label: 'または', tooltip: 'いずれかの条件を満たすものを検索', icon: 'union' },
@@ -126,7 +121,6 @@ const addCondition = ({ type, value, include = includesOrder[0] }) => {
   pushToHistory()
 }
 const removeCondition = (index) => {
-  console.log('removeCondition')
   conditions.value = conditions.value.filter((_, i) => i !== index)
   pushToHistory()
 }
