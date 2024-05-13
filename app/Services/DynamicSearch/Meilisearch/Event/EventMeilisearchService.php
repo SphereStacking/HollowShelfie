@@ -106,26 +106,6 @@ class EventMeilisearchService
                 return $query->orderBy('published_at', 'desc');
         }
     }
-
-    private function createQueryParams(array $queryParams): array
-    {
-        $result = [];
-        foreach ($queryParams as $item) {
-            $type = $item['type'];
-            if (isset($this->queryParamClasses[$type])) {
-                $class = $this->queryParamClasses[$type];
-                $result[] = new $class($item['include'], $type, $item['value']);
-            }
-        }
-        return $result;
-    }
-
-    private function makeFilter(array $queryParams): string
-    {
-        return array_reduce($queryParams, function ($carry, $item) {
-            return $carry . $item->makeQuery();
-        }, '');
-    }
 }
 
 
