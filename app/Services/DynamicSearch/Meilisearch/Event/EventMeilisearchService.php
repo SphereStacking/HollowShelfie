@@ -44,6 +44,8 @@ class EventMeilisearchService
         'status' => EventFilterStatus::class,
         'tag' => EventFilterTag::class,
         'category' => EventFilterCategory::class,
+        'organizer' => EventFilterOrganizer::class,
+        'performer' => EventFilterPerformer::class,
     ];
 
     public function getPublishedEventSearch(SearchParams $params): LengthAwarePaginator

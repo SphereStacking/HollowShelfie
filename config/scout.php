@@ -148,6 +148,8 @@ return [
                     'instances.*.location',
                     'instances.*.instance_type_name',
                     'categories',
+                    'organizers',
+                    'performers',
                     'good_count',
                 ],
                 'sortableAttributes' => [
