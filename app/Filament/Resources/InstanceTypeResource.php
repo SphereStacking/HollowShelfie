@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TagResource\Pages;
-use App\Filament\Resources\TagResource\RelationManagers;
-use App\Models\Tag;
+use App\Filament\Resources\InstanceTypeResource\Pages;
+use App\Filament\Resources\InstanceTypeResource\RelationManagers;
+use App\Models\InstanceType;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,14 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TagResource extends Resource
+class InstanceTypeResource extends Resource
 {
-    protected static ?string $model = Tag::class;
+    protected static ?string $model = InstanceType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
 
     protected static ?string $navigationGroup = 'Content Settings';
-
 
     public static function form(Form $form): Form
     {
@@ -64,7 +63,7 @@ class TagResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageTags::route('/'),
+            'index' => Pages\ManageInstanceTypes::route('/'),
         ];
     }
 }
