@@ -16,17 +16,16 @@ defineProps({
     </div>
     <div class="flex w-full flex-col rounded-xl bg-base-200">
       <template v-for="(instance, index) in instances" :key="index">
-        <div class="flex flex-row gap-2 p-2">
+        <div class="flex flex-row gap-2 overflow-hidden p-2">
           <div class="badge badge-primary">
             {{ instance.instance_type }}
           </div>
           <component
             :is="instance.access_url ? 'a' : 'div'"
             :href="instance.access_url || undefined"
+            class=" whitespace-nowra truncate"
             :class="{ 'link': instance.access_url }">
-            <div class="overflow-hidden whitespace-nowrap">
-              {{ instance.display_name }}
-            </div>
+            {{ instance.display_name }}
           </component>
         </div>
       </template>

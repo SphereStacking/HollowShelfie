@@ -2,7 +2,7 @@
 
 namespace App\Services\DynamicSearch\Meilisearch\Event;
 
-use Carbon\Carbon;
+use App\Models\User;
 use App\Services\DynamicSearch\Meilisearch\MeilisearchFilter;
 
 /**
@@ -10,10 +10,10 @@ use App\Services\DynamicSearch\Meilisearch\MeilisearchFilter;
  */
 class EventFilterPerformer extends MeilisearchFilter
 {
-    protected $column = 'performers';
+    protected $column = 'performer_ids';
 
     public function formatValue()
     {
-        return $this->value;
+        return User::where('name', $this->value)->value('id');
     }
 }

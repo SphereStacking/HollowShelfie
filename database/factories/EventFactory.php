@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Instance;
 use App\Models\EventTimeTable;
 use App\Models\TimeTablePerformers;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -43,6 +44,17 @@ class EventFactory extends Factory
             'alias' => $this->faker->unique()->slug(2),
         ];
     }
+
+    public function withInstances()
+    {
+        return $this->afterCreating(function (Event $event) {
+            $numberOfInstances = rand(0, 3); // 0から3のランダムな数
+            for ($i = 0; $i < $numberOfInstances; $i++) {
+                $event->instances()->save(Instance::factory()->make());
+            }
+        });
+    }
+
 
     public function withFile()
     {

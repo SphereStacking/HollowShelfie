@@ -12,7 +12,7 @@ class InitInstanceTypeSeeder extends AbstractOnceSeeder
     public function runOnce(): void
     {
         $InitItems = [
-            'リアル',
+            '現実',
             'VRchat',
             'cluster',
             'Resonite',

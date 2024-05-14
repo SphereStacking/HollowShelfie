@@ -93,7 +93,7 @@ class Event extends Model
                 'title',
                 'description',
                 'created_user',
-                'good_count',
+          　      'good_count',
                 'is_forced_hidden',
             ]
         );
@@ -101,17 +101,14 @@ class Event extends Model
         $array['start_date'] = $this->published_at ? Carbon::parse($this->start_date)->getTimestamp() : null;
         $array['end_date'] = $this->published_at ? Carbon::parse($this->end_date)->getTimestamp() : null;
         $array['tags'] = $this->tags()->pluck('name')->toArray();
-        $array['instances'] = $this->instances()->get()->map(function ($instance) {
-            return [
-                'location' => $instance->display_name,
-                'instance_type_name' => $instance->instance_type_name,
-            ];
+        $array['instance_type_ids'] = $this->instances()->get()->map(function ($instance) {
+            return $instance->instance_type_id;
         })->toArray();
-        $array['categories'] = $this->categories()->pluck('name')->toArray();
-        $array['organizers'] = $this->organizers->pluck('event_organizeble.name')->toArray();
-        $array['performers'] = $this->event_time_tables->flatMap(function ($time_table) {
-            return $time_table->performers->pluck('performable.name');
-        });
+        $array['category_ids'] = $this->categories()->pluck('categories.id')->toArray();
+        $array['organizer_ids'] = $this->organizers->pluck('event_organizeble.id')->toArray();
+        $array['performer_ids'] = $this->event_time_tables->flatMap(function ($time_table) {
+            return $time_table->performers->pluck('performable.id');
+        })->toArray();
 
         return $array;
     }
