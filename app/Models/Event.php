@@ -93,7 +93,7 @@ class Event extends Model
                 'title',
                 'description',
                 'created_user',
-          　      'good_count',
+                'good_count',
                 'is_forced_hidden',
             ]
         );
