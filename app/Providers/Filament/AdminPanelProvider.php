@@ -8,6 +8,8 @@ use Filament\Widgets;
 use Filament\PanelProvider;
 use Filament\Enums\ThemeMode;
 use Filament\Support\Colors\Color;
+use Filament\Navigation\NavigationItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -55,6 +57,13 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->defaultThemeMode(ThemeMode::Dark);
+            ->defaultThemeMode(ThemeMode::Dark)
+            ->colors([
+                'gray' => Color::Zinc,
+                'info' => Color::Blue,
+                'primary' => Color::Emerald,
+                'success' => Color::Green,
+                'warning' => Color::Amber,
+            ]);
     }
 }
