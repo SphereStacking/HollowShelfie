@@ -2,6 +2,7 @@
 
 namespace App\Services\DynamicSearch\Meilisearch\Event;
 
+use App\Models\Category;
 use App\Services\DynamicSearch\Meilisearch\MeilisearchFilter;
 
 
@@ -10,10 +11,10 @@ use App\Services\DynamicSearch\Meilisearch\MeilisearchFilter;
  */
 class EventFilterCategory extends MeilisearchFilter
 {
-    protected $column = 'categories';
+    protected $column = 'category_ids';
 
     public function formatValue()
     {
-        return $this->value;
+        return Category::where('name', $this->value)->value('id');
     }
 }
