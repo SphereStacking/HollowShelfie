@@ -147,9 +147,9 @@ return [
                     'tags',
                     'instances.*.location',
                     'instances.*.instance_type_name',
-                    'categories',
-                    'organizers',
-                    'performers',
+                    'category_ids',
+                    'organizer_ids',
+                    'performer_ids',
                     'good_count',
                 ],
                 'sortableAttributes' => [
