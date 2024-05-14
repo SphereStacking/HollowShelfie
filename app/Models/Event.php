@@ -101,11 +101,8 @@ class Event extends Model
         $array['start_date'] = $this->published_at ? Carbon::parse($this->start_date)->getTimestamp() : null;
         $array['end_date'] = $this->published_at ? Carbon::parse($this->end_date)->getTimestamp() : null;
         $array['tags'] = $this->tags()->pluck('name')->toArray();
-        $array['instances'] = $this->instances()->get()->map(function ($instance) {
-            return [
-                'location' => $instance->display_name,
-                'instance_type_name' => $instance->instance_type_name,
-            ];
+        $array['instance_type_ids'] = $this->instances()->get()->map(function ($instance) {
+            return $instance->instance_type_id;
         })->toArray();
         $array['category_ids'] = $this->categories()->pluck('categories.id')->toArray();
         $array['organizer_ids'] = $this->organizers->pluck('event_organizeble.id')->toArray();

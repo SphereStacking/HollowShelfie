@@ -46,6 +46,7 @@ class EventMeilisearchService
         'category' => EventFilterCategory::class,
         'organizer' => EventFilterOrganizer::class,
         'performer' => EventFilterPerformer::class,
+        'instance' => EventFilterInstance::class,
     ];
 
     public function getPublishedEventSearch(SearchParams $params): LengthAwarePaginator
@@ -57,6 +58,7 @@ class EventMeilisearchService
             query: $params->text,
             callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
                 $options['filter'] = 'published_at < ' . Carbon::now()->getTimestamp() . $filterString;
+                Log::info($options);
                 return $meilisearch->rawSearch($query, $options);
             })
             // order
