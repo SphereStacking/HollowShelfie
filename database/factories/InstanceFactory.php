@@ -7,27 +7,18 @@ use App\Models\InstanceType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Instance>
  */
 class InstanceFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Instance::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
             'instance_type_id' => InstanceType::inRandomOrder()->first()->id,
-            'location' => $this->faker->address,
+            'display_name' => $this->faker->sentence,
+            'access_url' => $this->faker->url,
         ];
     }
 }

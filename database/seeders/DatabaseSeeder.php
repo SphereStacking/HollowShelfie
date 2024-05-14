@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(100)->create();
-        Event::factory(1000)->withEventTimeTable()->create();
+        Event::factory(1000)->withEventTimeTable()->withInstances()->create();
         $this->call([
             EventRelationSeeder::class,
             TeamRelationSeeder::class,
