@@ -93,7 +93,7 @@ class Event extends Model
                 'title',
                 'description',
                 'created_user',
-                'good_count',
+          　      'good_count',
                 'is_forced_hidden',
             ]
         );
@@ -108,7 +108,7 @@ class Event extends Model
         $array['organizer_ids'] = $this->organizers->pluck('event_organizeble.id')->toArray();
         $array['performer_ids'] = $this->event_time_tables->flatMap(function ($time_table) {
             return $time_table->performers->pluck('performable.id');
-        });
+        })->toArray();
 
         return $array;
     }
