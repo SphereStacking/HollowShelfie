@@ -34,6 +34,11 @@ class Role extends Model
 
     public function hasPermission(String $permission)
     {
-        return (bool) $this->permissions->where('name', $permission)->count();
+        $this->load('permissions.roles');
+        foreach ($this->permissions as $permission) {
+            if ($permission->roles->contains('name', $permission)) {
+                return true;
+            }
+        }
     }
 }

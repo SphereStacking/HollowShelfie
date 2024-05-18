@@ -33,12 +33,14 @@ trait UserRole
     /**
      * 権限を持っているか
      */
-    public function hasPermission(String $permission)
+    public function hasPermission(String $permission): bool
     {
-        if (is_null($this->permissions)) {
-            return false;
+        $this->load('roles.permissions');
+        foreach ($this->roles as $role) {
+            if ($role->permissions->contains('name', $permission)) {
+                return true;
+            }
         }
-        return (bool) $this->role->permissions->where('name', $permission)->count();
     }
 
 
