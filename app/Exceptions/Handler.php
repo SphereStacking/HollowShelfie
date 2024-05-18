@@ -31,18 +31,20 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (InvalidStateException $e, $request) {
-            return Inertia::render('Errors/InvalidState', []);
+            return Inertia::render('Errors/InvalidState', [
+                'message' => $e->getMessage(),
+            ]);
         });
 
         $this->renderable(function (EventNotPublishedException $e, $request) {
             return Inertia::render('Errors/404Error', [
-                'message' => 'イベントが見つかりませんでした。',
+                'message' => $e->getMessage(),
             ]);
         });
 
         $this->renderable(function (CannotOperateEventException $e, $request) {
             return Inertia::render('Errors/403Error', [
-                'message' => '権限がありません。',
+                'message' => $e->getMessage(),
             ]);
         });
 
