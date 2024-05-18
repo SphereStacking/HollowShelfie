@@ -9,13 +9,6 @@ defineProps({
 </script>
 
 <template>
-  <ErrorLayout title="429 Error">
-    <template #title>
-      429 Error
-    </template>
-    <template #message>
-      {{ message }}
-    </template>
-  </ErrorLayout>
+  <ErrorLayout title="429 Error" :message="message" />
 </template>
 

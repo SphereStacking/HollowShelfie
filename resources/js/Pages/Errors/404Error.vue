@@ -1,5 +1,4 @@
 <script setup>
-
 defineProps({
   message: {
     type: String,
@@ -10,13 +9,6 @@ defineProps({
 </script>
 
 <template>
-  <ErrorLayout title="404 Error">
-    <template #title>
-      404 Error
-    </template>
-    <template #message>
-      {{ message }}
-    </template>
-  </ErrorLayout>
+  <ErrorLayout title="404 Error" :message="message" />
 </template>
 
