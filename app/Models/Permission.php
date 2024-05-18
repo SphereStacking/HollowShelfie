@@ -10,7 +10,7 @@ class Permission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'permission_denied_message'];
 
     public function roles(): BelongsToMany
     {
