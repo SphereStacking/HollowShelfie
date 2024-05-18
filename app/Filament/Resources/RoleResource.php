@@ -29,7 +29,13 @@ class RoleResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('permissions')
+                    ->columnSpanFull()
+                    ->multiple()
+                    ->relationship('permissions', 'name')
+                    ->preload(),
                 Forms\Components\Select::make('users')
+                    ->columnSpanFull()
                     ->multiple()
                     ->searchable()
                     ->relationship('users', 'screen_name')
@@ -45,7 +51,7 @@ class RoleResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('users_count')
-                    ->label('Total Users')
+                    ->label('Attached counts')
                     ->counts('users'),
                 Tables\Columns\TextColumn::make('users.name')
                     ->label('Attached Users')

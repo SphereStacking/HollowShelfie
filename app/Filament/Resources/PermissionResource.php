@@ -17,7 +17,9 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-key';
+
+    protected static ?string $navigationGroup = 'User Settings';
 
     public static function form(Form $form): Form
     {
@@ -28,6 +30,11 @@ class PermissionResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('permission_denied_message')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('roles')
+                    ->columnSpanFull()
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload(),
             ]);
     }
 
@@ -45,6 +52,12 @@ class PermissionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('roles_count')
+                    ->label('Attached counts')
+                    ->counts('roles'),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Attached Roles')
+                    ->sortable(),
             ])
             ->filters([
                 //
