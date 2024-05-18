@@ -173,6 +173,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SocialstreamServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
+        App\Providers\PermissionsServiceProvider::class,
     ])->toArray(),
 
     /*
