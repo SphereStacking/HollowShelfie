@@ -24,8 +24,6 @@ trait UserRole
      */
     public function hasRole(String|int $role): bool
     {
-        Log::info('hasRole');
-
         return $this->roles()
             ->where('name', $role)
             ->orWhere('id', $role)
@@ -37,7 +35,6 @@ trait UserRole
      */
     public function hasPermission(String $permission)
     {
-        Log::info('hasPermission');
         if (is_null($this->permissions)) {
             return false;
         }
