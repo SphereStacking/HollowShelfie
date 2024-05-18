@@ -21,7 +21,7 @@ class PermissionMiddleware
             abort(500, '権限が見つかりません。');
         }
         if (!$request->user()->can($permission)) {
-            abort(403, $permissionRecord->permission_denied_message);
+            abort(403, $permissionRecord->permission_denied_message ?? '');
         }
 
         return $next($request);
