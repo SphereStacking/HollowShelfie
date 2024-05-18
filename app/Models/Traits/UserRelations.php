@@ -2,15 +2,16 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Event;
-use App\Models\EventOrganizer;
-use App\Models\Link;
-use App\Models\SocialAccount;
 use App\Models\Tag;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Link;
+use App\Models\Role;
+use App\Models\Event;
+use App\Models\SocialAccount;
+use App\Models\EventOrganizer;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * ユーザー関連のトレイト
@@ -71,5 +72,13 @@ trait UserRelations
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * ロールとのリレーション
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
     }
 }

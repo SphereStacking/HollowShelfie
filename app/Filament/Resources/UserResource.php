@@ -25,6 +25,9 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('screen_name')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -45,6 +48,11 @@ class UserResource extends Resource
                 Forms\Components\Textarea::make('two_factor_recovery_codes')
                     ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('two_factor_confirmed_at'),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
             ]);
     }
 
@@ -52,6 +60,8 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('screen_name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
