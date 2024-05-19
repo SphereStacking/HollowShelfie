@@ -1,5 +1,5 @@
 <script setup>
-import { Head} from '@inertiajs/vue3'
+import { Head, Link} from '@inertiajs/vue3'
 import DOMPurify from 'dompurify'
 
 const props = defineProps({
@@ -14,7 +14,9 @@ const props = defineProps({
 })
 
 const sanitizedMessage = DOMPurify.sanitize(props.message)
-
+function goBack() {
+  window.history.back()
+}
 </script>
 
 <template>
@@ -25,7 +27,7 @@ const sanitizedMessage = DOMPurify.sanitize(props.message)
       <NavigationMenu />
       <!-- Page Content -->
       <main class="flex items-center justify-center px-4 py-8">
-        <div class="mt-20 flex w-80 flex-col items-center justify-center gap-4">
+        <div class="mt-20 flex w-1/2 flex-col items-center justify-center gap-4">
           <h1 class="mb-4 text-center text-3xl font-bold">
             <slot name="title">
               {{ title }}
@@ -38,13 +40,14 @@ const sanitizedMessage = DOMPurify.sanitize(props.message)
               <div class="prose" v-html="sanitizedMessage"></div>
             </slot>
           </div>
-
-          <Link :href="route('welcome')" class="btn w-40">
-            ホーム
-          </Link>
-          <button class="btn w-40" @click="goBack">
-            戻る
-          </button>
+          <div class="flex flex-col gap-4 md:flex-row">
+            <Link :href="route('home')" class="btn btn-link w-20">
+              ホームへ
+            </Link>
+            <button class="btn btn-link w-20" @click="goBack">
+              戻る
+            </button>
+          </div>
         </div>
       </main>
     </div>
