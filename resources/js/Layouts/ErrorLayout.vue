@@ -1,10 +1,22 @@
 <script setup>
-import { Head} from '@inertiajs/vue3'
+import { Head, Link} from '@inertiajs/vue3'
+import DOMPurify from 'dompurify'
 
-defineProps({
-  title: String,
+const props = defineProps({
+  title: {
+    type: String,
+    required: true
+  },
+  message: {
+    type: String,
+    required: true
+  }
 })
 
+const sanitizedMessage = DOMPurify.sanitize(props.message)
+function goBack() {
+  window.history.back()
+}
 </script>
 
 <template>
@@ -15,21 +27,27 @@ defineProps({
       <NavigationMenu />
       <!-- Page Content -->
       <main class="flex items-center justify-center px-4 py-8">
-        <div class="mt-20 flex w-80 flex-col items-center justify-center gap-4">
+        <div class="mt-20 flex w-1/2 flex-col items-center justify-center gap-4">
           <h1 class="mb-4 text-center text-3xl font-bold">
-            <slot name="title"></slot>
+            <slot name="title">
+              {{ title }}
+            </slot>
           </h1>
 
-          <div class="mb-4 text-center text-lg text-base-content ">
-            <slot name="message"></slot>
+          <div class="mb-4 text-center text-lg text-base-content">
+            <slot name="message">
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div class="prose" v-html="sanitizedMessage"></div>
+            </slot>
           </div>
-
-          <Link :href="route('welcome')" class="btn w-40">
-            ホーム
-          </Link>
-          <button class="btn w-40" @click="goBack">
-            戻る
-          </button>
+          <div class="flex flex-col gap-4 md:flex-row">
+            <Link :href="route('home')" class="btn btn-link w-20">
+              ホームへ
+            </Link>
+            <button class="btn btn-link w-20" @click="goBack">
+              戻る
+            </button>
+          </div>
         </div>
       </main>
     </div>

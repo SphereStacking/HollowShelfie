@@ -2,11 +2,12 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Inertia\Inertia;
-use Laravel\Socialite\Two\InvalidStateException;
 use Throwable;
+use Inertia\Inertia;
 use Sentry\Laravel\Integration;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Laravel\Socialite\Two\InvalidStateException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -31,20 +32,39 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (InvalidStateException $e, $request) {
-            return Inertia::render('Errors/InvalidState', []);
+            return Inertia::render('Errors/InvalidState', [
+                'message' => $e->getMessage(),
+            ]);
         });
 
         $this->renderable(function (EventNotPublishedException $e, $request) {
             return Inertia::render('Errors/404Error', [
-                'message' => 'イベントが見つかりませんでした。',
+                'message' => $e->getMessage(),
             ]);
         });
 
         $this->renderable(function (CannotOperateEventException $e, $request) {
             return Inertia::render('Errors/403Error', [
-                'message' => '権限がありません。',
+                'message' => $e->getMessage(),
             ]);
         });
+
+        // abortで発火したエラーはこちらに入る。
+        $this->renderable(function (HttpException $e, $request) {
+            $statusCode = $e->getStatusCode();
+            $message = $e->getMessage();
+            return match ($statusCode) {
+                403 => Inertia::render('Errors/403Error', ['message' => $message]),
+                404 => Inertia::render('Errors/404Error', ['message' => $message]),
+                429 => Inertia::render('Errors/429Error', ['message' => $message]),
+                500 => Inertia::render('Errors/500Error', ['message' => $message]),
+                default => function() use ($e, $message) {
+                    Integration::captureUnhandledException($e);
+                    return Inertia::render('Errors/500Error', ['message' => $message]);
+                },
+            };
+        });
+
 
         $this->reportable(function (Throwable $e) {
             Integration::captureUnhandledException($e);

@@ -32,10 +32,12 @@ class DatabaseSeeder extends Seeder
             InitCategorySeeder::class,
             InitTagSeeder::class,
             InitInstanceTypeSeeder::class,
+            InitPermissionSeeder::class,
+            InitRoleSeeder::class,
         ]);
 
         User::factory(100)->create();
-        Event::factory(1000)->withEventTimeTable()->withInstances()->create();
+        Event::factory(500)->withEventTimeTable()->withInstances()->create();
         $this->call([
             EventRelationSeeder::class,
             TeamRelationSeeder::class,

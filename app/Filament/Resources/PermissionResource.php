@@ -2,23 +2,22 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\PermissionResource\Pages;
+use App\Filament\Resources\PermissionResource\RelationManagers;
+use App\Models\Permission;
 use Filament\Forms;
-use App\Models\Role;
-use App\Models\User;
-use Filament\Tables;
 use Filament\Forms\Form;
-use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\RoleResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\RoleResource\RelationManagers;
 
-class RoleResource extends Resource
+class PermissionResource extends Resource
 {
-    protected static ?string $model = Role::class;
+    protected static ?string $model = Permission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+    protected static ?string $navigationIcon = 'heroicon-o-key';
 
     protected static ?string $navigationGroup = 'User Settings';
 
@@ -31,18 +30,13 @@ class RoleResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\Select::make('permissions')
+                Forms\Components\Textarea::make('permission_denied_message')
+                    ->columnSpanFull(),
+                Forms\Components\Select::make('roles')
                     ->columnSpanFull()
                     ->multiple()
-                    ->relationship('permissions', 'name')
+                    ->relationship('roles', 'name')
                     ->preload(),
-                Forms\Components\Select::make('users')
-                    ->columnSpanFull()
-                    ->multiple()
-                    ->searchable()
-                    ->relationship('users', 'screen_name')
-                    ->getSearchResultsUsing(fn (string $search): array => User::where('screen_name', 'like', "%{$search}%")->limit(50)->pluck('name', 'id')->toArray())
-                    ->getOptionLabelsUsing(fn (array $values): array => User::whereIn('id', $values)->pluck('name', 'id')->toArray())
             ]);
     }
 
@@ -50,16 +44,6 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('users_count')
-                    ->label('Attached counts')
-                    ->counts('users'),
-                Tables\Columns\TextColumn::make('users.name')
-                    ->label('Attached Users')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -68,6 +52,16 @@ class RoleResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('roles_count')
+                    ->label('Attached counts')
+                    ->counts('roles'),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Attached Roles')
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -86,7 +80,7 @@ class RoleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageRoles::route('/'),
+            'index' => Pages\ManagePermissions::route('/'),
         ];
     }
 }

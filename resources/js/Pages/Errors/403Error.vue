@@ -10,13 +10,6 @@ defineProps({
 </script>
 
 <template>
-  <ErrorLayout title="403 Error">
-    <template #title>
-      403 Error
-    </template>
-    <template #message>
-      {{ message }}
-    </template>
-  </ErrorLayout>
+  <ErrorLayout title="403 Error" :message="message" />
 </template>
 

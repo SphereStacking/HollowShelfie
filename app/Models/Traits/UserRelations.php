@@ -4,7 +4,6 @@ namespace App\Models\Traits;
 
 use App\Models\Tag;
 use App\Models\Link;
-use App\Models\Role;
 use App\Models\Event;
 use App\Models\SocialAccount;
 use App\Models\EventOrganizer;
@@ -74,11 +73,4 @@ trait UserRelations
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    /**
-     * ロールとのリレーション
-     */
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
-    }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Filament\Panel;
 use App\Traits\HasFollowable;
 use Laravel\Scout\Searchable;
+use App\Models\Traits\UserRole;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Traits\UserRelations;
@@ -34,6 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
     use SetsProfilePhotoFromUrl;
     use TwoFactorAuthenticatable;
     use UserRelations;
+    use UserRole;
+
 
     /**
      * ルートキー名を取得する
