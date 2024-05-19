@@ -12,12 +12,18 @@ class InitPermissionSeeder extends AbstractOnceSeeder
     public function runOnce(): void
     {
         $InitPermissions = [
-            ['name' => 'team-management', 'permission_denied_message' => '支援者の限定で試験解放中の機能になります。'],
+            [
+                'name' => 'feature-team',
+                'permission_denied_message' =>
+                    '<p>この機能は現在、開発中です</p><p>🐙支援者(Patreon,Fanbox)に限定開放しています。</p>',
+                'description' => 'チーム機能'
+            ],
         ];
         foreach ($InitPermissions as $permission) {
             Permission::create([
                 'name' => $permission['name'],
                 'permission_denied_message' => $permission['permission_denied_message'],
+                'description' => $permission['description']
             ]);
         }
     }

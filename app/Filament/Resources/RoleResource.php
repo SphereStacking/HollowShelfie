@@ -29,6 +29,8 @@ class RoleResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('description')
+                    ->maxLength(255),
                 Forms\Components\Select::make('permissions')
                     ->columnSpanFull()
                     ->multiple()
@@ -49,6 +51,8 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('users_count')
                     ->label('Attached counts')

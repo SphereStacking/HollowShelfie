@@ -28,6 +28,8 @@ class PermissionResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('description')
+                    ->maxLength(255),
                 Forms\Components\Textarea::make('permission_denied_message')
                     ->columnSpanFull(),
                 Forms\Components\Select::make('roles')
@@ -51,6 +53,8 @@ class PermissionResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles_count')
                     ->label('Attached counts')

@@ -55,7 +55,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
 
             // Teams...
             if (Jetstream::hasTeamFeatures()) {
-                Route::group(['middleware' => 'permission:team-management'], function () {
+                Route::group(['middleware' => 'permission:feature-team'], function () {
                     Route::get('/teams/create', [TeamController::class, 'create'])->name('teams.create');
                     Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
                     Route::get('/teams/{team}', [TeamController::class, 'show'])->name('teams.show');
