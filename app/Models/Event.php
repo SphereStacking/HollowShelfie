@@ -33,7 +33,16 @@ class Event extends Model
     /**
      * @var array<int, string>
      */
-    protected $fillable = ['title', 'description',];
+    protected $fillable = [
+        'published_at',
+        'is_forced_hidden',
+        'title',
+        'event_create_user_id',
+        'start_date',
+        'end_date',
+        'description',
+        'alias',
+    ];
 
     /**
      * @var array<int, string>
