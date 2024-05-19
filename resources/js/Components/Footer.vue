@@ -12,7 +12,6 @@ const pages = {
   About: [
     { component: Link, url: route('about', 'app'), label: appName, target: '_self' },
     { component: Link, url: route('about', 'operation'), label: '運営', target: '_self' },
-    { component: Link, url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
     { component: Link, url: route('about', 'advertisement'), label: '広告掲載', target: '_self' }
   ],
   // しばらくは必要ないためコメントアウト
@@ -34,6 +33,10 @@ const pages = {
     { component: 'a', url: issueForms.feedback, label: 'フィードバックを送る', target: '_blank' },
     { component: 'a', url: issueForms.bug_report, label: 'バグを報告する', target: '_blank' },
     { component: 'a', url: issueForms.new_feature, label: '新機能のリクエスト', target: '_blank' }
+  ],
+  Info: [
+    { component: Link, url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
+    { component: Link, url: route('roadmap'), label: 'ロードマップ', target: '_self' }
   ]
 }
 
