@@ -6,6 +6,7 @@ use App\Http\Controllers\GetHomeController;
 use App\Http\Controllers\GetWelcomeController;
 use App\Http\Controllers\GetDashboardController;
 use App\Http\Controllers\Event\ShowEventController;
+use App\Http\Controllers\Event\GetRoadmapController;
 use App\Http\Controllers\GetTagSuggestionController;
 use App\Http\Controllers\Event\UpdateEventController;
 use App\Http\Controllers\EventGood\GetGoodController;
@@ -100,7 +101,7 @@ Route::get('/about/{about}', GetAboutPageController::class)->name('about');
 Route::get('/guide/{guides}', GetGuidePageController::class)->name('guide');
 Route::get('/legal/{legal}', GetLegalPageController::class)->name('legal');
 Route::get('/credit', GetCreditPageController::class)->name('credit');
-
+Route::get('/roadmap', GetRoadmapController::class)->name('roadmap');
 //ログインしていない場合login画面に遷移
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
 
