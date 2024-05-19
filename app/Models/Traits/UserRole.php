@@ -41,6 +41,7 @@ trait UserRole
                 return true;
             }
         }
+        return false;
     }
 
 

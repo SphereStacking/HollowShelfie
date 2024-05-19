@@ -32,7 +32,7 @@ class Role extends Model
         return $this->belongsToMany(Permission::class);
     }
 
-    public function hasPermission(String $permission)
+    public function hasPermission(String $permission): bool
     {
         $this->load('permissions.roles');
         foreach ($this->permissions as $permission) {
@@ -40,5 +40,6 @@ class Role extends Model
                 return true;
             }
         }
+        return false;
     }
 }
