@@ -30,10 +30,9 @@ const features = [
   { icon: 'advertisement', description: 'バナー掲載', plan: 'premium / coming soon', isComingSoon: true },
 ]
 const featureBanners = [
-  { title: 'イベントをいいねで応援！', description: 'あなたの一つの「いいね」が、イベントの魅力を多くの人へと伝える力になります。イベントページで気に入ったものに「いいね」をして、主催者を応援しましょう。' },
-  { title: '行きたいイベントをブックマーク！', description: '「行きたい！」と思ったイベントはブックマーク機能を使って保存しましょう。後で簡単にアクセスできるようになり、あなたの興味に合ったイベントを見逃すことがありません。' },
-  { title: '主催するイベント掲載して告知しよう！', description: 'あなたが主催するイベントを当プラットフォームに掲載することで、より多くの参加者と繋がることができます。イベントの詳細情報を入力して、効果的な告知を始めましょう。' },
-  { title: '推しのオーガナイザー&パフォーマーをフォローしてイベントを見逃さない！', description: 'お気に入りのオーガナイザーやパフォーマーをフォローすることで、彼らが主催するイベント情報をいち早くキャッチできます。フォロー機能を使って、大切なイベントを見逃すことがないようにしましょう。' }
+  { title: 'フライヤーを飾れる', description: '拘って作ったフライヤーを飾って見返せるようにして、活動のログをフライヤーで記録しよう！' },
+  { title: 'イベントをいいねで応援！', description: 'あなたの一つの「いいね」が、イベントの魅力を多くの人へと伝える力になります。イベントページで気に入ったものに「いいね」をして、主催者を応援しよう！' },
+  { title: '行きたいイベントをブックマーク！', description: '「行きたい！」と思ったイベントはブックマーク機能を使って保存しましょう。後で簡単にアクセスできるようになり、あなたの興味に合ったイベントを見逃さないように！' },
 ]
 const plans = [
   {
@@ -75,7 +74,7 @@ const columns = computed(() => {
     <section class="flex min-h-[calc(100vh-4rem)] items-center justify-center px-2 text-center">
       <ApplicationLogo class="sticky top-10 h-20 py-2 text-base-content md:flex-row" />
     </section>
-    <section class=" flex min-h-[calc(100vh-4rem)] items-center justify-center px-2 text-center">
+    <section class="flex items-center justify-center py-32 text-center md:min-h-[calc(100vh-4rem)]">
       <div class=" sticky top-10 text-center text-7xl font-black">
         <div class="text-center font-title text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
           <div class=" inline-grid">
@@ -94,7 +93,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="min-h-[calc(100vh-4rem)] w-full overflow-x-clip px-20 ">
+    <section class="min-h-[calc(100vh-4rem)] w-full overflow-x-clip p-10 md:px-20">
       <div class="mt-20 flex flex-col items-center justify-around gap-10 md:flex-row md:gap-0">
         <div class=" items-center text-4xl font-bold">
           <div>
@@ -120,8 +119,8 @@ const columns = computed(() => {
       <div class="flex flex-row items-center justify-around  py-20 md:p-32">
         <div v-for="status in AppStatuses" :key="status.type" class="group">
           <div class="flex flex-row items-center justify-center gap-2">
-            <div class="flex h-20 w-20 items-center justify-center rounded-xl bg-base-100 transition-all duration-200">
-              <img :src="status.image" class="h-10 w-10 transition-all duration-200">
+            <div class="flex size-20 items-center justify-center rounded-xl bg-base-100 transition-all duration-200">
+              <img :src="status.image" class="size-10 transition-all duration-200">
             </div>
             <div class="text-left">
               {{ status.description }} <br>
@@ -141,17 +140,17 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class=" relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class=" relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip p-10 md:px-20 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
         leave-active-class="transition-all duration-1000"
         enter-from-class="translate-x-20 opacity-0 rotate-90"
         leave-to-class="opacity-0">
-        <div class="h-44 w-44  rotate-12 bg-teal-200/10"></div>
+        <div class="size-44 rotate-12  bg-teal-200/10"></div>
       </TransitionInViewportObserver>
       <TransitionInViewportObserver
-        class="absolute bottom-2 right-5 h-32 w-32"
+        class="absolute bottom-2 right-5 size-32"
         enter-active-class="transition-all duration-1000 rotate-90"
         leave-active-class="transition-all duration-1000"
         enter-from-class="-translate-x-20 opacity-0 rotate-90"
@@ -177,7 +176,7 @@ const columns = computed(() => {
                 {{ feature.plan }}
               </span>
               <div class="flex flex-row items-center gap-2">
-                <IconTypeMapper :type="feature.icon" class="h-10 w-10" />
+                <IconTypeMapper :type="feature.icon" class="size-10" />
               </div>
               <div class="ml-4 ">
                 <div class="text-2xl font-black">
@@ -202,7 +201,7 @@ const columns = computed(() => {
           leave-active-class="transition-all duration-1000"
           :enter-from-class="index % 2 === 0 ? 'translate-x-20 opacity-0' : '-translate-x-20 opacity-0'"
           leave-to-class="opacity-0">
-          <div class="flex justify-between gap-4" :class="index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'">
+          <div class="flex justify-between gap-4 " :class="index % 2 === 0 ? 'flex-col md:flex-row' : 'flex-col-reverse md:flex-row-reverse'">
             <div class="flex flex-col gap-2">
               <div class=" text-4xl font-black">
                 {{ feature.title }}
@@ -211,22 +210,22 @@ const columns = computed(() => {
                 {{ feature.description }}
               </div>
             </div>
-            <img class="aspect-video" src="https://placehold.jp/400x225.png">
+            <img class=" aspect-video max-w-96" src="https://placehold.jp/400x225.png">
           </div>
         </TransitionInViewportObserver>
       </div>
     </section>
-    <section class="relative mx-auto  min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class="relative mx-auto  min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip p-10 md:px-20 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
         leave-active-class="transition-all duration-1000"
         enter-from-class="translate-x-20 opacity-0 rotate-90"
         leave-to-class="opacity-0">
-        <div class="h-44 w-44  rotate-12 bg-pink-200/10"></div>
+        <div class="size-44 rotate-12  bg-pink-200/10"></div>
       </TransitionInViewportObserver>
       <TransitionInViewportObserver
-        class="absolute bottom-2 right-5 h-32 w-32"
+        class="absolute bottom-2 right-5 size-32"
         enter-active-class="transition-all duration-1000 rotate-90"
         leave-active-class="transition-all duration-1000"
         enter-from-class="-translate-x-20 opacity-0 rotate-90"
@@ -269,17 +268,17 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class="relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip p-10 md:px-20 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
         enter-active-class="transition-all duration-1000 rotate-90"
         leave-active-class="transition-all duration-1000"
         enter-from-class="translate-x-20 opacity-0 rotate-90"
         leave-to-class="opacity-0">
-        <div class="h-44 w-44  rotate-12 bg-sky-200/10"></div>
+        <div class="size-44 rotate-12  bg-sky-200/10"></div>
       </TransitionInViewportObserver>
       <TransitionInViewportObserver
-        class="absolute bottom-2 right-5 h-32 w-32"
+        class="absolute bottom-2 right-5 size-32"
         enter-active-class="transition-all duration-1000 rotate-90"
         leave-active-class="transition-all duration-1000"
         enter-from-class="-translate-x-20 opacity-0 rotate-90"
@@ -319,7 +318,7 @@ const columns = computed(() => {
         </div>
       </div>
     </section>
-    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip px-20">
+    <section class="relative mx-auto w-full max-w-screen-lg overflow-x-clip p-10 md:px-20 md:py-32">
       <div class="rounded-md py-10 text-center font-neon text-3xl font-black text-yellow-500-neon">
         Pricing
       </div>
@@ -327,7 +326,7 @@ const columns = computed(() => {
         <div
           v-for="plan in plans" :key="plan"
           class="relative flex flex-col justify-between rounded-lg bg-base-200 p-6 shadow-lg">
-          <div v-if="plan.isComingSoon" class="absolute left-0 top-0 h-full w-full rounded-lg bg-base-300/80"></div>
+          <div v-if="plan.isComingSoon" class="absolute left-0 top-0 size-full rounded-lg bg-base-300/80"></div>
           <div>
             <h3 class="mb-2 text-3xl font-black">
               {{ plan.title }}
