@@ -24,9 +24,7 @@ class GetEditEventController extends Controller
     public function __invoke($alias): Response
     {
         $event = $this->eventService->getEventDetailByAlias($alias);
-        if (! $event->canUserOperate(Auth::user())) {
-            throw new CannotOperateEventException();
-        }
+        $event->canUserOperate(Auth::user());
 
         return Inertia::render('Event/Edit', [
             'categories' => fn () => CategoryResource::collection(Category::all()),

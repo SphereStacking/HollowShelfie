@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-use App\Exceptions\EventNotPublishedException;
 use App\Exceptions\CannotOperateEventException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -85,9 +84,7 @@ class EventService
         DB::beginTransaction();
         try {
             $event = self::findOrFailByAlias($alias);
-            if (! $event->canUserOperate(Auth::user())) {
-                throw new CannotOperateEventException();
-            }
+            $event->canUserOperate(Auth::user());
             $event->title = $attributes['title'];
             $event->description = $attributes['description'];
             $event->start_date = new Carbon($attributes['start_date'], $this->dateTimeZone);
@@ -128,13 +125,7 @@ class EventService
         $user = Auth::user();
 
         // イベントが未公開（公開日が未来）かつログインユーザーがイベントの作成者でない場合、エラーを投げる
-        if (
-            isset($event->published_at) &&
-            $event->published_at->isFuture() &&
-            $event->event_create_user_id !== $user?->id
-        ) {
-            throw new EventNotPublishedException('イベントはまだ公開されていません。');
-        }
+        $event->canUserShow($user);
 
         $this->viewCountService->incrementCount($event);
 
@@ -158,9 +149,7 @@ class EventService
         $user = Auth::user();
 
         // イベントが未公開（公開日が未来）かつログインユーザーがイベントの作成者でない場合、エラーを投げる
-        if (! $event->canUserShow($user)) {
-            throw new EventNotPublishedException('イベントはまだ公開されていません。');
-        }
+        $event->canUserShow($user);
 
         $this->viewCountService->incrementCount($event);
 
@@ -178,9 +167,7 @@ class EventService
             throw new ModelNotFoundException('Eventが見つかりませんでした。');
         }
         $user = Auth::user();
-        if (! $event->canUserShow($user)) {
-            throw new EventNotPublishedException('イベントはまだ公開されていません。');
-        }
+        $event->canUserShow($user);
 
         $this->viewCountService->incrementCount($event);
 
@@ -202,9 +189,7 @@ class EventService
         DB::beginTransaction();
         try {
             $event = self::findOrFailByAlias($alias);
-            if (! $event->canUserOperate(Auth::user())) {
-                throw new CannotOperateEventException();
-            }
+            $event->canUserOperate(Auth::user());
             $event->delete();
             DB::commit();
         } catch (CannotOperateEventException $e) {

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Exceptions\EventNotPublishedException;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -229,13 +230,14 @@ class Event extends Model
     /**
      * 指定されたユーザーがイベントを操作できるかどうかをチェックします。
      */
-    public function canUserOperate(User|Authenticatable|null $user): bool
+    public function canUserOperate(User|Authenticatable|null $user): void
     {
         if ($user === null) {
-            return false;
+            throw new CannotOperateEventException('操作権限がありません。');
         }
-
-        return $this->event_create_user_id === $user->getAuthIdentifier();
+        if($this->event_create_user_id !== $user->getAuthIdentifier()) {
+            throw new CannotOperateEventException('操作権限がありません');
+        }
     }
 
     /**
@@ -248,7 +250,6 @@ class Event extends Model
      */
     public function canUserShow(User|Authenticatable|null $user): bool
     {
-
         // イベントの作成者であれば表示可能
         if($this->event_create_user_id === $user?->getAuthIdentifier()) {
             \Log::info('event_create_user_id');
@@ -257,15 +258,14 @@ class Event extends Model
 
         // イベントが強制的に非公開にされているか
         if($this->is_forced_hidden) {
-            return false;
+            throw new EventNotPublishedException('イベントは運営者によって強制的に非公開にされています。');
         }
 
         // イベントが公開されているか
         if (isset($this->published_at) && $this->published_at->isPast()) {
             return true;
         }
-
-        return false;
+        throw new EventNotPublishedException('イベントはまだ公開されていません。');
     }
 
     /**

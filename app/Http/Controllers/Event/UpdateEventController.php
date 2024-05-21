@@ -20,9 +20,7 @@ class UpdateEventController extends Controller
     public function __invoke(EventUpdateRequest $request, $alias)
     {
         $event = $this->eventService->getEventDetailByAlias($alias);
-        if (! $event->canUserOperate(Auth::user())) {
-            throw new CannotOperateEventException();
-        }
+        $event->canUserOperate(Auth::user());
         $attributes = $request->getAttributes();
         $event = $this->eventService->updateEventByAlias($alias, $attributes);
 
