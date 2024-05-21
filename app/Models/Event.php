@@ -242,18 +242,30 @@ class Event extends Model
      * 指定されたユーザーがこのイベントを表示可能かどうかを判定します。
      *
      * 条件:
-     * - イベントが公開されている（published_atが過去の日時）
      * - イベントが非公開の場合、イベントの作成者であれば表示可能
+     * - イベントが強制的に非公開にされているか
+     * - イベントが公開されている（published_atが過去の日時）
      */
     public function canUserShow(User|Authenticatable|null $user): bool
     {
+
+        // イベントの作成者であれば表示可能
+        if($this->event_create_user_id === $user?->getAuthIdentifier()) {
+            \Log::info('event_create_user_id');
+            return true;
+        }
+
+        // イベントが強制的に非公開にされているか
+        if($this->is_forced_hidden) {
+            return false;
+        }
+
         // イベントが公開されているか
         if (isset($this->published_at) && $this->published_at->isPast()) {
             return true;
         }
 
-        // ログインユーザーがイベントの作成者か
-        return $this->event_create_user_id === $user?->getAuthIdentifier();
+        return false;
     }
 
     /**

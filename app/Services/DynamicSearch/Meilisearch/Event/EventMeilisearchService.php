@@ -49,15 +49,21 @@ class EventMeilisearchService
         'instance' => EventFilterInstance::class,
     ];
 
+    public function getPublishedFilter(): string
+    {
+        return 'is_forced_hidden = false AND published_at < ' . Carbon::now()->getTimestamp();
+    }
+
     public function getPublishedEventSearch(SearchParams $params): LengthAwarePaginator
     {
         $queryParams = $this->createQueryParams($params->queryParams);
-        $filterString = $this->makeFilter($queryParams);
+        $queryfilterString = $this->makeFilter($queryParams);
+        $publishedFilter = $this->getPublishedFilter();
 
         return Event::search(
             query: $params->text,
-            callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
-                $options['filter'] = 'published_at < ' . Carbon::now()->getTimestamp() . $filterString;
+            callback: function (Indexes $meilisearch, $query, array $options) use ($queryfilterString, $publishedFilter) {
+                $options['filter'] = $publishedFilter . $queryfilterString;
                 Log::info($options);
                 return $meilisearch->rawSearch($query, $options);
             })
