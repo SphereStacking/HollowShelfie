@@ -1,15 +1,18 @@
 <?php
 
-namespace Laravel\Jetstream\Http\Controllers\Inertia;
+namespace App\Http\Controllers\Jetstream;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Laravel\Jetstream\Actions\UpdateTeamMemberRole;
-use Laravel\Jetstream\Contracts\AddsTeamMembers;
-use Laravel\Jetstream\Contracts\InvitesTeamMembers;
-use Laravel\Jetstream\Contracts\RemovesTeamMembers;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
+use Laravel\Jetstream\Contracts\AddsTeamMembers;
+use Laravel\Jetstream\Actions\UpdateTeamMemberRole;
+use Laravel\Jetstream\Contracts\InvitesTeamMembers;
+use Laravel\Jetstream\Contracts\RemovesTeamMembers;
 
 class TeamMemberController extends Controller
 {
@@ -17,13 +20,11 @@ class TeamMemberController extends Controller
      * Add a new team member to a team.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $teamId
+     * @param  Team  $team
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request, $teamId)
+    public function store(Request $request,Team $team)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
-
         if (Features::sendsTeamInvitations()) {
             app(InvitesTeamMembers::class)->invite(
                 $request->user(),
@@ -47,16 +48,17 @@ class TeamMemberController extends Controller
      * Update the given team member's role.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $teamId
-     * @param  int  $userId
+     * @param  Team  $team
+     * @param  User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $teamId, $userId)
+    public function update(Request $request, Team $team,User $user)
     {
+        Log::info('update');
         app(UpdateTeamMemberRole::class)->update(
             $request->user(),
-            Jetstream::newTeamModel()->findOrFail($teamId),
-            $userId,
+            $team,
+            $user->id,
             $request->role
         );
 
@@ -67,18 +69,17 @@ class TeamMemberController extends Controller
      * Remove the given user from the given team.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $teamId
-     * @param  int  $userId
+     * @param  Team  $team
+     * @param  User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, $teamId, $userId)
+    public function destroy(Request $request, Team $team, User $user)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
         app(RemovesTeamMembers::class)->remove(
             $request->user(),
             $team,
-            $user = Jetstream::findUserByIdOrFail($userId)
+            $user
         );
 
         if ($request->user()->id === $user->id) {

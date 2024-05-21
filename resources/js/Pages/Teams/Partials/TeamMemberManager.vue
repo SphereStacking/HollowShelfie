@@ -40,7 +40,7 @@ const confirmingLeavingTeam = ref(false)
 const teamMemberBeingRemoved = ref(null)
 
 const addTeamMember = () => {
-  addTeamMemberForm.post(route('team-members.store', props.team), {
+  addTeamMemberForm.post(route('team-members.store', props.team.screen_name), {
     errorBag: 'addTeamMember',
     preserveScroll: true,
     onSuccess: () => addTeamMemberForm.reset(),
@@ -60,7 +60,7 @@ const manageRole = (teamMember) => {
 }
 
 const updateRole = () => {
-  updateRoleForm.put(route('team-members.update', [props.team, managingRoleFor.value]), {
+  updateRoleForm.put(route('team-members.update', [props.team.screen_name, managingRoleFor.value]), {
     preserveScroll: true,
     onSuccess: () => currentlyManagingRole.value = false,
   })
@@ -71,7 +71,7 @@ const confirmLeavingTeam = () => {
 }
 
 const leaveTeam = () => {
-  leaveTeamForm.delete(route('team-members.destroy', [props.team, page.props.auth.user]))
+  leaveTeamForm.delete(route('team-members.destroy', [props.team.screen_name, page.props.auth.user.id]))
 }
 
 const confirmTeamMemberRemoval = (teamMember) => {
@@ -79,7 +79,7 @@ const confirmTeamMemberRemoval = (teamMember) => {
 }
 
 const removeTeamMember = () => {
-  removeTeamMemberForm.delete(route('team-members.destroy', [props.team, teamMemberBeingRemoved.value]), {
+  removeTeamMemberForm.delete(route('team-members.destroy', [props.team.screen_name, teamMemberBeingRemoved.value]), {
     errorBag: 'removeTeamMember',
     preserveScroll: true,
     preserveState: true,
@@ -146,7 +146,7 @@ const displayableRole = (role) => {
                     </div>
 
                     <svg
-                      v-if="addTeamMemberForm.role == role.key" class="ml-2 h-5 w-5 text-success" xmlns="http://www.w3.org/2000/svg"
+                      v-if="addTeamMemberForm.role == role.key" class="ml-2 size-5 text-success" xmlns="http://www.w3.org/2000/svg"
                       fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                       stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -229,7 +229,7 @@ const displayableRole = (role) => {
           <div class="space-y-6">
             <div v-for="user in team.users" :key="user.id" class="flex items-center justify-between">
               <div class="flex items-center">
-                <img class="h-8 w-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name">
+                <img class="size-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name">
                 <div class="ml-4">
                   {{ user.name }}
                 </div>
@@ -294,7 +294,7 @@ const displayableRole = (role) => {
                   </div>
 
                   <svg
-                    v-if="updateRoleForm.role == role.key" class="ml-2 h-5 w-5 text-success" xmlns="http://www.w3.org/2000/svg"
+                    v-if="updateRoleForm.role == role.key" class="ml-2 size-5 text-success" xmlns="http://www.w3.org/2000/svg"
                     fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

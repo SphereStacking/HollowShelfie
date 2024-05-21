@@ -1,16 +1,17 @@
 <?php
 
-namespace Laravel\Jetstream\Http\Controllers\Inertia;
+namespace App\Http\Controllers\Jetstream;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
+use Laravel\Jetstream\Jetstream;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Jetstream\Actions\ValidateTeamDeletion;
+use Laravel\Jetstream\RedirectsActions;
 use Laravel\Jetstream\Contracts\CreatesTeams;
 use Laravel\Jetstream\Contracts\DeletesTeams;
 use Laravel\Jetstream\Contracts\UpdatesTeamNames;
-use Laravel\Jetstream\Jetstream;
-use Laravel\Jetstream\RedirectsActions;
+use Laravel\Jetstream\Actions\ValidateTeamDeletion;
 
 class TeamController extends Controller
 {
@@ -20,13 +21,11 @@ class TeamController extends Controller
      * Show the team management screen.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $teamId
+     * @param  Team  $team
      * @return \Inertia\Response
      */
-    public function show(Request $request, $teamId)
+    public function show(Request $request, Team $team)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
-
         Gate::authorize('view', $team);
 
         return Jetstream::inertia()->render($request, 'Teams/Show', [
@@ -76,12 +75,11 @@ class TeamController extends Controller
      * Update the given team's name.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $teamId
+     * @param  Team  $team
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $teamId)
+    public function update(Request $request, Team $team)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
         app(UpdatesTeamNames::class)->update($request->user(), $team, $request->all());
 
@@ -92,12 +90,11 @@ class TeamController extends Controller
      * Delete the given team.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $teamId
+     * @param  Team  $team
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, $teamId)
+    public function destroy(Request $request, Team $team)
     {
-        $team = Jetstream::newTeamModel()->findOrFail($teamId);
 
         app(ValidateTeamDeletion::class)->validate($request->user(), $team);
 
