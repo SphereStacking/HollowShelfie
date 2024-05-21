@@ -26,6 +26,8 @@ class EventResource extends Resource
         return $form
             ->schema([
                 Forms\Components\DateTimePicker::make('published_at'),
+                Forms\Components\Toggle::make('is_forced_hidden')
+                    ->required(),
                 Forms\Components\Textarea::make('title')
                     ->required()
                     ->columnSpanFull(),
@@ -37,10 +39,6 @@ class EventResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('draft'),
                 Forms\Components\TextInput::make('alias')
                     ->required()
                     ->maxLength(255),
@@ -66,6 +64,8 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\IconColumn::make('is_forced_hidden')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('event_create_user.name')
                     ->numeric()
                     ->sortable(),
@@ -75,8 +75,6 @@ class EventResource extends Resource
                 Tables\Columns\TextColumn::make('end_date')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('alias')
                     ->searchable(),
             ])
