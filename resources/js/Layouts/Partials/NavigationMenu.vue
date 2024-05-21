@@ -120,7 +120,7 @@ const headerButtons = [
                   </div>
                   <!-- Team Settings -->
 
-                  <DropdownLink v-if="isTeam" :href="route('teams.show', auth_user.current_team)">
+                  <DropdownLink v-if="isTeam" :href="route('teams.show', auth_user.current_team.screen_name)">
                     {{ $t('Team Settings') }}
                   </DropdownLink>
 
@@ -140,7 +140,7 @@ const headerButtons = [
                       <DropdownLink @click="switchToTeam(team)">
                         <div class="flex items-center">
                           <svg
-                            v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-success"
+                            v-if="team.id == auth_user.current_team_id" class="mr-2 size-5 text-success"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5"
                             stroke="currentColor">
@@ -166,7 +166,7 @@ const headerButtons = [
                 <button
                   class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
                   <img
-                    class="h-8 w-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                    class="size-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
                     :alt="auth_user.name">
                 </button>
               </template>
@@ -232,7 +232,7 @@ const headerButtons = [
             <template v-if="isLogin">
               <div class="mr-3 shrink-0">
                 <img
-                  class="h-10 w-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
+                  class="size-10 rounded-full object-cover" :src="auth_user.profile_photo_url"
                   :alt="auth_user.name">
               </div>
 
@@ -299,7 +299,7 @@ const headerButtons = [
                   <ResponsiveNavLink class="ml-2 rounded-l-md" @click="switchToTeam(team)">
                     <div class="flex items-center">
                       <svg
-                        v-if="team.id == auth_user.current_team_id" class="mr-2 h-5 w-5 text-success"
+                        v-if="team.id == auth_user.current_team_id" class="mr-2 size-5 text-success"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor">
