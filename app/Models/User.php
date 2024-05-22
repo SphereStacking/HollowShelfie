@@ -87,7 +87,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     protected $appends = [
         'profile_photo_url',
-        'profile_url',
     ];
 
 
@@ -126,7 +125,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
      */
     public function getProfileUrlAttribute(): string
     {
-        return route('user.profile.show', $this->screen_name);
+        return route('user.profile.show', ['user' => $this->screen_name]);
     }
 
     /**
