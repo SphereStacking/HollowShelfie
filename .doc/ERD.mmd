@@ -1,0 +1,308 @@
+erDiagram
+    migrations {
+        integer id
+        character_varying migration
+        integer batch
+    }
+    time_table_performers {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint event_time_table_id
+        character_varying performable_type
+        bigint performable_id
+    }
+    social_accounts {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint user_id
+        character_varying provider
+        character_varying provider_id
+    }
+    views {
+        name table_catalog
+        name table_schema
+        name table_name
+        character_varying view_definition
+        character_varying check_option
+        character_varying is_updatable
+        character_varying is_insertable_into
+        character_varying is_trigger_updatable
+        character_varying is_trigger_deletable
+        character_varying is_trigger_insertable_into
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying viewable_type
+        bigint viewable_id
+        bigint count
+    }
+    role_user {
+        bigint id
+        bigint user_id
+        bigint role_id
+    }
+    roles {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying name "名前"
+        character_varying description "説明"
+    }
+    permission_role {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint role_id
+        bigint permission_id
+    }
+    permissions {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying name "名前"
+        character_varying description "説明"
+        text permission_denied_message "拒否メッセージ"
+    }
+    password_reset_tokens {
+        character_varying email
+        character_varying token
+        timestamp_without_time_zone created_at
+    }
+    users {
+        bigint id
+        character_varying name
+        character_varying email
+        timestamp_without_time_zone email_verified_at
+        character_varying password
+        character_varying remember_token
+        bigint current_team_id
+        text profile_photo_path
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        text two_factor_secret
+        text two_factor_recovery_codes
+        timestamp_without_time_zone two_factor_confirmed_at
+        character_varying screen_name
+    }
+    telescope_entries {
+        bigint sequence
+        uuid uuid
+        uuid batch_id
+        character_varying family_hash
+        boolean should_display_on_index
+        character_varying type
+        text content
+        timestamp_without_time_zone created_at
+    }
+    telescope_entries_tags {
+        uuid entry_uuid
+        character_varying tag
+    }
+    telescope_monitoring {
+        character_varying tag
+    }
+    failed_jobs {
+        bigint id
+        character_varying uuid
+        text connection
+        text queue
+        text payload
+        text exception
+        timestamp_without_time_zone failed_at
+    }
+    personal_access_tokens {
+        bigint id
+        character_varying tokenable_type
+        bigint tokenable_id
+        character_varying name
+        character_varying token
+        text abilities
+        timestamp_without_time_zone last_used_at
+        timestamp_without_time_zone expires_at
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+    }
+    team_user {
+        bigint id
+        bigint team_id
+        bigint user_id
+        character_varying role
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+    }
+    team_invitations {
+        bigint id
+        bigint team_id
+        character_varying email
+        character_varying role
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+    }
+    connected_accounts {
+        bigint id
+        bigint user_id
+        character_varying provider
+        character_varying provider_id
+        character_varying name
+        character_varying nickname
+        character_varying email
+        character_varying telephone
+        text avatar_path
+        character_varying token
+        character_varying secret
+        character_varying refresh_token
+        timestamp_without_time_zone expires_at
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+    }
+    sessions {
+        character_varying id
+        bigint user_id
+        character_varying ip_address
+        text user_agent
+        text payload
+        integer last_activity
+    }
+    seed_flags {
+        bigint id
+        character_varying name
+    }
+    teams {
+        bigint id
+        bigint user_id
+        character_varying name
+        boolean personal_team
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying team_logo_path
+        character_varying screen_name "公開表示名"
+    }
+    tags {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying name "タグ名"
+    }
+    taggables {
+        bigint id
+        bigint tag_id
+        character_varying taggable_type
+        bigint taggable_id
+    }
+    event_user_bookmark {
+        bigint id
+        bigint user_id
+        bigint event_id
+    }
+    events {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        timestamp_without_time_zone deleted_at
+        timestamp_without_time_zone published_at "公開日時"
+        boolean is_forced_hidden "強制非表示フラグ"
+        text title "タイトル"
+        bigint event_create_user_id "イベント作成者ID"
+        timestamp_without_time_zone start_date "開始日時"
+        timestamp_without_time_zone end_date "終了日時"
+        text description "説明"
+        character_varying alias "エイリアス"
+    }
+    files {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying path "パス"
+        character_varying name "名前"
+        character_varying original_name "元名"
+        character_varying type "種類"
+        bigint fileable_id "モデルのID"
+        character_varying fileable_type "モデルの種類"
+    }
+    event_user_good {
+        bigint id
+        bigint user_id
+        bigint event_id
+    }
+    category_event {
+        bigint id
+        bigint event_id
+        bigint category_id
+    }
+    categories {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying name "カテゴリ名"
+    }
+    instance_types {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying name
+    }
+    instances {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint event_id
+        bigint instance_type_id
+        text access_url "アクセスURL"
+        text display_name "表示名"
+    }
+    event_time_tables {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint event_id
+        text description "説明"
+        timestamp_without_time_zone start_date "開始日時"
+        timestamp_without_time_zone end_date "終了日時"
+    }
+    event_organizers {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint event_id
+        character_varying event_organizeble_type
+        bigint event_organizeble_id
+    }
+    links {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        character_varying link "リンク"
+        character_varying label "ラベル"
+        character_varying linkable_type
+        bigint linkable_id
+    }
+    followables {
+        bigint id
+        timestamp_without_time_zone created_at
+        timestamp_without_time_zone updated_at
+        bigint user_id
+        character_varying followable_type
+        bigint followable_id
+    }
+    telescope_entries_tags |o--|{ telescope_entries : "entry_uuid -> uuid"
+    team_invitations |o--o| teams : "team_id -> id"
+    connected_accounts }o--o{ users : "user_id -> id"
+    taggables }o--o{ tags : "tag_id -> id"
+    event_user_bookmark }o--o{ users : "user_id -> id"
+    event_user_bookmark }o--o{ events : "event_id -> id"
+    event_user_good }o--o{ users : "user_id -> id"
+    event_user_good }o--o{ events : "event_id -> id"
+    category_event }o--o{ events : "event_id -> id"
+    category_event }o--o{ categories : "category_id -> id"
+    instances }o--o{ events : "event_id -> id"
+    event_time_tables }o--o{ events : "event_id -> id"
+    event_organizers }o--o{ events : "event_id -> id"
+    followables }o--o{ users : "user_id -> id"
+    time_table_performers }o--o{ event_time_tables : "event_time_table_id -> id"
+    social_accounts }o--o{ users : "user_id -> id"
+    role_user }o--o{ users : "user_id -> id"
+    role_user }o--o{ roles : "role_id -> id"
+    permission_role }o--o{ roles : "role_id -> id"
+    permission_role }o--o{ permissions : "permission_id -> id"
