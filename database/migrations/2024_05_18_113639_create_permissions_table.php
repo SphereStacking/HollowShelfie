@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
-            $table->string('description');
-            $table->text('permission_denied_message')->nullable();
+            $table->string('name')->comment('名前');
+            $table->string('description')->comment('説明');
+            $table->text('permission_denied_message')->nullable()->comment('拒否メッセージ');
         });
     }
 

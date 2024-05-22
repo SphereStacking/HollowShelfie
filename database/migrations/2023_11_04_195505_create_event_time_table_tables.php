@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
-            $table->text('description')->nullable();
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
+            $table->text('description')->nullable()->comment('説明');
+            $table->timestamp('start_date')->nullable()->comment('開始日時');
+            $table->timestamp('end_date')->nullable()->comment('終了日時');
         });
     }
 

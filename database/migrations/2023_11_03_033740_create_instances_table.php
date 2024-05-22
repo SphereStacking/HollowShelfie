@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
             $table->foreignId('instance_type_id')->nullable();
-            $table->text('access_url', 2048)->nullable();
-            $table->text('display_name')->nullable();
+            $table->text('access_url', 2048)->nullable()->comment('アクセスURL');
+            $table->text('display_name')->nullable()->comment('表示名');
         });
     }
 

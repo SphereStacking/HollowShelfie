@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('event_time_table_id')->constrained()->cascadeOnDelete();
-            $table->morphs('performable'); // パフォーマーのモデルのクラス名
+            $table->morphs('performable');
         });
     }
 
