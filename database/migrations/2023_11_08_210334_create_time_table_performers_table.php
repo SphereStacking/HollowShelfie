@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('time_table_performers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('event_time_table_id');
-            $table->morphs('performable'); // パフォーマーのモデルのクラス名
+            $table->foreignId('event_time_table_id')->constrained()->cascadeOnDelete();
+            $table->morphs('performable');
         });
     }
 

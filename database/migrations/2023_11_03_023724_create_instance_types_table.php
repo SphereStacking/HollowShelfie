@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('instance_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('name');
+            $table->string('name')->comment('名前');
         });
     }
 

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('views', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->morphs('viewable'); // ポリモーフィックリレーション用のカラム
-            $table->unsignedBigInteger('count')->nullable(); // オプション
+            $table->morphs('viewable');
+            $table->unsignedBigInteger('count')->nullable();
 
         });
     }

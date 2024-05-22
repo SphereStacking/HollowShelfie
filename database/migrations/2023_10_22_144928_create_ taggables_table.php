@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('taggables', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tag_id')->constrained(); // 外部キー制約を追加
-            $table->morphs('taggable'); // ポリモーフィックリレーションのためのフィールドを追加
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+            $table->morphs('taggable');
         });
     }
 

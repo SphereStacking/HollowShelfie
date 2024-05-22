@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('screen_name', 14)->unique();
+            $table->string('screen_name', 14)->unique()->comment('公開表示名');
         });
     }
 
