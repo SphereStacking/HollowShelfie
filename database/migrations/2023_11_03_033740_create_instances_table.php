@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('instances', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('event_id');
-            $table->integer('instance_type_id')->nullable();
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('instance_type_id')->nullable();
             $table->text('access_url', 2048)->nullable();
             $table->text('display_name')->nullable();
         });

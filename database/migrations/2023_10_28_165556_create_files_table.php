@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('original_name');
             $table->string('type');
-            $table->unsignedBigInteger('fileable_id'); // ポリモーフィック関連
-            $table->string('fileable_type'); // ポリモーフィック関連
+            $table->unsignedBigInteger('fileable_id');
+            $table->string('fileable_type');
         });
     }
 

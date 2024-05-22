@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('event_time_tables', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('event_id');
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
             $table->text('description')->nullable();
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
