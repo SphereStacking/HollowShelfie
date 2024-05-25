@@ -1,15 +1,16 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Initialize;
 
 use App\Models\Permission;
+use Illuminate\Database\Seeder;
 
-class InitPermissionSeeder extends AbstractOnceSeeder
+class PermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function runOnce(): void
+    public function run(): void
     {
         $InitPermissions = [
             [

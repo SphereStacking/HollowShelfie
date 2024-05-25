@@ -1,15 +1,16 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Initialize;
 
 use App\Models\InstanceType;
+use Illuminate\Database\Seeder;
 
-class InitInstanceTypeSeeder extends AbstractOnceSeeder
+class InstanceTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function runOnce(): void
+    public function run(): void
     {
         $InitItems = [
             '現実',

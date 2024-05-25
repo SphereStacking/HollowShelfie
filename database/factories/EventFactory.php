@@ -3,12 +3,15 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
+use App\Models\Tag;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Event;
+use App\Models\Category;
 use App\Models\Instance;
 use App\Models\EventTimeTable;
 use App\Models\TimeTablePerformers;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,6 +30,7 @@ class EventFactory extends Factory
         $endDateTime = Carbon::instance($dateTime)->addHours(rand(2, 6))->format('Ymd\THis\Z');
         return [
             'event_create_user_id' => User::inRandomOrder()->first()->id,
+            'is_forced_hidden' => $this->faker->boolean(20),
             'title' => $this->faker->text(20),
             'start_date' => $formattedDateTime,
             'end_date' => $endDateTime,
@@ -45,7 +49,60 @@ class EventFactory extends Factory
         ];
     }
 
-    public function withInstances()
+    public function withOrganizer(callable $callback = null)
+    {
+        // データベースに主催者データを一括挿入
+        return $this->afterCreating(function (Event $event) {
+            $organizers = [];
+            $count = rand(1, 4);
+            for ($i = 0; $i < $count; $i++) {
+                $modelClass = rand(0, 1) ? User::class : Team::class;
+                $organizerData = $this->createOrganizerData($event->id, $modelClass);
+                // $organizerData が null でない場合にのみ、$organizersData に追加する
+                if ($organizerData !== null) {
+                    $organizers[] = new EventOrganizer($organizerData);
+                }
+            }
+            $this->organizers()->saveMany($organizers);
+
+        });
+    }
+
+    public function withBookmarkUser(callable $callback = null)
+    {
+        return $this->afterCreating(function (Event $event) {
+            $id = User::inRandomOrder()->limit(rand(1, 100))->pluck('id');
+            $event->bookmark_users()->syncWithoutDetaching($id);
+        });
+    }
+
+    public function withTag(callable $callback = null)
+    {
+        return $this->afterCreating(function (Event $event) use ($callback) {
+            // 既存のタグをランダムに選択してアタッチ
+            $tagIds = Tag::inRandomOrder()->limit(rand(1, 4))->pluck('id');
+            $event->tags()->syncWithoutDetaching($tagIds);
+        });
+    }
+
+
+    public function withGoodUser(callable $callback = null)
+    {
+        return $this->afterCreating(function (Event $event) {
+            $id = User::inRandomOrder()->limit(rand(1, 100))->pluck('id');
+            $event->good_users()->syncWithoutDetaching($id);
+        });
+    }
+
+    public function withCategory(callable $callback = null)
+    {
+        return $this->afterCreating(function (Event $event) {
+            $id = Category::inRandomOrder()->limit(rand(1, 3))->pluck('id');
+            $event->categories()->syncWithoutDetaching($id);
+        });
+    }
+
+    public function withInstances(callable $callback = null)
     {
         return $this->afterCreating(function (Event $event) {
             $numberOfInstances = rand(0, 3); // 0から3のランダムな数
@@ -56,14 +113,16 @@ class EventFactory extends Factory
     }
 
 
-    public function withFile()
+    public function withFile(callable $callback = null)
     {
         return $this->afterCreating(function (Event $event) {
-            $event->files()->save(File::factory()->make());
+            $numberOfFiles = rand(1, 3);
+            $files = File::factory()->count($numberOfFiles)->make();
+            $event->files()->saveMany($files);
         });
     }
 
-    public function withEventTimeTable()
+    public function withEventTimeTable(callable $callback = null)
     {
         return $this->afterCreating(function (Event $event) {
 

@@ -2,6 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\File;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,8 +27,13 @@ class FileFactory extends Factory
      */
     public function definition(): array
     {
+        $files = Storage::disk('public')->files('dummy');
+        $randomFile = Arr::random($files); // ランダムに一つ選択
+        $fileName = basename($randomFile); // ファイル名のみを取得
         return [
-            'name' => 'uploads/dummy/path/'.Str::random(10).'.jpg',
+            'path' => 'dummy',
+            'name' => $fileName,
+            'original_name' => $fileName,
             'type' => 'image/jpeg',
         ];
     }

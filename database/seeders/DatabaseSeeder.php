@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Event;
+use App\Models\Team;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Followable;
 use Illuminate\Database\Seeder;
+use Database\Seeders\Initialize;
 use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
@@ -23,26 +26,24 @@ class DatabaseSeeder extends Seeder
         Artisan::call('scout:flush', ['model' => 'App\\Models\\Tag']);
 
         $this->call([
-            AdminUserSeeder::class,
+            Initialize\CategorySeeder::class,
+            Initialize\InstanceTypeSeeder::class,
+            Initialize\PermissionSeeder::class,
+            Initialize\RoleSeeder::class,
         ]);
 
-        //default値が存在するseeder
-        //seed_flagsをみて走るか来まる
-        $this->call([
-            InitCategorySeeder::class,
-            InitTagSeeder::class,
-            InitInstanceTypeSeeder::class,
-            InitPermissionSeeder::class,
-            InitRoleSeeder::class,
-        ]);
-
-        User::factory(100)->create();
-        Event::factory(500)->withEventTimeTable()->withInstances()->create();
-        $this->call([
-            EventRelationSeeder::class,
-            TeamRelationSeeder::class,
-            UserRelationSeeder::class,
-        ]);
+        User::factory(20)->withLink()->withTag()->create();
+        Team::factory(10)->withLink()->withTag()->create();
+        Followable::factory(10)->create();
+        Event::factory(100)
+            ->withTag()
+            ->withFile()
+            ->withEventTimeTable()
+            ->withInstances()
+            ->withGoodUser()
+            ->withBookmarkUser()
+            ->withCategory()
+            ->create();
 
         Artisan::call('scout:import', ['model' => 'App\\Models\\Event']);
         Artisan::call('scout:import', ['model' => 'App\\Models\\User']);
