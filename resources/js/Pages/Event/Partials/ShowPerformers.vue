@@ -14,12 +14,11 @@ defineProps({
       <IconTypeMapper type="performer" />
       <div>performers</div>
     </div>
-    <div class="flex w-full justify-around rounded-xl bg-base-200 p-2">
-      <a
+    <div class="flex w-full flex-wrap justify-center gap-2 rounded-xl bg-base-200 p-2">
+      <AvatarLink
         v-for="(performer, index ) in performers" :key="index" :href="performer.profile_url"
-        class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name">
-        <img :src="performer.image_url" class="h-10 rounded-md">
-      </a>
+        size="size-10"
+        :image-url="performer.image_url" :name="performer.name" />
     </div>
   </div>
 </template>

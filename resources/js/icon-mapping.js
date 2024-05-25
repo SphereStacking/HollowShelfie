@@ -327,6 +327,9 @@ export const ItemsConfig = {
   notification: {
     icon: 'mdi:bell',
   },
+  clock: {
+    icon: 'mdi:clock-time-four',
+  },
   default: {
     icon: '',
   }

@@ -113,12 +113,9 @@ const startDate = (event) => {
                   <div>organizers</div>
                 </div>
                 <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-300 p-2">
-                  <a
+                  <AvatarLink
                     v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
-                    class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
-                    :data-tip="organizer.name">
-                    <img :src="organizer.image_url">
-                  </a>
+                    :image-url="organizer.image_url" :name="organizer.name" />
                 </div>
               </div>
               <!-- performers -->
@@ -128,12 +125,9 @@ const startDate = (event) => {
                   <div>performers</div>
                 </div>
                 <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-300 p-2">
-                  <a
+                  <AvatarLink
                     v-for="(performer, index ) in event.performers" :key="index" :href="performer.profile_url"
-                    class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
-                    :data-tip="performer.name">
-                    <img :src="performer.image_url">
-                  </a>
+                    :image-url="performer.image_url" :name="performer.name" />
                 </div>
               </div>
               <button class=" btn btn-ghost btn-outline btn-sm w-full" @click="getEventShow(event)">
