@@ -172,10 +172,14 @@ const snsShare = {
                   <AppName />を支援する!
                 </div>
               </template>
-              <div>
-                <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.fanbox">pixiv fanbox </a>
-                <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.patreon">patreon </a>
-              </div>
+              <ul class="list-none">
+                <li>
+                  <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.fanbox">fanbox </a>
+                </li>
+                <li>
+                  <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.patreon">patreon </a>
+                </li>
+              </ul>
             </Card>
           </div>
         </aside>
