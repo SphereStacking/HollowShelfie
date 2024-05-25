@@ -9,6 +9,11 @@ class TimeTablePerformers extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'performable_type',
+        'performable_id',
+    ];
+
     public function timeTable()
     {
         return $this->belongsTo(EventTimeTable::class);
