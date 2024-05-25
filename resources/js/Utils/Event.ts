@@ -1,4 +1,4 @@
-import { getDurationBetweenDates, formattedToBrowserTz } from '@/Utill/Date'
+import { getDurationBetweenDates, formattedToBrowserTz } from '@/Utils/Date'
 
 export function getEventPeriod(startDate: string, endDate: string) {
   if (!startDate || !endDate) {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { format, addHours, eachDayOfInterval} from 'date-fns'
-import { parseToBrowserTz } from '@/Utill/Date'
+import { parseToBrowserTz } from '@/Utils/Date'
 
 const props = defineProps({
   columnsPerHour: {

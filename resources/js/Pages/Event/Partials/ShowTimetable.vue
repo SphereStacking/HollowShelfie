@@ -1,5 +1,5 @@
 <script setup>
-import { formattedToBrowserTz} from '@/Utill/Date'
+import { formattedToBrowserTz} from '@/Utils/Date'
 
 defineProps({
   timeTable: {

@@ -1,5 +1,5 @@
 <script setup>
-import { createCalendarEvent } from '@/Utill/CreateCalendarEvent'
+import { createCalendarEvent } from '@/Utils/CreateCalendarEvent'
 
 const props = defineProps({
   title: {

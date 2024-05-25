@@ -3,7 +3,7 @@
 
 import {useForm, usePage} from '@inertiajs/vue3'
 import { addMinutes } from 'date-fns'
-import { parseToBrowserTz } from '@/Utill/Date'
+import { parseToBrowserTz } from '@/Utils/Date'
 import SearchPerformersGridElement from '@/Components/Grid/SearchPerformersGridElement.vue'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
 import PickerDateElement from '@/Components/Form/PickerDateElement.vue'

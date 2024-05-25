@@ -2,7 +2,7 @@
 import { defineAsyncComponent, ref, computed, watchEffect } from 'vue'
 import VueDatepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-import { traverseObj } from '@/Sunbirds/Utility/Utill'
+import { traverseObj } from '@/Sunbirds/Utility/Utils'
 
 const TimePicker = defineAsyncComponent(() => import('./parts/TimePickerCustom.vue'))
 
