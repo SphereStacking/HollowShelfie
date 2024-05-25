@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { differenceInMinutes } from 'date-fns'
-import { getEventPeriod } from '@/Utill/Event'
-import { parseToBrowserTz } from '@/Utill/Date'
+import { getEventPeriod } from '@/Utils/Event'
+import { parseToBrowserTz } from '@/Utils/Date'
 import type { TimeLineItem } from '../EventTimeLineTypes'
 import { Good, SnsShare, Bookmark } from '../../EventOtherBtn/BtnDropDownOtherTypes'
 import { Link } from '@inertiajs/vue3'

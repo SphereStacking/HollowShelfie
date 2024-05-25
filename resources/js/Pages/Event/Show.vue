@@ -1,6 +1,6 @@
 <script setup>
-import { decomposeDate, getDurationBetweenDates } from '@/Utill/Date'
-import { getEventPeriod } from '@/Utill/Event'
+import { decomposeDate, getDurationBetweenDates } from '@/Utils/Date'
+import { getEventPeriod } from '@/Utils/Event'
 const props = defineProps({
   event: {
     type: String,

@@ -1,5 +1,5 @@
 <script setup>
-import { generateTwitterUrl } from '@/Utill/SnsShare'
+import { generateTwitterUrl } from '@/Utils/SnsShare'
 import { usePage } from '@inertiajs/vue3'
 const page = usePage()
 const appName = page.props.config.appName ?? null

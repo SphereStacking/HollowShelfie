@@ -1,8 +1,8 @@
 
 <script setup>
 import { Link, router} from '@inertiajs/vue3'
-import { getEventPeriod } from '@/Utill/Event'
-import { decomposeDate } from '@/Utill/Date'
+import { getEventPeriod } from '@/Utils/Event'
+import { decomposeDate } from '@/Utils/Date'
 import { getYear } from 'date-fns'
 const props = defineProps({
   event: {

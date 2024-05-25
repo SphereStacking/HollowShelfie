@@ -1,5 +1,5 @@
 <script setup>
-import { getEventPeriod } from '@/Utill/Event'
+import { getEventPeriod } from '@/Utils/Event'
 
 const props = defineProps({
   event: {
