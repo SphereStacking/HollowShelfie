@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
         Event::factory(100)
             ->withTag()
             ->withFile()
+            ->withOrganizer()
             ->withEventTimeTable()
             ->withInstances()
             ->withGoodUser()

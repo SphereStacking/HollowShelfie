@@ -5,10 +5,12 @@ namespace Database\Factories;
 use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\File;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Category;
 use App\Models\Instance;
+use App\Models\EventOrganizer;
 use App\Models\EventTimeTable;
 use App\Models\TimeTablePerformers;
 use Illuminate\Support\Facades\Storage;
@@ -57,13 +59,13 @@ class EventFactory extends Factory
             $count = rand(1, 4);
             for ($i = 0; $i < $count; $i++) {
                 $modelClass = rand(0, 1) ? User::class : Team::class;
-                $organizerData = $this->createOrganizerData($event->id, $modelClass);
-                // $organizerData が null でない場合にのみ、$organizersData に追加する
-                if ($organizerData !== null) {
-                    $organizers[] = new EventOrganizer($organizerData);
-                }
+                $organizers[] = EventOrganizer::factory()->create([
+                    'event_id' => $event->id,
+                    'event_organizeble_type' => $modelClass,
+                    'event_organizeble_id' => $modelClass::inRandomOrder()->first()->id
+                ]);
             }
-            $this->organizers()->saveMany($organizers);
+            $event->organizers()->saveMany($organizers);
 
         });
     }
