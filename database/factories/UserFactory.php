@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\ConnectedAccount;
+use App\Models\Tag;
+use App\Models\Link;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\ConnectedAccount;
 use JoelButcher\Socialstream\Providers;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Laravel\Jetstream\Features as JetstreamFeatures;
 
 /**
@@ -43,6 +45,26 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+
+    /**
+     * Indicate that the user should have links.
+     */
+    public function withLink(callable $callback = null): static
+    {
+        return $this->has(
+            Link::factory()->count(rand(1, 4))->when(is_callable($callback), $callback),
+            'links'
+        );
+    }
+
+    public function withTag(callable $callback = null): static
+    {
+        return $this->has(
+            Tag::factory()->count(rand(1, 4))->when(is_callable($callback), $callback),
+            'tags'
+        );
     }
 
     /**

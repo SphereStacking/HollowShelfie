@@ -2,19 +2,20 @@
 
 namespace Database\Factories;
 
+use App\Models\Followable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Follow>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Followable>
  */
-class FollowFactory extends Factory
+class FollowableFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Follow::class;
+    protected $model = Followable::class;
 
     /**
      * Define the model's default state.
@@ -30,8 +31,8 @@ class FollowFactory extends Factory
         ][rand(0, 1)];
 
         return [
-            'user_id' => \App\Models\User::factory(),
-            'followable_id' => $followable::factory(),
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
+            'followable_id' => $followable::inRandomOrder()->first()->id,
             'followable_type' => $followable,
         ];
     }
