@@ -90,6 +90,7 @@ class EventService
             $event->start_date = new Carbon($attributes['start_date'], $this->dateTimeZone);
             $event->end_date = new Carbon($attributes['end_date'], $this->dateTimeZone);
             $event->event_create_user_id = Auth::user()->id;
+            $event->published_at = $attributes['published_at'] ?? null;
             $event->save();
             $event->syncTagsByNames($attributes['tags'] ?? []);
             $event->syncCategoriesByNames($attributes['categories'] ?? []);

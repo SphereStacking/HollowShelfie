@@ -32,6 +32,7 @@ class EventUpdateRequest extends FormRequest
             'performers' => $this->input('performers') ?? [],
             'time_tables' => $this->input('time_tables') ?? [],
             'instances' => $this->input('instances') ?? [],
+            'published_at' => $this->input('published_at') ?? null,
         ];
     }
 
@@ -45,6 +46,7 @@ class EventUpdateRequest extends FormRequest
             'instances' => 'インスタンス',
             'instances.*.instance_type_id' => 'インスタンスのタイプ',
             'instances.*.display_name' => '表示ラベル',
+            'published_at' => '公開日',
         ];
     }
 
@@ -56,13 +58,14 @@ class EventUpdateRequest extends FormRequest
     public function rules(): array
     {
         //ドラフトのとき
-        if ($this->input('publish_at') == null) {
+        if ($this->input('published_at') == null) {
             return [];
         }
 
         //ドラフト以外
         return [
             'title' => 'required|string',
+            'published_at' => 'nullable|date',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'description' => 'required|string',
