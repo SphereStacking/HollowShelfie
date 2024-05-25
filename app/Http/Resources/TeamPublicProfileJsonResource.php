@@ -21,6 +21,21 @@ class TeamPublicProfileJsonResource extends JsonResource
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->team_logo_url,
                 'profile_url' => route('user.profile.show', $this->resource->id),
+                'owner' => [
+                    'profile_url' => $this->resource->owner->profile_url,
+                    'id' => $this->resource->owner->id,
+                    'image_url' => $this->resource->owner->profile_photo_url,
+                    'name' => $this->resource->owner->name,
+                ],
+                'members' => $this->resource->members->map(function ($member) {
+                    return [
+                        'profile_url' => $member->profile_url,
+                        'id' => $member->id,
+                        'image_url' => $member->profile_photo_url,
+                        'name' => $member->name,
+                    ];
+                }),
+
                 'location' => 'TODO',
                 'links' => $this->resource->links->map(function ($link) {
                     return [
