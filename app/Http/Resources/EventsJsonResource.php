@@ -27,7 +27,6 @@ class EventsJsonResource extends JsonResource
                 'status' => $item->status,
                 'good_count' => $item->good_count,
                 'short_good_count' => $item->short_good_count,
-                'event_timeline_status' => $item->event_timeline_status,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
                 'files' => $item->files->map(function ($file) {
@@ -40,8 +39,8 @@ class EventsJsonResource extends JsonResource
                     return [
                         'profile_url' => $organizeble->event_organizeble->profile_url,
                         'id' => $organizeble->event_organizeble->id,
-                        'type' => $organizeble->event_organizeble->type,
-                        'image_url' => $organizeble->event_organizeble->type === User::class
+                        'type' => $organizeble->event_organizeble_type,
+                        'image_url' => $organizeble->event_organizeble_type === User::class
                             ? $organizeble->event_organizeble->profile_photo_url
                             : $organizeble->event_organizeble->team_logo_url,
                         'name' => $organizeble->event_organizeble->name,

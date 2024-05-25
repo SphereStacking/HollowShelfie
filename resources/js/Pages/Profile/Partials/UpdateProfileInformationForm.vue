@@ -99,15 +99,19 @@ const clearPhotoFileInput = () => {
         <InputLabel for="photo" :value="$t('Photo')" />
 
         <!-- Current Profile Photo -->
-        <div v-show="! photoPreview" class="mt-2">
-          <img :src="user.profile_photo_url" :alt="user.name" class="h-20 w-20 rounded-full object-cover">
+        <div v-show="! photoPreview" class="avatar mt-2 ">
+          <div class="mask mask-squircle size-20">
+            <img :src="user.profile_photo_url" :alt="user.name">
+          </div>
         </div>
 
         <!-- New Profile Photo Preview -->
-        <div v-show="photoPreview" class="mt-2">
-          <span
-            class="block h-20 w-20 rounded-full bg-cover bg-center bg-no-repeat"
-            :style="'background-image: url(\'' + photoPreview + '\');'"></span>
+        <div v-show="photoPreview" class="avatar mt-2">
+          <div class="mask mask-squircle size-20">
+            <span
+              class="mask mask-squircle block size-20  bg-cover bg-center bg-no-repeat"
+              :style="'background-image: url(\'' + photoPreview + '\');'"></span>
+          </div>
         </div>
 
         <SecondaryButton class="mr-2 mt-2" type="button" @click.prevent="selectNewPhoto">

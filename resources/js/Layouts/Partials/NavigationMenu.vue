@@ -32,9 +32,9 @@ const logout = () => {
   router.post(route('logout'))
 }
 
-const auth_user = ref(page.props.auth.user ?? null)
-const isTeam = ref(auth_user.value?.current_team != null)
-const isLogin = ref(auth_user.value !== null)
+const auth_user = computed(() => page.props.auth.user ?? null)
+const isTeam = computed(() => auth_user.value?.current_team != null)
+const isLogin = computed(() => auth_user.value !== null)
 
 const headerButtons = [
   {
@@ -163,11 +163,12 @@ const headerButtons = [
           <div v-if="isLogin" class="relative">
             <Dropdown align="right" width="48">
               <template #trigger>
-                <button
-                  class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
-                  <img
-                    class="size-8 rounded-full object-cover" :src="auth_user.profile_photo_url"
-                    :alt="auth_user.name">
+                <button class="avatar btn btn-ghost flex p-0 hover:bg-transparent">
+                  <div class="mask mask-squircle size-10">
+                    <img
+                      class="" :src="auth_user.profile_photo_url"
+                      :alt="auth_user.name">
+                  </div>
                 </button>
               </template>
 
