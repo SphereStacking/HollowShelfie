@@ -169,7 +169,7 @@ const snsShare = {
             <Card class="w-full">
               <template #title>
                 <div class="flex w-full flex-row justify-between gap-2">
-                  支援する
+                  <AppName />を支援する!
                 </div>
               </template>
               <div>
