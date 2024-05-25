@@ -56,29 +56,6 @@ trait EventGetters
         return $this->categories->pluck('name')->toArray();
     }
 
-    /**
-     * 現在からイベント開始までの時間（時間単位）を取得
-     */
-    public function getEventTimelineStatusAttribute(): string
-    {
-        $now = new DateTimeImmutable();
-        $startDate = new DateTimeImmutable($this->start_date);
-        $endDate = new DateTimeImmutable($this->end_date);
-
-        $interval = $now->diff($startDate);
-
-        // 時間単位で返す（小数点2以下は切り捨て）
-        $hoursUntilStart = floor(($interval->h + ($interval->i / 60)) * 10) / 10;
-
-        // 1日以上ある場合は指定した形式で表示、1時間以上1日未満は時間で表示、1時間未満は分で表示
-        if ($interval->d >= 1) {
-            return $startDate->format('Y/m/d H:i');
-        } elseif ($hoursUntilStart >= 1) {
-            return $hoursUntilStart.'時間後';
-        } else {
-            return $interval->i.'分後';
-        }
-    }
 
     /**
      * 開始日をフォーマット

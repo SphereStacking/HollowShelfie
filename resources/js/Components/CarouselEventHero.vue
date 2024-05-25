@@ -2,8 +2,9 @@
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-
 import { router } from '@inertiajs/vue3'
+import { decomposeDate } from '@/Utill/Date'
+import { format } from 'date-fns'
 
 const props = defineProps({
   events: {
@@ -41,6 +42,10 @@ const getEventShow = (event) => {
     }
   })
 }
+const startDate = (event) => {
+  return decomposeDate(event.start_date)
+}
+
 </script>
 
 <template>
@@ -73,7 +78,7 @@ const getEventShow = (event) => {
             </div>
             <div class="flex flex-col items-start gap-2">
               <div class="flex w-full flex-row justify-between">
-                <div>{{ event.event_timeline_status }}</div>
+                <div> {{ format(new Date(event.start_date), 'yyyy/MM/dd HH:mm') }}</div>
                 <div class="flex gap-1">
                   <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
                   <BtnSwapEventGood

@@ -27,7 +27,6 @@ class EventsJsonResource extends JsonResource
                 'status' => $item->status,
                 'good_count' => $item->good_count,
                 'short_good_count' => $item->short_good_count,
-                'event_timeline_status' => $item->event_timeline_status,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
                 'files' => $item->files->map(function ($file) {

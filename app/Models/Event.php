@@ -51,7 +51,7 @@ class Event extends Model
     protected $appends = [
         'created_user',
         'is_bookmark', 'is_good', 'category_name', 'good_count',
-        'short_good_count', 'event_timeline_status',
+        'short_good_count',
     ];
 
     /**
