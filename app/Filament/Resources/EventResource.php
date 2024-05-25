@@ -2,16 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EventResource\Pages;
-use App\Filament\Resources\EventResource\RelationManagers;
-use App\Models\Event;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\Team;
+use App\Models\User;
 use Filament\Tables;
+use App\Models\Event;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\EventResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\EventResource\RelationManagers;
 
 class EventResource extends Resource
 {
@@ -27,6 +29,8 @@ class EventResource extends Resource
             ->schema([
                 Forms\Components\DateTimePicker::make('published_at'),
                 Forms\Components\Toggle::make('is_forced_hidden')
+                    ->onColor('danger')
+                    ->offColor('success')
                     ->required(),
                 Forms\Components\Textarea::make('title')
                     ->required()
@@ -42,6 +46,37 @@ class EventResource extends Resource
                 Forms\Components\TextInput::make('alias')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Section::make('relation')->schema([
+                    Forms\Components\Select::make('tags')
+                        ->multiple()
+                        ->relationship('tags', 'name')
+                        ->preload(),
+                    Forms\Components\Select::make('categories')
+                        ->multiple()
+                        ->relationship('categories', 'name')
+                        ->preload(),
+                    Forms\Components\Repeater::make('timeTables')
+                        ->relationship('event_time_tables')
+                        ->schema([
+                            Forms\Components\TextInput::make('description')
+                                ->required(),
+                            Forms\Components\DateTimePicker::make('start_date')
+                                ->required(),
+                            Forms\Components\DateTimePicker::make('end_date')
+                                ->required(),
+                            Forms\Components\Repeater::make('performers')
+                                ->relationship('performers')
+                                ->schema([
+                                    Forms\Components\MorphToSelect::make('performable')
+                                        ->types([
+                                            Forms\Components\MorphToSelect\Type::make(User::class)
+                                                ->titleAttribute('name'),
+                                            Forms\Components\MorphToSelect\Type::make(Team::class)
+                                                ->titleAttribute('name'),
+                                        ])
+                                ])
+                        ])
+                ]),
             ]);
     }
 
@@ -65,6 +100,10 @@ class EventResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_forced_hidden')
+                    ->falseIcon('heroicon-o-eye')
+                    ->falseColor('success')
+                    ->trueIcon('heroicon-o-eye-slash')
+                    ->trueColor('danger')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('event_create_user.name')
                     ->numeric()
@@ -76,6 +115,10 @@ class EventResource extends Resource
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('alias')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tags.name')
+                    ->label('Tags')
+                    ->sortable()
                     ->searchable(),
             ])
             ->filters([
