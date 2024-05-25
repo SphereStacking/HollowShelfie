@@ -2,7 +2,8 @@
 <script setup>
 import { Link, router} from '@inertiajs/vue3'
 import { getEventPeriod } from '@/Utill/Event'
-
+import { decomposeDate } from '@/Utill/Date'
+import { getYear } from 'date-fns'
 const props = defineProps({
   event: {
     type: Object,
@@ -40,6 +41,17 @@ const navigateToType = (searchValue, type) => {
     )
   )
 }
+const currentYear = new Date().getFullYear()
+const eventYear = computed(() => getYear(props.event.start_date))
+
+const startDate = computed(() => {
+  return decomposeDate(props.event.start_date)
+})
+
+const isCurrentYear = computed(() => {
+  return eventYear.value === currentYear
+})
+
 </script>
 
 <template>
@@ -106,8 +118,14 @@ const navigateToType = (searchValue, type) => {
             {{ $t(event.status) }}
           </button>
         </div>
-        <div>
-          {{ event.event_timeline_status }}
+        <div class="flex items-center gap-1">
+          <IconTypeMapper type="clock" />
+          <div v-if="isCurrentYear">
+            {{ startDate.month }}/{{ startDate.day }} {{ startDate.hour }}:{{ startDate.minute }}
+          </div>
+          <div v-else>
+            {{ startDate.year }}/{{ startDate.month }}/{{ startDate.day }} {{ startDate.hour }}:{{ startDate.minute }}
+          </div>
         </div>
       </div>
       <div class="mx-2 flex flex-wrap items-center gap-1 text-xs">

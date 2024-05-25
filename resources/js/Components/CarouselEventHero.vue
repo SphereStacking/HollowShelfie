@@ -2,8 +2,9 @@
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-
 import { router } from '@inertiajs/vue3'
+import { decomposeDate } from '@/Utill/Date'
+import { format } from 'date-fns'
 
 const props = defineProps({
   events: {
@@ -41,6 +42,10 @@ const getEventShow = (event) => {
     }
   })
 }
+const startDate = (event) => {
+  return decomposeDate(event.start_date)
+}
+
 </script>
 
 <template>
@@ -73,7 +78,7 @@ const getEventShow = (event) => {
             </div>
             <div class="flex flex-col items-start gap-2">
               <div class="flex w-full flex-row justify-between">
-                <div>{{ event.event_timeline_status }}</div>
+                <div> {{ format(new Date(event.start_date), 'yyyy/MM/dd HH:mm') }}</div>
                 <div class="flex gap-1">
                   <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
                   <BtnSwapEventGood
@@ -108,12 +113,9 @@ const getEventShow = (event) => {
                   <div>organizers</div>
                 </div>
                 <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-300 p-2">
-                  <a
+                  <AvatarLink
                     v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
-                    class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
-                    :data-tip="organizer.name">
-                    <img :src="organizer.image_url">
-                  </a>
+                    :image-url="organizer.image_url" :name="organizer.name" />
                 </div>
               </div>
               <!-- performers -->
@@ -123,12 +125,9 @@ const getEventShow = (event) => {
                   <div>performers</div>
                 </div>
                 <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-300 p-2">
-                  <a
+                  <AvatarLink
                     v-for="(performer, index ) in event.performers" :key="index" :href="performer.profile_url"
-                    class="avatar tooltip h-10 transition-all duration-200 hover:-translate-y-1"
-                    :data-tip="performer.name">
-                    <img :src="performer.image_url">
-                  </a>
+                    :image-url="performer.image_url" :name="performer.name" />
                 </div>
               </div>
               <button class=" btn btn-ghost btn-outline btn-sm w-full" @click="getEventShow(event)">
