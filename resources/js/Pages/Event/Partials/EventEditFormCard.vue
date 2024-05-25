@@ -30,8 +30,7 @@ const form = useForm({
   time_tables: [],
   images: [],
   status: '',
-
-  //追加
+  published_at: null,
   start_date: null,
   end_date: null,
 })
@@ -66,7 +65,9 @@ const emit = defineEmits(['success', 'error'])
 const formCard = ref(null)
 
 const formSubmit = (status)=>{
-  form.status=status
+  if (status){
+    form.published_at = new Date()
+  }
   let currentTime = new Date(form.start_date)
   form.time_tables = form.time_tables.map(timeTable => {
     const duration = timeTable.duration
@@ -308,10 +309,10 @@ const updateEndDate = () => {
       max-file-size="2MB" />
     <template #actions>
       <div class="mx-20 grid w-full grid-cols-2 gap-2">
-        <button class="btn btn-outline " @click="formSubmit('draft')">
+        <button class="btn btn-outline " @click="formSubmit(false)">
           下書きで保存する
         </button>
-        <button class="btn btn-primary " @click="formSubmit('upcoming')">
+        <button class="btn btn-primary " @click="formSubmit(true)">
           公開で保存する
         </button>
       </div>
