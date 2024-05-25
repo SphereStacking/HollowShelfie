@@ -25,8 +25,13 @@ trait UserRole
     public function hasRole(String|int $role): bool
     {
         return $this->roles()
-            ->where('name', $role)
-            ->orWhere('id', $role)
+            ->where(function ($query) use ($role) {
+                if (is_int($role)) {
+                    $query->where('id', $role);
+                } else {
+                    $query->where('name', $role);
+                }
+            })
             ->exists();
     }
 

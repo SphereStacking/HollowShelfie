@@ -213,10 +213,7 @@ return [
     | Filament
     |--------------------------------------------------------------------------
     */
-    'admin' => [
-        'emails' => [
-            'sphere.stacking@gmail.com',
-            'ghostshelfie@gmail.com',
-        ],
+    'root' => [
+        'emails' => explode(',', env('APP_ROOT_EMAILS')),
     ],
 ];
