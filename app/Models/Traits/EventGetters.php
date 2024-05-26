@@ -56,6 +56,13 @@ trait EventGetters
         return $this->categories->pluck('name')->toArray();
     }
 
+    /**
+     * 関連付けられているカテゴリの名前を返す
+     */
+    public function getTagNamesAttribute(): array
+    {
+        return $this->tags->pluck('name')->toArray();
+    }
 
     /**
      * 開始日をフォーマット
