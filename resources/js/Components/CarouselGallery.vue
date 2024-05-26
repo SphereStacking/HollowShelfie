@@ -36,17 +36,17 @@ const prev = () => {
   <div class="flex h-full flex-col justify-between gap-2">
     <slot name="header"></slot>
 
-    <div class="aspect-w-16 aspect-h-9 relative min-h-80 " :class="[!props.images.length ? 'rounded-xl bg-base-300' : '']">
+    <div class="relative aspect-a4 min-h-80 " :class="[!props.images.length ? 'rounded-xl bg-base-300' : '']">
       <template v-if="props.images.length>0">
         <Carousel
           v-model="currentSlide" :items-to-show="1" :wrap-around="true">
           <Slide v-for="(image, index) in props.images" :key="index">
-            <img class="carousel__item" :src="image">
+            <FryerImg class="carousel__item" :src="image" />
           </Slide>
         </Carousel>
       </template>
       <template v-else>
-        <div class="h-full w-full bg-base-300">
+        <div class="size-full bg-base-300">
           <IconTypeMapper type="imageOff" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
         </div>
       </template>
@@ -60,9 +60,9 @@ const prev = () => {
         ref="carousel" v-model="currentSlide" :items-to-show="4"
         :wrap-around="false">
         <Slide v-for="(slide, index) in props.images" :key="index" class="rounded-sm px-0.5">
-          <img
+          <FryerImg
             :src="slide" alt="image" class="carousel__item"
-            @click="slideTo(index)">
+            @click="slideTo(index)" />
         </Slide>
       </Carousel>
       <button class="btn btn-square  btn-md" @click="prev">

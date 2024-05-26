@@ -45,9 +45,9 @@ const imageClick = (url) => {
     <Slide v-for="(slide, index) in props.slides" :key="index">
       <!-- <Link :herf="slide.url"> -->
       <div class="mx-0.5">
-        <img
+        <FryerImg
           :src="slide.image" alt="image" class="carousel__item "
-          @click="imageClick(slide.url)">
+          @click="imageClick(slide.url)" />
       </div>
     </Slide>
   </Carousel>

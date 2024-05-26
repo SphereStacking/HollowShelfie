@@ -28,15 +28,15 @@ const incrementImageIndex = () => {
             leave-active-class="transition-all duration-600"
             enter-from-class="translate-y-10 opacity-0"
             leave-to-class="-translate-y-10 opacity-0">
-            <img
+            <FryerImg
               v-for="(image, index) in event.files" v-show="index === currentImageIndex"
               :key="index"
               class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 cursor-pointer select-none"
-              :src="image.public_url">
+              :src="image.public_url" />
           </TransitionGroup>
         </template>
         <template v-else>
-          <div class="h-full w-full bg-base-300">
+          <div class="size-full bg-base-300">
             <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
           </div>
         </template>

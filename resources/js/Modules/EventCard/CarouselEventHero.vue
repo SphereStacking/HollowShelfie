@@ -62,21 +62,12 @@ const startDate = (event) => {
     </button>
     <Carousel
       v-model="currentSlide" :autoplay="5000" wrap-around
-      class=" absolute flex flex-col" pause-autoplay-on-hover>
+      class=" absolute flex w-full flex-col" pause-autoplay-on-hover>
       <Slide v-for="(event, index) in events" :key="index">
-        <div class="carousel__item hero  rounded-md bg-base-300 ">
-          <div class="hero-content flex-col lg:flex-row">
-            <div class=" relative aspect-a4 h-80">
-              <template v-if="event.files.length>0">
-                <img :src="event.files[0].public_url">
-              </template>
-              <template v-else>
-                <div class="size-full bg-base-300">
-                  <Icon icon="mdi:image-off" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
-                </div>
-              </template>
-            </div>
-            <div class="flex flex-col items-start gap-2">
+        <div class="carousel__item w-full px-2">
+          <div class="flex flex-col items-center justify-center gap-4 lg:flex-row">
+            <CardEventImages class="w-2/6" :images="event.files" />
+            <div class="flex w-4/6 flex-col items-start gap-2">
               <div class="flex w-full flex-row justify-between">
                 <div> {{ format(new Date(event.start_date), 'yyyy/MM/dd HH:mm') }}</div>
                 <div class="flex gap-1">
@@ -107,26 +98,27 @@ const startDate = (event) => {
                 </div>
               </div>
               <!-- organizers -->
-              <div class="flex w-full flex-col justify-center">
+              <div class="flex w-full flex-col justify-center gap-1">
                 <div class="flex flex-row items-center gap-1">
                   <IconTypeMapper type="organizer" class="text-md" />
                   <div>organizers</div>
                 </div>
-                <div class="flex flex-wrap  gap-1 rounded-xl  bg-base-300 p-2">
+                <div class="flex flex-wrap  gap-1 rounded-xl ">
                   <AvatarLink
                     v-for="(organizer, index ) in event.organizers" :key="index" :href="organizer.profile_url"
                     :image-url="organizer.image_url" :name="organizer.name" />
                 </div>
               </div>
               <!-- performers -->
-              <div class="flex flex-col justify-center ">
+              <div class="flex flex-col justify-center gap-1">
                 <div class="flex flex-row items-center gap-1">
                   <IconTypeMapper type="performer" class="text-md" />
                   <div>performers</div>
                 </div>
-                <div class="flex w-full flex-wrap gap-1 rounded-xl bg-base-300 p-2">
+                <div class="flex w-full flex-wrap gap-1 rounded-xl ">
                   <AvatarLink
-                    v-for="(performer, index ) in event.performers" :key="index" :href="performer.profile_url"
+                    v-for="(performer, index ) in event.performers"
+                    :key="index" size="size-16" :href="performer.profile_url"
                     :image-url="performer.image_url" :name="performer.name" />
                 </div>
               </div>
