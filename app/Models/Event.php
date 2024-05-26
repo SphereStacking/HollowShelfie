@@ -125,31 +125,24 @@ class Event extends Model
 
     /**
      * タグを同期する。
-     *
-     * @param  array $tagNames タグ名の配列
-     * @return void
+     * @param  array<string> $tagNames タグ名の配列
      */
-    public function syncTagsByNames(array $tagNames)
+    public function syncTagsByNames(array $tagNames): void
     {
-        $existingTags = Tag::whereIn('name', $tagNames)->get()->keyBy('name');
-        $tagIds = collect($tagNames)->map(function ($tagName) use ($existingTags) {
-            return $existingTags->has($tagName) ?
-                   $existingTags[$tagName]->id :
-                   Tag::create(['name' => $tagName])->id;
+        $tagIds = collect($tagNames)->map(function ($tagName) {
+            return Tag::firstOrCreate(['name' => $tagName])->id;
         })->all();
         $this->tags()->sync($tagIds);
     }
 
     /**
      * カテゴリを同期する。
+     * @param  array<string> $categoryNames カテゴリ名の配列
      */
     public function syncCategoriesByNames(array $categoryNames): void
     {
-        $existingCategories = Category::whereIn('name', $categoryNames)->get()->keyBy('name');
-        $categoryIds = collect($categoryNames)->map(function ($categoryName) use ($existingCategories) {
-            return $existingCategories->has($categoryName) ?
-                   $existingCategories[$categoryName]->id :
-                   Category::create(['name' => $categoryName])->id;
+        $categoryIds = collect($categoryNames)->map(function ($categoryName) {
+            return Category::firstOrCreate(['name' => $categoryName])->id;
         })->all();
         $this->categories()->sync($categoryIds);
     }

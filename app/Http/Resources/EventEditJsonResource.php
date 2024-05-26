@@ -22,7 +22,7 @@ class EventEditJsonResource extends JsonResource
             'title' => $this->resource->title,
             'description' => $this->resource->description,
             'category_names' => $this->resource->category_names,
-            'tags' => $this->resource->tags,
+            'tags' => $this->resource->tag_names,
             'status' => $this->resource->status,
             'create_user' => $this->resource->event_create_user,
             'start_date' => $this->resource->start_date,
