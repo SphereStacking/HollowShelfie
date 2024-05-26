@@ -15,7 +15,7 @@ const props = defineProps({
   <div>
     <Carousel :items-to-show="3.95" :wrap-around="true" :transition="500">
       <Slide v-for="(slide, index) in props.images" :key="index">
-        <img :src="slide" alt="image" class="carousel__item">
+        <FryerImg :src="slide" alt="image" class="carousel__item" />
       </Slide>
       <template #addons>
         <Navigation />

@@ -180,9 +180,9 @@ const itemsToShow = computed(() => {
               @click="handleRemoveFile(file.id)">
               <IconTypeMapper type="delete" />
             </button>
-            <img
+            <FryerImg
               :src="file.public_url" :alt="`File preview ${index}`"
-              class=" rounded-lg object-cover">
+              class="rounded-lg " />
           </div>
         </Slide>
       </Carousel>
