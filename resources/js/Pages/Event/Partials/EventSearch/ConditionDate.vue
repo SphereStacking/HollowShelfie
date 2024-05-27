@@ -22,9 +22,7 @@ onBeforeUnmount(() => {
 })
 
 const startDate = ref(null)
-const startTime = ref(null)
 const endDate = ref(null)
-const endTime = ref(null)
 
 const setToday = () => {
   startDate.value = startOfDay(new Date())
