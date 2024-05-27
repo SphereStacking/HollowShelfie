@@ -25,6 +25,11 @@ defineProps({
           <slot name="header"></slot>
         </div>
       </header>
+      <header v-if="$slots.fixedHeader" class="sticky top-14 z-20 mb-10 bg-base-300 shadow-2xl shadow-emerald-200 ">
+        <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8 ">
+          <slot name="fixedHeader"></slot>
+        </div>
+      </header>
       <!-- Page Content -->
       <main class="px-6 sm:px-12">
         <slot></slot>
