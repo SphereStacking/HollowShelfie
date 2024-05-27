@@ -185,6 +185,10 @@ onMounted(() => {
       <div class="collapse-title pl-1 pr-0 text-xl font-medium">
         <div class="flex flex-row items-center gap-2 text-xl font-medium ">
           <div class="join w-full">
+            <input
+              v-model="text" placeholder="Let's find an event..." type="text"
+              class="input input-sm join-item input-bordered w-full">
+            <button class="btn join-item btn-sm" @click="emitExecuteSearch()">
               <IconTypeMapper type="search" class="mx-2 text-xl" />
             </button>
           </div>
