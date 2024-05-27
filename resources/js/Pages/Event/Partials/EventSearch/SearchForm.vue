@@ -185,13 +185,15 @@ onMounted(() => {
       <div class="collapse-title pl-1 pr-0 text-xl font-medium">
         <div class="flex flex-row items-center gap-2 text-xl font-medium ">
           <div class="join w-full">
-            <input v-model="text" type="text" class="input input-sm join-item input-bordered w-full">
-            <button class="btn btn-outline join-item btn-sm" @click="emitExecuteSearch()">
+            <input
+              v-model="text" placeholder="Let's find an event..." type="text"
+              class="input input-sm join-item input-bordered w-full">
+            <button class="btn join-item btn-sm" @click="emitExecuteSearch()">
               <IconTypeMapper type="search" class="mx-2 text-xl" />
             </button>
           </div>
           <BtnSwapOpenFilter
-            v-model:check="isOpenFilter" class="btn indicator btn-neutral btn-sm w-16"
+            v-model:check="isOpenFilter" class="btn indicator btn-sm w-16"
             swap-effect="rotate" on-color="text-neutral-content" off-color="text-neutral-content">
             <div v-if="hasSearchConditions" class="badge indicator-item badge-info" @click="emitExecuteSearch()">
               <IconTypeMapper :type="isSameCondition ? 'check' : 'uploading'" class=" text-sm " />

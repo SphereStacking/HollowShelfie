@@ -10,8 +10,8 @@ const props = defineProps({
 
 const type = 'date'
 
-const formattedStartDate = computed(() => format(props.value.start, 'yyyy/MM/dd hh:mm'))
-const formattedEndDate = computed(() => format(props.value.end, 'yyyy/MM/dd hh:mm'))
+const formattedStartDate = computed(() => format(props.value.start, 'yyyy/MM/dd HH:mm'))
+const formattedEndDate = computed(() => format(props.value.end, 'yyyy/MM/dd HH:mm'))
 </script>
 
 <template>

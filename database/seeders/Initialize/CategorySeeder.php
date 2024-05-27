@@ -20,11 +20,12 @@ class CategorySeeder extends Seeder
             'Club',
             'Game',
             'Bar',
-            '集会',
             'Tech',
-            '展示会',
-            'コンサート',
             'Dance ',
+            'コンサート',
+            '集会',
+            '展示会',
+            '企業',
             'Other',
         ];
 
