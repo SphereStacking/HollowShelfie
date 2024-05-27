@@ -34,7 +34,7 @@ class GetEventSearchController extends Controller
         );
 
         return Inertia::render(
-            'Search/Event',
+            'Event/Search',
             [
                 'trendTags' => fn () => new TagNamesJsonResource($this->tagService->getTrendTag()),
                 'events' => new EventsPaginatedJsonResource(
