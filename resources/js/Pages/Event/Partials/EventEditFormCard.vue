@@ -64,10 +64,8 @@ const emit = defineEmits(['success', 'error'])
 
 const formCard = ref(null)
 
-const formSubmit = (status)=>{
-  if (status){
-    form.published_at = new Date()
-  }
+const formSubmit = (isPublish)=>{
+  form.published_at = isPublish ? new Date() : null
   let currentTime = new Date(form.start_date)
   form.time_tables = form.time_tables.map(timeTable => {
     const duration = timeTable.duration
@@ -262,12 +260,6 @@ const updateEndDate = () => {
       </template>
     </MultiSearchableElement>
 
-    <!-- <PickerFullDayRangeElement
-      v-model="form.dates"
-      :error="form.errors.dates"
-      label-icon-type="date"
-      label="開催日時"
-      help="" /> -->
     <div class="grid grid-cols-2 gap-2">
       <PickerDateElement
         v-model="form.start_date"
@@ -305,7 +297,7 @@ const updateEndDate = () => {
       :upload-route="route('event.fryer.store', event.alias)"
       :delete-route="route('event.fryer.destroy')"
       :error="form.errors.images"
-      help="先頭の画像がイベント表示の際の縦横比を決定します。画像サイズは統一することをお勧めします。"
+      help="画像のアスペクト比はA4をお勧めします。"
       max-file-size="2MB" />
     <template #actions>
       <div class="mx-20 grid w-full grid-cols-2 gap-2">
