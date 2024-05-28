@@ -36,12 +36,8 @@ export default defineConfig({
         },
       ],
     }),
+
   ],
-  resolve: {
-    alias: {
-      'vue3-carousel': 'vue3-carousel/dist/carousel.es.js',
-    },
-  },
   server: {
     hmr: {
       host: 'localhost',

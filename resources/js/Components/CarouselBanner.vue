@@ -1,4 +1,5 @@
 <script setup>
+import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
 import { Link, router } from '@inertiajs/vue3'
 import 'vue3-carousel/dist/carousel.css'
