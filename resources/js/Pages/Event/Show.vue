@@ -6,7 +6,6 @@ const props = defineProps({
     type: String,
     required: true
   },
-
   trendTags: {
     type: Array,
     default: () => []
@@ -22,29 +21,41 @@ defineEmits(
 
 const supportings = props.config.supportings ?? []
 
-const formattedStartDate = decomposeDate(props.event.start_date)
-const eventPeriod = computed(() => {
-  let durationString = ''
-  try {
-    const duration = getDurationBetweenDates(props.event.start_date, props.event.end_date)
-    // duration オブジェクトのキーをチェックして、存在するものだけ文字列に追加
-    if (duration.hours) durationString += duration.hours + 'h '
-    if (duration.minutes) durationString += duration.minutes + 'm '
-    if (duration.seconds) durationString += duration.seconds + 's '
-  } catch (error) {
-    console.error(error)
+const formattedStartDate = computed(() => {
+  if (!props.event.start_date) {
+    return { weekday: '', hour: '', minute: '', second: '' }
   }
+  return decomposeDate(props.event.start_date)
+})
+const eventPeriod = computed(() => {
+  if (!props.event.start_date || !props.event.end_date) {
+    return '日時が入力されていません'
+  }
+  let durationString = ''
+  const duration = getDurationBetweenDates(props.event.start_date, props.event.end_date)
+  // duration オブジェクトのキーをチェックして、存在するものだけ文字列に追加
+  if (duration.hours) durationString += duration.hours + 'h '
+  if (duration.minutes) durationString += duration.minutes + 'm '
+  if (duration.seconds) durationString += duration.seconds + 's '
+
   // 末尾の空白を削除し、必要に応じて ' - ' を追加
   durationString = durationString.trim()
   if (durationString) {
     durationString = ' - ' + durationString
   }
-  return `[${formattedStartDate.weekday}] ${formattedStartDate.hour}:${formattedStartDate.minute}:${formattedStartDate.second} ${durationString}`
+  return `[${formattedStartDate.value.weekday}] ${formattedStartDate.value.hour}:${formattedStartDate.value.minute}:${formattedStartDate.value.second} ${durationString}`
+})
+
+const hasCategory = computed(() => {
+  return props.event.category_names.length > 0
+})
+const hasTag = computed(() => {
+  return props.event.tags.length > 0
 })
 
 const snsShare = {
   title: props.event.title,
-  period: getEventPeriod(props.event.start_date, props.event.end_date),
+  period: eventPeriod.value,
   route: route('event.show', props.event.alias),
   instances: props.event.instances.map((instance) => instance.display_name),
   organizers: props.event.organizers.map((organizer) => organizer.name),
@@ -106,7 +117,7 @@ const snsShare = {
       </div>
 
       <div class=" mx-auto flex w-full flex-row gap-1 lg:col-span-7 lg:col-start-1 lg:row-start-2">
-        <div class="flex flex-row items-center gap-1">
+        <div v-if="hasCategory" class="flex flex-row items-center gap-1">
           <div class="mr-auto flex items-center gap-1  rounded-md">
             <IconTypeMapper type="category" class="text-xl" />
             <template v-for="(category_name, index) in event.category_names" :key="index">
@@ -116,7 +127,7 @@ const snsShare = {
             </template>
           </div>
         </div>
-        <div class="flex flex-row items-center gap-1">
+        <div v-if="hasTag" class="flex flex-row items-center gap-1">
           <div class="mr-auto flex items-center gap-1  rounded-md">
             <IconTypeMapper type="tag" class="text-xl" />
             <template v-for="(tag, index) in event.tags" :key="index">
