@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 
 defineProps({
 })
@@ -18,9 +18,9 @@ const routeUrl = usePage().props.auth.user.profile_url
       <p class="text-sm">
       </p>
       <div class="card-actions justify-end">
-        <a class="btn btn-neutral btn-sm" :href="routeUrl">
+        <Link class="btn btn-neutral btn-sm" :href="routeUrl">
           Profile
-        </a>
+        </Link>
       </div>
     </div>
   </div>

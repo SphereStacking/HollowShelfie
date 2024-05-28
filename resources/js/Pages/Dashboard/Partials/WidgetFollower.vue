@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 
 defineProps({
 })
@@ -20,9 +20,9 @@ const count = usePage().props.counts.follower || 0
         {{ count }}
       </p>
       <div class="card-actions justify-end">
-        <a class="btn btn-neutral btn-sm" :href="routeUrl">
+        <Link class="btn btn-neutral btn-sm" :href="routeUrl">
           View all
-        </a>
+        </Link>
       </div>
     </div>
   </div>

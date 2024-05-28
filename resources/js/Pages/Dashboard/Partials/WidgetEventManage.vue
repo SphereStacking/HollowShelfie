@@ -1,5 +1,4 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
 
 defineProps({
 })
@@ -19,12 +18,12 @@ const createUrl = route('event.create')
       <p class="text-sm">
       </p>
       <div class="card-actions justify-end">
-        <a class="btn btn-neutral btn-sm" :href="manageUrl">
+        <Link class="btn btn-neutral btn-sm" :href="manageUrl">
           Manage
-        </a>
-        <a class="btn btn-neutral btn-sm" :href="createUrl">
+        </Link>
+        <Link class="btn btn-neutral btn-sm" :href="createUrl">
           Create
-        </a>
+        </Link>
       </div>
     </div>
   </div>

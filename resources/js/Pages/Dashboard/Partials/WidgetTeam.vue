@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 
 defineProps({
 })
@@ -18,9 +18,9 @@ const routeUrl = route('teams.create')
       <p class="text-sm">
       </p>
       <div class="card-actions justify-end">
-        <a class="btn btn-neutral btn-sm" :href="routeUrl">
+        <Link class="btn btn-neutral btn-sm" :href="routeUrl">
           Create
-        </a>
+        </Link>
       </div>
     </div>
   </div>

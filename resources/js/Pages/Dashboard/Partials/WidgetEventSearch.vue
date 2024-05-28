@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 
 defineProps({
 })
@@ -19,9 +19,9 @@ const routeUrl = route('event.search.index')
         {{ count }}
       </p>
       <div class="card-actions justify-end">
-        <a class="btn btn-neutral btn-sm" :href="routeUrl">
+        <Link class="btn btn-neutral btn-sm" :href="routeUrl">
           Search
-        </a>
+        </Link>
       </div>
     </div>
   </div>
