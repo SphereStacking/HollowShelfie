@@ -189,12 +189,12 @@ const updateEndDate = () => {
       label="タグ"
       label-icon-type="tag"
       item-type="tag"
-
       help="複数選択可能です。数の多いタグを使用することで見つかりやすくなります。"
       :error="form.errors.tags"
       item-icon-type="tag"
       :route="route('tag.suggestion')"
       label-key="name"
+      enable-enter-to-add
       :get-filtered-data-func="getFilteredDataFunc">
       <template #viewItem="{ element, handleDelete }">
       </template>

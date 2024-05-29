@@ -31,6 +31,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  enableEnterToAdd: {
+    type: Boolean,
+    default: false
+  },
   //routeからのレスポンスを加工して配列を返す処理の受け渡し。
   getFilteredDataFunc: {
     type: Function,
@@ -66,6 +70,11 @@ const clickTagDelete = (tagValue) => {
 const isIncludesString = (searchString) => {
   console.log(items.value)
   return items.value.some(item => item === searchString)
+}
+const handleEnterAdd = (inputText) => {
+  if (props.enableEnterToAdd) {
+    handleAdd(inputText)
+  }
 }
 
 const handleAdd = (value) => {
@@ -121,7 +130,7 @@ const getLabel = (item) => {
 
 <template>
   <!-- タグ入力ボックス -->
-  <div class="input input-sm  flex h-full w-full flex-wrap items-center gap-2 text-base-content">
+  <div class="input input-sm  flex size-full flex-wrap items-center gap-2 text-base-content">
     <!-- タグ表示 -->
     <draggable
       v-model="items"
@@ -156,7 +165,7 @@ const getLabel = (item) => {
       <input
         ref="inputRef"
         v-model="inputText" class="input input-sm m-0 w-full border-none p-0" :placeholder="placeholder"
-        @keydown.enter="handleAdd(inputText)">
+        @keydown.enter="handleEnterAdd(inputText)">
       <!-- 検索結果をbutton表示 -->
       <div :class="[isOpen ? 'block' : 'hidden']" class="absolute left-0 z-40 mt-4 flex max-h-64 min-w-48 flex-col gap-0.5 overflow-y-auto rounded-md  bg-base-300 p-2 shadow-lg">
         <template v-for="(item, index) in filteredItems" :key="index">

@@ -45,6 +45,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  enableEnterToAdd: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const emits = defineEmits(['update:modelValue'])
@@ -73,6 +77,12 @@ const clickTagDelete = (tagValue) => {
 
 const isIncludesString = (searchString) => {
   return items.value.some(item => item === searchString)
+}
+
+const handleEnterToAdd = (inputText) => {
+  if (props.enableEnterToAdd) {
+    handleAdd(inputText)
+  }
 }
 
 const handleAdd = (tagName) => {
@@ -127,7 +137,7 @@ const onClickOutsideHandler= ()=>{
     :error="error" :label-icon-type="labelIconType">
     <div class="w-full">
       <!-- タグ入力ボックス -->
-      <div class="input input-sm flex h-full w-full flex-wrap items-center gap-2 py-0.5">
+      <div class="input input-sm flex size-full flex-wrap items-center gap-2 py-0.5">
         <!-- タグ表示 -->
         <draggable
           v-model="items"
@@ -158,7 +168,7 @@ const onClickOutsideHandler= ()=>{
           <input
             ref="inputRef"
             v-model="inputText" class="input input-sm m-0 w-full shrink border-none p-0" :placeholder="placeholder"
-            @keydown.enter="handleAdd(inputText)"
+            @keydown.enter="handleEnterToAdd(inputText)"
             @focus="onFocus">
           <!-- 検索結果をbutton表示 -->
           <div :class="[isOpen ? 'block' : 'hidden']" class="absolute left-0 z-40 mt-4 flex max-h-64 min-w-48 flex-col gap-0.5 overflow-y-auto rounded-md  bg-base-300 p-2 shadow-lg">
