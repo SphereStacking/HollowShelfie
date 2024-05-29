@@ -146,7 +146,7 @@ const updateEndDate = () => {
       v-model="form.instances[0].instance_type_id"
       label="インスタンス"
       label-icon-type="instance"
-      help="開催場所を選択"
+      help="開催場所を記載してください。(URLが入力された場合、タイトルが'link'形式になります)"
       class=""
       id-key="id"
       label-key="name"
@@ -158,14 +158,14 @@ const updateEndDate = () => {
       :selectable-items="instanceTypeNames">
       <template #joinRight>
         <input
-          v-model="form.instances[0].access_url"
-          class="input input-sm join-item w-full"
-          placeholder="url">
-        <input
           v-model="form.instances[0].display_name"
           :class="{ 'input-error': form.errors['instances.0.display_name'] }"
+          class="input input-sm join-item w-1/2"
+          placeholder="タイトル">
+        <input
+          v-model="form.instances[0].access_url"
           class="input input-sm join-item w-full"
-          placeholder="label">
+          placeholder="URL">
       </template>
     </SelectElement>
 
@@ -189,12 +189,12 @@ const updateEndDate = () => {
       label="タグ"
       label-icon-type="tag"
       item-type="tag"
-
       help="複数選択可能です。数の多いタグを使用することで見つかりやすくなります。"
       :error="form.errors.tags"
       item-icon-type="tag"
       :route="route('tag.suggestion')"
       label-key="name"
+      enable-enter-to-add
       :get-filtered-data-func="getFilteredDataFunc">
       <template #viewItem="{ element, handleDelete }">
       </template>
@@ -280,7 +280,7 @@ const updateEndDate = () => {
       label="タイムテーブル"
       label-icon-type="timeline"
       :error="form.errors.time_tables"
-      help=""
+      help="本サービスに登録してないユーザーは備考へ記入してください。"
       :colum-defs="columDefs" />
 
     <EditorElement
@@ -288,7 +288,7 @@ const updateEndDate = () => {
       label-icon-type="wysiwygEditor"
       label="こんなイベントを開催する！"
       :error="form.errors.description"
-      help="イベントの概要などを詳しく記入してください" />
+      help="イベントの概要などを詳しく記入してください。" />
 
     <FileInputElement
       v-model="event.files"
@@ -297,7 +297,7 @@ const updateEndDate = () => {
       :upload-route="route('event.fryer.store', event.alias)"
       :delete-route="route('event.fryer.destroy')"
       :error="form.errors.images"
-      help="画像のアスペクト比はA4をお勧めします。"
+      help="縦A4サイズ推奨"
       max-file-size="2MB" />
     <template #actions>
       <div class="mx-20 grid w-full grid-cols-2 gap-2">
