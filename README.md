@@ -11,6 +11,8 @@
   </a>
 </p>
 
+
+
 ## about
 VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [resonite](https://resonite.com/))の情報共有serviceの構築する。  
 現在のVR界隈は情報のまとまっているところがない  
@@ -145,9 +147,48 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 2. `docker exec -it sphere_app-laravel.test-1  bash` で立ち上げた環境に入る。
 3. `npm run dev` 開発サーバ起動
 
+
+
+
 ## links
 
 OAuth2.0用
 - [Google Cloud Console](https://console.cloud.google.com/welcome?authuser=1&hl=ja&project=pj-sphere)
 - [Discord Developer](https://discord.com/developers/applications/1172881212809936916/information)
+
+## gitの運用ワークフロー
+
+- git-flow
+- 初期リリースまではmainブランチからfeatureを切って作業
+``` mermaid
+gitGraph
+   commit id: "Initial commit" tag: "v1.0"
+   branch develop
+   commit id: "Feature A"
+   branch feature/featureA
+   commit id: "Work on feature A"
+   commit id: "Complete feature A"
+   checkout develop
+   merge feature/featureA
+   commit id: "Feature B"
+   branch feature/featureB
+   commit id: "Work on feature B"
+   commit id: "Complete feature B"
+   checkout develop
+   merge feature/featureB
+   commit id: "Prepare release"
+   branch release/v1.1
+   commit id: "Release work"
+   checkout main
+   merge release/v1.1 tag: "v1.1"
+   checkout develop
+   merge release/v1.1
+   commit id: "Hotfix"
+   branch hotfix/v1.1.1
+   commit id: "Fix critical bug"
+   checkout main
+   merge hotfix/v1.1.1 tag: "v1.1.1"
+   checkout develop
+   merge hotfix/v1.1.1
+```
 
