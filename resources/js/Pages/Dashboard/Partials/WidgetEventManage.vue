@@ -9,7 +9,7 @@ const manageUrl = route('event.manage')
 const createUrl = route('event.create')
 </script>
 <template>
-  <div class="card bg-base-200 text-center shadow-md">
+  <div class="card bg-base-300 text-center shadow-md">
     <div class="card-body">
       <div class="card-title">
         <IconTypeMapper :type="iconType" />
