@@ -4,38 +4,47 @@ namespace App\Http\Controllers\Profile;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Services\UserService;
+use App\Models\ScreenName;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Http\Resources\TeamPublicProfileJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
 use App\Services\DynamicSearch\Meilisearch\SearchParams;
 use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
-class GetUserProfileController extends Controller
+class GetProfileController extends Controller
 {
     public function __construct(
-        private UserService $userService,
         private EventMeilisearchService $eventMeilisearchService
     ) {}
 
     /**
      * ユーザーのプロファイルを表示します。
      */
-    public function __invoke(User $user)
+    public function __invoke($screen_name)
     {
-        // User モデルのルートモデルバインディングを使用してユーザーを取得
-        // ユーザープロファイルのビューを返す
+        $screenNameable = ScreenName::findScreenNameable($screen_name);
         $EventSearchParams = new SearchParams(
             '',
-            [['include' => 'and', 'type' => 'user', 'value' => $user->name]],
+            [['include' => 'and', 'type' => 'organizer', 'value' => $screenNameable->name]],
+            12,
+            'new',
+        );
+        $EventSearchParams = new SearchParams(
+            '',
+            [['include' => 'and', 'type' => 'performer', 'value' => $screenNameable->name]],
             12,
             'new',
         );
 
-        return Inertia::render('User/Index', [
-            'profile' => new UserPublicProfileJsonResource(
-                $this->userService->preloadProfileData($user),
-            ),
+        Log::info('screenNameable: ' . $screenNameable->screen_nameable_type);
+        return Inertia::render('Profile', [
+            'profile' => match ($screenNameable->screen_nameable_type) {
+                'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screen_nameable),
+                'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screen_nameable),
+                default => abort(404, 'Profile type not found'),
+            },
             'events' => new EventsPaginatedJsonResource(
                 $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
             ),
