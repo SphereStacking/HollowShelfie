@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Profile;
 
-use App\Models\User;
 use Inertia\Inertia;
 use App\Models\ScreenName;
 use Illuminate\Support\Facades\Log;
@@ -39,7 +38,7 @@ class GetProfileController extends Controller
         );
 
         Log::info('screenNameable: ' . $screenNameable->screen_nameable_type);
-        return Inertia::render('Profile', [
+        return Inertia::render('Profile/Index', [
             'profile' => match ($screenNameable->screen_nameable_type) {
                 'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screen_nameable),
                 'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screen_nameable),

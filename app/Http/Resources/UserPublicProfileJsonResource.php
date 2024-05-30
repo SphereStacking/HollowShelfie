@@ -20,7 +20,7 @@ class UserPublicProfileJsonResource extends JsonResource
                 'screen_name' => $this->resource->screen_name,
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->profile_photo_url,
-                'profile_url' => $this->resource->profile_url,
+                // 'profile_url' => $this->resource->profile_url,
                 'location' => $this->resource->location,
                 'links' => $this->resource->links,
                 'followers_count' => $this->resource->followers_count,
