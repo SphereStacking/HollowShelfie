@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\ScreenName;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\MentionSuggestionJsonResource;
@@ -13,14 +13,11 @@ class GetMentionSuggestionController extends Controller
     {
         // Userの検索
         $query = $request->input('q');
-        $users = User::query()
-            ->where('screen_name', 'like', "%{$query}%")
-            ->orWhere('name', 'like', "%{$query}%")
-            ->paginate(15);
+        $screenNames = ScreenName::query()->searchByScreenNameOrMorphName($query)->paginate(15);
 
         return response()->json([
             'status' => 'success',
-            'suggestions' => new MentionSuggestionJsonResource($users),
+            'suggestions' => new MentionSuggestionJsonResource($screenNames),
         ]);
     }
 }

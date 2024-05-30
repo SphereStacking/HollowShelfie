@@ -13,7 +13,7 @@ class ScreenName extends Model
 
     protected $fillable = ['screen_name'];
 
-    public function screen_nameable()
+    public function screenNameable()
     {
         return $this->morphTo();
     }

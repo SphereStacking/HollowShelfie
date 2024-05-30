@@ -37,11 +37,10 @@ class GetProfileController extends Controller
             'new',
         );
 
-        Log::info('screenNameable: ' . $screenNameable->screen_nameable_type);
         return Inertia::render('Profile/Index', [
             'profile' => match ($screenNameable->screen_nameable_type) {
-                'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screen_nameable),
-                'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screen_nameable),
+                'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screenNameable),
+                'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screenNameable),
                 default => abort(404, 'Profile type not found'),
             },
             'events' => new EventsPaginatedJsonResource(
