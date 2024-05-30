@@ -178,7 +178,7 @@ const headerButtons = [
                   {{ $t('Manage Account') }}
                 </div>
 
-                <DropdownLink :href="route('profile.show')">
+                <DropdownLink :href="route('account.show')">
                   {{ $t('Profile') }}
                 </DropdownLink>
 
@@ -249,7 +249,7 @@ const headerButtons = [
           </div>
 
           <div class="mt-3">
-            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('profile.show')" :active="route().current('profile.show')">
+            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('account.show')" :active="route().current('account.show')">
               {{ $t('Profile') }}
             </ResponsiveNavLink>
 
