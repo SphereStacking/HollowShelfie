@@ -53,7 +53,9 @@ trait HasScreenNameable
     /** スクリーンネームを取得する */
     public function getScreenNameAttribute()
     {
-        return $this->screenName()->first() ? $this->screenName()->first()->screen_name : null;
+        return $this->relationLoaded('screenName')
+            ? $this->getRelation('screenName')->screen_name
+            : optional($this->load('screenName')->getRelation('screenName'))->screen_name;
     }
 
     /** profileページへのURL */
