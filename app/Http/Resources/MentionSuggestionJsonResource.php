@@ -16,7 +16,6 @@ class MentionSuggestionJsonResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'debug' => $this->resource,
             'pagination' => [
                 'current_page' => $this->resource->currentPage(),
                 'first_page_url' => $this->resource->url(1),
@@ -35,8 +34,10 @@ class MentionSuggestionJsonResource extends JsonResource
                     'id' => $item->id,
                     'screen_name' => $item->screen_name,
                     'name' => $item->name,
-                    'image_url' => $item->profile_photo_url,
-                    'type' => User::class
+                    'image_url' => $item->screen_nameable_type === User::class
+                        ? $item->screenNameable->profile_photo_url
+                        : $item->screenNameable->team_logo_url,
+                    'type' => $item->screen_nameable_type
                 ];
             }),
         ];
