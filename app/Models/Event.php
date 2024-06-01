@@ -179,8 +179,8 @@ class Event extends Model
     {
         // EventTimeTableのIDを取得
         $timeTableIds = $this->event_time_tables()->pluck('id');
-        // 関連するTimeTablePerformersを一括で削除
-        TimeTablePerformers::whereIn('event_time_table_id', $timeTableIds)->delete();
+        // 関連するTimeTablePerformerを一括で削除
+        TimeTablePerformer::whereIn('event_time_table_id', $timeTableIds)->delete();
 
         $this->event_time_tables()->delete();
         // 新しいタイムテーブルデータ作成
@@ -202,7 +202,7 @@ class Event extends Model
                     'updated_at' => now(),
                 ];
             })->toArray();
-            TimeTablePerformers::insert($performersData);
+            TimeTablePerformer::insert($performersData);
         }
     }
 

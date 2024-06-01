@@ -12,7 +12,7 @@ use App\Models\Category;
 use App\Models\Instance;
 use App\Models\EventOrganizer;
 use App\Models\EventTimeTable;
-use App\Models\TimeTablePerformers;
+use App\Models\TimeTablePerformer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -146,8 +146,8 @@ class EventFactory extends Factory
                 ]);
                 $event->event_time_tables()->save($eventTimeTable);
 
-                // TimeTablePerformersはrand(1 ,2)の範囲で作成
-                TimeTablePerformers::factory()->count(rand(1, 2))->create([
+                // TimeTablePerformerはrand(1 ,2)の範囲で作成
+                TimeTablePerformer::factory()->count(rand(1, 2))->create([
                     'event_time_table_id' => $eventTimeTable->id,
                 ]);
                 // 次のイベントタイムテーブルの開始時間を設定
