@@ -50,18 +50,11 @@ trait HasScreenNameable
         return $this->morphOne(ScreenName::class, 'screen_nameable');
     }
 
-    /** スクリーンネームを取得する */
-    public function getScreenNameAttribute()
-    {
-        return $this->relationLoaded('screenName')
-            ? $this->getRelation('screenName')->screen_name
-            : optional($this->load('screenName')->getRelation('screenName'))->screen_name;
-    }
 
     /** profileページへのURL */
     public function getProfileUrlAttribute(): string
     {
-        return route('profile.show', ['screen_name' => $this->screen_name]);
+        return route('profile.show', ['screen_name' => $this->screenName->screen_name]);
     }
 
     /**
