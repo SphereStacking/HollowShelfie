@@ -13,7 +13,7 @@ class GetMentionSuggestionController extends Controller
     {
         // Userの検索
         $query = $request->input('q');
-        $screenNames = ScreenName::query()->searchByScreenNameOrMorphName($query)->paginate(15);
+        $screenNames = ScreenName::query()->searchByScreenNameOrMorphName($query)->paginate(12);
 
         return response()->json([
             'status' => 'success',
