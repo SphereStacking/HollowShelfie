@@ -30,10 +30,12 @@ const props = defineProps({
       <template #viewItem="{ element, handleDelete }">
         <slot :element="element" :handle-delete="handleDelete" name="viewItem"></slot>
       </template>
-      <template #searchItem="{ item, handleAdd}">
-        <slot :item="item" :handle-add="handleAdd" name="searchItem"></slot>
+      <template #searchItem="{ item, handleAdd, isSearching }">
+        <slot
+          :item="item" :handle-add="handleAdd" :is-searching="isSearching"
+          name="searchItem"></slot>
       </template>
-      <template #notExist="{ inputText, handleAdd}">
+      <template #notExist="{ inputText, handleAdd }">
         <slot :input-text="inputText" :handle-add="handleAdd" name="notExist"></slot>
       </template>
     </MultiSearchable>

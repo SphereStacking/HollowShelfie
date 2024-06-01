@@ -57,8 +57,8 @@ watch(performers, (value) => {
     <template #viewItem="{ element, handleDelete }">
       <PerformerBadge :performer="element" @click="handleDelete(element)" />
     </template>
-    <template #searchItem="{ item, handleAdd}">
-      <PerformerBadge :performer="item" @click="handleAdd(addFormatDataFunc(item))" />
+    <template #searchItem="{ item, handleAdd ,isSearching}">
+      <PerformerBadge :performer="item" :is-searching="isSearching" @click="!isSearching && handleAdd(addFormatDataFunc(item))" />
     </template>
     <template #notExist>
       <button class="btn btn-md w-full gap-2 py-1 text-sm" disabled>
