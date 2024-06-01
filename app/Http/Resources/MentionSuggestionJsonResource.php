@@ -31,7 +31,7 @@ class MentionSuggestionJsonResource extends JsonResource
             ],
             'data' => $this->resource->map(function ($item) {
                 return [
-                    'id' => $item->id,
+                    'id' => $item->screenNameable->id,
                     'screen_name' => $item->screen_name,
                     'name' => $item->name,
                     'image_url' => $item->screen_nameable_type === User::class
