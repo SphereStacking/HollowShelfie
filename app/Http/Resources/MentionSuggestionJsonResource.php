@@ -33,7 +33,7 @@ class MentionSuggestionJsonResource extends JsonResource
                 return [
                     'id' => $item->screenNameable->id,
                     'screen_name' => $item->screen_name,
-                    'name' => $item->name,
+                    'name' => $item->screenNameable->name,
                     'image_url' => $item->screen_nameable_type === User::class
                         ? $item->screenNameable->profile_photo_url
                         : $item->screenNameable->team_logo_url,
