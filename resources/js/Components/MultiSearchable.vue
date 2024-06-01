@@ -102,7 +102,10 @@ watch(inputText, (newValue) => {
   clearTimeout(searchTimeoutId)
   searchTimeoutId = setTimeout(() => {
     fetchFilteredItems(newValue)
-    isSearching.value = false
+    setTimeout(() => {
+      //NOTE: 画面側の描画が終わった後にisSearchingをfalseにする。
+      isSearching.value = false
+    }, 200)
   }, props.searchDelay)
 })
 
@@ -113,7 +116,6 @@ const fetchFilteredItems = async (searchValue) => {
     const response = await axios({method: method, url: url, params: {q: searchValue} })
     if (response.status >= 200 && response.status < 300) {
       filteredItems.value = props.getFilteredDataFunc(response)
-      console.log(filteredItems.value)
     }
   } catch (error) {
     console.error('Error:', error)
