@@ -2,8 +2,6 @@
 
 namespace App\Services\DynamicSearch\Meilisearch\Event;
 
-use Closure;
-use Carbon\Carbon;
 use App\Models\Event;
 use Laravel\Scout\Builder;
 use App\Models\Traits\EventScopes;
@@ -49,22 +47,32 @@ class EventMeilisearchService
         'instance' => EventFilterInstance::class,
     ];
 
-    public function getPublishedFilter(): string
+    /** 公開されたイベントを検索する */
+    public function searchPublishedEvents(SearchParams $params): LengthAwarePaginator
     {
-        return 'is_forced_hidden = false AND published_at < ' . Carbon::now()->getTimestamp();
+        $publishedFilter = new EventSystemFilterPublished();
+        return $this->searchEvents($publishedFilter->makeQuery(), $params);
     }
 
-    public function getPublishedEventSearch(SearchParams $params): LengthAwarePaginator
+    /** 特定のユーザーが作成したイベントを検索する */
+    public function searchManageableEvents(SearchParams $params): LengthAwarePaginator
+    {
+        $userFilter = new EventSystemFilterCreaterById();
+        return $this->searchEvents($userFilter->makeQuery(), $params);
+    }
+
+    /** イベントを検索する共通メソッド */
+    private function searchEvents(string $optionsFilter,SearchParams $params): LengthAwarePaginator
     {
         $queryParams = $this->createQueryParams($params->queryParams);
         $queryfilterString = $this->makeFilter($queryParams);
-        $publishedFilter = $this->getPublishedFilter();
 
+        $filterString = $optionsFilter . $queryfilterString;
+        Log::info($filterString);
         return Event::search(
             query: $params->text,
-            callback: function (Indexes $meilisearch, $query, array $options) use ($queryfilterString, $publishedFilter) {
-                $options['filter'] = $publishedFilter . $queryfilterString;
-                Log::info($options);
+            callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
+                $options['filter'] = $filterString;
                 return $meilisearch->rawSearch($query, $options);
             })
             // order

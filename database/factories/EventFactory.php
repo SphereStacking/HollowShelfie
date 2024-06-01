@@ -31,7 +31,7 @@ class EventFactory extends Factory
         // 開始時間からランダムに2~6時間後を終了時間とする
         $endDateTime = Carbon::instance($dateTime)->addHours(rand(2, 6))->format('Ymd\THis\Z');
         return [
-            'event_create_user_id' => User::inRandomOrder()->first()->id,
+            'created_user_id' => User::inRandomOrder()->first()->id,
             'is_forced_hidden' => $this->faker->boolean(20),
             'title' => $this->faker->text(20),
             'start_date' => $formattedDateTime,

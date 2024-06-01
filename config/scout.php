@@ -150,6 +150,7 @@ return [
                     'organizer_ids',
                     'performer_ids',
                     'good_count',
+                    'created_user_id',
                 ],
                 'sortableAttributes' => [
                     'good_count',

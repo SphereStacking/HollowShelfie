@@ -38,7 +38,7 @@ class Event extends Model
         'published_at',
         'is_forced_hidden',
         'title',
-        'event_create_user_id',
+        'created_user_id',
         'start_date',
         'end_date',
         'description',
@@ -102,9 +102,9 @@ class Event extends Model
                 'id',
                 'title',
                 'description',
-                'created_user',
                 'good_count',
                 'is_forced_hidden',
+                'created_user_id',
             ]
         );
         $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;
@@ -228,7 +228,7 @@ class Event extends Model
         if ($user === null) {
             throw new CannotOperateEventException('操作権限がありません。');
         }
-        if($this->event_create_user_id !== $user->getAuthIdentifier()) {
+        if($this->created_user_id !== $user->getAuthIdentifier()) {
             throw new CannotOperateEventException('操作権限がありません');
         }
     }
@@ -244,8 +244,8 @@ class Event extends Model
     public function canUserShow(User|Authenticatable|null $user): bool
     {
         // イベントの作成者であれば表示可能
-        if($this->event_create_user_id === $user?->getAuthIdentifier()) {
-            \Log::info('event_create_user_id');
+        if($this->created_user_id === $user?->getAuthIdentifier()) {
+            \Log::info('created_user_id');
             return true;
         }
 
@@ -337,7 +337,7 @@ class Event extends Model
      */
     public function scopeOwnerPublished($query): Builder
     {
-        return $query->where('event_create_user_id', auth()->id());
+        return $query->where('created_user_id', auth()->id());
     }
 
     public function getStatusAttribute(): EventStatus

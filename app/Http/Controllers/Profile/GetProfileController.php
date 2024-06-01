@@ -44,7 +44,7 @@ class GetProfileController extends Controller
                 default => abort(404, 'Profile type not found'),
             },
             'events' => new EventsPaginatedJsonResource(
-                $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
+                $this->eventMeilisearchService->searchPublishedEvents($EventSearchParams)
             ),
             'url' => route('event.search.index', [
                 't' => $EventSearchParams->text,
