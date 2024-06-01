@@ -30,12 +30,6 @@ class GetProfileController extends Controller
             12,
             'new',
         );
-        $EventSearchParams = new SearchParams(
-            '',
-            [['include' => 'and', 'type' => 'performer', 'value' => $screenNameable->name]],
-            12,
-            'new',
-        );
 
         return Inertia::render('Profile/Index', [
             'profile' => match ($screenNameable->screen_nameable_type) {
