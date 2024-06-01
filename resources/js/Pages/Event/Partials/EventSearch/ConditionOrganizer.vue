@@ -34,9 +34,15 @@ onBeforeUnmount(() => {
       v-if="isVisible"
       :items="items"
       placeholder="オーガナイザーid検索"
-      :route="route('mention.suggestion')"
-      type="organizer"
-      :add-condition-func="addConditionFunc" />
+      :route="route('mention.suggestion')">
+      <template #items="{ suggestions }">
+        <PerformerBadge
+          v-for="(item, index ) in suggestions"
+          :key="index" :performer="item"
+          class="tooltip transition-all duration-200 hover:-translate-y-1"
+          @click="addConditionFunc({ type: 'organizer', value: item.screen_name })" />
+      </template>
+    </AddConditionSuggestion>
   </Transition>
 </template>
 <style lang="">

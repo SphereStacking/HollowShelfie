@@ -30,7 +30,7 @@ const items = ref(props.items ? props.items.map(v => v) : [])
 
 const computedItems = computed(() => {
   if (suggestions.value.length > 0) {
-    return suggestions.value.map(v => v.name)
+    return suggestions.value.map(v => v.screen_name)
   } else {
     return items.value
   }
@@ -58,10 +58,12 @@ const computedItems = computed(() => {
         leave-active-class="transition ease-in "
         leave-from-class="transform opacity-100"
         leave-to-class="transform opacity-0">
-        <BtnEventSearchItem
-          v-for="item in computedItems" :key="item" :type="type"
-          :value="item"
-          @click="addConditionFunc({ type: type, value: item })" />
+        <slot name="items" :suggestions="suggestions">
+          <BtnEventSearchItem
+            v-for="item in computedItems" :key="item" :type="type"
+            :value="item"
+            @click="addConditionFunc({ type: type, value: item })" />
+        </slot>
       </transition-group>
     </div>
     <slot></slot>

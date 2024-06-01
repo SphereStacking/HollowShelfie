@@ -115,9 +115,13 @@ class Event extends Model
             return $instance->instance_type_id;
         })->toArray();
         $array['category_ids'] = $this->categories()->pluck('categories.id')->toArray();
-        $array['organizer_ids'] = $this->organizers->pluck('event_organizeble.id')->toArray();
-        $array['performer_ids'] = $this->event_time_tables->flatMap(function ($time_table) {
-            return $time_table->performers->pluck('performable.id');
+        $array['organizers'] = $this->organizers->map(function (EventOrganizer $organizer) {
+            return implode(' ', [$organizer->event_organizeble_type, $organizer->event_organizeble->id]);
+        })->toArray();
+        $array['performers'] = $this->event_time_tables->flatMap(function (EventTimeTable $time_table) {
+            return $time_table->performers->map(function (TimeTablePerformer $performer) {
+                return implode(' ', [$performer->performable_type, $performer->performable_id]);
+            })->toArray();
         })->toArray();
 
         return $array;

@@ -5,6 +5,10 @@ defineProps({
     type: String,
     default: '',
   },
+  option: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 
 const type = 'organizer'
@@ -20,7 +24,7 @@ const type = 'organizer'
         type="close"
         class="absolute left-0 top-1/2 -translate-y-1/2 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
       <div class="pl-6">
-        {{ value }}
+        @{{ value }}
       </div>
     </div>
   </BtnConditionTypeMapper>

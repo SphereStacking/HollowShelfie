@@ -2,7 +2,7 @@
 
 namespace App\Services\DynamicSearch\Meilisearch\Event;
 
-use App\Models\User;
+use App\Models\ScreenName;
 use App\Services\DynamicSearch\Meilisearch\MeilisearchFilter;
 
 /**
@@ -10,10 +10,11 @@ use App\Services\DynamicSearch\Meilisearch\MeilisearchFilter;
  */
 class EventFilterOrganizer extends MeilisearchFilter
 {
-    protected $column = 'organizer_ids';
+    protected $column = 'organizers';
 
     public function formatValue()
     {
-        return User::where('name', $this->value)->value('id');
+        $screenName = ScreenName::where('screen_name', $this->value)->firstOrFail();
+        return implode(' ', [addslashes($screenName->screen_nameable_type), $screenName->screen_nameable_id]);
     }
 }

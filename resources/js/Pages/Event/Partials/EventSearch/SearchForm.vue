@@ -221,17 +221,17 @@ onMounted(() => {
         </div>
 
         <!-- セレクトエリア start -->
-        <div class="mt-2 grid grid-cols-1 gap-4 rounded-md bg-base-300 p-4 md:grid-cols-4">
+        <div class="mt-2 grid grid-cols-1 gap-4 rounded-md bg-base-300 p-4 md:grid-cols-5">
           <div class="menu grid w-full grid-cols-3 gap-2 rounded-box bg-base-200 md:grid-cols-1">
             <button
-              v-for=" item in filterMaps" :key="item.type" class="btn btn-sm justify-start md:btn-md"
+              v-for=" item in filterMaps" :key="item.type" class="btn btn-sm flex-nowrap justify-start md:btn-md"
               :class="{ 'btn-accent': selectFilterType.type == item.type }"
               @click="selectFilterType = item">
               <IconTypeMapper :type="item.type" />
               {{ item.label }}
             </button>
           </div>
-          <div class="col-span-1 flex flex-col gap-2 md:col-span-3">
+          <div class="col-span-1 flex flex-col gap-2 md:col-span-4">
             <div class="flex flex-wrap justify-end gap-2">
               <button
                 class="btn btn-accent btn-xs" :class="{ 'btn-disabled': !canGoBackInHistory() }"
@@ -247,7 +247,7 @@ onMounted(() => {
                 <IconTypeMapper type="trashBox" class="text-xl" />
               </button>
             </div>
-            <div v-if="isOpenFilter" class="size-full rounded-xl  border-2 p-4">
+            <div v-if="isOpenFilter" class="size-full rounded-xl border-2 p-4">
               <component
                 :is="selectFilterType.component"
                 :items="selectFilterType.items"
