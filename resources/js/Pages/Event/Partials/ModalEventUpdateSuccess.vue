@@ -53,7 +53,7 @@ defineExpose({
           <BtnSnsShareEventToX
             :title="item.title" :period="item.period" :instance-names="item.instances"
             :organizer-names="item.organizers" :performer-names="item.performers" :category-names="item.category_names"
-            :tags="item.tags" :route="item.url" />
+            :tags="item.tags" :url="item.url" />
         </div>
       </div>
     </template>

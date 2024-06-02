@@ -106,7 +106,7 @@ const isCurrentYear = computed(() => {
                 <BtnSnsShareEventToX
                   :title="shareData.title" :period="shareData.period" :instance-names="shareData.instances"
                   :organizer-names="shareData.organizers" :performer-names="shareData.performers" :category-names="shareData.category_names"
-                  :tags="shareData.tags" :route="shareData.route" />
+                  :tags="shareData.tags" :url="shareData.route" />
               </li>
             </ul>
           </div>
