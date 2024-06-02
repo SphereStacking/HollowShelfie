@@ -1,6 +1,7 @@
 <script setup>
 import { decomposeDate, getDurationBetweenDates } from '@/Utils/Date'
-import { getEventPeriod } from '@/Utils/Event'
+import { GetEventDetailMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
+
 const props = defineProps({
   event: {
     type: String,
@@ -63,9 +64,13 @@ const snsShare = {
   categoryNames: props.event.category_names,
   tags: props.event.tags.map((tag) => '#'+tag),
 }
+
+const metaTags = GetEventDetailMetaTags()
+
 </script>
 <template>
-  <AppLayout title="Event Detail">
+  <AppLayout title="Event Detail" :meta-tags="metaTags">
+    <!-- <MetaTagEventDetail /> -->
     <template #header>
       <h2 class="text-xl font-semibold leading-tight">
         Event Detail
@@ -109,7 +114,7 @@ const snsShare = {
                 <BtnSnsShareEventToX
                   :title="snsShare.title" :period="snsShare.period" :instance-names="snsShare.instances"
                   :organizer-names="snsShare.organizers" :performer-names="snsShare.performers"
-                  :category-names="snsShare.categoryNames" :tags="snsShare.tags" :route="snsShare.route" />
+                  :category-names="snsShare.categoryNames" :tags="snsShare.tags" :url="snsShare.route" />
               </div>
             </div>
           </div>

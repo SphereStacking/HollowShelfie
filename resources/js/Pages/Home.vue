@@ -63,12 +63,12 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
     </template>
     <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6 ">
       <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 shadow-xl shadow-base-200 md:col-span-4">
-        <div class="h-full w-full p-8">
+        <div class="size-full p-8">
           開催中
         </div>
       </div>
       <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 shadow-xl shadow-base-200 md:col-span-4">
-        <div class="h-full w-full p-8">
+        <div class="size-full p-8">
           開催予定
         </div>
       </div>

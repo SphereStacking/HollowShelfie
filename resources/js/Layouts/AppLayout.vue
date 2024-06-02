@@ -1,23 +1,33 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3'
 import Banner from '@/Jetstream/Banner.vue'
+import { GetAppMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
 
-const page = usePage()
-console.log(page.props)
+console.log(usePage().props)
 
 defineProps({
-  title: String,
+  title: {
+    type: String,
+    default: () => usePage().props.config.appName,
+  },
+  metaTags: {
+    type: Array,
+    default: () => GetAppMetaTags(),
+  },
 })
 
 </script>
 
 <template>
   <div>
+    <!-- Title -->
     <Head :title="title" />
-
+    <!-- Meta Tags -->
+    <MetaTags :meta-tags="metaTags" />
+    <!-- Banner -->
     <Banner />
-
     <div class="min-h-screen bg-base-100 pb-4">
+      <!-- Navigation Menu -->
       <NavigationMenu class=" sticky top-0 z-30 " />
       <!-- Page Heading -->
       <header v-if="$slots.header" class="sticky top-0 z-20 mb-10 bg-base-300 shadow-2xl shadow-emerald-200 ">
@@ -35,6 +45,7 @@ defineProps({
         <slot></slot>
       </main>
     </div>
+    <!-- Footer -->
     <Footer />
   </div>
 </template>
