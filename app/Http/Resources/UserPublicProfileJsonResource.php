@@ -17,7 +17,7 @@ class UserPublicProfileJsonResource extends JsonResource
         return [
             'dataile' => [
                 'id' => $this->resource->id,
-                'screen_name' => $this->resource->screen_name,
+                'screen_name' => $this->resource->screenName->screen_name,
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->profile_photo_url,
                 // 'profile_url' => $this->resource->profile_url,

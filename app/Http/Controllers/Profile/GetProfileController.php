@@ -26,7 +26,10 @@ class GetProfileController extends Controller
         $screenNameable = ScreenName::findScreenNameable($screen_name);
         $EventSearchParams = new SearchParams(
             '',
-            [['include' => 'and', 'type' => 'organizer', 'value' => $screenNameable->name]],
+            [
+                ['include' => 'or', 'type' => 'organizer', 'value' => $screenNameable->screen_name],
+                ['include' => 'or', 'type' => 'performer', 'value' => $screenNameable->screen_name],
+            ],
             12,
             'new',
         );
