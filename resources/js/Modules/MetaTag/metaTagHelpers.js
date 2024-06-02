@@ -6,7 +6,7 @@ export function GetAppMetaTags() {
     { property: 'og:title', content: usePage().props.title },
     { property: 'og:description', content: usePage().props.description },
     { property: 'og:site_name', content: usePage().props.config.appName },
-    { property: 'og:image', content: usePage().props.ziggy.url +'/storage/images/App/Logo.svg' },
+    { property: 'og:image', content: `${usePage().props.ziggy.url}/storage/images/App/Logo.svg` },
   ]
 }
 
