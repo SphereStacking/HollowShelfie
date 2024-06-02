@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3'
 
 defineProps({
   name: {
-    type: Object,
+    type: String,
     required: true,
   },
   href: {

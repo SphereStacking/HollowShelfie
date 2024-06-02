@@ -37,7 +37,7 @@ const props = defineProps({
     default: () => [],
     required: false,
   },
-  route: {
+  url: {
     type: String,
     default: () => '',
     required: false,
@@ -54,7 +54,7 @@ function getShareText() {
    `🧺 ${props.categoryNames.join(' ')}\n` +
    `🏷 ${props.tags.map((name) => name).join(' ')}\n` +
    '\n' +
-   `${props.route}`
+   `${props.url}`
 }
 
 function openShareUrl() {

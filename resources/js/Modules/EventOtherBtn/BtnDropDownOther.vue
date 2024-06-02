@@ -32,7 +32,7 @@ defineProps<{
           <BtnSnsShareEventToX
             :title="snsShare.title" :period="snsShare.period" :instance-names="snsShare.instances"
             :organizer-names="snsShare.organizers" :performer-names="snsShare.performers"
-            :category-names="snsShare.categoryNames" :tags="snsShare.tags" :route="snsShare.route" />
+            :category-names="snsShare.categoryNames" :tags="snsShare.tags" :url="snsShare.route" />
         </li>
       </ul>
     </div>
