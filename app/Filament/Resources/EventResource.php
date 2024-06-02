@@ -35,8 +35,8 @@ class EventResource extends Resource
                 Forms\Components\Textarea::make('title')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\Select::make('event_create_user_id')
-                    ->relationship('event_create_user', 'name')
+                Forms\Components\Select::make('created_user_id')
+                    ->relationship('created_user', 'name')
                     ->required(),
                 Forms\Components\DateTimePicker::make('start_date'),
                 Forms\Components\DateTimePicker::make('end_date'),

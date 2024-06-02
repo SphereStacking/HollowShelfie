@@ -38,7 +38,7 @@ class Event extends Model
         'published_at',
         'is_forced_hidden',
         'title',
-        'event_create_user_id',
+        'created_user_id',
         'start_date',
         'end_date',
         'description',
@@ -102,9 +102,9 @@ class Event extends Model
                 'id',
                 'title',
                 'description',
-                'created_user',
                 'good_count',
                 'is_forced_hidden',
+                'created_user_id',
             ]
         );
         $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;
@@ -115,9 +115,13 @@ class Event extends Model
             return $instance->instance_type_id;
         })->toArray();
         $array['category_ids'] = $this->categories()->pluck('categories.id')->toArray();
-        $array['organizer_ids'] = $this->organizers->pluck('event_organizeble.id')->toArray();
-        $array['performer_ids'] = $this->event_time_tables->flatMap(function ($time_table) {
-            return $time_table->performers->pluck('performable.id');
+        $array['organizers'] = $this->organizers->map(function (EventOrganizer $organizer) {
+            return implode(' ', [$organizer->event_organizeble_type, $organizer->event_organizeble->id]);
+        })->toArray();
+        $array['performers'] = $this->event_time_tables->flatMap(function (EventTimeTable $time_table) {
+            return $time_table->performers->map(function (TimeTablePerformer $performer) {
+                return implode(' ', [$performer->performable_type, $performer->performable_id]);
+            })->toArray();
         })->toArray();
 
         return $array;
@@ -179,8 +183,8 @@ class Event extends Model
     {
         // EventTimeTableのIDを取得
         $timeTableIds = $this->event_time_tables()->pluck('id');
-        // 関連するTimeTablePerformersを一括で削除
-        TimeTablePerformers::whereIn('event_time_table_id', $timeTableIds)->delete();
+        // 関連するTimeTablePerformerを一括で削除
+        TimeTablePerformer::whereIn('event_time_table_id', $timeTableIds)->delete();
 
         $this->event_time_tables()->delete();
         // 新しいタイムテーブルデータ作成
@@ -202,7 +206,7 @@ class Event extends Model
                     'updated_at' => now(),
                 ];
             })->toArray();
-            TimeTablePerformers::insert($performersData);
+            TimeTablePerformer::insert($performersData);
         }
     }
 
@@ -228,7 +232,7 @@ class Event extends Model
         if ($user === null) {
             throw new CannotOperateEventException('操作権限がありません。');
         }
-        if($this->event_create_user_id !== $user->getAuthIdentifier()) {
+        if($this->created_user_id !== $user->getAuthIdentifier()) {
             throw new CannotOperateEventException('操作権限がありません');
         }
     }
@@ -244,8 +248,8 @@ class Event extends Model
     public function canUserShow(User|Authenticatable|null $user): bool
     {
         // イベントの作成者であれば表示可能
-        if($this->event_create_user_id === $user?->getAuthIdentifier()) {
-            \Log::info('event_create_user_id');
+        if($this->created_user_id === $user?->getAuthIdentifier()) {
+            \Log::info('created_user_id');
             return true;
         }
 
@@ -337,7 +341,7 @@ class Event extends Model
      */
     public function scopeOwnerPublished($query): Builder
     {
-        return $query->where('event_create_user_id', auth()->id());
+        return $query->where('created_user_id', auth()->id());
     }
 
     public function getStatusAttribute(): EventStatus

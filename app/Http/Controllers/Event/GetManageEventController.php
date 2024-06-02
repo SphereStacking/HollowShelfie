@@ -12,29 +12,28 @@ use App\Services\TagService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Params\EventEloquentSearchParams;
-use App\Services\EventEloquentSearchService;
 use App\Http\Resources\EventsPaginatedJsonResource;
+use App\Services\DynamicSearch\Meilisearch\SearchParams;
+use App\Services\DynamicSearch\Meilisearch\Event\EventMeilisearchService;
 
 class GetManageEventController extends Controller
 {
     public function __construct(
-        private readonly EventEloquentSearchService $eventEloquentSearchService,
+        private readonly EventMeilisearchService $eventMeilisearchService,
         private readonly TagService $tagService
     ) {
     }
 
     public function __invoke(Request $request): Response
     {
-        $user = Auth::user();
-
-        $eventSearchParams = new EventEloquentSearchParams(
+        $eventSearchParams = new SearchParams(
             $request->input('t', null),
             $request->input('q', null),
             $request->input('paginate', 12),
             $request->input('o', null),
         );
-        $events = $this->eventEloquentSearchService->getEventSearchByUser($user, $eventSearchParams);
+
+        $events = $this->eventMeilisearchService->searchManageableEvents($eventSearchParams);
 
         return Inertia::render('Event/EventManage', [
             'events' => new EventsPaginatedJsonResource($events),

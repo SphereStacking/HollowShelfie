@@ -20,7 +20,6 @@ class TeamPublicProfileJsonResource extends JsonResource
                 'screen_name' => $this->resource->screen_name,
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->team_logo_url,
-                'profile_url' => route('user.profile.show', $this->resource->id),
                 'owner' => [
                     'profile_url' => $this->resource->owner->profile_url,
                     'id' => $this->resource->owner->id,

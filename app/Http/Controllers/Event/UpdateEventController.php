@@ -7,8 +7,7 @@ use App\Services\EventService;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EventUpdateRequest;
-use App\Http\Resources\EventShowJsonResource;
-use App\Exceptions\CannotOperateEventException;
+use App\Http\Resources\EventUpdatedJsonResource;
 
 class UpdateEventController extends Controller
 {
@@ -28,7 +27,7 @@ class UpdateEventController extends Controller
             'response' => [
                 'status' => 'success',
                 'message' => 'イベントを更新しました。',
-                'event' => new EventShowJsonResource($event),
+                'event' => new EventUpdatedJsonResource($event),
             ],
         ]);
     }

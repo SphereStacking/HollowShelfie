@@ -38,7 +38,7 @@ class GetEventSearchController extends Controller
             [
                 'trendTags' => fn () => new TagNamesJsonResource($this->tagService->getTrendTag()),
                 'events' => new EventsPaginatedJsonResource(
-                    $this->eventMeilisearchService->getPublishedEventSearch($EventSearchParams)
+                    $this->eventMeilisearchService->searchPublishedEvents($EventSearchParams)
                 ),
                 'categories' => fn () => Category::all(),
                 'instanceTypes' => fn () => new InstanceTypeNamesJsonResource(InstanceType::all()),

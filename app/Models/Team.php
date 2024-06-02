@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Traits\TeamRelations;
-use App\Traits\HasFollowable;
 use App\Traits\TeamLogo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasFollowable;
+use Laravel\Scout\Searchable;
+use App\Traits\HasScreenNameable;
+use App\Models\Traits\TeamRelations;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Team extends JetstreamTeam
 {
@@ -19,16 +20,7 @@ class Team extends JetstreamTeam
     use Searchable;
     use TeamLogo;
     use TeamRelations;
-
-    /**
-     * ルートキー名を取得する
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'screen_name';
-    }
+    use HasScreenNameable;
 
     /**
      * The attributes that should be cast.
@@ -48,7 +40,6 @@ class Team extends JetstreamTeam
         'name',
         'personal_team',
         'team_logo_path',
-        'screen_name',
     ];
 
     /**
@@ -70,25 +61,6 @@ class Team extends JetstreamTeam
     protected $appends = [
         'team_logo_url', 'links', 'profile_url',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($user) {
-            do {
-                $randomScreenName = bin2hex(random_bytes(7));
-            } while (User::where('screen_name', $randomScreenName)->exists());
-            $user->screen_name = $randomScreenName;
-        });
-    }
-
-
-
-    public function getProfileUrlAttribute()
-    {
-        return route('team.profile.show', $this->screen_name);
-    }
 
     /**
      * 関連付けられているlink

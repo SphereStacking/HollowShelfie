@@ -58,7 +58,7 @@ class EventService
             $event->description = $attributes['description'];
             $event->start_date = $attributes['dates'][0] ?? null;
             $event->end_date = $attributes['dates'][1] ?? null;
-            $event->event_create_user_id = Auth::user()->id;
+            $event->created_user_id = Auth::user()->id;
             $event->alias = Str::ulid();
             $event->save();
 
@@ -89,7 +89,7 @@ class EventService
             $event->description = $attributes['description'];
             $event->start_date = new Carbon($attributes['start_date'], $this->dateTimeZone);
             $event->end_date = new Carbon($attributes['end_date'], $this->dateTimeZone);
-            $event->event_create_user_id = Auth::user()->id;
+            $event->created_user_id = Auth::user()->id;
             $event->published_at = $attributes['published_at'] ?? null;
             $event->save();
             $event->syncTagsByNames($attributes['tags'] ?? []);

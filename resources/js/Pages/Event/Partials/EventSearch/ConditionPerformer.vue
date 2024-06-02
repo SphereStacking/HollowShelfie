@@ -35,8 +35,15 @@ onBeforeUnmount(() => {
       :items="items"
       placeholder="パフォーマーid検索"
       :route="route('mention.suggestion')"
-      type="performer"
-      :add-condition-func="addConditionFunc" />
+      :add-condition-func="addConditionFunc">
+      <template #items="{ suggestions }">
+        <PerformerBadge
+          v-for="(item, index ) in suggestions"
+          :key="index" :performer="item"
+          class="tooltip transition-all duration-200 hover:-translate-y-1"
+          @click="addConditionFunc({ type: 'performer', value: item.screen_name })" />
+      </template>
+    </AddConditionSuggestion>
   </Transition>
 </template>
 <style lang="">

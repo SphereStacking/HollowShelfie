@@ -61,11 +61,11 @@ class GetHomeController extends Controller
         );
 
         $ongoingEvents = $this->eventMeilisearchService
-            ->getPublishedEventSearch($ongoingParams);
+            ->searchPublishedEvents($ongoingParams);
         $planningEventCount = $this->eventMeilisearchService
-            ->getPublishedEventSearch($recentParams);
+            ->searchPublishedEvents($recentParams);
         $newEvents = $this->eventMeilisearchService
-            ->getPublishedEventSearch($newParams);
+            ->searchPublishedEvents($newParams);
         return Inertia::render(
             'Home',
             [

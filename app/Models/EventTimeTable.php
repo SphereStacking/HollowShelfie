@@ -60,6 +60,6 @@ class EventTimeTable extends Model
      */
     public function performers(): HasMany
     {
-        return $this->hasMany(TimeTablePerformers::class);
+        return $this->hasMany(TimeTablePerformer::class);
     }
 }

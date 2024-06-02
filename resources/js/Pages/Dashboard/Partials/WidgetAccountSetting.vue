@@ -6,7 +6,7 @@ defineProps({
 
 const title = 'アカウント設定'
 const iconType = 'account'
-const routeUrl = route('profile.show')
+const routeUrl = route('account.show')
 </script>
 <template>
   <div class="card bg-base-300 text-center shadow-md">

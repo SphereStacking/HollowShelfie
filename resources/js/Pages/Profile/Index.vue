@@ -1,5 +1,5 @@
 <script setup>
-import { router, Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 const props = defineProps({
   profile: {
     type: Object,
@@ -40,6 +40,11 @@ const querySetter = (value, type) => {
     { include: 'and', type: type.toString(), value: value.name },
   ]
 }
+
+const isTeamProfile = computed(() => {
+  return props.profile.dataile?.members?.length > 0
+})
+
 </script>
 <template>
   <AppLayout title="Dashboard">
@@ -61,7 +66,7 @@ const querySetter = (value, type) => {
                   :class="isMounted ? ' w-52 h-52' : ' h-0 w-0 rotate-12  '">
                 </div>
                 <div class="avatar">
-                  <div class="h-48 w-48">
+                  <div class="size-48">
                     <img :src="dataile.photo_url" class="absolute mx-auto h-full rounded-lg bg-base-300 shadow-2xl">
                   </div>
                 </div>
@@ -101,7 +106,7 @@ const querySetter = (value, type) => {
                     </div>
                   </div>
                 </div>
-                <div class="parse h-full w-full rounded-lg bg-base-300 p-2">
+                <div class="parse size-full rounded-lg bg-base-300 p-2">
                   {{ dataile.content }}
                 </div>
               </div>
@@ -109,7 +114,14 @@ const querySetter = (value, type) => {
           </div>
         </div>
       </Card>
-
+      <div v-if="isTeamProfile" class="flex flex-row gap-2">
+        <AvatarLink
+          :href="dataile.owner.profile_url"
+          :image-url="dataile.owner.image_url" :name="dataile.owner.name" />
+        <AvatarLink
+          v-for="(member, index ) in dataile.members" :key="index" :href="member.profile_url"
+          :image-url="member.image_url" :name="member.name" />
+      </div>
       <div class="my-2 grid w-full grid-cols-2  gap-6 sm:grid-cols-3  md:grid-cols-4 xl:grid-cols-6">
         <CardEvent
           v-for="(item, index) in props.events.data" :key="index" :event="item"

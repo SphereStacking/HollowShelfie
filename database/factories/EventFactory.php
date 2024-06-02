@@ -12,7 +12,7 @@ use App\Models\Category;
 use App\Models\Instance;
 use App\Models\EventOrganizer;
 use App\Models\EventTimeTable;
-use App\Models\TimeTablePerformers;
+use App\Models\TimeTablePerformer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -31,7 +31,7 @@ class EventFactory extends Factory
         // 開始時間からランダムに2~6時間後を終了時間とする
         $endDateTime = Carbon::instance($dateTime)->addHours(rand(2, 6))->format('Ymd\THis\Z');
         return [
-            'event_create_user_id' => User::inRandomOrder()->first()->id,
+            'created_user_id' => User::inRandomOrder()->first()->id,
             'is_forced_hidden' => $this->faker->boolean(20),
             'title' => $this->faker->text(20),
             'start_date' => $formattedDateTime,
@@ -146,8 +146,8 @@ class EventFactory extends Factory
                 ]);
                 $event->event_time_tables()->save($eventTimeTable);
 
-                // TimeTablePerformersはrand(1 ,2)の範囲で作成
-                TimeTablePerformers::factory()->count(rand(1, 2))->create([
+                // TimeTablePerformerはrand(1 ,2)の範囲で作成
+                TimeTablePerformer::factory()->count(rand(1, 2))->create([
                     'event_time_table_id' => $eventTimeTable->id,
                 ]);
                 // 次のイベントタイムテーブルの開始時間を設定

@@ -25,7 +25,7 @@ trait EventRelations
      */
     public function event_create_user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'event_create_user_id');
+        return $this->belongsTo(User::class, 'created_user_id');
     }
 
     /**

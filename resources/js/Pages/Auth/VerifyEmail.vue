@@ -42,7 +42,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
         <div>
           <Link
-            :href="route('profile.show')"
+            :href="route('account.show')"
             class="rounded-md text-sm text-base-content underline ">
             {{ $t('Edit Profile') }}
           </Link>

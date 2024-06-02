@@ -15,17 +15,6 @@ abstract class MeilisearchFilter implements MeilisearchFilterInterface
 
     public $value;
 
-    /**
-     * 条件マップ
-     *
-     * @var array
-     */
-    public $conditionMaps = [
-        'and' => 'where',
-        'or' => 'WhereOr',
-        'not' => 'whereNot',
-    ];
-
     public function __construct($include, $type, $value)
     {
         $this->include = $include;
@@ -35,9 +24,12 @@ abstract class MeilisearchFilter implements MeilisearchFilterInterface
 
     public function makeQuery(): string
     {
-        $method = $this->conditionMaps[$this->include];
-
-        return $this->$method($this->formatValue());
+        return match ($this->include) {
+            'and' => $this->where($this->formatValue()),
+            'or' => $this->whereOr($this->formatValue()),
+            'not' => $this->whereNot($this->formatValue()),
+            default => throw new \Exception('Invalid include value'),
+        };
     }
 
     protected function where($value): string
@@ -65,7 +57,6 @@ abstract class MeilisearchFilter implements MeilisearchFilterInterface
         $value = is_numeric($value) ? $value : "\"{$value}\"";
         return " AND NOT {$this->column} = {$value}";
     }
-
 
     /**
      * 値をフォーマットする

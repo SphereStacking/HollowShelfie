@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\Jetstream\TeamController;
-use App\Http\Controllers\Jetstream\TeamMemberController;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Jetstream\TeamController;
+use App\Http\Controllers\Jetstream\TeamMemberController;
+use App\Http\Controllers\Jetstream\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\CurrentTeamController;
 use Laravel\Jetstream\Http\Controllers\TeamInvitationController;
 use Laravel\Jetstream\Http\Controllers\Inertia\ApiTokenController;
 use Laravel\Jetstream\Http\Controllers\Inertia\CurrentUserController;
-use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 use Laravel\Jetstream\Http\Controllers\Inertia\ProfilePhotoController;
 use Laravel\Jetstream\Http\Controllers\Inertia\PrivacyPolicyController;
 use Laravel\Jetstream\Http\Controllers\Inertia\TermsOfServiceController;
@@ -31,7 +31,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
     Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware]))], function () {
         // User & Profile...
         Route::get('/account/profile', [UserProfileController::class, 'show'])
-            ->name('profile.show');
+            ->name('account.show');
 
         Route::delete('/account/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
             ->name('other-browser-sessions.destroy');

@@ -46,7 +46,7 @@ trait UserRelations
      */
     public function create_events(): HasMany
     {
-        return $this->hasMany(Event::class, 'event_create_user_id');
+        return $this->hasMany(Event::class, 'created_user_id');
     }
 
     /**

@@ -147,9 +147,10 @@ return [
                     'tags',
                     'instance_type_ids',
                     'category_ids',
-                    'organizer_ids',
-                    'performer_ids',
+                    'organizers',
+                    'performers',
                     'good_count',
+                    'created_user_id',
                 ],
                 'sortableAttributes' => [
                     'good_count',
