@@ -106,7 +106,7 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 - [tiptap](https://tiptap.dev) (WYSIWYGエディター)
 - [meilisearch](https://www.meilisearch.com/) (全文検索)
   - 日本語の検索がいまいちなためimageはprototypeを使用
-- [vue3-carousel](https://ismail9k.github.io/vue3-carousel/) (カルーセルバナー)
+- [swiper](https://swiperjs.com/) (カルーセルバナー)
 - [date-fns](https://date-fns.org/) (日付操作)  day.jsは削除予定
 - [iconify](https://iconify.design/) (Iconに使用)
 
