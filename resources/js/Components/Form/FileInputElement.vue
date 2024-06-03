@@ -1,9 +1,12 @@
 <script setup>
 import { ref, defineProps, defineEmits, watch, computed } from 'vue'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
-import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
 import { useForm } from '@inertiajs/vue3'
+
+// import function to register Swiper custom elements
+import { register } from 'swiper/element/bundle'
+// register Swiper custom elements
+register()
 
 // 単位をバイトに変換する関数
 const convertSizeToBytes = (size) => {
@@ -77,7 +80,6 @@ const props = defineProps({
 // propsの値をバイト単位に変換
 const maxFileSizeBytes = computed(() => convertSizeToBytes(props.maxFileSize))
 
-const myCarousel = ref(null)
 const files = ref(props.modelValue || [])
 
 const updateForm = useForm({
@@ -138,10 +140,6 @@ const handleRemoveFile = (id) => {
     onError: () => {},
   })
 }
-const itemsToShow = computed(() => {
-  return files.value.length < 4 ? 4 : files.value.length
-})
-
 </script>
 
 <template>
@@ -170,25 +168,28 @@ const itemsToShow = computed(() => {
             name="file" multiple @change="handleFileChange">
         </label>
       </div>
-      <Carousel
-        ref="myCarousel"
-        :items-to-show="itemsToShow" class="flex flex-col">
-        <Slide v-for="(file, index) in files" :key="file">
-          <div class="carousel__item relative mx-0.5">
-            <button
-              class="btn btn-circle btn-error btn-xs absolute right-0 top-0 m-1"
-              @click="handleRemoveFile(file.id)">
-              <IconTypeMapper type="delete" />
-            </button>
-            <FryerImg
-              :src="file.public_url" :alt="`File preview ${index}`"
-              class="rounded-lg " />
-          </div>
-        </Slide>
-      </Carousel>
+      <div v-if="files.length > 0" class=" rounded-md bg-base-200 p-2">
+        <SwiperWrapper
+          v-model="files"
+          slides-per-view="3"
+          pagination="true"
+          loop="true"
+          space-between="10">
+          <template #item="{element, index}">
+            <div class="relative mx-0.5">
+              <button
+                class="btn btn-circle btn-error btn-xs absolute right-0 top-0 m-1"
+                @click="handleRemoveFile(element.id)">
+                <IconTypeMapper type="delete" />
+              </button>
+              <FryerImg
+                :src="element.public_url" :alt="`File preview ${index}`"
+                class="rounded-lg " />
+            </div>
+          </template>
+        </SwiperWrapper>
+      </div>
     </div>
   </Wrapper>
 </template>
 
-<style lang="">
-</style>
