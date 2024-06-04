@@ -1,5 +1,5 @@
 <script setup>
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 
 const props = defineProps({
   title: {
@@ -7,7 +7,7 @@ const props = defineProps({
     required: true
   },
   content: {
-    type: Object,
+    type: String,
     required: true
   },
 })
