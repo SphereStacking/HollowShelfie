@@ -1,5 +1,5 @@
 <script setup>
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 
 const props = defineProps({
   description: {

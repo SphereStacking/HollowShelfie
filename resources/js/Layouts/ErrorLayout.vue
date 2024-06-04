@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link} from '@inertiajs/vue3'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 
 const props = defineProps({
   title: {
