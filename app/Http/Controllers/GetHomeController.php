@@ -37,6 +37,24 @@ class GetHomeController extends Controller
 
     public function __invoke()
     {
+
+
+        $ongoingParams = new SearchParams(
+            '',
+            [['include' => 'and', 'type' => 'status', 'value' => EventStatus::ONGOING->value]],
+            12,
+            null,
+        );
+
+        $planningParams = new SearchParams(
+            '',
+            [
+                ['include' => 'and', 'type' => 'status', 'value' => EventStatus::UPCOMING->value],
+            ],
+            12,
+            null,
+        );
+
         $newParams = new SearchParams(
             '',
             [],
@@ -44,26 +62,10 @@ class GetHomeController extends Controller
             'new',
         );
 
-        $ongoingParams = new SearchParams(
-            '',
-            [['include' => 'or', 'type' => 'status', 'value' => EventStatus::ONGOING->name]],
-            12,
-            null,
-        );
-
-        $recentParams = new SearchParams(
-            '',
-            [
-                ['include' => 'not', 'type' => 'status', 'value' => EventStatus::ONGOING->name],
-            ],
-            12,
-            null,
-        );
-
         $ongoingEvents = $this->eventMeilisearchService
             ->searchPublishedEvents($ongoingParams);
-        $planningEventCount = $this->eventMeilisearchService
-            ->searchPublishedEvents($recentParams);
+        $planningEvents = $this->eventMeilisearchService
+            ->searchPublishedEvents($planningParams);
         $newEvents = $this->eventMeilisearchService
             ->searchPublishedEvents($newParams);
         return Inertia::render(
@@ -78,12 +80,12 @@ class GetHomeController extends Controller
                     'paginate' => $ongoingParams->getDefaultPaginate(),
                     'o' => $ongoingParams->order,
                 ]),
-                'planningEvents' => fn () => new EventsJsonResource($planningEventCount),
+                'planningEvents' => fn () => new EventsJsonResource($planningEvents),
                 'planningEventsUrl' => fn () => route('event.search.index', [
-                    't' => $recentParams->text,
-                    'q' => $recentParams->queryParams,
-                    'paginate' => $recentParams->getDefaultPaginate(),
-                    'o' => $recentParams->order,
+                    't' => $planningParams->text,
+                    'q' => $planningParams->queryParams,
+                    'paginate' => $planningParams->getDefaultPaginate(),
+                    'o' => $planningParams->order,
                 ]),
 
                 'newEvents' => fn () => new EventsJsonResource($newEvents),

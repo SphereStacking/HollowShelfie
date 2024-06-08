@@ -116,8 +116,12 @@ const isCurrentYear = computed(() => {
       <div class="mx-2 flex items-center justify-between gap-1 text-xs font-thin">
         <div class="flex items-center gap-1">
           <IconTypeMapper type="status" />
-          <button class="btn btn-ghost btn-xs px-0.5 text-xs">
+          <button
+            class="btn btn-ghost btn-xs px-0.5 py-0 text-xs"
+            @click="navigateToType(event.status, 'status')">
             {{ $t(event.status) }}
+          </button>
+          <button class="btn btn-ghost btn-xs px-0.5 text-xs">
           </button>
         </div>
         <div class="flex items-center gap-1">

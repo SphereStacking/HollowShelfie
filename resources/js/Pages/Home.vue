@@ -29,11 +29,11 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  recentEventsUrl: {
+  planningEventsUrl: {
     type: String,
     required: true
   },
-  recentEvents: {
+  planningEvents: {
     type: Array,
     required: true
   },
@@ -49,7 +49,7 @@ const querySetter = (value, type) => {
 }
 const eventItems = ref([])
 eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'eventOpen' })
-eventItems.value.push({ url: props.recentEventsUrl, events: props.recentEvents, title: 'Recent', icon: 'eventRecent' })
+eventItems.value.push({ url: props.planningEventsUrl, events: props.planningEvents, title: 'Planning', icon: 'eventPlanning' })
 eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'NEW', icon: 'new' })
 
 </script>

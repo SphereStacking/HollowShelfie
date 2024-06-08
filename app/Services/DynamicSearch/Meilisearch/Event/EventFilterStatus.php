@@ -49,7 +49,7 @@ class EventFilterStatus extends MeilisearchFilter
     public function scopeGeneralPublished(): string
     {
         $now = Carbon::now()->getTimestamp();
-        return 'is_forced_hidden = false AND published_at < ' . $now;
+        return 'published_at < ' . $now;
     }
 
     /**
@@ -58,7 +58,7 @@ class EventFilterStatus extends MeilisearchFilter
     public function scopeClosedPublished(): string
     {
         $now = Carbon::now()->getTimestamp();
-        return 'is_forced_hidden = false AND published_at < ' . $now . ' AND end_date < ' . $now;
+        return 'published_at < ' . $now . ' AND end_date < ' . $now;
     }
 
     /**
@@ -67,7 +67,7 @@ class EventFilterStatus extends MeilisearchFilter
     public function scopeOngoingPublished(): string
     {
         $now = Carbon::now()->getTimestamp();
-        return 'is_forced_hidden = false AND published_at < ' . $now . ' AND ( start_date < ' . $now . ' AND end_date > ' . $now . ')';
+        return 'published_at < ' . $now . ' AND ( start_date < ' . $now . ' AND end_date > ' . $now . ')';
     }
 
     /**
@@ -76,7 +76,7 @@ class EventFilterStatus extends MeilisearchFilter
     public function scopeUpcomingPublished(): string
     {
         $now = Carbon::now()->getTimestamp();
-        return 'is_forced_hidden = false AND published_at < ' . $now . ' AND start_date > ' . $now;
+        return 'published_at < ' . $now . ' AND start_date > ' . $now;
     }
 
 
