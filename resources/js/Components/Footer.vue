@@ -36,7 +36,8 @@ const pages = {
   ],
   Info: [
     { component: Link, url: route('about', 'news'), label: 'お知らせ・リリース', target: '_self' },
-    { component: Link, url: route('roadmap'), label: 'ロードマップ', target: '_self' }
+    { component: Link, url: route('roadmap'), label: 'ロードマップ', target: '_self' },
+    { component: Link, url: route('credit'), label: 'クレジット', target: '_self' }
   ]
 }
 
