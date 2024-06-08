@@ -13,7 +13,6 @@ const item = ref({})
 //Modal表示する。
 const onBtnOpenModal = (newItem) => {
   IsOpenModal.value = true
-  console.log(newItem)
   item.value = {
     id: newItem.id,
     alias: newItem.alias,

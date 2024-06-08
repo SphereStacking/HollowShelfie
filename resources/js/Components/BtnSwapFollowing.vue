@@ -49,8 +49,6 @@ const follow = async () => {
       count.value = response.data.followers_count
       isFollowed.value = response.data.is_followed
     }
-
-    console.log(response.data)
   } catch (error) {
     console.error('Error:', error)
   }

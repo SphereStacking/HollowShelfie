@@ -108,7 +108,6 @@ const handleFileChange = (event) => {
   updateForm.post(props.uploadRoute, {
     preserveScroll: true,
     onSuccess: (result) => {
-      console.log(result.props.response.files)
       files.value.push(...result.props.response.files)
     },
     onError: () => {
@@ -129,7 +128,6 @@ function validateIndividualSizes(newFiles) {
 }
 
 const handleRemoveFile = (id) => {
-  console.log('handleRemoveFile')
   deleteForm.id = id
   deleteForm.delete(props.deleteRoute, {
     preserveScroll: true,

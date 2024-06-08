@@ -2,8 +2,11 @@
 import { Head, usePage } from '@inertiajs/vue3'
 import Banner from '@/Jetstream/Banner.vue'
 import { GetAppMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
+import { isDevelopment } from '@/Utils/Environment'
 
-console.log(usePage().props)
+if (isDevelopment()){
+  console.info('props :', usePage().props)
+}
 
 defineProps({
   title: {

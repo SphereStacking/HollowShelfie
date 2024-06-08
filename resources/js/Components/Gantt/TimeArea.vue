@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   times: {
     type: Array,
     required: true
@@ -8,12 +8,11 @@ const props = defineProps({
 defineEmits(
   ['click']
 )
-console.log(props.times)
 </script>
 <template>
   <div class="flex flex-row overflow-hidden overflow-x-auto">
     <!-- 時間を表示 -->
-    <div v-for="time in times" class="flex flex-col">
+    <div v-for="time in times" :key="time" class="flex flex-col">
       <div class="text-left">
         <!-- 日にちを表示 -->
         <h2 class="text-xl font-semibold">

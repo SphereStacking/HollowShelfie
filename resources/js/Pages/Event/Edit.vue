@@ -1,11 +1,7 @@
 <script setup>
 
-function success() {
-  console.log('success')
-}
-
 function error() {
-  console.log('error')
+  console.error('EventEditForm error')
 }
 
 const modal = ref()
