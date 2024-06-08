@@ -22,7 +22,7 @@ function createGoogleCalendarUrl(title, dates, details, location) {
   const _title = `&text=${encodeURIComponent(title)}`
   const _details = `&details=${encodeURIComponent(details)}`
   const _location = `&location=${encodeURIComponent(location)}`
-  console.log(`${base}${_title}${_details}${_location}`)
+  console.info(`${base}${_title}${_details}${_location}`)
 
   if (dates.size=1) {
     //終日イベント
@@ -32,7 +32,7 @@ function createGoogleCalendarUrl(title, dates, details, location) {
   } else {
     //期間イベント
     const dates = `&dates=${dates[0]}/${dates[1]}`
-    console.log(`${base}${_title}${dates}${_details}${_location}`)
+    console.info(`${base}${_title}${dates}${_details}${_location}`)
     return `${base}${_title}${dates}${_details}${_location}`
   }
 }

@@ -15,7 +15,6 @@ const initialtitle = page.title
 const hasNextPage = () => props.follows.pagination.next_page_url !== null
 
 const loadMoreFollows = () => {
-  console.log(window.history)
   if (!hasNextPage()) {
     return
   }

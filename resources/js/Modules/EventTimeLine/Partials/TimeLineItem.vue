@@ -37,8 +37,6 @@ const calculateGridSpan = (startDate, endDate) => {
   const startColumn = Math.floor(startDiff / 10) + 1
   const endColumn = Math.floor(endDiff / 10) + 1
 
-  // console.log('Calculated Columns - Start:', startColumn, 'End:', endColumn)
-
   return `grid-column: ${startColumn} / ${endColumn};`
 }
 
@@ -62,7 +60,7 @@ const bookmark: Bookmark = {
 </script>
 
 <template>
-  <div class="rounded-md bg-base-200 p-2 text-base-content" @click="console.log(timeLineItem)">
+  <div class="rounded-md bg-base-200 p-2 text-base-content" @click="console.debug(timeLineItem)">
     <div class="flex flex-row justify-between">
       <div class="flex flex-row gap-2">
         <Link v-for="organizer in timeLineItem.organizers" :key="organizer.id" :href="organizer.profile_url">
@@ -86,7 +84,7 @@ const bookmark: Bookmark = {
           v-if="item.performers.length > 0"
           :style="calculateGridSpan(item.start_date, item.end_date)"
           :performers="item.performers"
-          @click="console.log(item.start_date,item.end_date)" />
+          @click="console.debug(item.start_date,item.end_date)" />
       </template>
     </div>
   </div>

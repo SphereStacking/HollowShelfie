@@ -35,8 +35,6 @@ traverseObj(optins.value, defOptions.value)
 
 function modifyType() {
   let type = Object.prototype.toString.call(modelValue.value)
-  console.log(modelValue.value)
-  console.log(type)
   switch (type) {
   case '[object Object]':
     date.value = modelValue.value

@@ -20,7 +20,6 @@ export default defineComponent({
   emits: ['update:hours', 'update:minutes'],
   setup(props) {
     // Generate array of hours
-    console.log(props.hoursGridIncrement)
     const hoursArray = computed(() => {
       const arr = []
       for (let i = 0; i < 24; i=i+props.hoursGridIncrement) {
@@ -30,7 +29,6 @@ export default defineComponent({
     })
 
     // Generate array of minutes
-    console.log(props.minutesGridIncrement)
     const minutesArray = computed(() => {
       const arr = []
       for (let i = 0; i < 60; i=i+props.minutesGridIncrement) {

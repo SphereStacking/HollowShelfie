@@ -19,10 +19,6 @@ const dataile = props.profile.dataile
 const authUser = ref({})
 authUser.value = props.profile.auth_user
 
-watch(authUser, (newVal, oldVal) => {
-  console.log('authUser has changed', newVal, oldVal)
-})
-
 const isMounted = ref(false)
 onBeforeMount(() => {
   setTimeout(() => {
@@ -34,7 +30,6 @@ const getButtonText = (event) => {
   return `${event.name}`
 }
 const querySetter = (value, type) => {
-  console.log(value)
   return [
     { include: 'and', type: 'user', value: props.profile.dataile.name },
     { include: 'and', type: type.toString(), value: value.name },

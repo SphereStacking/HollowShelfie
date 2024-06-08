@@ -86,7 +86,6 @@ const handleEnterToAdd = (inputText) => {
 }
 
 const handleAdd = (tagName) => {
-  console.log(tagName)
   isOpen.value=false
   if (tagName === ''){ return }
   clearInputTag()

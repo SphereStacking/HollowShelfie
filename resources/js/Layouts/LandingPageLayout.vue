@@ -1,9 +1,6 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
 import Banner from '@/Jetstream/Banner.vue'
-
-const page = usePage()
-console.log(page.props)
 
 defineProps({
   title: String,

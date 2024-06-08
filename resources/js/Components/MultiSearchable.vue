@@ -68,7 +68,6 @@ const clickTagDelete = (tagValue) => {
 }
 
 const isIncludesString = (searchString) => {
-  console.log(items.value)
   return items.value.some(item => item === searchString)
 }
 const handleEnterAdd = (inputText) => {

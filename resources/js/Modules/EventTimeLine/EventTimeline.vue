@@ -76,7 +76,6 @@ const calculateGridPosition = (eventStartDate, eventEndDate) => {
 
 const timeLineItems = computed<TimeLineItem[]>(() => {
   return props.events.map((event:any) => {
-    console.log(event)
     return {
       alias: event.alias,
       startDate: event.start_date,

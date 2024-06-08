@@ -109,7 +109,6 @@ const pushToHistory = () => {
   history.value.push([...conditions.value])
   currentPosition.value++
 
-  console.log(history.value)
 }
 
 const addCondition = ({ type, value, include = includesOrder[0] }) => {
@@ -146,7 +145,6 @@ const goForwardInHistory = () => {
 const goBackInHistory = () => {
   if (currentPosition.value > 0) {
     currentPosition.value--
-    console.log(history.value[currentPosition.value])
     conditions.value = [...history.value[currentPosition.value]]
   }
 }

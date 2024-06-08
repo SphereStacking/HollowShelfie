@@ -15,9 +15,6 @@ const getEventShow = (event) => {
     method: 'get',
     preserveState: false,
     preserveScroll: true,
-    onSuccess: (result) => {
-      console.log(result)
-    }
   })
 }
 
@@ -31,8 +28,7 @@ const getEventShow = (event) => {
       :model-value="events"
       watch-slides-progress="true"
       scrollbar="true"
-      slide-class="mb-4"
-      @oninit="console.log('hoge')">
+      slide-class="mb-4">
       <template #item="{element}">
         <div class="w-full px-2">
           <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">

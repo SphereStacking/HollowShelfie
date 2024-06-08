@@ -21,12 +21,8 @@ const props = defineProps({
 
 const startDate = new Date(props.startDate)
 const endDate = new Date(props.endDate)
-console.log('getHours props.startDate : ', props.startDate)
-console.log('getHours props.endDate   : ', props.endDate)
 
 const timeRanges = computed(() => {
-  console.log('getHours start : ', startDate)
-  console.log('getHours end   : ', endDate)
   const days = eachDayOfInterval({ start: startDate, end: endDate })
   return days.map((day, index, array) => {
     const date = format(day, 'M/d')
