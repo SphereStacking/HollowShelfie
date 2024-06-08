@@ -6,7 +6,7 @@ defineProps({
 
 const title = '公開プロファイル'
 const iconType = 'setting'
-const routeUrl = usePage().props.auth.user.profile_url
+const routeUrl = route('profile.show', usePage().props.auth.user.screen_name)
 </script>
 <template>
   <div class="card bg-base-300  text-center shadow-md">
