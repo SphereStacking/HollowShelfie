@@ -1,7 +1,7 @@
 <script setup>
 import SwiperWrapper from './Swiper/SwiperWrapper.vue'
 
-const props = defineProps({
+defineProps({
   images: {
     type: Array,
     default: () => [],
@@ -28,50 +28,40 @@ const prev = () => {
 </script>
 
 <template>
-  <div class="flex h-full flex-col justify-between gap-2">
+  <div class="flex flex-col gap-4 overflow-hidden">
     <slot name="header"></slot>
-    <div class="relative aspect-a4 min-h-80 " :class="[!props.images.length ? 'rounded-xl bg-base-300' : '']">
-      <template v-if="props.images.length>0">
-        <SwiperWrapper
-          ref="swiper1"
-          class="size-full" loop="true"
-          space-between="10"
-          :thumbs-swiper="`#${uniqueId}`"
-          sc
-          :model-value="images">
-          <template #item="{element}">
-            <FryerImg :src="element" />
-          </template>
-        </SwiperWrapper>
+    <SwiperWrapper
+      ref="swiper1"
+      loop="true"
+      space-between="2"
+      scrollbar="true"
+      autoplay-delay="2500"
+      slide-class="mb-4"
+      :thumbs-swiper="`#${uniqueId}`"
+      :model-value="images">
+      <template #item="{element}">
+        <FryerImg :src="element" />
       </template>
-      <template v-else>
-        <div class="size-full bg-base-300">
-          <IconTypeMapper type="imageOff" class=" absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  text-6xl" />
-        </div>
-      </template>
-    </div>
+    </SwiperWrapper>
 
-    <div class=" flex flex-row items-center justify-between gap-1">
-      <button class="btn btn-square  btn-md" @click="prev">
-        <IconTypeMapper type="arrowLeft" class="text-4xl" />
+    <div class="flex items-center">
+      <button class="btn btn-square btn-sm" @click="prev">
+        <IconTypeMapper type="arrowLeft" class="text-3xl" />
       </button>
       <SwiperWrapper
         :id="uniqueId"
+        class="mx-2 grow "
         loop="true"
-        free-mode="true"
-        slides-per-view="3"
-        :model-value="images"
-        watch-slides-progress="true"
-        scrollbar="true"
-        class="w-32"
-        @oninit="console.log('hoge')">
+        space-between="2"
+        slides-per-view="4"
+        hide-no-image="true"
+        :model-value="images">
         <template #item="{element}">
-          <FryerImg class="h-10" :src="element" />
+          <FryerImg class="w-10" :src="element" />
         </template>
       </SwiperWrapper>
-
-      <button class="btn btn-square  btn-md" @click="next">
-        <IconTypeMapper type="arrowRight" class="text-4xl" />
+      <button class="btn btn-square btn-sm" @click="next">
+        <IconTypeMapper type="arrowRight" class="text-3xl" />
       </button>
     </div>
     <slot name="footer"></slot>

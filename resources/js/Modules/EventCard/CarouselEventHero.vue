@@ -1,33 +1,14 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
-import { decomposeDate } from '@/Utils/Date'
 import { format } from 'date-fns'
 
-const props = defineProps({
+defineProps({
   events: {
     type: Array,
     default: () => [],
     required: true
   },
 })
-
-const currentSlide = ref()
-
-const next = () => {
-  if (currentSlide.value < props.events.length - 1) {
-    currentSlide.value++
-  } else {
-    currentSlide.value = 0
-  }
-}
-
-const prev = () => {
-  if (currentSlide.value > 0) {
-    currentSlide.value--
-  } else {
-    currentSlide.value = props.events.length - 1
-  }
-}
 
 const getEventShow = (event) => {
   router.visit(route('event.show', event.alias), {
@@ -50,14 +31,13 @@ const getEventShow = (event) => {
       :model-value="events"
       watch-slides-progress="true"
       scrollbar="true"
-      autoplay-delay="2500"
       slide-class="mb-4"
       @oninit="console.log('hoge')">
       <template #item="{element}">
-        <div class="carousel__item w-full px-2">
-          <div class="flex flex-col items-center justify-center gap-4 lg:flex-row">
+        <div class="w-full px-2">
+          <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <CardEventImages class="w-2/6" :images="element.files" />
-            <div class="flex w-4/6 flex-col items-start gap-2">
+            <div class="flex w-full flex-col items-start gap-2 sm:w-4/6">
               <div class="flex w-full flex-row justify-between">
                 <div> {{ format(new Date(element.start_date), 'yyyy/MM/dd HH:mm') }}</div>
                 <div class="flex gap-1">
@@ -112,7 +92,7 @@ const getEventShow = (event) => {
                     :image-url="performer.image_url" :name="performer.name" />
                 </div>
               </div>
-              <button class=" btn btn-ghost btn-outline btn-sm w-full" @click="getEventShow(event)">
+              <button class=" btn btn-ghost btn-outline btn-sm w-full" @click="getEventShow(element)">
                 show more!
               </button>
             </div>
