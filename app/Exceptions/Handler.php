@@ -5,10 +5,10 @@ namespace App\Exceptions;
 use Throwable;
 use Inertia\Inertia;
 use Sentry\Laravel\Integration;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Socialite\Two\InvalidStateException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use App\Http\Middleware\HandleInertiaRequests;
 class Handler extends ExceptionHandler
 {
     /**
@@ -54,7 +54,10 @@ class Handler extends ExceptionHandler
             $statusCode = $e->getStatusCode();
             $message = $e->getMessage();
             return match ($statusCode) {
-                403 => Inertia::render('Errors/403Error', ['message' => $message]),
+                403 => function () use ($request, $message) {
+                    Inertia::share((new HandleInertiaRequests)->share($request));
+                    return Inertia::render('Errors/403Error', ['message' => $message]);
+                },
                 404 => Inertia::render('Errors/404Error', ['message' => $message]),
                 418 => Inertia::render('Errors/418Error', ['message' => $message]),
                 429 => Inertia::render('Errors/429Error', ['message' => $message]),
