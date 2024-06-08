@@ -5,6 +5,9 @@ namespace App\Rules;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
+/**
+ * 予約語チェック
+ */
 class ReservedWord implements ValidationRule
 {
     protected $categories;
@@ -27,7 +30,7 @@ class ReservedWord implements ValidationRule
             $reservedWords = array_merge($reservedWords, config('reserved_words.'.$category, []));
         }
         if (in_array($value, $reservedWords)) {
-            $fail('The :attribute is a reserved word.');
+            $fail(':attributeは予約語です。');
         }
     }
 }

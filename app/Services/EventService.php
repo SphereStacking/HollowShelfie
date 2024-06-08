@@ -59,7 +59,7 @@ class EventService
             $event->start_date = $attributes['dates'][0] ?? null;
             $event->end_date = $attributes['dates'][1] ?? null;
             $event->created_user_id = Auth::user()->id;
-            $event->alias = Str::ulid();
+            $event->alias = Str::lower(Str::ulid());
             $event->save();
 
             $event->syncTagsByNames($attributes['tags'] ?? []);
