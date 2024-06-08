@@ -200,6 +200,9 @@ export const ItemsConfig = {
   eventRecent: {
     icon: 'mdi:timelapse',
   },
+  eventPlanning: {
+    icon: 'mdi:calendar-month',
+  },
   image: {
     icon: 'mdi:image',
   },

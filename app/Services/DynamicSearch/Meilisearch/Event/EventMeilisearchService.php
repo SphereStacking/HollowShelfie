@@ -120,6 +120,8 @@ class EventMeilisearchService
                 return $query->orderBy('good_count', 'desc');
             case 'new':
                 return $query->orderBy('published_at', 'desc');
+            case 'old':
+                return $query->orderBy('published_at', 'asc');
             default:
                 return $query->orderBy('published_at', 'desc');
         }
