@@ -56,8 +56,10 @@ class Handler extends ExceptionHandler
             return match ($statusCode) {
                 403 => Inertia::render('Errors/403Error', ['message' => $message]),
                 404 => Inertia::render('Errors/404Error', ['message' => $message]),
+                418 => Inertia::render('Errors/418Error', ['message' => $message]),
                 429 => Inertia::render('Errors/429Error', ['message' => $message]),
                 500 => Inertia::render('Errors/500Error', ['message' => $message]),
+                503 => Inertia::render('Errors/503Error', ['message' => $message]),
                 default => function() use ($e, $message) {
                     Integration::captureUnhandledException($e);
                     return Inertia::render('Errors/500Error', ['message' => $message]);

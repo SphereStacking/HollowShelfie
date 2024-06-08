@@ -12,7 +12,7 @@ const form = useForm({})
 const page = usePage()
 
 defineProps({
-  isLandingPage: {
+  isNightMode: {
     type: Boolean,
     default: false,
   },
@@ -32,7 +32,7 @@ const logout = () => {
   router.post(route('logout'))
 }
 
-const auth_user = computed(() => page.props.auth.user ?? null)
+const auth_user = computed(() => page.props.auth?.user ?? null)
 const isTeam = computed(() => auth_user.value?.current_team != null)
 const isLogin = computed(() => auth_user.value !== null)
 
@@ -86,17 +86,17 @@ const headerButtons = [
         </div>
 
         <div class="hidden sm:ml-6 sm:flex sm:items-center sm:gap-2">
-          <Link class="btn  btn-active no-animation btn-sm" :class="isLandingPage ? '' : 'btn-primary'" :href="route('event.search.index')">
+          <Link class="btn  btn-active no-animation btn-sm" :class="isNightMode ? '' : 'btn-primary'" :href="route('event.search.index')">
             <IconTypeMapper type="search" class="mx-2 text-xl" />
           </Link>
           <Link
             v-if="!isLogin" :href="route('login')" class=" btn btn-sm"
-            :class="isLandingPage ? '' : 'btn-primary'">
+            :class="isNightMode ? '' : 'btn-primary'">
             {{ $t('Login') }}
           </Link>
           <Link
             v-if="!isLogin" :href="route('register')" class="btn btn-sm"
-            :class="isLandingPage ? '' : 'btn-secondary'">
+            :class="isNightMode ? '' : 'btn-secondary'">
             {{ $t('Register') }}
           </Link>
 
