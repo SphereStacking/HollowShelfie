@@ -3,6 +3,7 @@ namespace App\Traits;
 
 use App\Models\ScreenName;
 use App\Rules\ReservedWord;
+use App\Rules\CaseInsensitiveUnique;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
@@ -71,6 +72,7 @@ trait HasScreenNameable
                 'max:14',
                 'unique:screen_names,screen_name',
                 new ReservedWord(),
+                new CaseInsensitiveUnique('screen_names', 'screen_name'),
             ],
         ]);
 
