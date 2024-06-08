@@ -9,6 +9,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         \App\Console\Commands\GenerateMermaidERD::class,
+        \App\Console\Commands\ImportScoutModels::class,
     ];
 
     /**
