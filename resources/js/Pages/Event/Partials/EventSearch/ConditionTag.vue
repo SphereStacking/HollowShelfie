@@ -34,7 +34,7 @@ onBeforeUnmount(() => {
     <div v-if="isVisible">
       <AddConditionSuggestion
         placeholder="タグを検索"
-        :route="route('tag.suggestion')"
+        :url="route('tag.suggestion')"
         type="tag"
         :add-condition-func="addConditionFunc">
         <div class="divider divider-start my-0 w-full">

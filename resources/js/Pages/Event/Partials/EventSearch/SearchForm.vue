@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, defineProps, defineEmits } from 'vue'
+import { markRaw } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import ConditionDate from './ConditionDate.vue'
 import ConditionCategory from './ConditionCategory.vue'
@@ -16,6 +17,13 @@ import FilterItemPerformer from './FilterItemPerformer.vue'
 import FilterItemInstance from './FilterItemInstance.vue'
 import FilterItemStatus from './FilterItemStatus.vue'
 
+const RawConditionDate = markRaw(ConditionDate)
+const RawConditionCategory = markRaw(ConditionCategory)
+const RawConditionTag = markRaw(ConditionTag)
+const RawConditionOrganizer = markRaw(ConditionOrganizer)
+const RawConditionPerformer = markRaw(ConditionPerformer)
+const RawConditionOther = markRaw(ConditionOther)
+
 const props = defineProps({
   text: {
     type: String,
@@ -31,14 +39,6 @@ const props = defineProps({
     required: true
   },
   tags: {
-    type: Array,
-    required: true
-  },
-  performers: {
-    type: Array,
-    required: true
-  },
-  organizers: {
     type: Array,
     required: true
   },
@@ -72,12 +72,12 @@ const isOpenFilter = ref(false)
 const includesOrder = ['and', 'or', 'not']
 
 const filterMaps = [
-  { type: 'other', label: 'other', component: ConditionOther, items: { 'statuses': props.statuses, 'instanceTypes': props.instanceTypes } },
-  { type: 'category', label: 'category', component: ConditionCategory, items: categories },
-  { type: 'tag', label: 'tags', component: ConditionTag, items: props.tags },
-  { type: 'date', label: 'date', component: ConditionDate, items: [] },
-  { type: 'organizer', label: 'organizer', component: ConditionOrganizer, items: props.organizers },
-  { type: 'performer', label: 'performer', component: ConditionPerformer, items: props.performers },
+  { type: 'other', label: 'other', component: RawConditionOther, items: { 'statuses': props.statuses, 'instanceTypes': props.instanceTypes } },
+  { type: 'category', label: 'category', component: RawConditionCategory, items: categories },
+  { type: 'tag', label: 'tags', component: RawConditionTag, items: props.tags },
+  { type: 'date', label: 'date', component: RawConditionDate, items: [] },
+  { type: 'organizer', label: 'organizer', component: RawConditionOrganizer, items: props.organizers },
+  { type: 'performer', label: 'performer', component: RawConditionPerformer, items: props.performers },
 ]
 
 const filterItemMap={

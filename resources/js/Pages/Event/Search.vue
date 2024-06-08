@@ -1,6 +1,8 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
-import { usePage } from '@inertiajs/vue3'
+
+import { router, usePage } from '@inertiajs/vue3'
+import { markRaw } from 'vue'
+import SearchForm from '@/Pages/Event/Partials/EventSearch/SearchForm.vue'
 
 const props = defineProps({
   trendTags: {
@@ -20,7 +22,7 @@ const props = defineProps({
     required: true
   },
   events: {
-    type: Array,
+    type: Object,
     required: true
   },
 })
@@ -48,6 +50,8 @@ onMounted(() => {
   }
 })
 
+const RawSearchForm = markRaw(SearchForm)
+
 </script>
 
 <template>
@@ -58,7 +62,7 @@ onMounted(() => {
       </h2>
     </template>
     <div class="mx-auto flex max-w-6xl flex-col gap-2">
-      <SearchForm
+      <RawSearchForm
         v-model="conditions" v-model:text="text" :instance-types="instanceTypes"
         :statuses="statuses"
         :categories="categories" :tags="trendTags" @execute-search="executeSearch()" />

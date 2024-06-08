@@ -34,7 +34,7 @@ onBeforeUnmount(() => {
       v-if="isVisible"
       :items="items"
       placeholder="パフォーマーid検索"
-      :route="route('mention.suggestion')"
+      :url="route('mention.suggestion')"
       :add-condition-func="addConditionFunc">
       <template #items="{ suggestions }">
         <PerformerBadge
