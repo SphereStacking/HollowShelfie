@@ -173,10 +173,30 @@ const metaTags = GetEventDetailMetaTags()
               </template>
               <ul class="list-none">
                 <li>
-                  <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.fanbox">fanbox </a>
+                  <h4 class="font-bold uppercase">
+                    継続支援
+                  </h4>
                 </li>
                 <li>
-                  <a class="text-3xl font-black text-base-content hover:text-accent" :href="supportings.patreon">patreon </a>
+                  <a class="ml-2 text-3xl font-black text-base-content hover:text-accent" :href="supportings.fanbox">Fanbox</a>
+                </li>
+                <li>
+                  <a class="ml-2 text-3xl font-black text-base-content hover:text-accent" :href="supportings.patreon">Patreon</a>
+                </li>
+                <li>
+                  <h4 class="font-bold uppercase">
+                    単発支援
+                  </h4>
+                </li>
+                <li>
+                  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="LEZH4L3FZK4ZU">
+                    <input type="hidden" name="currency_code" value="JPY">
+                    <button type="submit" class="ml-2 text-3xl font-black text-base-content hover:text-accent">
+                      PayPal
+                    </button>
+                  </form>
                 </li>
               </ul>
             </Card>
