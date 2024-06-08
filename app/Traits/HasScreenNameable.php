@@ -1,14 +1,13 @@
 <?php
 namespace App\Traits;
 
+use App\Models\ScreenName;
 use App\Rules\ReservedWord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use App\Models\ScreenName;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait HasScreenNameable
 {
@@ -65,17 +64,19 @@ trait HasScreenNameable
     public function changeScreenName(string $newScreenName): void
     {
         $validator = Validator::make(['screen_name' => $newScreenName], [
-            'alpha_dash',
-            'min:3',
-            'max:14',
-            'unique:screen_names,screen_name',
-            new ReservedWord(),
+            'screen_name' => [
+                'required',
+                'alpha_dash',
+                'min:3',
+                'max:14',
+                'unique:screen_names,screen_name',
+                new ReservedWord(),
+            ],
         ]);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
-
         $this->screenName()->update(['screen_name' => $newScreenName]);
     }
 

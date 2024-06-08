@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
+use Illuminate\Http\Request;
+use App\Http\Resources\AuthUserJsonResource;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -53,6 +54,9 @@ class HandleInertiaRequests extends Middleware
                     'patreon' => fn () => config('external_services.supportings.patreon'),
                 ],
             ],
+            // Laravel\Jetstream\Http\Middleware\ShareInertiaDataのauth.userを上書きする。
+            'auth' => fn () => AuthUserJsonResource::make($request->user()),
+            // flash
             'response' => $request->session()->get('response'),
         ];
     }
