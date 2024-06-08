@@ -57,7 +57,9 @@ class HandleInertiaRequests extends Middleware
             // Laravel\Jetstream\Http\Middleware\ShareInertiaDataのauth.userを上書きする。
             'auth' => fn () => AuthUserJsonResource::make($request->user()),
             // flash
-            'response' => $request->session()->get('response'),
+            'response' => fn () => $request->hasSession()
+                ? $request->session()->get('response')
+                : null,
         ];
     }
 }

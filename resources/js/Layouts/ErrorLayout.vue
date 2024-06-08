@@ -1,6 +1,11 @@
 <script setup>
-import { Head, Link} from '@inertiajs/vue3'
+import { Head, Link, usePage } from '@inertiajs/vue3'
 import DOMPurify from 'isomorphic-dompurify'
+import { isDevelopment } from '@/Utils/Environment'
+
+if (isDevelopment()){
+  console.info('props :', usePage().props)
+}
 
 const props = defineProps({
   title: {
@@ -24,7 +29,8 @@ function goBack() {
     <Head :title="title" />
 
     <div class="min-h-screen bg-base-300 pb-4">
-      <NavigationMenu />
+      <NavigationMenu is-night-mode />
+
       <!-- Page Content -->
       <main class="flex items-center justify-center px-4 py-8">
         <div class="mt-20 flex w-1/2 flex-col items-center justify-center gap-4">

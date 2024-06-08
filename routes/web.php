@@ -66,16 +66,10 @@ use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
 // Route::resourceはつかはない。
 // ルートとメソッドの管理がしにくい。
 
-Route::get('/phpinfo', function () {phpinfo();});
-
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+// production環境ではphpinfoを表示しない
+if (!App::environment('production')) {
+    Route::get('/phpinfo', function () { phpinfo(); });
+}
 
 Route::get('/home', GetHomeController::class)->name('home');
 Route::get('/', GetWelcomeController::class)->name('welcome');
@@ -139,4 +133,3 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 });
 
-// Route::get('/information', [InformationController::class, 'index'])->name('information.index');
