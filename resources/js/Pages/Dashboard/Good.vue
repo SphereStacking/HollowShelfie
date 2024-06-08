@@ -22,7 +22,6 @@ const props = defineProps({
         </div>
         <div class=" flex flex-row gap-2">
           <BtnPagination
-            :prev-page-url="props.events.pagination.prev_page_url" :next-page-url="props.events.pagination.links"
             :links="events.pagination.links" />
         </div>
       </div>
@@ -33,7 +32,6 @@ const props = defineProps({
       </div>
       <div class="flex flex-row justify-center">
         <BtnPagination
-          :prev-page-url="props.events.pagination.prev_page_url" :next-page-url="props.events.pagination.links"
           :links="events.pagination.links" />
       </div>
     </div>

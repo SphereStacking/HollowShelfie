@@ -12,8 +12,8 @@ const props = defineProps({
     type: String,
     required: true
   },
-  route: {
-    type: String,
+  url: {
+    type: [String, Function],
     required: true
   },
   addConditionFunc: {
@@ -45,7 +45,7 @@ const computedItems = computed(() => {
         v-model="searchText"
         :placeholder="placeholder"
         :get-suggestions="(res) => {return res.data.suggestions.data}"
-        :route="route" @suggestions="suggestions = $event" />
+        :url="route" @suggestions="suggestions = $event" />
     </div>
     <div class="divider divider-start my-0 w-full">
       <div class="flex flex-row items-center  gap-1">

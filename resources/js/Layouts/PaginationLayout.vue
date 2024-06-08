@@ -16,7 +16,6 @@ defineProps({
       <div class=" flex flex-row gap-2">
         <slot name="TopPaginationLeft"></slot>
         <BtnPagination
-          :prev-page-url="pagination.prev_page_url" :next-page-url="pagination.links"
           :links="pagination.links" />
         <slot name="TopPaginationRight"></slot>
       </div>
@@ -25,7 +24,6 @@ defineProps({
     <div class="flex flex-row justify-center">
       <slot name="BottomPaginationLeft"></slot>
       <BtnPagination
-        :prev-page-url="pagination.prev_page_url" :next-page-url="pagination.links"
         :links="pagination.links" />
       <slot name="BottomPaginationRight"></slot>
     </div>

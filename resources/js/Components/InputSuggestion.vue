@@ -6,9 +6,9 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  route: {
-    type: String,
-    default: ''
+  url: {
+    type: [String, Function],
+    default: '#'
   },
   searchDelay: {
     type: Number,
