@@ -12,7 +12,7 @@ class GoogleFormsService
     public function __construct()
     {
         $client = new Client();
-        $client->setApplicationName('vShelf');
+        $client->setApplicationName(config('app.name'));
         $client->setScopes([Forms::FORMS_RESPONSES_READONLY]);
         $client->setAuthConfig(json_decode(env('GOOGLE_CREDENTIALS_JSON'), true));
 

@@ -43,7 +43,7 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 演者の募集や打診によるオーガナイザーのマッチング
 記事投稿もできてVR界隈のナレッジの共有ができる(かなりニッチで技術に疎い人はアバターアップロードや改変すらままならないため)
 
-ドメインは  v-shelf.com
+ドメインは  hollowshelfie.com
 
 イベントのfryerやチラシを掲示する棚をイメージしてこの名称
 

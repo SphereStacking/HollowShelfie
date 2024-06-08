@@ -5,7 +5,7 @@
 
 請求を頂ければ遅滞なく開示いたします。
 
-<a href="mailto:ghostshelfie@gmail.com">ghostshelfie@gmail.com</a>
+<a href="mailto:hollowshelfie@gmail.com">hollowshelfie@gmail.com</a>
 
 ## 役務の対価
 

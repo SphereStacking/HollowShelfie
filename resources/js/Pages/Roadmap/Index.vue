@@ -54,10 +54,10 @@ const status = {
         <ul class="timeline timeline-vertical timeline-compact timeline-snap-icon mb-20">
           <div class="mb-10 text-center">
             <h1 class="text-4xl font-bold">
-              GhostShlfie Roadmap
+              HollowShelfie
             </h1>
             <p class="mt-2 text-lg">
-              ロードマップ、マイルストーン、今後の機能
+              ロードマップ、マイルストーン、今後の実装予定機能
             </p>
           </div>
           <li v-for="(item, index) in Roadmap" :key="item.title" class="lg:gap-x-6">
