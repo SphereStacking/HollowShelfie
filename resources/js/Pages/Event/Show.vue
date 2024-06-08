@@ -76,34 +76,16 @@ const metaTags = GetEventDetailMetaTags()
         Event Detail
       </h2>
     </template>
-    <div class="mx-auto grid max-w-7xl auto-rows-min gap-4 pt-4 lg:grid-cols-12 lg:gap-2">
+    <div class="mx-auto grid max-w-7xl auto-rows-min gap-2 pt-4 lg:grid-cols-12 lg:gap-4">
       <!-- header -->
       <div class="lg:col-start-1 lg:col-end-10">
         <div class="flex flex-row items-center ">
-          <div class="relative w-5">
-            <p class="absolute w-4 grow-0 -rotate-90 text-2xl font-normal ">
-              {{ formattedStartDate.year }}
-            </p>
-          </div>
-          <div class="mr-2 flex flex-col items-center justify-center border-l-2 border-base-content pl-1">
-            <div class="text-3xl font-normal">
-              {{ formattedStartDate.month }}
-            </div>
-            <div class="text-3xl font-normal">
-              {{ formattedStartDate.day }}
-            </div>
-          </div>
           <div class="flex grow flex-col ">
-            <div class=" prose lg:prose-xl ">
-              <h1> {{ event.title }}</h1>
-            </div>
             <div class="flex flex-row items-center justify-between">
               <div class="flex flex-row items-center gap-2">
-                <div class="text-xs font-light ">
-                  {{ eventPeriod }}
-                </div>
+                {{ formattedStartDate.year }}/{{ formattedStartDate.month }}/{{ formattedStartDate.day }}   {{ eventPeriod }}
                 <BadgeEventStatus
-                  class="rounded-md lg:col-start-1 lg:row-start-2" :status="event.status"
+                  class="lg:col-start-1 lg:row-start-2" :status="event.status"
                   :label="$t(event.status)" />
               </div>
               <div class="flex items-center gap-2 rounded-md p-1">
@@ -117,18 +99,19 @@ const metaTags = GetEventDetailMetaTags()
                   :category-names="snsShare.categoryNames" :tags="snsShare.tags" :url="snsShare.route" />
               </div>
             </div>
+            <div class=" prose lg:prose-xl ">
+              <h1> {{ event.title }}</h1>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class=" mx-auto flex w-full flex-row gap-1 lg:col-span-7 lg:col-start-1 lg:row-start-2">
+      <div class="mx-auto flex w-full flex-col gap-1 md:flex-row lg:col-span-7 lg:col-start-1 lg:row-start-2">
         <div v-if="hasCategory" class="flex flex-row items-center gap-1">
           <div class="mr-auto flex items-center gap-1  rounded-md">
             <IconTypeMapper type="category" class="text-xl" />
             <template v-for="(category_name, index) in event.category_names" :key="index">
-              <BtnConditionTypeMapper type="category" class="no-animation">
-                {{ category_name }}
-              </BtnConditionTypeMapper>
+              <BtnEventSearchItem :value="category_name" type="category" is-navigate />
             </template>
           </div>
         </div>
@@ -143,10 +126,10 @@ const metaTags = GetEventDetailMetaTags()
       </div>
       <!-- header -->
       <!-- leftside -->
-      <div class="mx-auto w-full lg:col-span-3 lg:row-start-3">
-        <Card class="sticky top-12">
+      <div class="lg:col-span-3 lg:row-start-3">
+        <div class="sticky top-24 rounded-md bg-base-300 p-4">
           <CarouselGallery :images="event.files.map(file => file.public_url)" />
-        </Card>
+        </div>
       </div>
       <!-- leftside -->
       <!-- Main -->

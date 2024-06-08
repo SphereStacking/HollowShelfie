@@ -1,7 +1,5 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
-
-const props = defineProps({
+defineProps({
   status: {
     type: Array,
     required: true
@@ -16,11 +14,12 @@ const props = defineProps({
 
 <template>
   <div
-    class="badge badge-xs" :class="{
-      'badge-neutral': status == 'draft',
-      'badge-info': status == 'upcoming' || status == 'closed',
-      'badge-error': status == 'canceled' || status == 'deleted',
-      'badge-success': status == 'ongoing',
+    class="badge badge-sm rounded-full" :class="{
+      'badge badge-outline': status == 'draft' || status == 'closed',
+      'badge-info badge-outline': status == 'upcoming',
+      'badge-warning badge-outline': status == 'unpublished' ,
+      'badge-error badge-outline': status == 'forced_hidden',
+      'badge-success badge-outline': status == 'ongoing',
     }">
     {{ label }}
   </div>

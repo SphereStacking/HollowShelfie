@@ -51,7 +51,7 @@ export function getDurationBetweenDates(startDateISOString: string, endDateISOSt
 }
 
 // 日付を分解して詳細情報を返す関数
-export function decomposeDate(dateISOString: string, formatStr: DecomposeDateFormat = { year: 'yyyy', month: 'MM', day: 'dd', weekday: 'EEEE', hour: 'HH', minute: 'mm', second: 'ss' }): DecomposeDateFormat {
+export function decomposeDate(dateISOString: string, formatStr: DecomposeDateFormat = { year: 'yyyy', month: 'MM', day: 'dd', weekday: 'E', hour: 'HH', minute: 'mm', second: 'ss' }): DecomposeDateFormat {
   if (!dateISOString) {
     throw new Error('Invalid date input: 無効な日付形式です。ISO 8601形式の日付文字列を指定してください。')
   }
