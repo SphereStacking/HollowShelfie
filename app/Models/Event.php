@@ -84,17 +84,13 @@ class Event extends Model
         });
     }
 
-    /**
-     * ルートバインディングを解決する
-     */
+    /** ルートバインディングを解決する*/
     public function resolveRouteBinding($value, $field = null): ?Model
     {
         return $this->where('alias', $value)->first();
     }
 
-    /**
-     * MeiliSearch 検索可能な配列に変換します。
-     */
+    /** MeiliSearch 検索可能な配列に変換します。*/
     public function toSearchableArray(): array
     {
         $array = $this->only(
@@ -176,9 +172,7 @@ class Event extends Model
         EventOrganizer::insert($organizers);
     }
 
-    /**
-     * タイムテーブルを同期する。
-     */
+    /** タイムテーブルを同期する。*/
     public function syncTimeTables(array $timeTables): void
     {
         // EventTimeTableのIDを取得
@@ -224,9 +218,7 @@ class Event extends Model
         $this->instances()->createMany($validatedInstances);
     }
 
-    /**
-     * 指定されたユーザーがイベントを操作できるかどうかをチェックします。
-     */
+    /** 指定されたユーザーがイベントを操作できるかどうかをチェックします。*/
     public function canUserOperate(User|Authenticatable|null $user): void
     {
         if ($user === null) {
@@ -265,9 +257,7 @@ class Event extends Model
         throw new EventNotPublishedException('イベントはまだ公開されていません。');
     }
 
-    /**
-     * イベント管理者確認可能なイベントのステータス
-     */
+    /** イベント管理者確認可能なイベントのステータス*/
     public static function canManagerSearchStatus(): array
     {
         return [
@@ -280,9 +270,7 @@ class Event extends Model
     }
 
 
-    /**
-     * 一般公開可能なイベントのステータス
-     */
+    /** 一般公開可能なイベントのステータス*/
     public static function canGeneralSearchStatus(): array
     {
         return [
@@ -304,9 +292,7 @@ class Event extends Model
             ->where('published_at', '>=', now());
     }
 
-    /**
-     * 一般公開しているClosedイベントのスコープ。
-     */
+    /** 一般公開しているClosedイベントのスコープ。*/
     public function scopeClosedPublished($query): Builder
     {
         return $query->where('is_forced_hidden', false)
@@ -314,9 +300,7 @@ class Event extends Model
             ->where('end_date', '<', now());
     }
 
-    /**
-     * 一般公開しているOngoingイベントのスコープ。
-     */
+    /** 一般公開しているOngoingイベントのスコープ。*/
     public function scopeOngoingPublished($query): Builder
     {
         $now = now();
@@ -326,9 +310,7 @@ class Event extends Model
             ->where('end_date', '>=', $now);
     }
 
-    /**
-     * 一般公開しているUpcomingイベントのスコープ。
-     */
+    /** 一般公開しているUpcomingイベントのスコープ。*/
     public function scopeUpcomingPublished($query): Builder
     {
         return $query->where('is_forced_hidden', false)
@@ -336,12 +318,23 @@ class Event extends Model
             ->where('start_date', '>', now());
     }
 
-    /**
-     * イベントのオーナーが閲覧することができるイベントのスコープ。
-     */
-    public function scopeOwnerPublished($query): Builder
+    /** イベントがDraftのスコープ。*/
+    public function scopeDraft($query): Builder
     {
-        return $query->where('created_user_id', auth()->id());
+        return $query->where('published_at', null);
+    }
+
+    /** イベントが公開されているスコープ。*/
+    public function scopePublished($query): Builder
+    {
+        //TODO:現在は予約公開は入れてないので nullでなければ公開状態
+        return $query->whereNotNull('published_at');
+    }
+
+    /** イベントのオーナーが閲覧することができるイベントのスコープ。*/
+    public function scopeCreatedUser($query, User|Authenticatable|null $user): Builder
+    {
+        return $query->where('created_user_id', $user->getAuthIdentifier());
     }
 
     public function getStatusAttribute(): EventStatus
@@ -380,4 +373,6 @@ class Event extends Model
 
         return EventStatus::DRAFT;
     }
+
+
 }

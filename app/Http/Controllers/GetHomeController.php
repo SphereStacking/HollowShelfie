@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Models\Event;
 use App\Enums\EventStatus;
 use App\Services\TagService;
 use App\Services\EventService;
@@ -95,6 +96,8 @@ class GetHomeController extends Controller
                     'paginate' => $newParams->getDefaultPaginate(),
                     'o' => $newParams->order,
                 ]),
+                'ongoingEventCount' => fn () => Event::ongoingPublished()->count(),
+                'upcomingEventCount' => fn () => Event::upcomingPublished()->count(),
             ]
         );
     }
