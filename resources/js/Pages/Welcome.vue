@@ -75,9 +75,9 @@ const columns = computed(() => {
       <ApplicationLogo class="sticky top-10 h-20 py-2 text-base-content md:flex-row" />
     </section>
     <section class="flex items-center justify-center py-32 text-center md:min-h-[calc(100vh-4rem)]">
-      <div class=" sticky top-10 text-center text-7xl font-black">
+      <div class=" sticky top-10 text-center  font-black">
         <div class="text-center font-title text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
-          <div class=" inline-grid">
+          <div class="inline-grid">
             <div class="pointer-events-none col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text text-center blur-xl [-webkit-text-fill-color:transparent] [transform:translate3d(0,0,0)] before:content-[attr(data-text)] [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
               フライヤーを飾れる
               <br>
@@ -192,7 +192,7 @@ const columns = computed(() => {
       </div>
     </section>
 
-    <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-32">
+    <section class="mx-auto w-full max-w-screen-lg overflow-x-clip px-20 py-10 md:py-24">
       <div class="grid grid-cols-1 gap-32">
         <TransitionInViewportObserver
           v-for="(feature, index) in featureBanners"
@@ -210,7 +210,6 @@ const columns = computed(() => {
                 {{ feature.description }}
               </div>
             </div>
-            <img class=" aspect-video max-w-96" src="https://placehold.jp/400x225.png">
           </div>
         </TransitionInViewportObserver>
       </div>
@@ -359,12 +358,12 @@ const columns = computed(() => {
         leave-to-class="opacity-0">
         <ApplicationLogo class="sticky top-0 h-20 py-2 text-base-content md:flex-row" />
       </TransitionInViewportObserver>
-      <div class="flex flex-col items-center justify-center gap-8  py-10 md:flex-row md:gap-10">
-        <div class="relative font-neon text-5xl text-emerald-300-neon">
+      <div class="flex flex-col items-center justify-center gap-8  overflow-hidden py-10 md:flex-row  md:gap-10">
+        <div class="relative p-5 py-3 font-neon text-5xl text-emerald-300-neon">
           <TransitionInViewportObserver
             enter-active-class="transition-all duration-1000"
             leave-active-class="transition-all duration-1000"
-            enter-from-class="translate-x-20 opacity-0"
+            enter-from-class="-translate-x-20 opacity-0"
             leave-to-class="opacity-0">
             <div class="absolute left-20 top-7 h-14 w-40 bg-emerald-200/10"></div>
           </TransitionInViewportObserver>
