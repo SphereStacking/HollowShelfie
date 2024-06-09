@@ -37,6 +37,14 @@ const props = defineProps({
     type: Array,
     required: true
   },
+  ongoingEventCount: {
+    type: Number,
+    required: true
+  },
+  upcomingEventCount: {
+    type: Number,
+    required: true
+  },
 })
 
 const getButtonText = (event) => {
@@ -62,16 +70,9 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
       </h2>
     </template>
     <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6 ">
-      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 shadow-xl shadow-base-200 md:col-span-4">
-        <div class="size-full p-8">
-          開催中
-        </div>
-      </div>
-      <div class="col-span-12 flex h-36 flex-wrap gap-2 rounded-lg bg-base-300 shadow-xl shadow-base-200 md:col-span-4">
-        <div class="size-full p-8">
-          開催予定
-        </div>
-      </div>
+      <WidgetOngoingEventCount class="col-span-12 md:col-span-4" />
+      <WidgetPlanningEventCount class="col-span-12 md:col-span-4" />
+
       <AreaAdvertisementRecruitment class="col-span-12 h-36 shadow-xl shadow-base-200 md:col-span-4" />
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
