@@ -36,7 +36,7 @@ class EventResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('created_user_id')
-                    ->relationship('created_user', 'name')
+                    ->relationship('event_create_user', 'name')
                     ->required(),
                 Forms\Components\DateTimePicker::make('start_date'),
                 Forms\Components\DateTimePicker::make('end_date'),

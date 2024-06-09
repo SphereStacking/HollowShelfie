@@ -35,9 +35,6 @@ class TeamResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('team_logo_path')
                     ->maxLength(2048),
-                Forms\Components\TextInput::make('screen_name')
-                    ->required()
-                    ->maxLength(14),
             ]);
     }
 
