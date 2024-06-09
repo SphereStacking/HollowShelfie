@@ -9,9 +9,9 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex h-full items-center gap-4 text-7xl" :class="isResponsive ? 'md:flex-row' : 'flex-col'">
+  <div class="flex h-full items-center gap-4 " :class="isResponsive ? 'md:flex-row' : 'flex-col'">
     <ApplicationMark class="size-32" />
-    <div class=" font-title font-black">
+    <div class=" font-title text-4xl font-black sm:text-7xl">
       <AppName />
     </div>
   </div>
