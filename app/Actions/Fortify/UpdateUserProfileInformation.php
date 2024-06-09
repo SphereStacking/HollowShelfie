@@ -25,8 +25,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
-        //screen_nameの変更
-        $user->changeScreenName($input['screen_name']);
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
@@ -41,6 +39,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
             ])->save();
         }
+
+        //screen_nameの変更
+        // TODO: 一時的処置 そもそもfoamを分けるべきかも
+        $user->changeScreenName($input['screen_name']);
+
     }
 
     /**
