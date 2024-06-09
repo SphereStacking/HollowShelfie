@@ -7,7 +7,7 @@ defineProps({
 const title = 'Bookmarks'
 const iconType = 'onBookmark'
 const routeUrl = route('user.bookmark', usePage().props.auth.user.screen_name)
-const count = usePage().props.counts.bookmark?.total || 0
+const count = usePage().props.counts.bookmark || 0
 </script>
 <template>
   <div class="card bg-base-300 text-center shadow-md">
@@ -16,12 +16,13 @@ const count = usePage().props.counts.bookmark?.total || 0
         <IconTypeMapper :type="iconType" />
         {{ title }}
       </div>
-      <p class="text-sm">
-        {{ count }}
-      </p>
-      <div class="card-actions justify-end">
+      <div class="flex items-end justify-around font-mono text-5xl">
+        <p>{{ count }}</p>
         <Link class="btn btn-neutral btn-sm" :href="routeUrl">
-          View all
+          <span class="flex items-center">
+            View all
+            <IconTypeMapper type="arrowRight" class="text-xl" />
+          </span>
         </Link>
       </div>
     </div>

@@ -227,11 +227,20 @@ class EventService
 
     public function getPublicRandomEvents($limit = 3)
     {
-
         return Event::with(['organizers.event_organizeble'])
             ->generalPublished()
             ->inRandomOrder()
             ->limit($limit)
             ->get();
+    }
+
+    public function getDraftEventCountByUser(User|Authenticatable|null $user)
+    {
+        return Event::draft()->createdUser($user)->count();
+    }
+
+    public function getPublishedEventCountByUser(User|Authenticatable|null $user)
+    {
+        return Event::published()->createdUser($user)->count();
     }
 }
