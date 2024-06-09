@@ -18,7 +18,10 @@ const Roadmap = [
     features: [
       { status: 'experiment', feature: 'チーム機能'},
       { status: 'doing', feature: '通知機能'},
-      { status: 'plan', feature: 'ユーザー検索'}
+      { status: 'plan', feature: 'ユーザー検索'},
+      { status: 'plan', feature: 'イベント作成時に既存のコピーを作成'},
+      { status: 'plan', feature: 'VRCワールド配置用asset'},
+      { status: 'plan', feature: 'VRC インスタンス オプション(pc quest etc)'},
     ]
   },
   {
@@ -27,8 +30,8 @@ const Roadmap = [
     features: [
       { status: 'plan', feature: 'バナー掲載'},
       { status: 'plan', feature: '主催者-演者マッチング'},
+      { status: 'plan', feature: 'カスタムプロフィール'},
       { status: 'plan', feature: 'チケット機能'},
-      { status: 'plan', feature: 'カスタムプロフィール'}
     ]
   }
 ]
