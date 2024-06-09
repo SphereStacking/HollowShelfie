@@ -9,6 +9,7 @@ use App\Enums\EventStatus;
 use App\Models\InstanceType;
 use App\Services\TagService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TagNamesJsonResource;
 use App\Http\Resources\EventsPaginatedJsonResource;
@@ -26,6 +27,7 @@ class GetEventSearchController extends Controller
 
     public function __invoke(Request $request)
     {
+        Log::info($request->all());
         $EventSearchParams = new SearchParams(
             $request->input('t', null),
             $request->input('q', null),
