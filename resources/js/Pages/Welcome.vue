@@ -233,7 +233,7 @@ const columns = computed(() => {
       </TransitionInViewportObserver>
       <div class="rounded-3xl border-4 border-pink-300  shadow-xl shadow-pink-500/50 ">
         <div class="rounded-md pt-10 text-center font-neon text-3xl font-black text-pink-500-neon">
-          Our Premium<br>
+          My Special<br>
           Supporter
         </div>
         <div class="grid grid-cols-3 gap-5 p-10 text-base-content md:col-span-1 md:px-52">
@@ -245,18 +245,20 @@ const columns = computed(() => {
             :enter-from-class="'scale-0 opacity-0'"
             leave-to-class="opacity-0">
             <div class="flex h-52 w-auto flex-col items-center gap-2">
-              <template v-if="supporter.image">
-                <div class="tooltip" :data-tip="supporter.name">
-                  <img :src="supporter.image" class="">
-                </div>
-              </template>
-              <template v-else>
-                {{ supporter.name }}
-              </template>
+              <a :href="supporter.url" target="_blank">
+                <template v-if="supporter.image">
+                  <div class="tooltip" :data-tip="supporter.name">
+                    <img :src="supporter.image" class="">
+                  </div>
+                </template>
+                <template v-else>
+                  {{ supporter.name }}
+                </template>
+              </a>
             </div>
           </TransitionInViewportObserver>
         </div>
-        <div class="col-span-3 mb-10 mt-20 flex flex-row items-center justify-center gap-10">
+        <div class="col-span-3 mb-10 mt-20 flex flex-col items-center justify-center gap-10 sm:flex-row">
           <a :href="supportings.fanbox" target="_blank" class="btn btn-outline btn-lg border-pink-300">
             Fanbox
           </a>
