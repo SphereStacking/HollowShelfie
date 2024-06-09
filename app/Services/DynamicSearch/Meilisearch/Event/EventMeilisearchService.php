@@ -51,7 +51,9 @@ class EventMeilisearchService
     public function searchPublishedEvents(SearchParams $params): LengthAwarePaginator
     {
         $publishedFilter = new EventSystemFilterPublished();
-        return $this->searchEvents($publishedFilter->makeQuery(), $params);
+        $result = $this->searchEvents($publishedFilter->makeQuery(), $params);
+        Log::info($result);
+        return $result;
     }
 
     /** 特定のユーザーが作成したイベントを検索する */
