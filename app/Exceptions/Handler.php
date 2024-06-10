@@ -53,21 +53,27 @@ class Handler extends ExceptionHandler
         $this->renderable(function (HttpException $e, $request) {
             $statusCode = $e->getStatusCode();
             $message = $e->getMessage();
-            return match ($statusCode) {
-                403 => function () use ($request, $message) {
-                    Inertia::share((new HandleInertiaRequests)->share($request));
-                    return Inertia::render('Errors/403Error', ['message' => $message]);
-                },
+            $response = match ($statusCode) {
+                403 => Inertia::render('Errors/403Error', ['message' => $message]),
                 404 => Inertia::render('Errors/404Error', ['message' => $message]),
                 418 => Inertia::render('Errors/418Error', ['message' => $message]),
                 429 => Inertia::render('Errors/429Error', ['message' => $message]),
                 500 => Inertia::render('Errors/500Error', ['message' => $message]),
                 503 => Inertia::render('Errors/503Error', ['message' => $message]),
-                default => function() use ($e, $message) {
-                    Integration::captureUnhandledException($e);
-                    return Inertia::render('Errors/500Error', ['message' => $message]);
-                },
+                default => null,
             };
+
+            // NOTE:403エラーの場合、URL直接アクセスの場合にミドルウェアを通らない可能性があるためInertiaの共有データを設定する。
+            if ($statusCode === 403) {
+                Inertia::share((new HandleInertiaRequests)->share($request));
+            }
+
+            // どのエラーにも当てはまっていないエラーはこちらに入る。
+            if ($response === null) {
+                Integration::captureUnhandledException($e);
+                $response = Inertia::render('Errors/500Error', ['message' => $message]);
+            }
+            return $response;
         });
 
 
