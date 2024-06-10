@@ -289,7 +289,7 @@ class Event extends Model
     public function scopeGeneralPublished($query): Builder
     {
         return $query->where('is_forced_hidden', false)
-            ->where('published_at', '>=', now());
+            ->where('published_at', '<=', now());
     }
 
     /** 一般公開しているClosedイベントのスコープ。*/
@@ -305,7 +305,7 @@ class Event extends Model
     {
         $now = now();
         return $query->where('is_forced_hidden', false)
-            ->where('published_at', '>', $now)
+            ->where('published_at', '<=', $now)
             ->where('start_date', '<=', $now)
             ->where('end_date', '>=', $now);
     }
@@ -314,7 +314,7 @@ class Event extends Model
     public function scopeUpcomingPublished($query): Builder
     {
         return $query->where('is_forced_hidden', false)
-            ->where('published_at', '>', now())
+            ->where('published_at', '<=', now())
             ->where('start_date', '>', now());
     }
 
