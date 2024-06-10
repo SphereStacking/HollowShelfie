@@ -40,7 +40,7 @@ const confirmingLeavingTeam = ref(false)
 const teamMemberBeingRemoved = ref(null)
 
 const addTeamMember = () => {
-  addTeamMemberForm.post(route('team-members.store', props.team.screen_name), {
+  addTeamMemberForm.post(route('team-members.store', props.team.screen_name.screen_name), {
     errorBag: 'addTeamMember',
     preserveScroll: true,
     onSuccess: () => addTeamMemberForm.reset(),
@@ -60,7 +60,7 @@ const manageRole = (teamMember) => {
 }
 
 const updateRole = () => {
-  updateRoleForm.put(route('team-members.update', [props.team.screen_name, managingRoleFor.value]), {
+  updateRoleForm.put(route('team-members.update', [props.team.screen_name.screen_name, managingRoleFor.value]), {
     preserveScroll: true,
     onSuccess: () => currentlyManagingRole.value = false,
   })

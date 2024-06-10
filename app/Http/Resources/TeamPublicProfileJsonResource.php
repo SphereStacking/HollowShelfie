@@ -43,7 +43,7 @@ class TeamPublicProfileJsonResource extends JsonResource
                     ];
                 }),
                 'followers_count' => $this->resource->followers_count,
-                'content' => 'hogegegege',
+                'content' => '',
                 'tags' => $this->resource->tags->map(function ($tag) {
                     return [
                         'name' => $tag->name,

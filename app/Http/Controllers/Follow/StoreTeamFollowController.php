@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Follow;
 
 use App\Models\Team;
+use App\Models\ScreenName;
 use App\Services\UserService;
 
 /**
@@ -21,9 +22,10 @@ class StoreTeamFollowController extends FollowBaseController
         $this->userService = $userService;
     }
 
-    public function __invoke(Team $team)
+    public function __invoke($screenName)
     {
-        $result = $this->userService->follow(auth()->user(), $team);
+        $screenName = ScreenName::findScreenNameable($screenName);
+        $result = $this->userService->follow(auth()->user(), $screenName->screen_nameable);
 
         return $this->generateResponse($result['message'], $result['followed']);
     }

@@ -46,7 +46,7 @@ const selectNewLogo = () => {
 // ロゴ情報を更新する関数
 const updateLogoInformation = () => {
   form.logo = logoInput.value.files[0]
-  form.post(route('current-team-logo.update', props.team.id), {
+  form.post(route('current-team-logo.update', props.team.screen_name.screen_name), {
     preserveScroll: true,
     onSuccess: clearLogoFileInput,
   })
@@ -61,7 +61,7 @@ const clearLogoFileInput = () => {
 
 // ロゴを削除する関数
 const deleteLogo = () => {
-  form.delete(route('current-team-logo.destroy', props.team.id), {
+  form.delete(route('current-team-logo.destroy', props.team.screen_name.screen_name), {
     preserveScroll: true,
     onSuccess: () => {
       logoPreview.value = null

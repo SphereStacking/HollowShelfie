@@ -17,7 +17,7 @@ const form = useForm({
 })
 
 const updateTeamName = () => {
-  form.put(route('teams.update', props.team), {
+  form.put(route('teams.update', props.team.screen_name.screen_name), {
     errorBag: 'updateTeamName',
     preserveScroll: true,
   })
@@ -40,7 +40,7 @@ const updateTeamName = () => {
         <InputLabel :value="$t('Team Owner')" />
 
         <div class="mt-2 flex items-center">
-          <img class="h-12 w-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
+          <img class="size-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
 
           <div class="ml-4 leading-tight">
             <div class="text-base-content">

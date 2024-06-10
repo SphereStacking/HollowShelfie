@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 /**
  * ユーザーサービスクラス
@@ -94,6 +95,9 @@ class UserService
 
     public function follow(User $authUser, $model)
     {
+        Log::info("follow");
+        Log::info($authUser);
+        Log::info($model);
         $authUser->follow($model);
         $message = "{$authUser->name}が{$model->name}をフォローしました。";
 
@@ -106,6 +110,9 @@ class UserService
 
     public function unfollow(User $authUser, $model)
     {
+        Log::info("unfollow");
+        Log::info($authUser);
+        Log::info($model);
         $authUser->unfollow($model);
         $message = "{$authUser->name}が{$model->name}のフォローを解除しました。";
 

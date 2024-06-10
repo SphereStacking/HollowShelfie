@@ -99,8 +99,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', GetDashboardController::class)->name('dashboard');
     Route::get('/user/{user:screen_name}/bookmark', GetBookmarkController::class)->name('user.bookmark');
     Route::get('/user/{user:screen_name}/good', GetGoodController::class)->name('user.good');
-    Route::get('/user/{user:screen_name}/following', GetFollowingController::class)->name('user.following');
-    Route::get('/user/{user:screen_name}/follower', GetFollowerController::class)->name('user.follower');
+    Route::get('/user/{screen_name}/following', GetFollowingController::class)->name('user.following');
+    Route::get('/user/{screen_name}/follower', GetFollowerController::class)->name('user.follower');
 
     Route::delete('/team/{team:screen_name}/logo', DestroyTeamLogoController::class)->name('current-team-logo.destroy');
     Route::put('/team/{team:screen_name}/logo', StoreTeamLogoController::class)->name('current-team-logo.update');
@@ -123,13 +123,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     // フォロー
     Route::post('/follow', StoreFollowController::class)->name('follow');
-    Route::post('/users/{user:screen_name}/follow', StoreUserFollowController::class)->name('users.follow');
-    Route::post('/teams/{team:screen_name}/follow', StoreTeamFollowController::class)->name('teams.follow');
+    Route::post('/users/{screen_name}/follow', StoreUserFollowController::class)->name('users.follow');
+    Route::post('/teams/{screen_name}/follow', StoreTeamFollowController::class)->name('teams.follow');
 
     // フォロー解除
     Route::delete('/unfollow', DestroyFollowController::class)->name('unfollow');
-    Route::delete('/users/{user:screen_name}/unfollow', DestroyUserFollowController::class)->name('users.unfollow');
-    Route::delete('/teams/{team:screen_name}/unfollow', DestroyTeamFollowController::class)->name('teams.unfollow');
+    Route::delete('/users/{screen_name}/unfollow', DestroyUserFollowController::class)->name('users.unfollow');
+    Route::delete('/teams/{screen_name}/unfollow', DestroyTeamFollowController::class)->name('teams.unfollow');
 
 });
 

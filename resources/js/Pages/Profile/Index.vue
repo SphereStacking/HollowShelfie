@@ -72,6 +72,7 @@ const isTeamProfile = computed(() => {
                     {{ dataile.name }}
                   </p>
                   <div class="flex items-end gap-4">
+                    {{ dataile.screen_name }}
                     <BtnSwapFollowing
                       :follow-route="route('users.follow', { id: dataile.screen_name })"
                       :unfollow-route="route('users.unfollow', { id: dataile.screen_name })"
