@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use DateTimeZone;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Resources\Json\JsonResource;
 
