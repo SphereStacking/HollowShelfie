@@ -18,7 +18,7 @@ const confirmTeamDeletion = () => {
 }
 
 const deleteTeam = () => {
-  form.delete(route('teams.destroy', props.team), {
+  form.delete(route('teams.destroy', props.team.screen_name.screen_name), {
     errorBag: 'deleteTeam',
   })
 }

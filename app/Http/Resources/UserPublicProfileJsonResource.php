@@ -24,7 +24,7 @@ class UserPublicProfileJsonResource extends JsonResource
                 'location' => $this->resource->location,
                 'links' => $this->resource->links,
                 'followers_count' => $this->resource->followers_count,
-                'content' => 'hogegegege',
+                'content' => '',
                 'tags' => $this->resource->tags->map(function ($tag) {
                     return [
                         'name' => $tag->name,

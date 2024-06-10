@@ -39,7 +39,7 @@ trait HasScreenNameable
     /** ルートバインディングを解決する */
     public function resolveRouteBinding(mixed $value, mixed $field = null): ?Model
     {
-        return $this->whereHas('screen_names', function ($query) use ($value) {
+        return $this->whereHas('screenName', function ($query) use ($value) {
             $query->where('screen_name', $value);
         })->first() ?? abort(404);
     }

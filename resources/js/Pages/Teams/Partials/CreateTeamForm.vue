@@ -33,7 +33,7 @@ const createTeam = () => {
         <InputLabel :value="$t('Team Owner')" />
 
         <div class="mt-2 flex items-center">
-          <img class="h-12 w-12 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+          <img class="size-12 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
 
           <div class="ml-4 leading-tight">
             <div class="text-base-content">
