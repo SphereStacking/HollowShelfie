@@ -73,7 +73,9 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
       <WidgetOngoingEventCount class="col-span-12 md:col-span-4" />
       <WidgetPlanningEventCount class="col-span-12 md:col-span-4" />
 
-      <AreaAdvertisementRecruitment class="col-span-12 h-36 shadow-xl shadow-base-200 md:col-span-4" />
+      <AreaAdvertisementRecruitment as="a" link="https://sainakey.booth.pm/items/4876171" class=" col-span-12  shadow-xl shadow-base-200 md:col-span-4">
+        <img src="storage/images/Advertisement/01_SynapseRack_VJ_Tool.png" alt="SynapseRack VJ Tool" class=" max-h-40">
+      </AreaAdvertisementRecruitment>
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
