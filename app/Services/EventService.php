@@ -100,6 +100,9 @@ class EventService
 
             DB::commit();
 
+            // NOTE: Eventのrelationデータの更新時にメイリサーチのインデックス更新がされないため明示的に更新する。
+            $event->searchable();
+
             return Event::with([
                 'organizers.event_organizeble',
                 'event_time_tables.performers.performable',
