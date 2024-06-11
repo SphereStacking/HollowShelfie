@@ -64,6 +64,7 @@ trait HasScreenNameable
      */
     public function changeScreenName(string $newScreenName): void
     {
+        // TODO: Requestのでもバリエーションしているので変更時気を付けて
         $validator = Validator::make(['screen_name' => $newScreenName], [
             'screen_name' => [
                 'required',
