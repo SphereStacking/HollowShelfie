@@ -27,7 +27,7 @@ class GetProfileController extends Controller
         $EventSearchParams = new SearchParams(
             '',
             [
-                ['include' => 'or', 'type' => 'organizer', 'value' => $screenNameable->screen_name],
+                ['include' => 'and', 'type' => 'organizer', 'value' => $screenNameable->screen_name],
                 ['include' => 'or', 'type' => 'performer', 'value' => $screenNameable->screen_name],
             ],
             12,
