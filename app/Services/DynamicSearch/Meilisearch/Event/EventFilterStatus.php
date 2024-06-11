@@ -25,20 +25,24 @@ class EventFilterStatus extends MeilisearchFilter
 
     protected function where($value): string
     {
-        return " AND ({$value})";
+        return $this->isFirst
+            ? "({$value})"
+            : " AND ({$value})";
     }
 
     protected function whereOr($value): string
     {
-        return " OR ({$value})";
+        return $this->isFirst
+            ? "({$value})"
+            : " OR ({$value})";
     }
 
     protected function whereNot($value): string
     {
-        return " AND NOT ({$value})";
+        return $this->isFirst
+            ? "({$value})"
+            : " AND NOT ({$value})";
     }
-
-
 
     /**
      * 一般公開しているイベントのスコープ。

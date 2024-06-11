@@ -52,7 +52,6 @@ class EventMeilisearchService
     {
         $publishedFilter = new EventSystemFilterPublished();
         $result = $this->searchEvents($publishedFilter->makeQuery(), $params);
-        Log::info($result);
         return $result;
     }
 
@@ -66,10 +65,10 @@ class EventMeilisearchService
     /** イベントを検索する共通メソッド */
     private function searchEvents(string $optionsFilter,SearchParams $params): LengthAwarePaginator
     {
-        $queryParams = $this->createQueryParams($params->queryParams);
-        $queryfilterString = $this->makeFilter($queryParams);
+        $queryfilterString = $this->createMakeFilter($params->queryParams);
 
-        $filterString = $optionsFilter . $queryfilterString;
+        $filterString = "(".$optionsFilter.") " . ($queryfilterString ? "AND (".$queryfilterString.")" : "");
+
         Log::info($filterString);
         return Event::search(
             query: $params->text,
@@ -90,24 +89,19 @@ class EventMeilisearchService
             ->appends(request()->query());
     }
 
-    // 検索パラメータを作成する
-    private function createQueryParams(array $queryParams): array {
-        $result = [];
-        foreach ($queryParams as $item) {
+    // クエリパラメータを作成し、フィルタ文字列を生成する
+    private function createMakeFilter(array $queryParams): string {
+        $filterString = '';
+        foreach ($queryParams as $index => $item) {
             $type = $item['type'];
             if (isset($this->queryParamClasses[$type])) {
                 $class = $this->queryParamClasses[$type];
-                // 各タイプに応じたフィルタクラスをインスタンス化
-                $result[] = new $class($item['include'], $type, $item['value']);
+                // 各タイプに応じたフィルタクラスをインスタンス化し、フィルタ文字列を生成
+                $filterInstance = new $class($item['include'], $type, $item['value'], $index === 0);
+                $filterString .= $filterInstance->makeQuery();
             }
         }
-        return $result;
-    }
-    // クエリパラメータに基づいてフィルタ文字列を作成する
-    private function makeFilter(array $queryParams): string {
-        return array_reduce($queryParams, function ($carry, $item) {
-            return $carry . $item->makeQuery();
-        }, '');
+        return $filterString;
     }
 
     /**

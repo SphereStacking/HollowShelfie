@@ -15,11 +15,14 @@ abstract class MeilisearchFilter implements MeilisearchFilterInterface
 
     public $value;
 
-    public function __construct($include, $type, $value)
+    public $isFirst;
+
+    public function __construct($include, $type, $value, $isFirst)
     {
         $this->include = $include;
         $this->type = $type;
         $this->value = $value;
+        $this->isFirst = $isFirst;
     }
 
     public function makeQuery(): string
@@ -34,28 +37,44 @@ abstract class MeilisearchFilter implements MeilisearchFilterInterface
 
     protected function where($value): string
     {
+        $query = "";
         if (is_array($value)) {
-            return " AND ({$this->column} > {$value[0]} AND {$this->column} < {$value[1]})";
+            $query = " ({$this->column} > {$value[0]} AND {$this->column} < {$value[1]})";
         } else {
             $value = is_numeric($value) ? $value : "\"{$value}\"";
-            return " AND {$this->column} = {$value}";
+            $query = " {$this->column} = {$value}";
         }
+        if (!$this->isFirst) {
+            $query = " AND " . $query;
+        }
+        return $query;
     }
 
     protected function whereOr($value): string
     {
+        $query = "";
         if (is_array($value)) {
-            return " OR ({$this->column} > {$value[0]} AND {$this->column} < {$value[1]})";
+            $query = " ({$this->column} > {$value[0]} AND {$this->column} < {$value[1]})";
         } else {
             $value = is_numeric($value) ? $value : "\"{$value}\"";
-            return " OR {$this->column} = {$value}";
+            $query = " {$this->column} = {$value}";
         }
+
+        if (!$this->isFirst) {
+            $query = " OR " . $query;
+        }
+
+        return $query;
     }
 
     protected function whereNot($value): string
     {
         $value = is_numeric($value) ? $value : "\"{$value}\"";
-        return " AND NOT {$this->column} = {$value}";
+        $query = " {$this->column} = {$value}";
+        if (!$this->isFirst) {
+            $query = " AND NOT " . $query;
+        }
+        return $query;
     }
 
     /**

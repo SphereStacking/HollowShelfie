@@ -7,7 +7,7 @@ namespace App\Services\DynamicSearch\Meilisearch;
  */
 interface MeilisearchFilterInterface
 {
-    public function __construct($include, $type, $value);
+    public function __construct($include, $type, $value, $isFirst);
 
     public function makeQuery();
 
