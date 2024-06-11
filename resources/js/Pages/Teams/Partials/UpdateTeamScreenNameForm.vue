@@ -31,7 +31,6 @@ const updateTeamScreenName = () => {
     </template>
 
     <template #description>
-      {{ $t('The team\'s ID.') }}
     </template>
 
     <template #form>

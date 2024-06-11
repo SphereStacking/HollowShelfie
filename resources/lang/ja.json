@@ -150,6 +150,7 @@
     "Team Name": "チーム名",
     "Team Owner": "チームオーナー",
     "Team Settings": "チーム設定",
+    "Team ID": "チームID",
     "Terms of Service": "利用規約",
     "The :attribute must be a valid role.": ":Attributeは有効なロールである必要があります。",
     "The :attribute must be at least :length characters and contain at least one number.": ":Attributeは:length文字以上で、数字を１文字以上含めなければいけません。",
