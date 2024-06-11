@@ -40,6 +40,7 @@ use App\Http\Controllers\TeamLogo\DestroyTeamLogoController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;
 use App\Http\Controllers\EventFryer\StoreEventFryerController;
 use App\Http\Controllers\EventBookmark\StoreBookmarkController;
+use App\Http\Controllers\ScreenName\UpdateScreenNameController;
 use App\Http\Controllers\EventFryer\DestroyEventFryerController;
 use App\Http\Controllers\EventBookmark\DestroyBookmarkController;
 
@@ -131,5 +132,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::delete('/users/{screen_name}/unfollow', DestroyUserFollowController::class)->name('users.unfollow');
     Route::delete('/teams/{screen_name}/unfollow', DestroyTeamFollowController::class)->name('teams.unfollow');
 
+    Route::put('/screen_name/{screen_name}', UpdateScreenNameController::class)->name('screen_name.update');
 });
 

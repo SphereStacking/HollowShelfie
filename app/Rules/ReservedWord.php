@@ -30,7 +30,7 @@ class ReservedWord implements ValidationRule
             $reservedWords = array_merge($reservedWords, config('reserved_words.'.$category, []));
         }
         if (in_array($value, $reservedWords)) {
-            $fail(':attributeは予約語です。');
+            $fail('指定の:attributeは予約されています。');
         }
     }
 }
