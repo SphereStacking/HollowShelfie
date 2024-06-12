@@ -17,7 +17,8 @@ class EventMeilisearchService
 {
     use EventScopes;
 
-    private $with = [
+    /** Eager Loading するリレーション */
+    private const WITH = [
         'organizers.event_organizeble',
         'event_time_tables.performers.performable',
         'files',
@@ -28,7 +29,8 @@ class EventMeilisearchService
         'event_create_user',
     ];
 
-    private $withCount = [
+    /** Eager Loading するリレーションのカウント */
+    private const WITH_COUNT = [
         'good_users',
     ];
 
@@ -37,7 +39,7 @@ class EventMeilisearchService
      *
      * @var array<string, class-string>
      */
-    private $queryParamClasses = [
+    private const QUERY_PARAM_CLASSES = [
         'date' => EventFilterDate::class,
         'status' => EventFilterStatus::class,
         'tag' => EventFilterTag::class,
@@ -45,6 +47,14 @@ class EventMeilisearchService
         'organizer' => EventFilterOrganizer::class,
         'performer' => EventFilterPerformer::class,
         'instance' => EventFilterInstance::class,
+    ];
+
+    /** オーダーオプション */
+    private const ORDER_BY_OPTIONS = [
+        'good' => ['column' => 'good_count', 'direction' => 'DESC'],
+        'new' => ['column' => 'published_at', 'direction' => 'DESC'],
+        'old' => ['column' => 'published_at', 'direction' => 'ASC'],
+        'default' => ['column' => 'published_at', 'direction' => 'DESC'],
     ];
 
     /** 公開されたイベントを検索する */
@@ -65,26 +75,22 @@ class EventMeilisearchService
     /** イベントを検索する共通メソッド */
     private function searchEvents(string $optionsFilter,SearchParams $params): LengthAwarePaginator
     {
+        $orderBy = $this->parseOrderBy($params->order);
         $queryfilterString = $this->createMakeFilter($params->queryParams);
-
         $filterString = "(".$optionsFilter.") " . ($queryfilterString ? "AND (".$queryfilterString.")" : "");
 
-        Log::info($filterString);
         return Event::search(
-            query: $params->text,
-            callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
-                $options['filter'] = $filterString;
-                return $meilisearch->rawSearch($query, $options);
-            })
-            // order
-            ->query(function ($query) use ($params) {
-                return $this->orderScopes($query, $params->order);
-            })
-            //Eager Loading
+                query: $params->text,
+                callback: function (Indexes $meilisearch, $query, array $options) use ($filterString) {
+                    $options['filter'] = $filterString;
+                    return $meilisearch->rawSearch($query, $options);
+                }
+            )
+            ->orderBy($orderBy['column'], $orderBy['direction'])
             ->query(function ($query) {
-                return $query->with($this->with)->withCount($this->withCount);
+                // Eager Loading
+                return $query->with(self::WITH)->withCount(self::WITH_COUNT);
             })
-            // ---
             ->paginate($params->paginate)
             ->appends(request()->query());
     }
@@ -94,8 +100,8 @@ class EventMeilisearchService
         $filterString = '';
         foreach ($queryParams as $index => $item) {
             $type = $item['type'];
-            if (isset($this->queryParamClasses[$type])) {
-                $class = $this->queryParamClasses[$type];
+            $class = $this->parseQueryParamClass($type);
+            if ($class) {
                 // 各タイプに応じたフィルタクラスをインスタンス化し、フィルタ文字列を生成
                 $filterInstance = new $class($item['include'], $type, $item['value'], $index === 0);
                 $filterString .= $filterInstance->makeQuery();
@@ -104,23 +110,18 @@ class EventMeilisearchService
         return $filterString;
     }
 
-    /**
-     * オーダースコープを取得する
-     *
-     * @return Builder
-     */
-    private function orderScopes(Builder $query, string $order): Builder
+    // NOTE: フロントから悪意あるクエリパラメータが来てもエラーが出ないようにするためのparse処理
+
+    /** オーダーを取得する */
+    private function parseOrderBy(string $order): array
     {
-        switch ($order) {
-            case 'good':
-                return $query->orderBy('good_count', 'desc');
-            case 'new':
-                return $query->orderBy('published_at', 'desc');
-            case 'old':
-                return $query->orderBy('published_at', 'asc');
-            default:
-                return $query->orderBy('published_at', 'desc');
-        }
+        return self::ORDER_BY_OPTIONS[$order] ?? self::ORDER_BY_OPTIONS['default'];
+    }
+
+    /** オーダーを取得する */
+    private function parseQueryParamClass(string $type)
+    {
+        return self::QUERY_PARAM_CLASSES[$type] ?? self::QUERY_PARAM_CLASSES['default'];
     }
 }
 
