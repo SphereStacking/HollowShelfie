@@ -79,7 +79,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper type="category" />
+          <IconTypeMapper type="category" class="text-4xl" />
           Category
         </div>
         <div class="flex flex-wrap gap-2">
@@ -92,7 +92,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start mt-5 w-full text-3xl font-bold  ">
-          <IconTypeMapper type="tag" />
+          <IconTypeMapper type="tag" class="text-4xl" />
           tag
         </div>
         <div class="flex flex-wrap gap-2">
@@ -105,7 +105,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
       <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper :type="items.icon" />
+          <IconTypeMapper :type="items.icon" class="text-4xl" />
           <h4 class="font-bold">
             {{ items.title }}
           </h4>

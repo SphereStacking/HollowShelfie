@@ -16,16 +16,6 @@ class UserService
     public function __construct(){}
 
     /**
-     * プロフィールデータを事前ロードする
-     */
-    public function preloadProfileData(User $user): User
-    {
-        // $user->links();
-        // $user->tags();
-        return $user;
-    }
-
-    /**
      * フォローページネーションを取得する
      *
      * @param int $perPage
@@ -79,25 +69,8 @@ class UserService
         return $user->followersCount();
     }
 
-    public function followByFollowable(User $authUser, $type, $id)
-    {
-        $model = $type::find($id);
-
-        return $this->follow($authUser, $model);
-    }
-
-    public function unfollowByFollowable(User $authUser, $type, $id)
-    {
-        $model = $type::find($id);
-
-        return $this->unfollow($authUser, $model);
-    }
-
     public function follow(User $authUser, $model)
     {
-        Log::info("follow");
-        Log::info($authUser);
-        Log::info($model);
         $authUser->follow($model);
         $message = "{$authUser->name}が{$model->name}をフォローしました。";
 
@@ -110,9 +83,6 @@ class UserService
 
     public function unfollow(User $authUser, $model)
     {
-        Log::info("unfollow");
-        Log::info($authUser);
-        Log::info($model);
         $authUser->unfollow($model);
         $message = "{$authUser->name}が{$model->name}のフォローを解除しました。";
 

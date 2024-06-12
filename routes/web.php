@@ -121,16 +121,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('/event/{alias}/bookmark', StoreBookmarkController::class)->name('event.bookmark');
     Route::delete('/event/{alias}/bookmark', DestroyBookmarkController::class)->name('event.unbookmark');
 
-
     // フォロー
-    Route::post('/follow', StoreFollowController::class)->name('follow');
-    Route::post('/users/{screen_name}/follow', StoreUserFollowController::class)->name('users.follow');
-    Route::post('/teams/{screen_name}/follow', StoreTeamFollowController::class)->name('teams.follow');
-
-    // フォロー解除
-    Route::delete('/unfollow', DestroyFollowController::class)->name('unfollow');
-    Route::delete('/users/{screen_name}/unfollow', DestroyUserFollowController::class)->name('users.unfollow');
-    Route::delete('/teams/{screen_name}/unfollow', DestroyTeamFollowController::class)->name('teams.unfollow');
+    Route::post('/follow/{screen_name}', StoreFollowController::class)->name('follow');
+    Route::delete('/unfollow/{screen_name}', DestroyFollowController::class)->name('unfollow');
 
     Route::put('/screen_name/{screen_name}', UpdateScreenNameController::class)->name('screen_name.update');
 });

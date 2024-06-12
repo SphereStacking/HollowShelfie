@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function Psy\debug;
+
 class UserPublicProfileJsonResource extends JsonResource
 {
     /**
@@ -15,13 +17,13 @@ class UserPublicProfileJsonResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'type' => 'user',
             'dataile' => [
                 'id' => $this->resource->id,
                 'screen_name' => $this->resource->screenName->screen_name,
+                'teams' => $this->resource->allTeams(),
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->profile_photo_url,
-                // 'profile_url' => $this->resource->profile_url,
-                'location' => $this->resource->location,
                 'links' => $this->resource->links,
                 'followers_count' => $this->resource->followers_count,
                 'content' => '',
