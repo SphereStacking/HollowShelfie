@@ -38,8 +38,6 @@ class GetHomeController extends Controller
 
     public function __invoke()
     {
-
-
         $ongoingParams = new SearchParams(
             '',
             [['include' => 'and', 'type' => 'status', 'value' => EventStatus::ONGOING->value]],
@@ -47,11 +45,9 @@ class GetHomeController extends Controller
             null,
         );
 
-        $planningParams = new SearchParams(
+        $upcomingParams = new SearchParams(
             '',
-            [
-                ['include' => 'and', 'type' => 'status', 'value' => EventStatus::UPCOMING->value],
-            ],
+            [['include' => 'and', 'type' => 'status', 'value' => EventStatus::UPCOMING->value]],
             12,
             null,
         );
@@ -65,8 +61,8 @@ class GetHomeController extends Controller
 
         $ongoingEvents = $this->eventMeilisearchService
             ->searchPublishedEvents($ongoingParams);
-        $planningEvents = $this->eventMeilisearchService
-            ->searchPublishedEvents($planningParams);
+        $upcomingEvents = $this->eventMeilisearchService
+            ->searchPublishedEvents($upcomingParams);
         $newEvents = $this->eventMeilisearchService
             ->searchPublishedEvents($newParams);
         return Inertia::render(
@@ -81,12 +77,12 @@ class GetHomeController extends Controller
                     'paginate' => $ongoingParams->getDefaultPaginate(),
                     'o' => $ongoingParams->order,
                 ]),
-                'planningEvents' => fn () => new EventsJsonResource($planningEvents),
-                'planningEventsUrl' => fn () => route('event.search.index', [
-                    't' => $planningParams->text,
-                    'q' => $planningParams->queryParams,
-                    'paginate' => $planningParams->getDefaultPaginate(),
-                    'o' => $planningParams->order,
+                'upcomingEvents' => fn () => new EventsJsonResource($upcomingEvents),
+                'upcomingEventsUrl' => fn () => route('event.search.index', [
+                    't' => $upcomingParams->text,
+                    'q' => $upcomingParams->queryParams,
+                    'paginate' => $upcomingParams->getDefaultPaginate(),
+                    'o' => $upcomingParams->order,
                 ]),
 
                 'newEvents' => fn () => new EventsJsonResource($newEvents),
