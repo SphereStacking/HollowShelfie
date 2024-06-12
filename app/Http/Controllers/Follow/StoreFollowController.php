@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Follow;
 
-use App\Http\Requests\FollowRequest;
+use App\Models\ScreenName;
 use App\Services\UserService;
+use App\Http\Requests\FollowRequest;
 
 /**
  * フォロー関連の操作を管理するコントローラー
@@ -21,9 +22,10 @@ class StoreFollowController extends FollowBaseController
         $this->userService = $userService;
     }
 
-    public function __invoke(FollowRequest $request)
+    public function __invoke($screenName)
     {
-        $result = $this->userService->followByFollowable(auth()->user(), $request->type, $request->id);
+        $screenName = ScreenName::findScreenNameable($screenName);
+        $result = $this->userService->follow(auth()->user(),$screenName->screenNameable);
 
         return $this->generateResponse($result['message'], $result['followed']);
     }
