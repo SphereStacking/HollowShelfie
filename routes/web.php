@@ -18,6 +18,7 @@ use App\Http\Controllers\Profile\GetProfileController;
 use App\Http\Controllers\Event\GetIndexEventController;
 use App\Http\Controllers\EventGood\StoreGoodController;
 use App\Http\Controllers\Follow\GetFollowingController;
+use App\Http\Controllers\Profile\EditProfileController;
 use App\Http\Controllers\Event\GetCreateEventController;
 use App\Http\Controllers\Event\GetEventSearchController;
 use App\Http\Controllers\Event\GetManageEventController;
@@ -33,11 +34,13 @@ use App\Http\Controllers\Follow\StoreUserFollowController;
 use App\Http\Controllers\Markdown\GetCreditPageController;
 use App\Http\Controllers\TeamLogo\StoreTeamLogoController;
 use App\Http\Controllers\CustomId\UpdateCustomIdController;
+use App\Http\Controllers\Profile\EditUserProfileController;
 use App\Http\Controllers\Event\GetRecruitingEventController;
 use App\Http\Controllers\Follow\DestroyTeamFollowController;
 use App\Http\Controllers\Follow\DestroyUserFollowController;
 use App\Http\Controllers\TeamLogo\DestroyTeamLogoController;
 use App\Http\Controllers\EventBookmark\GetBookmarkController;
+use App\Http\Controllers\Profile\UpdateUserProfileController;
 use App\Http\Controllers\EventFryer\StoreEventFryerController;
 use App\Http\Controllers\EventBookmark\StoreBookmarkController;
 use App\Http\Controllers\ScreenName\UpdateScreenNameController;
@@ -80,6 +83,9 @@ Route::get('/credits', function () {
 })->name('credits');
 
 Route::get('/@{screen_name}', GetProfileController::class)->name('profile.show');
+Route::get('/@{screen_name}/edit', EditUserProfileController::class)->name('profile.edit');
+Route::put('/@{screen_name}', UpdateUserProfileController::class)->name('profile.update');
+
 Route::get('/event', GetIndexEventController::class)->name('event.index');
 Route::get('/event/search', GetEventSearchController::class)->name('event.search.index');
 Route::get('/tag/suggestion', GetTagSuggestionController::class)->name('tag.suggestion');

@@ -161,11 +161,11 @@ const updateEndDate = () => {
           v-model="form.instances[0].display_name"
           :class="{ 'input-error': form.errors['instances.0.display_name'] }"
           class="input input-sm join-item w-1/2"
-          placeholder="タイトル">
+          placeholder="表示">
         <input
           v-model="form.instances[0].access_url"
           class="input input-sm join-item w-full"
-          placeholder="URL">
+          placeholder="https://">
       </template>
     </SelectElement>
 

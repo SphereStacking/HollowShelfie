@@ -12,10 +12,6 @@ const props = defineProps({
     required: true,
     default: ''
   },
-  count: {
-    type: Number,
-    default: null
-  },
   isFollowed: {
     type: Boolean,
     required: true
@@ -25,7 +21,6 @@ const isFollowed = ref(props.isFollowed)
 const count = ref(props.count)
 const followUrl = props.followRoute
 const unfollowUrl = props.unfollowRoute
-const hasCount = computed(() => props.count == null)
 const isFollowedBtnOver = ref()
 
 const follow = async () => {
@@ -47,30 +42,20 @@ const follow = async () => {
     console.error('Error:', error)
   }
 }
-const buttonLabel = computed(() => {
-  if (isFollowed.value) {
-    return isFollowedBtnOver.value ? 'Unfollow' : 'Following'
-  } else {
-    return 'Follow'
-  }
-})
+
 </script>
 <template>
-  <div>
+  <div class="">
     <button
+      class="btn btn-circle btn-md"
       :class="[
-        isFollowed ? 'btn btn-success btn-sm hover:btn-error' : 'btn btn-outline btn-sm hover:btn-success',
-        hasCount ? 'w-32' : 'w-40',
+        isFollowed ? 'btn-success hover:btn-error' : 'btn-outline hover:btn-success',
       ]"
       @mouseover="isFollowedBtnOver = true" @mouseleave="isFollowedBtnOver = false"
       @click="follow">
       <IconTypeMapper
         :type="isFollowed ? isFollowedBtnOver ? 'unFollowing' : 'followNeutral' : 'onFollowing'"
-        class="text-xl" />
-      {{ buttonLabel }}
-      <div v-if="!hasCount" class="badge">
-        {{ count }}
-      </div>
+        class="text-3xl" />
     </button>
   </div>
 </template>

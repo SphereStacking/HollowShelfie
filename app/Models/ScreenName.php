@@ -21,7 +21,7 @@ class ScreenName extends Model
 
     public static function findScreenNameable($screen_name)
     {
-        return ScreenName::where('screen_name', $screen_name)->first();
+        return ScreenName::where('screen_name', $screen_name)->firstOrFail();
     }
 
     public function user()
