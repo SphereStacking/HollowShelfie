@@ -26,7 +26,7 @@ authUser.value = props.profile.auth_user
         Profile
       </h2>
     </template>
-    <ProfileHeader />
+    <ProfileHeader class="mt-28" />
     <div class="mx-auto my-6 flex max-w-7xl flex-col gap-4">
       <ProfileTeamMenbers :profile="props.profile" />
       <ProfileUserJoinedTeams :profile="props.profile" :joined-teams="props.profile.dataile.teams" />

@@ -42,7 +42,7 @@ const eventPublished = page.props.counts.eventPublished
               <IconTypeMapper type="arrowRight" class="text-xl" />
             </span>
           </Link>
-          <Link class="btn btn-neutral btn-sm" :href="createUrl">
+          <Link class="btn btn-primary btn-sm" :href="createUrl">
             <span class="flex items-center">
               新規作成
               <IconTypeMapper type="arrowRight" class="text-xl" />
