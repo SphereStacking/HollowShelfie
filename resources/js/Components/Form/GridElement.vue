@@ -12,7 +12,7 @@ defineProps({
     type: String,
     default: null
   },
-  error: {
+  errors: {
     type: String,
     default: null
   },
@@ -23,9 +23,9 @@ defineProps({
 
 <template>
   <Wrapper
-    :label="label" :help="help" :error="error"
+    :label="label" :help="help"
     :label-icon-type="labelIconType">
-    <Grid v-bind="$attrs" />
+    <Grid v-bind="$attrs" :errors="errors" />
   </Wrapper>
 </template>
 

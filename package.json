@@ -20,7 +20,7 @@
         "@vue/server-renderer": "^3.2.31",
         "autoprefixer": "^10.4.19",
         "axios": "^1.1.2",
-        "daisyui": "^4.10.2",
+        "daisyui": "^4.12.2",
         "eslint": "^8.56.0",
         "eslint-plugin-tailwindcss": "^3.13.1",
         "eslint-plugin-vue": "^9.19.2",

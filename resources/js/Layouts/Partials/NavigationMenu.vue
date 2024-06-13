@@ -179,7 +179,7 @@ const headerButtons = [
                 </div>
 
                 <DropdownLink :href="route('account.show')">
-                  {{ $t('Profile') }}
+                  {{ $t('Account settings') }}
                 </DropdownLink>
 
                 <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">

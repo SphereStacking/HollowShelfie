@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Profile;
 
 use Inertia\Inertia;
 use App\Models\ScreenName;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\TeamPublicProfileJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
@@ -35,6 +35,7 @@ class GetProfileController extends Controller
         );
 
         return Inertia::render('Profile/Index', [
+            'isAuthUser' => Auth::check() && Auth::user()->id === $screenNameable->screenNameable->id,
             'profile' => match ($screenNameable->screen_nameable_type) {
                 'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screenNameable),
                 'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screenNameable),

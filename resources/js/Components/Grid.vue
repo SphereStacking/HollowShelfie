@@ -9,6 +9,10 @@ const props = defineProps({
   modelValue: {
     type: Array,
     default: () => []
+  },
+  errors: {
+    type: Array,
+    default: () => []
   }
 })
 const rowData= ref(props.modelValue)
@@ -87,7 +91,7 @@ watch(rowData, () => {
       <tbody class="">
         <tr v-for="(row,rowIndex) in rowData" :key="'row-'+row.rowIndex">
           <td v-for="col in columDefs " :key="'col-'+col.field">
-            <div class=" flex h-full w-full items-center justify-center ">
+            <div class=" flex size-full items-center justify-center ">
               <!-- コンポーネントを動的にレンダリング -->
               <component
                 :is="resolveComponent(col.template)"
@@ -97,6 +101,7 @@ watch(rowData, () => {
                 :model-value="getNestedValue(row, col.field)"
                 :template-options="col['templateOptions']"
                 :data="row"
+                v-bind="col.options"
                 @update:model-value="(value) => setNestedValue(row, col.field, value)"
                 @row-delete="rowDelete" />
               <!-- テンプレートが指定されていない場合は通常のテキストを表示 -->
@@ -104,6 +109,9 @@ watch(rowData, () => {
                 {{ getNestedValue(row, col.field) }}
               </span>
             </div>
+            <span v-if="errors && errors[rowIndex] && errors[rowIndex][col.field]" class="text-error">
+              {{ errors[rowIndex][col.field] }}
+            </span>
           </td>
         </tr>
         <tr></tr>
