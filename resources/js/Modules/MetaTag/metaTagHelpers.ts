@@ -22,7 +22,7 @@ export function GetAppMetaTags(): MetaTag[] {
     { property: 'twitter:card', content: 'summary_large_image' },
     { property: 'twitter:title', content: usePage().props.config.appName },
     { property: 'twitter:description', content: 'イベントを探しやすく、共有しやすく。フライヤーを通じてイベントを告知しよう。' },
-    { property: 'twitter:image', content: `${usePage().props.ziggy.url}/storage/images/ogp/summary_large_image.svg` },
+    { property: 'twitter:image', content: `${usePage().props.ziggy.url}/storage/images/ogp/summary_large_image.webp` },
   ]
 }
 
