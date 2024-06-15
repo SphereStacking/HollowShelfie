@@ -15,10 +15,14 @@ export type MetaTag = {
 export function GetAppMetaTags(): MetaTag[] {
   return [
     { property: 'og:type', content: 'website' },
-    { property: 'og:title', content: DOMPurify.sanitize(usePage().props.title, { ALLOWED_TAGS: [] }) },
-    { property: 'og:description', content: DOMPurify.sanitize(usePage().props.description, { ALLOWED_TAGS: [] }) },
-    { property: 'og:site_name', content: DOMPurify.sanitize(usePage().props.config.appName, { ALLOWED_TAGS: [] }) },
+    { property: 'og:title', content: usePage().props.config.appName },
+    { property: 'og:description', content: 'イベントを探しやすく、共有しやすく。フライヤーを通じてイベントを告知しよう。' },
+    { property: 'og:site_name', content: usePage().props.config.appName },
     { property: 'og:image', content: `${usePage().props.ziggy.url}/storage/images/App/Logo.svg` },
+    { property: 'twitter:card', content: 'summary_large_image' },
+    { property: 'twitter:title', content: usePage().props.config.appName },
+    { property: 'twitter:description', content: 'イベントを探しやすく、共有しやすく。フライヤーを通じてイベントを告知しよう。' },
+    { property: 'twitter:image', content: `${usePage().props.ziggy.url}/storage/images/ogp/summary_large_image.svg` },
   ]
 }
 
