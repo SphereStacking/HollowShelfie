@@ -37,8 +37,8 @@ class GetProfileController extends Controller
         return Inertia::render('Profile/Index', [
             'isAuthUser' => Auth::check() && Auth::user()->id === $screenNameable->screenNameable->id,
             'profile' => match ($screenNameable->screen_nameable_type) {
-                'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screenNameable),
-                'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screenNameable),
+                'App\Models\Team' => new TeamPublicProfileJsonResource($screenNameable->screenNameable->load('tags', 'links')),
+                'App\Models\User' => new UserPublicProfileJsonResource($screenNameable->screenNameable->load('tags', 'links')),
                 default => abort(404, 'Profile type not found'),
             },
             'events' => new EventsPaginatedJsonResource(

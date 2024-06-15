@@ -1,7 +1,7 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3'
 const page = usePage()
-const dataile = ref(page.props.profile.dataile)
+const detail = ref(page.props.profile.detail)
 const type = ref(page.props.profile.type)
 const isTeamProfile = computed(() => {
   return type.value === 'team'
@@ -19,10 +19,10 @@ const isTeamProfile = computed(() => {
     </div>
     <div class="flex flex-row gap-2">
       <AvatarLink
-        :href="dataile.owner.profile_url"
-        :image-url="dataile.owner.image_url" :name="dataile.owner.name" />
+        :href="detail.owner.profile_url"
+        :image-url="detail.owner.image_url" :name="detail.owner.name" />
       <AvatarLink
-        v-for="(member, index ) in dataile.members" :key="index" :href="member.profile_url"
+        v-for="(member, index ) in detail.members" :key="index" :href="member.profile_url"
         :image-url="member.image_url" :name="member.name" />
     </div>
   </div>

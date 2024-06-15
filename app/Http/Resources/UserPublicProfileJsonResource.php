@@ -18,19 +18,23 @@ class UserPublicProfileJsonResource extends JsonResource
     {
         return [
             'type' => 'user',
-            'dataile' => [
+            'detail' => [
                 'id' => $this->resource->id,
+                'bio' => $this->resource->bio,
                 'screen_name' => $this->resource->screenName->screen_name,
                 'teams' => $this->resource->allTeams(),
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->profile_photo_url,
-                'links' => $this->resource->links,
+                'links' => collect($this->resource->links)->map(function ($link) {
+                    return [
+                        'label' => $link['label'],
+                        'link' => $link['link'],
+                    ];
+                }),
                 'followers_count' => $this->resource->followers_count,
                 'content' => '',
                 'tags' => $this->resource->tags->map(function ($tag) {
-                    return [
-                        'name' => $tag->name,
-                    ];
+                    return $tag->name;
                 }),
             ],
             'auth_user' => [
