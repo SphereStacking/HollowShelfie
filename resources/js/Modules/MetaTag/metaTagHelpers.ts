@@ -18,7 +18,7 @@ export function GetAppMetaTags(): MetaTag[] {
     { property: 'og:title', content: usePage().props.config.appName },
     { property: 'og:description', content: 'イベントを探しやすく、共有しやすく。フライヤーを通じてイベントを告知しよう。' },
     { property: 'og:site_name', content: usePage().props.config.appName },
-    { property: 'og:image', content: `${usePage().props.ziggy.url}/storage/images/App/Logo.svg` },
+    { property: 'og:image', content: `${usePage().props.ziggy.url}/storage/images/ogp/summary_large_image.webp` },
     { property: 'twitter:card', content: 'summary_large_image' },
     { property: 'twitter:title', content: usePage().props.config.appName },
     { property: 'twitter:description', content: 'イベントを探しやすく、共有しやすく。フライヤーを通じてイベントを告知しよう。' },
