@@ -1,6 +1,9 @@
 <script setup>
 import { vOnClickOutside } from '@vueuse/components'
 import draggable from 'vuedraggable'
+import { generateUniqueId } from '@/Utils'
+
+const draggableGroupId = generateUniqueId('multi-select-element')
 
 const props = defineProps({
   //Wrapper用
@@ -140,7 +143,7 @@ const onClickOutsideHandler= ()=>{
         <!-- タグ表示 -->
         <draggable
           v-model="items"
-          group="items"
+          :group="draggableGroupId"
           item-key="id"
           class="flex  flex-wrap gap-2"
           @start="dragging=true"

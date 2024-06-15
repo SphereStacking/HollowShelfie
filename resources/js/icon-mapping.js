@@ -333,6 +333,9 @@ export const ItemsConfig = {
   clock: {
     icon: 'mdi:clock-time-four',
   },
+  drag: {
+    icon: 'mdi:drag',
+  },
   default: {
     icon: '',
   }
