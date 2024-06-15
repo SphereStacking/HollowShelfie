@@ -1,5 +1,5 @@
 <script setup>
-import {router, usePage } from '@inertiajs/vue3'
+import {router, usePage, Link } from '@inertiajs/vue3'
 
 defineProps({
   categories: {
@@ -52,7 +52,12 @@ onMounted(() => {
         Event Management
       </h2>
     </template>
-
+    <Link class="btn btn-info btn-sm" :href="route('event.create')">
+      <span class="flex items-center">
+        イベントを主催する！
+        <IconTypeMapper type="arrowRight" class="text-xl" />
+      </span>
+    </Link>
     <div class="mx-auto flex max-w-6xl flex-col gap-2">
       <SearchForm
         v-model="conditions" v-model:text="text" :instance-types="instanceTypes"
