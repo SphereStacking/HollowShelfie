@@ -72,21 +72,21 @@ const columns = computed(() => {
 <template>
   <LandingPageLayout title="welcome">
     <section class="flex min-h-[calc(100vh-4rem)] items-center justify-center px-2 text-center">
-      <ApplicationLogo class="sticky top-10 h-20 py-2 text-base-content md:flex-row" />
+      <ApplicationLogo class="sticky top-20 h-20 py-2 text-base-content md:flex-row" />
     </section>
-    <section class="flex items-center justify-center py-32 text-center md:min-h-[calc(100vh-4rem)]">
+    <section class="flex items-start justify-center py-10 text-center">
       <div class=" sticky top-10 text-center  font-black">
         <div class="text-center font-title text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
           <div class="inline-grid">
             <div class="pointer-events-none col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text text-center blur-xl [-webkit-text-fill-color:transparent] [transform:translate3d(0,0,0)] before:content-[attr(data-text)] [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
-              フライヤーを飾れる
+              フライヤーで飾れる
               <br>
-              イベント共有サービス
+              VRイベント共有サービス
             </div>
             <div class="relative col-start-1 row-start-1 bg-[linear-gradient(90deg,theme(colors.error)_0%,theme(colors.secondary)_9%,theme(colors.secondary)_42%,theme(colors.primary)_47%,theme(colors.accent)_100%)] bg-clip-text text-center [-webkit-text-fill-color:transparent] [&::selection]:bg-blue-700/20 [&::selection]:text-base-content [@supports(color:oklch(0%_0_0))]:bg-[linear-gradient(90deg,oklch(var(--s))_4%,color-mix(in_oklch,oklch(var(--s)),oklch(var(--er)))_22%,oklch(var(--p))_45%,color-mix(in_oklch,oklch(var(--p)),oklch(var(--a)))_67%,oklch(var(--a))_100.2%)]">
               フライヤーを飾れる
               <br>
-              イベント共有サービス
+              VRイベント共有サービス
             </div>
           </div>
         </div>
@@ -106,14 +106,6 @@ const columns = computed(() => {
         </div>
         <div class="flex flex-row items-center gap-20 md:flex-col md:gap-4">
           <img :src="images.ghost">
-          <div class="flex flex-col gap-2">
-            <Link href="/home" class="btn btn-primary btn-lg ">
-              イベントを探す
-            </Link>
-            <Link href="/register" class="btn btn-link btn-sm ">
-              今すぐ登録
-            </Link>
-          </div>
         </div>
       </div>
       <div class="flex flex-row items-center justify-around  py-20 md:p-32">
@@ -139,7 +131,19 @@ const columns = computed(() => {
           class="m-5 w-40" />
       </div>
     </section>
-
+    <section class="mx-auto flex items-center justify-center py-10  md:gap-10 md:py-20">
+      <div class="flex flex-col gap-4">
+        <Link :href="route('home')" class="btn btn-info btn-lg">
+          <span class="flex items-center text-2xl">
+            イベントを探す
+            <IconTypeMapper type="arrowRight" />
+          </span>
+        </Link>
+        <Link href="/register" class="btn btn-link btn-sm ">
+          今すぐ登録
+        </Link>
+      </div>
+    </section>
     <section class=" relative mx-auto min-h-[calc(100vh-4rem)] w-full max-w-screen-lg overflow-x-clip p-10 md:px-20 md:py-32">
       <TransitionInViewportObserver
         class=" absolute"
@@ -377,6 +381,19 @@ const columns = computed(() => {
           data-tip="sphere">
           <img :src="developer.image" class="h-40 rounded-xl">
         </a>
+      </div>
+    </section>
+    <section class="mx-auto flex items-center justify-center pb-10  md:gap-10 md:pb-20">
+      <div class="flex flex-col gap-4">
+        <Link :href="route('home')" class="btn btn-info btn-md">
+          <span class="flex items-center">
+            イベントを探す
+            <IconTypeMapper type="arrowRight" class="text-2xl" />
+          </span>
+        </Link>
+        <Link href="/register" class="btn btn-link btn-sm ">
+          今すぐ登録
+        </Link>
       </div>
     </section>
   </LandingPageLayout>
