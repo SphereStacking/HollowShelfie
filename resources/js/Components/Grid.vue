@@ -1,6 +1,9 @@
 <script setup>
 import InputGridElement from '@/Components/Grid/InputGridElement.vue'
 import TextareaGridElement from '@/Components/Grid/TextareaGridElement.vue'
+import draggable from 'vuedraggable'
+import { generateUniqueId } from '@/Utils'
+const draggableGroupId = generateUniqueId('grid')
 const props = defineProps({
   columDefs: {
     type: Array,
@@ -88,34 +91,43 @@ watch(rowData, () => {
           </td>
         </tr>
       </thead>
-      <tbody class="">
-        <tr v-for="(row,rowIndex) in rowData" :key="'row-'+row.rowIndex">
-          <td v-for="col in columDefs " :key="'col-'+col.field">
-            <div class=" flex size-full items-center justify-center ">
-              <!-- コンポーネントを動的にレンダリング -->
-              <component
-                :is="resolveComponent(col.template)"
-                v-if="col.template"
-                :key="row"
-                :row-index="rowIndex"
-                :model-value="getNestedValue(row, col.field)"
-                :template-options="col['templateOptions']"
-                :data="row"
-                v-bind="col.options"
-                @update:model-value="(value) => setNestedValue(row, col.field, value)"
-                @row-delete="rowDelete" />
-              <!-- テンプレートが指定されていない場合は通常のテキストを表示 -->
-              <span v-else>
-                {{ getNestedValue(row, col.field) }}
+      <draggable
+        v-model="rowData"
+        :group="draggableGroupId"
+        item-key="id"
+        tag="tbody"
+        @start="dragging=true"
+        @end="dragging=false">
+        <template #item="{element ,index}">
+          <tr :key="'row-'+index">
+            <td v-for="col in columDefs " :key="'col-'+col.field">
+              <div class=" flex size-full items-center justify-center ">
+                <!-- コンポーネントを動的にレンダリング -->
+                <component
+                  :is="resolveComponent(col.template)"
+                  v-if="col.template"
+                  :key="element"
+                  :row-index="index"
+                  :model-value="getNestedValue(element, col.field)"
+                  :template-options="col['templateOptions']"
+                  :data="row"
+                  v-bind="col.options"
+                  @update:model-value="(value) => setNestedValue(element, col.field, value)"
+                  @row-delete="rowDelete" />
+                <!-- テンプレートが指定されていない場合は通常のテキストを表示 -->
+                <span v-else>
+                  {{ getNestedValue(element, col.field) }}
+                </span>
+              </div>
+              <span v-if="errors && errors[index] && errors[index][col.field]" class="text-error">
+                {{ errors[index][col.field] }}
               </span>
-            </div>
-            <span v-if="errors && errors[rowIndex] && errors[rowIndex][col.field]" class="text-error">
-              {{ errors[rowIndex][col.field] }}
-            </span>
-          </td>
-        </tr>
-        <tr></tr>
-      </tbody>
+            </td>
+          </tr>
+        </template>
+      </draggable>
+
+      <tr></tr>
     </table>
     <div class="rounded-b-lg p-2">
       <slot name="footer" :create-new-row="createNewRow">

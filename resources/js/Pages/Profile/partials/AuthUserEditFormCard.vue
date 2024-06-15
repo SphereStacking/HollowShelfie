@@ -3,6 +3,7 @@
 
 import {useForm, usePage, Link} from '@inertiajs/vue3'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
+import RowDragIndicatorGridElement from '@/Components/Grid/RowDragIndicatorGridElement.vue'
 import { parseErrors } from '@/Utils/LavaleValidate'
 
 const profile = usePage().props.profile.detail
@@ -14,7 +15,8 @@ const form = useForm({
 })
 
 const columDefs = [
-  { template: RowDeleteGridElement, headerName: '', width: '40px' },
+  { template: RowDragIndicatorGridElement, headerName: '', width: '30px' },
+  { template: RowDeleteGridElement, headerName: '', width: '30px' },
   { field: 'link', headerName: 'リンク', width: '30%', template: 'input', options: { placeholder: 'https://', required: true } },
   { field: 'label', headerName: 'ラベル', width: 'auto', template: 'input', options: { placeholder: '表示', required: true } },
 ]

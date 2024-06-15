@@ -6,6 +6,7 @@ import { addMinutes } from 'date-fns'
 import { parseToBrowserTz } from '@/Utils/Date'
 import SearchPerformersGridElement from '@/Components/Grid/SearchPerformersGridElement.vue'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
+import RowDragIndicatorGridElement from '@/Components/Grid/RowDragIndicatorGridElement.vue'
 import PickerDateElement from '@/Components/Form/PickerDateElement.vue'
 
 const categoryNames = usePage().props.categories.map(category => category.name)
@@ -41,9 +42,11 @@ const getFilteredDataFunc =(response) => {
 const addFormatData = (item) => {
   return { id: item.id, type: item.type, name: item.name, image_url: item.image_url, screen_name: item.screen_name}
 }
-
+import { generateUniqueId } from '@/Utils'
+const draggableGroupId = generateUniqueId('grid')
 const columDefs = [
-  { template: RowDeleteGridElement, headerName: '', width: '40px' },
+  { template: RowDragIndicatorGridElement, headerName: '', width: '30px'},
+  { template: RowDeleteGridElement, headerName: '', width: '30px' },
   { field: 'duration', headerName: '出演時間(分)', width: '100px', template: 'input',
     getNewRowValue: () => { return 60 },
     templateOptions: {
@@ -55,6 +58,9 @@ const columDefs = [
       route: route('mention.suggestion'),
       getFilteredDataFunc: getFilteredDataFunc,
       addFormatDataFunc: addFormatData,
+    },
+    options: {
+      group: draggableGroupId,
     }
   },
   { field: 'description', headerName: '備考', width: 'auto', template: 'input'},

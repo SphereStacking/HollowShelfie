@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
 import draggable from 'vuedraggable'
+import { generateUniqueId } from '@/Utils'
 
 const props = defineProps({
   modelValue: {
@@ -34,6 +35,11 @@ const props = defineProps({
   enableEnterToAdd: {
     type: Boolean,
     default: false
+  },
+  //draggableのgroupに渡す値。
+  group: {
+    type: String,
+    default: () => generateUniqueId('multi-searchable')
   },
   //routeからのレスポンスを加工して配列を返す処理の受け渡し。
   getFilteredDataFunc: {
@@ -131,33 +137,36 @@ const getLabel = (item) => {
 
 <template>
   <!-- タグ入力ボックス -->
-  <div class="input input-sm  flex size-full flex-wrap items-center gap-2 text-base-content">
+  <div class="input input-sm  flex size-full flex-wrap items-center gap-2 text-base-content" :for="group">
     <!-- タグ表示 -->
     <draggable
+      :id="group"
       v-model="items"
-      group="items"
+      :group="group"
       item-key="id"
-      class="flex  flex-wrap gap-2 py-2"
+      class="flex  flex-wrap gap-2 py-0.5"
       @start="dragging=true"
       @end="dragging=false">
       <template #item="{element}">
-        <slot name="viewItem" :element="element" :handle-delete="clickTagDelete">
-          <BtnConditionTypeMapper
-            :type="itemType"
-            @click="clickTagDelete(element)">
-            <div class="relative">
-              <IconTypeMapper
-                :type="itemType"
-                class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
-              <IconTypeMapper
-                type="close"
-                class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
-              <div class="pl-6">
-                {{ getLabel(element) }}
+        <div>
+          <slot name="viewItem" :element="element" :handle-delete="clickTagDelete">
+            <BtnConditionTypeMapper
+              :type="itemType"
+              @click="clickTagDelete(element)">
+              <div class="relative">
+                <IconTypeMapper
+                  :type="itemType"
+                  class="absolute left-0 top-0.5 text-lg opacity-100 transition-all duration-300 group-hover:opacity-0 " />
+                <IconTypeMapper
+                  type="close"
+                  class="absolute left-0 top-0.5 -rotate-90 text-lg opacity-0 transition-all duration-300 group-hover:rotate-0 group-hover:opacity-100" />
+                <div class="pl-6">
+                  {{ getLabel(element) }}
+                </div>
               </div>
-            </div>
-          </BtnConditionTypeMapper>
-        </slot>
+            </BtnConditionTypeMapper>
+          </slot>
+        </div>
       </template>
     </draggable>
 
