@@ -1,16 +1,27 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
+import { Head, usePage } from '@inertiajs/vue3'
 import Banner from '@/Jetstream/Banner.vue'
+import { GetAppMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
 
 defineProps({
-  title: String,
+  title: {
+    type: String,
+    default: () => usePage().props.config.appName,
+  },
+  metaTags: {
+    type: Array,
+    default: () => GetAppMetaTags(),
+  },
 })
 
 </script>
 
 <template>
   <div>
+    <!-- Title -->
     <Head :title="title" />
+    <!-- Meta Tags -->
+    <MetaTags :meta-tags="metaTags" />
 
     <Banner />
 
