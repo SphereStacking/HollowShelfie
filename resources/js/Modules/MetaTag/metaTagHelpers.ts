@@ -56,12 +56,12 @@ export function GetProfileMetaTags(): MetaTag[] {
   const profileMetaTags: MetaTag[] = [
     { property: 'og:url', content: DOMPurify.sanitize(usePage().props.ziggy.location, { ALLOWED_TAGS: [] }) },
     { property: 'og:type', content: 'article' },
-    { property: 'og:title', content: DOMPurify.sanitize(usePage().props.profile.dataile.name, { ALLOWED_TAGS: [] }) },
-    { property: 'og:description', content: DOMPurify.sanitize(usePage().props.profile.dataile.bio, { ALLOWED_TAGS: [] }) },
+    { property: 'og:title', content: DOMPurify.sanitize(usePage().props.profile.detail.name, { ALLOWED_TAGS: [] }) },
+    { property: 'og:description', content: DOMPurify.sanitize(usePage().props.profile.detail.bio, { ALLOWED_TAGS: [] }) },
     { property: 'og:site_name', content: DOMPurify.sanitize(usePage().props.config.appName, { ALLOWED_TAGS: [] }) },
-    { property: 'og:image', content: DOMPurify.sanitize(usePage().props.profile.dataile.photo_url, { ALLOWED_TAGS: [] }) },
+    { property: 'og:image', content: DOMPurify.sanitize(usePage().props.profile.detail.photo_url, { ALLOWED_TAGS: [] }) },
   ]
-  usePage().props.profile.dataile.tags.map((tag) => {
+  usePage().props.profile.detail.tags.map((tag) => {
     profileMetaTags.push({ property: 'article:tag', content: DOMPurify.sanitize(tag, { ALLOWED_TAGS: [] }) })
   })
   return profileMetaTags

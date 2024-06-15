@@ -5,7 +5,7 @@ import {useForm, usePage, Link} from '@inertiajs/vue3'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
 import { parseErrors } from '@/Utils/LavaleValidate'
 
-const profile = usePage().props.profile.dataile
+const profile = usePage().props.profile.detail
 const form = useForm({
   _method: 'PUT',
   bio: '',

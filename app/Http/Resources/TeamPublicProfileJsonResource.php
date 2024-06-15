@@ -16,7 +16,7 @@ class TeamPublicProfileJsonResource extends JsonResource
     {
         return [
             'type' => 'team',
-            'dataile' => [
+            'detail' => [
                 'id' => $this->resource->id,
                 'screen_name' => $this->resource->screenName->screen_name,
                 'name' => $this->resource->name,

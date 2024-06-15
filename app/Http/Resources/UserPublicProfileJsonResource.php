@@ -18,7 +18,7 @@ class UserPublicProfileJsonResource extends JsonResource
     {
         return [
             'type' => 'user',
-            'dataile' => [
+            'detail' => [
                 'id' => $this->resource->id,
                 'bio' => $this->resource->bio,
                 'screen_name' => $this->resource->screenName->screen_name,
