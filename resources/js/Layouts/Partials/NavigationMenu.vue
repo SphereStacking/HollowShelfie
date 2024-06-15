@@ -188,9 +188,9 @@ const headerButtons = [
                   {{ $t('Account settings') }}
                 </DropdownLink>
 
-                <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
+                <!-- <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
                   {{ $t('API Tokens') }}
-                </DropdownLink>
+                </DropdownLink> -->
 
                 <!-- Authentication -->
                 <DropdownLink @click="logout">
@@ -253,16 +253,24 @@ const headerButtons = [
           </div>
 
           <div class="mt-3">
+            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('event.manage')" :active="route().current('event.manage')">
+              イベント管理
+            </ResponsiveNavLink>
+
+            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('profile.show', auth_user.screen_name)" :active="route().current('profile.show')">
+              公開 プロフィール
+            </ResponsiveNavLink>
+
             <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('account.show')" :active="route().current('account.show')">
               {{ $t('Account settings') }}
             </ResponsiveNavLink>
 
-            <ResponsiveNavLink
+            <!-- <ResponsiveNavLink
               v-if="$page.props.jetstream.hasApiFeatures"
               class="ml-2 rounded-l-md" :href="route('api-tokens.index')"
               :active="route().current('api-tokens.index')">
               {{ $t('API Tokens') }}
-            </ResponsiveNavLink>
+            </ResponsiveNavLink> -->
 
             <!-- Authentication -->
             <ResponsiveNavLink class="ml-2 rounded-l-md" @click="logout">
