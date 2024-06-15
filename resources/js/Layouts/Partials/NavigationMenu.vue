@@ -173,20 +173,24 @@ const headerButtons = [
               </template>
 
               <template #content>
+                <DropdownLink :href="route('event.manage')">
+                  イベント管理
+                </DropdownLink>
+
+                <DropdownLink :href="route('profile.show', auth_user.screen_name)">
+                  公開 プロフィール
+                </DropdownLink>
+
                 <!-- Account Management -->
-                <div class="block px-4 py-2 text-xs ">
-                  {{ $t('Manage Account') }}
-                </div>
+                <div class="border-t border-gray-200"></div>
 
                 <DropdownLink :href="route('account.show')">
                   {{ $t('Account settings') }}
                 </DropdownLink>
 
-                <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
+                <!-- <DropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')">
                   {{ $t('API Tokens') }}
-                </DropdownLink>
-
-                <div class="border-t border-gray-200"></div>
+                </DropdownLink> -->
 
                 <!-- Authentication -->
                 <DropdownLink @click="logout">
@@ -249,16 +253,24 @@ const headerButtons = [
           </div>
 
           <div class="mt-3">
-            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('account.show')" :active="route().current('account.show')">
-              {{ $t('Profile') }}
+            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('event.manage')" :active="route().current('event.manage')">
+              イベント管理
             </ResponsiveNavLink>
 
-            <ResponsiveNavLink
+            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('profile.show', auth_user.screen_name)" :active="route().current('profile.show')">
+              公開 プロフィール
+            </ResponsiveNavLink>
+
+            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('account.show')" :active="route().current('account.show')">
+              {{ $t('Account settings') }}
+            </ResponsiveNavLink>
+
+            <!-- <ResponsiveNavLink
               v-if="$page.props.jetstream.hasApiFeatures"
               class="ml-2 rounded-l-md" :href="route('api-tokens.index')"
               :active="route().current('api-tokens.index')">
               {{ $t('API Tokens') }}
-            </ResponsiveNavLink>
+            </ResponsiveNavLink> -->
 
             <!-- Authentication -->
             <ResponsiveNavLink class="ml-2 rounded-l-md" @click="logout">
