@@ -1,7 +1,18 @@
 import { usePage } from '@inertiajs/vue3'
 import DOMPurify from 'isomorphic-dompurify'
 
-export function GetAppMetaTags() {
+export type MetaTag = {
+  content: string
+} & (
+  | { name: string; property?: never }
+  | { property: string; name?: never }
+)
+
+/**
+ * アプリ全体で共通に使用するMetaTagsを取得します。
+ * @returns {MetaTag[]} MetaTagsを返します。
+ */
+export function GetAppMetaTags(): MetaTag[] {
   return [
     { property: 'og:type', content: 'website' },
     { property: 'og:title', content: DOMPurify.sanitize(usePage().props.title, { ALLOWED_TAGS: [] }) },
@@ -11,8 +22,12 @@ export function GetAppMetaTags() {
   ]
 }
 
-export function GetEventDetailMetaTags() {
-  const eventMetaTags = [
+/**
+ * イベント詳細ページで使用するMetaTagsを取得します。
+ * @returns {MetaTag[]} MetaTagsを返します。
+ */
+export function GetEventDetailMetaTags(): MetaTag[] {
+  const eventMetaTags: MetaTag[] = [
     { property: 'og:url', content: DOMPurify.sanitize(usePage().props.ziggy.location, { ALLOWED_TAGS: [] }) },
     { property: 'og:type', content: 'article' },
     { property: 'og:title', content: DOMPurify.sanitize(usePage().props.event.title, { ALLOWED_TAGS: [] }) },
@@ -31,4 +46,23 @@ export function GetEventDetailMetaTags() {
     eventMetaTags.push({ property: 'article:tag', content: DOMPurify.sanitize(tag, { ALLOWED_TAGS: [] }) })
   })
   return eventMetaTags
+}
+
+/**
+ * プロフィール詳細ページで使用するMetaTagsを取得します。
+ * @returns {MetaTag[]} MetaTagsを返します。
+ */
+export function GetProfileMetaTags(): MetaTag[] {
+  const profileMetaTags: MetaTag[] = [
+    { property: 'og:url', content: DOMPurify.sanitize(usePage().props.ziggy.location, { ALLOWED_TAGS: [] }) },
+    { property: 'og:type', content: 'article' },
+    { property: 'og:title', content: DOMPurify.sanitize(usePage().props.profile.dataile.name, { ALLOWED_TAGS: [] }) },
+    { property: 'og:description', content: DOMPurify.sanitize(usePage().props.profile.dataile.bio, { ALLOWED_TAGS: [] }) },
+    { property: 'og:site_name', content: DOMPurify.sanitize(usePage().props.config.appName, { ALLOWED_TAGS: [] }) },
+    { property: 'og:image', content: DOMPurify.sanitize(usePage().props.profile.dataile.photo_url, { ALLOWED_TAGS: [] }) },
+  ]
+  usePage().props.profile.dataile.tags.map((tag) => {
+    profileMetaTags.push({ property: 'article:tag', content: DOMPurify.sanitize(tag, { ALLOWED_TAGS: [] }) })
+  })
+  return profileMetaTags
 }

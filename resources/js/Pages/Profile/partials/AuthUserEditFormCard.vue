@@ -5,8 +5,7 @@ import {useForm, usePage, Link} from '@inertiajs/vue3'
 import RowDeleteGridElement from '@/Components/Grid/RowDeleteGridElement.vue'
 import { parseErrors } from '@/Utils/LavaleValidate'
 
-const profile = usePage().props.profile
-const screenName = usePage().props.profile.screen_name.screen_name
+const profile = usePage().props.profile.dataile
 const form = useForm({
   _method: 'PUT',
   bio: '',
@@ -30,7 +29,6 @@ const getFilteredDataFunc =(response) => {
 }
 
 const formSubmit = ()=>{
-  console.log(form)
   form.put(route('profile.update', profile.screen_name), {
     preserveScroll: true,
     onSuccess: () => {
@@ -51,7 +49,7 @@ const errors = computed(() => parseErrors(form.errors))
     <template #title>
       <div class="flex w-full items-center justify-between">
         プロフィール編集
-        <Link :href="route('profile.show', screenName)" class="btn btn-neutral btn-sm">
+        <Link :href="route('profile.show', profile.screen_name)" class="btn btn-neutral btn-sm">
           profileへ移動
         </Link>
       </div>

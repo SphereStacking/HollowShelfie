@@ -32,7 +32,7 @@ class EditUserProfileController extends Controller
         }
 
         return Inertia::render('Profile/Edit', [
-            'profile' =>  $screenNameable->screenNameable,
+            'profile' =>  new UserPublicProfileJsonResource($screenNameable->screenNameable->load('tags', 'links')),
         ]);
     }
 }

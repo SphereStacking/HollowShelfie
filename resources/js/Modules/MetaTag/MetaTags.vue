@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-
-type MetaTag = {
-  content: string
-} & (
-  | { name: string; property?: never }
-  | { property: string; name?: never }
-)
+import type { MetaTag } from './metaTagHelpers'
 
 type Props = {
   metaTags: MetaTag[]

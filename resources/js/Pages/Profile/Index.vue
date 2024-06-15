@@ -1,5 +1,8 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { GetProfileMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
+const metaTags = GetProfileMetaTags()
+
 const props = defineProps({
   profile: {
     type: Object,
@@ -20,7 +23,7 @@ authUser.value = props.profile.auth_user
 
 </script>
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Dashboard" :meta-tags="metaTags">
     <template #header>
       <h2 class="text-xl font-semibold  leading-tight">
         Profile

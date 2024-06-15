@@ -22,7 +22,7 @@ class EventMeilisearchService
         'organizers.event_organizeble',
         'event_time_tables.performers.performable',
         'files',
-        'instances',
+        'instances.instance_type',
         'tags.taggables.tag',
         'categories',
         'good_users',

@@ -21,6 +21,7 @@ class TeamPublicProfileJsonResource extends JsonResource
                 'screen_name' => $this->resource->screenName->screen_name,
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->team_logo_url,
+                'bio' => $this->resource->bio,
                 'owner' => [
                     'profile_url' => $this->resource->owner->profile_url,
                     'id' => $this->resource->owner->id,
@@ -35,8 +36,6 @@ class TeamPublicProfileJsonResource extends JsonResource
                         'name' => $member->name,
                     ];
                 }),
-
-                'location' => 'TODO',
                 'links' => $this->resource->links->map(function ($link) {
                     return [
                         'label' => $link->label,
@@ -46,9 +45,7 @@ class TeamPublicProfileJsonResource extends JsonResource
                 'followers_count' => $this->resource->followers_count,
                 'content' => '',
                 'tags' => $this->resource->tags->map(function ($tag) {
-                    return [
-                        'name' => $tag->name,
-                    ];
+                    return $tag->name;
                 }),
             ],
             'auth_user' => [

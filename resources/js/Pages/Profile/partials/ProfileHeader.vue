@@ -1,10 +1,6 @@
 <script setup>
 import { usePage, Link } from '@inertiajs/vue3'
 const page = usePage()
-const getButtonText = (event) => {
-  return `${event.name}`
-}
-
 const dataile = page.props.profile.dataile
 const authUser = page.props.profile.auth_user
 const isAuthUser = page.props.isAuthUser
@@ -13,7 +9,16 @@ const querySetter = (value, type) => {
     { include: 'and', type: 'user', value: dataile.name },
     { include: 'and', type: type.toString(), value: value.name },
   ]
+
 }
+
+const hasLinks = computed(() => {
+  return dataile.links.length > 0
+})
+
+const hasTags = computed(() => {
+  return dataile.tags.length > 0
+})
 
 </script>
 <template>
@@ -59,23 +64,18 @@ const querySetter = (value, type) => {
         </div>
       </div>
 
-      <div class=" w-full rounded-md bg-base-200">
-        <div class="h-10 "></div>
+      <div v-if="dataile.bio" class="w-full rounded-md bg-base-200 p-2 text-base">
+        {{ dataile.bio }}
       </div>
       <div class="flex w-full flex-col gap-2 md:flex-row">
-        <div v-if="dataile.links.length > 0" class="flex w-1/2 items-center gap-1">
-          <a
-            v-for="item in dataile.links" :key="item.id" class="fel-row link flex items-center gap-0.5"
-            :href="item.link">
-            <IconTypeMapper type="link" class="text-xl" />
-            {{ item.label }}
-          </a>
+        <div v-if="hasLinks" class="flex w-1/2 flex-wrap items-center gap-3">
+          <LinkWithFavicon v-for="item in dataile.links" :key="item.id" :link="item" />
         </div>
-        <div v-if="dataile.tags.length > 0" class="flex w-1/2 items-center gap-1">
+        <div v-if="hasTags" class="flex w-1/2 flex-wrap items-center gap-1">
           <IconTypeMapper type="tag" class="text-xl" />
           <template v-for="(tag, index) in dataile.tags" :key="index">
             <BtnEventSearchItem
-              :button-text-setter="getButtonText" :query-setter="querySetter" :value="tag"
+              :query-setter="querySetter" :value="tag"
               type="tag" is-navigate />
           </template>
         </div>
