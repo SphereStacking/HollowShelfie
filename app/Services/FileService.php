@@ -2,43 +2,52 @@
 
 namespace App\Services;
 
-use App\Models\File;
 use Exception;
+use App\Models\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use App\Exceptions\FileServiceException;
 
 class FileService
 {
     public function uploadFile(UploadedFile $uploadedFile, $fileable): File
     {
-        $folderName = mb_strtolower(class_basename($fileable)).'/'.$fileable->id;
-        $filename = $uploadedFile->hashName();
-        $savePath = Storage::disk('public')->putFileAs($folderName, $uploadedFile, $filename);
-
-        if (! $savePath) {
-            throw new Exception('ファイルの保存に失敗しました。');
+        try {
+            return File::saveFile($fileable, $uploadedFile);
+        } catch (Exception $e) {
+            Log::error('ファイルのアップロード中にエラーが発生しました: ' . $e->getMessage());
+            throw new FileServiceException('ファイルのアップロード中にエラーが発生しました。');
         }
-
-        $file = $fileable->files()->create([
-            'path' => $folderName,
-            'name' => $filename,
-            'original_name' => $uploadedFile->getClientOriginalName(),
-            'type' => $uploadedFile->getClientMimeType(),
-        ]);
-
-        return $file;
     }
 
     public function deleteFile(File $file)
     {
-        $file->deleteFile();
-        $file->delete();
+        try {
+            // R2からファイルを削除
+            $file->deleteFile();
+
+            // データベースからファイル情報を削除
+            $file->delete();
+        } catch (Exception $e) {
+            Log::error('ファイルの削除中にエラーが発生しました: ' . $e->getMessage());
+            throw new FileServiceException('ファイルの削除中にエラーが発生しました。');
+        }
     }
 
     public function deleteFileById($id)
     {
-        $file = File::findOrFail($id);
-        $file->deleteFile();
-        $file->delete();
+        try {
+            $file = File::findOrFail($id);
+
+            // R2からファイルを削除
+            $file->deleteFile();
+
+            // データベースからファイル情報を削除
+            $file->delete();
+        } catch (Exception $e) {
+            Log::error('ファイルの削除中にエラーが発生しました: ' . $e->getMessage());
+            throw new FileServiceException('ファイルの削除中にエラーが発生しました。');
+        }
     }
 }
