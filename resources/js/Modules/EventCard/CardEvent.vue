@@ -57,7 +57,7 @@ const isCurrentYear = computed(() => {
 <template>
   <div class="flex flex-col justify-start border border-transparent">
     <div class="flex flex-col justify-start border border-transparent">
-      <div class=" relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200" @click.prevent="incrementImageIndex">
+      <Link :href="route('event.show', event.alias)" class=" relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200">
         <template v-if="event.files.length>0">
           <TransitionGroup
             enter-active-class="transition-all duration-300"
@@ -78,14 +78,14 @@ const isCurrentYear = computed(() => {
             <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
           </div>
         </template>
-        <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
+        <!-- <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
           <div v-for="(instance, index) in event.files" :key="index">
             <div class="select-none">
               {{ index === currentImageIndex ? '•' : '-' }}
             </div>
           </div>
-        </div>
-      </div>
+        </div> -->
+      </Link>
       <div class="mt-0.5 flex flex-row justify-between">
         <Link :href="route('event.show', event.alias)" class=" mx-2 truncate whitespace-nowrap text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
           {{ event.title }}
