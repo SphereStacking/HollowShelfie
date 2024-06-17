@@ -1,23 +1,22 @@
 <script setup>
+import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
   images: {
     type: Array,
     required: true
   },
+  url: {
+    type: Object,
+    required: true
+  }
 })
 
 const currentImageIndex = ref(0)
 
-const incrementImageIndex = () => {
-  if (props.images.length > 0) {
-    currentImageIndex.value = (currentImageIndex.value + 1) % props.images.length
-  }
-}
-
 </script>
 <template>
-  <div class=" relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200" @click.prevent="incrementImageIndex">
+  <Link :href="url" class=" relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md transition-all duration-300 hover:cursor-pointer hover:shadow-lg hover:shadow-neutral-500">
     <template v-if="images.length>0">
       <TransitionGroup
         enter-active-class="transition-all duration-300"
@@ -38,12 +37,5 @@ const incrementImageIndex = () => {
         <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
       </div>
     </template>
-    <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
-      <div v-for="(instance, index) in images" :key="index">
-        <div class="select-none">
-          {{ index === currentImageIndex ? '•' : '-' }}
-        </div>
-      </div>
-    </div>
-  </div>
+  </Link>
 </template>

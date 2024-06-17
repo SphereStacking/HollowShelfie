@@ -32,7 +32,7 @@ const getEventShow = (event) => {
       <template #item="{element}">
         <div class="w-full px-2">
           <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <CardEventImages class="w-2/6" :images="element.files" />
+            <CardEventImages class="w-2/6" :url="route('event.show', element.alias)" :images="element.files" />
             <div class="flex w-full flex-col items-start gap-2 sm:w-4/6">
               <div class="flex w-full flex-row justify-between">
                 <div> {{ format(new Date(element.start_date), 'yyyy/MM/dd HH:mm') }}</div>
@@ -88,9 +88,6 @@ const getEventShow = (event) => {
                     :image-url="performer.image_url" :name="performer.name" />
                 </div>
               </div>
-              <button class=" btn btn-ghost btn-outline btn-sm w-full" @click="getEventShow(element)">
-                show more!
-              </button>
             </div>
           </div>
         </div>
