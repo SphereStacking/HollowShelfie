@@ -74,9 +74,8 @@ onMounted(() => {
               </div>
 
               <BtnSwapFollowing
-                :follow-route="route('follow')"
-                :unfollow-route="route('unfollow')"
-                :payload="{ id: follow.followable_id, type: follow.followable_type}"
+                :follow-route="route('follow', follower.screen_name)"
+                :unfollow-route="route('unfollow', follower.screen_name)"
                 :screen-name="follower.screen_name"
                 :is-followed="follower.auth_user.is_followed" />
             </div>

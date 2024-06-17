@@ -36,13 +36,13 @@ class FollowPaginatedResource extends JsonResource
                     'followable_type' => $item->followable_type,
                     'followable' => [
                         'name' => $item->followable->name,
-                        'screen_name' => $item->followable->screen_name,
+                        'screen_name' => $item->followable->screenName->screen_name,
                         'profile_url' => $item->followable->profile_url,
                         'image_url' => $item->followable->profile_photo_url,
                         'auth_user' => [
                             'is_followed' => $item->followable->is_followed,
                         ],
-                        'bio' => 'TODO', // TODO:
+                        'bio' => '',
                     ],
                 ];
             }),
