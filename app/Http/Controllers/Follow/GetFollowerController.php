@@ -26,7 +26,7 @@ class GetFollowerController extends FollowBaseController
     {
         return Inertia::render('Dashboard/Follow', [
             'follows' => new FollowPaginatedResource(
-                $this->userService->getFollowPagination(auth()->user(), 10)
+                $this->userService->getFollowerPagination(auth()->user(), 10)
             )]
         );
     }
