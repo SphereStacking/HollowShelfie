@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -38,7 +39,9 @@ class FollowPaginatedResource extends JsonResource
                         'name' => $item->followable->name,
                         'screen_name' => $item->followable->screenName->screen_name,
                         'profile_url' => $item->followable->profile_url,
-                        'image_url' => $item->followable->profile_photo_url,
+                        'image_url' => $item->followable_type === User::class
+                            ? $item->followable->profile_photo_url
+                            : $item->followable->team_logo_url,
                         'auth_user' => [
                             'is_followed' => $item->followable->is_followed,
                         ],
