@@ -63,8 +63,8 @@ onMounted(() => {
           </div>
           <div class="flex w-full flex-col gap-2">
             <div class="flex flex-row justify-between gap-2">
-              <div class="link font-bold">
-                <Link :href="follow.followable.profile_url">
+              <div class="font-bold">
+                <Link class="link" :href="follow.followable.profile_url">
                   {{ follow.followable.name }}
                 </Link>
                 <div class=" opacity-30">
@@ -72,9 +72,9 @@ onMounted(() => {
                 </div>
               </div>
               <BtnSwapFollowing
-                :follow-route="route('follow')"
-                :unfollow-route="route('unfollow')"
-                :payload="{ id: follow.followable_id, type: follow.followable_type}"
+                :follow-route="route('follow', follow.followable.screen_name)"
+                :unfollow-route="route('unfollow', follow.followable.screen_name)"
+                :screen-name="follow.followable.screen_name"
                 :is-followed="follow.followable.auth_user.is_followed" />
             </div>
             <div>{{ follow.followable.bio }}</div>
