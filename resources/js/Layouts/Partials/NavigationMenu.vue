@@ -177,7 +177,7 @@ const headerButtons = [
                   イベント管理
                 </DropdownLink>
 
-                <DropdownLink :href="route('profile.show', auth_user.screen_name)">
+                <DropdownLink v-if="isLogin && auth_user?.screen_name" :href="route('profile.show', auth_user.screen_name)">
                   公開 プロフィール
                 </DropdownLink>
 
@@ -257,7 +257,9 @@ const headerButtons = [
               イベント管理
             </ResponsiveNavLink>
 
-            <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('profile.show', auth_user.screen_name)" :active="route().current('profile.show')">
+            <ResponsiveNavLink
+              v-if="isLogin && auth_user?.screen_name" class="ml-2 rounded-l-md" :href="route('profile.show', auth_user.screen_name)"
+              :active="route().current('profile.show')">
               公開 プロフィール
             </ResponsiveNavLink>
 
@@ -337,3 +339,4 @@ const headerButtons = [
 <style scoped>
 
 </style>
+
