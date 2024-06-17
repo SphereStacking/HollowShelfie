@@ -57,7 +57,7 @@ const isCurrentYear = computed(() => {
 <template>
   <div class="flex flex-col justify-start border border-transparent">
     <div class="flex flex-col justify-start border border-transparent">
-      <Link :href="route('event.show', event.alias)" class=" relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200">
+      <Link :href="route('event.show', event.alias)" class="  relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200 transition-all duration-300 hover:cursor-pointer hover:shadow-lg hover:shadow-neutral-500">
         <template v-if="event.files.length>0">
           <TransitionGroup
             enter-active-class="transition-all duration-300"
