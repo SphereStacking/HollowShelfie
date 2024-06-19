@@ -96,6 +96,7 @@ watch(rowData, () => {
         :group="draggableGroupId"
         item-key="id"
         tag="tbody"
+        handle=".handle"
         @start="dragging=true"
         @end="dragging=false">
         <template #item="{element ,index}">
