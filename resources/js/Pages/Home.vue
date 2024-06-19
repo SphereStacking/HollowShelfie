@@ -56,9 +56,9 @@ const querySetter = (value, type) => {
   ]
 }
 const eventItems = ref([])
-eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'OPEN', icon: 'eventOpen' })
-eventItems.value.push({ url: props.upcomingEventsUrl, events: props.upcomingEvents, title: 'UP COMING', icon: 'eventUpcoming' })
-eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'NEW', icon: 'new' })
+eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents, title: 'open', icon: 'eventOpen' })
+eventItems.value.push({ url: props.upcomingEventsUrl, events: props.upcomingEvents, title: 'upcoming', icon: 'eventUpcoming' })
+eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'New', icon: 'new' })
 
 </script>
 
@@ -106,9 +106,9 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
       <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
           <IconTypeMapper :type="items.icon" class="text-4xl" />
-          <h4 class="font-bold">
-            {{ items.title }}
-          </h4>
+          <h3 class="font-bold">
+            {{ $t(items.title) }}
+          </h3>
         </div>
 
         <CarouselEventHero :events="items.events" />
