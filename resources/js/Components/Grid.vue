@@ -79,14 +79,14 @@ watch(rowData, () => {
 })
 </script>
 <template>
-  <div class="w-full rounded-lg bg-base-100 ">
+  <div class="w-full overflow-auto rounded-lg  bg-base-100">
     <div class="h-2 rounded-t-lg">
     </div>
-    <table class="table table-xs w-full rounded-lg ">
+    <table class="table table-xs w-full overflow-auto rounded-lg">
       <!-- head -->
       <thead class="">
         <tr>
-          <td v-for="(col, colIndex) in columDefs" :key="'col-head-' + colIndex" :style="{ width: col['width'] }">
+          <td v-for="(col, colIndex) in columDefs" :key="'col-head-' + colIndex" :style="{ width: col['width'] || 'auto', minWidth: col['minWidth'] || 'auto' }">
             {{ col['headerName'] }}
           </td>
         </tr>
@@ -96,12 +96,13 @@ watch(rowData, () => {
         :group="draggableGroupId"
         item-key="id"
         tag="tbody"
+        handle=".handle"
         @start="dragging=true"
         @end="dragging=false">
         <template #item="{element ,index}">
           <tr :key="'row-'+index">
             <td v-for="col in columDefs " :key="'col-'+col.field">
-              <div class=" flex size-full items-center justify-center ">
+              <div class=" flex size-full items-center justify-center " :style="{ width: col['width'] || 'auto', minWidth: col['minWidth'] || 'auto' }">
                 <!-- コンポーネントを動的にレンダリング -->
                 <component
                   :is="resolveComponent(col.template)"

@@ -14,7 +14,7 @@ defineProps({
 
 <template>
   <div
-    class="badge badge-sm rounded-full" :class="{
+    class="badge badge-sm text-nowrap rounded-full" :class="{
       'badge badge-outline': status == 'draft' || status == 'closed',
       'badge-info badge-outline': status == 'upcoming',
       'badge-warning badge-outline': status == 'unpublished' ,

@@ -63,7 +63,7 @@ const columDefs = [
       group: draggableGroupId,
     }
   },
-  { field: 'description', headerName: '備考', width: 'auto', template: 'input'},
+  { field: 'description', headerName: '備考', width: 'auto', minWidth: '300px', template: 'input'},
 ]
 
 const emit = defineEmits(['success', 'error'])
@@ -248,13 +248,12 @@ const updateEndDate = () => {
       </template>
     </MultiSearchableElement>
 
-    <div class="grid grid-cols-2 gap-2">
+    <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
       <PickerDateElement
         v-model="form.start_date"
         :error="form.errors.start_date"
         label-icon-type="date"
         label="開始日時" />
-
       <PickerDateElement
         v-model="form.end_date"
         :error="form.errors.end_date"
