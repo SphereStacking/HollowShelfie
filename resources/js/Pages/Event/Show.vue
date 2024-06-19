@@ -78,17 +78,17 @@ const metaTags = GetEventDetailMetaTags()
     </template>
     <div class="mx-auto grid max-w-7xl auto-rows-min gap-2 pt-4 lg:grid-cols-12 lg:gap-4">
       <!-- header -->
-      <div class="lg:col-start-1 lg:col-end-10">
-        <div class="flex flex-row items-center ">
-          <div class="flex grow flex-col ">
-            <div class="flex flex-row items-center justify-between">
-              <div class="flex flex-row items-center gap-2">
-                {{ formattedStartDate.year }}/{{ formattedStartDate.month }}/{{ formattedStartDate.day }}   {{ eventPeriod }}
-                <BadgeEventStatus
-                  class="lg:col-start-1 lg:row-start-2" :status="event.status"
-                  :label="$t(event.status)" />
-              </div>
-              <div class="flex items-center gap-2 rounded-md p-1">
+      <div class="flex flex-row items-center lg:col-start-1 lg:col-end-10">
+        <div class="flex grow flex-col ">
+          <div class="flex flex-col justify-between gap-2 md:flex-row">
+            <span class="font-mono text-xl italic">
+              {{ formattedStartDate.year }}/{{ formattedStartDate.month }}/{{ formattedStartDate.day }}   {{ eventPeriod }}
+            </span>
+            <div class="flex grow items-center justify-between gap-2">
+              <BadgeEventStatus
+                class="badge-md" :status="event.status"
+                :label="$t(event.status)" />
+              <div class="flex items-center justify-center gap-2">
                 <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
                 <BtnSwapEventGood
                   :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
@@ -99,25 +99,27 @@ const metaTags = GetEventDetailMetaTags()
                   :category-names="snsShare.categoryNames" :tags="snsShare.tags" :url="snsShare.route" />
               </div>
             </div>
-            <div class=" prose lg:prose-xl ">
-              <h1> {{ event.title }}</h1>
-            </div>
           </div>
+          <h1 class="text-7xl font-bold">
+            {{ event.title }}
+          </h1>
         </div>
       </div>
 
-      <div class="mx-auto flex w-full flex-col gap-1 md:flex-row lg:col-span-7 lg:col-start-1 lg:row-start-2">
-        <div v-if="hasCategory" class="flex flex-row items-center gap-1">
-          <div class="mr-auto flex items-center gap-1  rounded-md">
-            <IconTypeMapper type="category" class="text-xl" />
+      <div class="flex w-full flex-col flex-wrap gap-1 md:flex-row lg:col-span-9 lg:col-start-1 lg:row-start-2">
+        <div v-if="hasCategory" class="flex  flex-row  items-center gap-1">
+          <IconTypeMapper type="category" class="size-5" />
+          <div class="flex flex-wrap gap-1">
             <template v-for="(category_name, index) in event.category_names" :key="index">
-              <BtnEventSearchItem :value="category_name" type="category" is-navigate />
+              <BtnEventSearchItem
+                :value="category_name" type="category" class=""
+                is-navigate />
             </template>
           </div>
         </div>
         <div v-if="hasTag" class="flex flex-row items-center gap-1">
-          <div class="mr-auto flex items-center gap-1  rounded-md">
-            <IconTypeMapper type="tag" class="text-xl" />
+          <IconTypeMapper type="tag" class="size-5" />
+          <div class="flex flex-wrap gap-1">
             <template v-for="(tag, index) in event.tags" :key="index">
               <BtnEventSearchItem :value="tag" type="tag" is-navigate />
             </template>
@@ -126,8 +128,8 @@ const metaTags = GetEventDetailMetaTags()
       </div>
       <!-- header -->
       <!-- leftside -->
-      <div class="lg:col-span-3 lg:row-start-3">
-        <div class="sticky top-24 rounded-md bg-base-300 p-4">
+      <div class=" lg:col-span-3 lg:row-start-3">
+        <div class="sticky top-24 w-full rounded-md bg-base-300 p-4">
           <CarouselGallery :images="event.files.map(file => file.public_url)" />
         </div>
       </div>
