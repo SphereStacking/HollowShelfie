@@ -48,14 +48,14 @@ const getEventShow = (event) => {
                 {{ element.title }}
               </h1>
               <!-- category -->
-              <div class="flex items-center gap-1 ">
+              <div v-if="element.category_names.length > 0" class="flex items-center gap-1 ">
                 <IconTypeMapper type="category" class="text-xl" />
                 <template v-for="category in element.category_names" :key="category">
                   <BtnEventSearchItem :value="category" type="category" is-navigate />
                 </template>
               </div>
               <!-- tag -->
-              <div class="flex flex-row items-center gap-1">
+              <div v-if="element.tags.length > 0" class="flex flex-row items-center gap-1">
                 <div class="mr-auto flex items-center gap-1  rounded-md">
                   <IconTypeMapper type="tag" class="text-xl" />
                   <template v-for="tag in element.tags" :key="tag">
@@ -64,7 +64,7 @@ const getEventShow = (event) => {
                 </div>
               </div>
               <!-- organizers -->
-              <div class="flex w-full flex-col justify-center gap-1">
+              <div v-if="element.organizers.length > 0" class="flex w-full flex-col justify-center gap-1">
                 <div class="flex flex-row items-center gap-1">
                   <IconTypeMapper type="organizer" class="text-md" />
                   <div>organizers</div>
@@ -76,7 +76,7 @@ const getEventShow = (event) => {
                 </div>
               </div>
               <!-- performers -->
-              <div class="flex flex-col justify-center gap-1">
+              <div v-if="element.performers.length > 0" class="flex flex-col justify-center gap-1">
                 <div class="flex flex-row items-center gap-1">
                   <IconTypeMapper type="performer" class="text-md" />
                   <div>performers</div>
