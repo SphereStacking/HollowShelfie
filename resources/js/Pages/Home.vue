@@ -110,18 +110,31 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
             {{ $t(items.title) }}
           </h3>
         </div>
-
-        <CarouselEventHero :events="items.events" />
-
-        <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4  md:gap-6 xl:grid-cols-5">
-          <CardEvent
-            v-for="(event, index) in items.events" :key="index" :event="event"
-            class="my-2" />
-        </div>
-        <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
-          show more!
-        </Link>
-        <AreaAdvertisementRecruitment class="col-span-12 h-40 shadow-xl shadow-base-200" />
+        <template v-if="items.events.length == 0">
+          <div class="flex flex-col items-center justify-center ">
+            <div class="flex w-60 flex-col items-center justify-center gap-2 rounded-md bg-base-200 p-4">
+              <p class="font-neon  text-accent">
+                No events
+              </p>
+              <Link class="btn btn-neutral" :href="route('event.create')">
+                イベントを掲載する！
+                <IconTypeMapper type="arrowRight" class="text-2xl" />
+              </Link>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <CarouselEventHero :events="items.events" />
+          <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4  md:gap-6 xl:grid-cols-5">
+            <CardEvent
+              v-for="(event, index) in items.events" :key="index" :event="event"
+              class="my-2" />
+          </div>
+          <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
+            show more!
+          </Link>
+          <AreaAdvertisementRecruitment class="col-span-12 h-40 shadow-xl shadow-base-200" />
+        </template>
       </div>
     </div>
   </AppLayout>
