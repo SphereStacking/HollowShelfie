@@ -112,9 +112,9 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
         </div>
         <template v-if="items.events.length == 0">
           <div class="flex flex-col items-center justify-center ">
-            <div class="flex w-60 flex-col items-center justify-center gap-2 rounded-md bg-base-200 p-4">
-              <p class="font-neon  text-accent">
-                No events
+            <div class="flex w-96 flex-col items-center justify-center gap-2 rounded-md bg-base-200 p-4">
+              <p class="text-md text-center font-black tracking-widest text-info">
+                {{ $t(items.title) }}の<span class="text-2xl font-black text-accent">イベント</span>はありません！<br>
               </p>
               <Link class="btn btn-neutral" :href="route('event.create')">
                 イベントを掲載する！
@@ -132,9 +132,22 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           </div>
           <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
             show more!
+            <IconTypeMapper type="arrowRight" class="size-8" />
           </Link>
           <AreaAdvertisementRecruitment class="col-span-12 h-40 shadow-xl shadow-base-200" />
         </template>
+      </div>
+      <div class="col-span-12 flex flex-col items-center justify-center py-20">
+        <div class="flex w-96 flex-col items-center justify-center gap-2 rounded-md bg-base-200 p-4">
+          <p class="text-md text-center font-black tracking-widest text-info">
+            <span class="text-lg">あなた</span>の <span class="text-2xl font-black text-accent">イベント</span> を <span class="text-2xl font-black text-accent">掲載</span>して<br>
+            <span class="text-2xl font-black text-accent">告知</span> してみませんか？
+          </p>
+          <Link class="btn btn-neutral" :href="route('event.create')">
+            イベントを掲載する！
+            <IconTypeMapper type="arrowRight" class="size-8" />
+          </Link>
+        </div>
       </div>
     </div>
   </AppLayout>
