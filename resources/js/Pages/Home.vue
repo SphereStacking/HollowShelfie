@@ -114,7 +114,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           <div class="flex flex-col items-center justify-center ">
             <div class="flex w-96 flex-col items-center justify-center gap-2 rounded-md bg-base-200 p-4">
               <p class="text-md text-center font-black tracking-widest text-info">
-                {{ $t(items.title) }}の<span class="text-2xl font-black text-accent">イベント</span>はありません！<br>
+                <span class="text-lg">{{ $t(items.title) }}</span>の<span class="text-2xl font-black text-accent">イベント</span>は<span class="text-lg">ありません！</span><br>
               </p>
               <Link class="btn btn-neutral" :href="route('event.create')">
                 イベントを掲載する！
@@ -140,8 +140,8 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
       <div class="col-span-12 flex flex-col items-center justify-center py-20">
         <div class="flex w-96 flex-col items-center justify-center gap-2 rounded-md bg-base-200 p-4">
           <p class="text-md text-center font-black tracking-widest text-info">
-            <span class="text-lg">あなた</span>の <span class="text-2xl font-black text-accent">イベント</span> を <span class="text-2xl font-black text-accent">掲載</span>して<br>
-            <span class="text-2xl font-black text-accent">告知</span> してみませんか？
+            <span class="text-lg">あなた</span>の<span class="text-2xl font-black text-accent">イベント</span>を<span class="text-2xl font-black text-accent">掲載</span>して<br>
+            <span class="text-2xl font-black text-accent">告知</span>してみませんか？
           </p>
           <Link class="btn btn-neutral" :href="route('event.create')">
             イベントを掲載する！
