@@ -7,6 +7,10 @@ defineProps({
     default: () => [],
     required: true
   },
+  zoomble: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const swiper1 = ref(null)
@@ -28,7 +32,10 @@ const prev = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 overflow-hidden">
+  <div class="group relative flex flex-col gap-4 overflow-hidden ">
+    <template v-if="zoomble">
+      <ModalImagesViewer :images="images" :zoomble="zoomble" />
+    </template>
     <slot name="header"></slot>
     <SwiperWrapper
       ref="swiper1"
