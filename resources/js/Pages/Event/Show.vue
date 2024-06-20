@@ -130,7 +130,7 @@ const metaTags = GetEventDetailMetaTags()
       <!-- leftside -->
       <div class=" lg:col-span-3 lg:row-start-3">
         <div class="sticky top-24 w-full rounded-md bg-base-300 p-4">
-          <CarouselGallery :images="event.files.map(file => file.public_url)" />
+          <CarouselGallery :images="event.files.map(file => file.public_url)" zoomble />
         </div>
       </div>
       <!-- leftside -->

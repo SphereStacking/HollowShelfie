@@ -336,6 +336,9 @@ export const ItemsConfig = {
   drag: {
     icon: 'mdi:drag',
   },
+  zoomPlus: {
+    icon: 'mdi:zoom-plus',
+  },
   default: {
     icon: '',
   }
