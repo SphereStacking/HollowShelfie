@@ -18,7 +18,6 @@ const addVideo= () => {
     width: width.value,
     height: height.value
   })
-  props.editor.chain().focus().setHardBreak().run()
 }
 </script>
 

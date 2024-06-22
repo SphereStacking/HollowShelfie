@@ -8,7 +8,11 @@ const props = defineProps({
   }
 })
 
-const sanitizedDescription = DOMPurify.sanitize(props.description)
+// iframeタグを許可する設定を追加
+const sanitizedDescription = DOMPurify.sanitize(props.description, {
+  ADD_TAGS: ['iframe'],
+  ADD_ATTR: ['allowfullscreen', 'autoplay', 'disablekbcontrols', 'enableiframeapi', 'endtime', 'ivloadpolicy', 'loop', 'modestbranding', 'origin', 'playlist', 'src', 'start']
+})
 </script>
 <template>
   <div class="flex w-full flex-col  justify-center">
