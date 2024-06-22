@@ -1,5 +1,7 @@
 <script setup>
+import { useMounted } from '@vueuse/core'
 
+const isMounted = useMounted()
 defineProps({
   images: {
     type: Array,
@@ -12,10 +14,9 @@ defineProps({
 })
 
 const show = ref(false)
-
 </script>
 <template lang="">
-  <template v-if="zoomble">
+  <template v-if="isMounted && zoomble">
     <teleport to="body">
       <Modal v-model:show="show" @close="show = false">
         <SwiperWrapper
