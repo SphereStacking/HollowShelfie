@@ -74,6 +74,7 @@ const editor = new Editor({
       resizable: true,
     }),
     Youtube.configure({
+      inline: true,
       HTMLAttributes: {
         class: 'w-full aspect-video md:aspect-square',
       },
