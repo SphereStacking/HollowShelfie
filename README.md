@@ -126,8 +126,9 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
    1. `docker-compose up -d`
       ここで初回のインストールなりビルドが走ると思う。(多分)
    2. `docker-compose exec laravel.test bash`
-   3. `composer install`
-   4. `exit`
+   3. `npm i`
+   4. `composer install`
+   5. `exit`
    ここの手順あいまい。
    composerをPC自体にインストールして
    composer installしてたかも
