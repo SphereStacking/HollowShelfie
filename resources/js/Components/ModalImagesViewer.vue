@@ -16,7 +16,6 @@ const show = ref(false)
 </script>
 <template lang="">
   <template v-if="zoomble">
-    <teleport to="body">
       <Modal v-model:show="show" @close="show = false">
         <SwiperWrapper
           loop="true"
@@ -24,6 +23,9 @@ const show = ref(false)
           scrollbar="true"
           :zoom="true"
           slide-class="mb-4"
+          :swiper-params="{
+            nested: true,
+          }"
           :model-value="images">
           <template #item="{element}">
             <div class="swiper-zoom-container">
@@ -32,7 +34,6 @@ const show = ref(false)
           </template>
         </SwiperWrapper>
       </Modal>
-    </teleport>
     <div class="absolute right-1 top-1 z-50 hidden flex-col items-center justify-center gap-0.5 group-hover:flex">
       <div class="tooltip tooltip-left" data-tip="zoom">
         <button class="btn btn-square btn-accent btn-sm" @click="show = true">
