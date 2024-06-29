@@ -134,7 +134,7 @@ const isCurrentYear = computed(() => {
           </div>
         </div>
       </div>
-      <div class="mx-2 flex flex-wrap items-center gap-1 text-xs">
+      <div class="mx-2 flex flex-wrap items-center gap-1 overflow-hidden text-xs">
         <IconTypeMapper type="category" />
         <button
           v-for="(category, index) in event.category_names" :key="index" class="btn btn-ghost btn-xs px-0.5 py-0 text-xs"
@@ -142,7 +142,7 @@ const isCurrentYear = computed(() => {
           {{ category }}
         </button>
       </div>
-      <div class="mx-2 flex flex-wrap items-center gap-1 text-xs">
+      <div class="mx-2 flex flex-wrap items-center gap-1 overflow-hidden text-xs">
         <IconTypeMapper type="tag" />
         <button
           v-for="(tag, index) in event.tags" :key="index" class="btn btn-ghost btn-xs px-0.5 py-0 text-xs"
