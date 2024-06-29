@@ -49,6 +49,20 @@ export default {
           css: {
             'blockquote p:first-of-type::before': false,
             'blockquote p:first-of-type::after': false,
+            p: {
+              marginTop: '0 !important',
+              marginBottom: '0 !important',
+            },
+            'ol, ul': {
+              li: {
+                '&, &::before': {
+                  marginTop: '0',
+                  marginBottom: '0',
+                  paddingTop: '0',
+                  paddingBottom: '0',
+                },
+              },
+            },
           },
         },
       },
