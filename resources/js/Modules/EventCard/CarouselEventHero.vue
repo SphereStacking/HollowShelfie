@@ -28,12 +28,13 @@ const getEventShow = (event) => {
       :model-value="events"
       watch-slides-progress="true"
       scrollbar="true"
+      autoplay-delay="5000"
       slide-class="mb-4">
       <template #item="{element}">
-        <div class="w-full px-2">
+        <div class="w-full  px-2">
           <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <CardEventImages class="w-2/6" :url="route('event.show', element.alias)" :images="element.files" />
-            <div class="flex w-full flex-col items-start gap-2 sm:w-4/6">
+            <div class="flex w-full flex-col items-start gap-2 overflow-hidden sm:w-4/6">
               <div class="flex w-full flex-row justify-between">
                 <div> {{ format(new Date(element.start_date), 'yyyy/MM/dd HH:mm') }}</div>
                 <div class="flex gap-1">
@@ -48,20 +49,18 @@ const getEventShow = (event) => {
                 {{ element.title }}
               </h1>
               <!-- category -->
-              <div v-if="element.category_names.length > 0" class="flex items-center gap-1 ">
+              <div v-if="element.category_names.length > 0" class="flex flex-wrap items-center gap-1">
                 <IconTypeMapper type="category" class="text-xl" />
-                <template v-for="category in element.category_names" :key="category">
-                  <BtnEventSearchItem :value="category" type="category" is-navigate />
-                </template>
+                <BtnEventSearchItem
+                  v-for="category in element.category_names" :key="category" :value="category"
+                  type="category" is-navigate />
               </div>
               <!-- tag -->
-              <div v-if="element.tags.length > 0" class="flex flex-row items-center gap-1">
-                <div class="mr-auto flex items-center gap-1  rounded-md">
-                  <IconTypeMapper type="tag" class="text-xl" />
-                  <template v-for="tag in element.tags" :key="tag">
-                    <BtnEventSearchItem :value="tag" type="tag" is-navigate />
-                  </template>
-                </div>
+              <div v-if="element.tags.length > 0" class="flex flex-wrap items-center gap-1">
+                <IconTypeMapper type="tag" class="text-xl" />
+                <BtnEventSearchItem
+                  v-for="tag in element.tags" :key="tag" :value="tag"
+                  type="tag" is-navigate />
               </div>
               <!-- organizers -->
               <div v-if="element.organizers.length > 0" class="flex w-full flex-col justify-center gap-1">
