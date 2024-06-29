@@ -22,9 +22,11 @@ const onBtnOpenModal = (newItem) => {
 
 const deleteEvent = (id) => {
   router.delete(route('event.destroy', id), {
-    preserveScroll: true
+    preserveScroll: true,
+    onFinish: () => {
+      onBtnCloseModal()
+    }
   })
-  onBtnCloseModal()
 }
 
 defineExpose({
