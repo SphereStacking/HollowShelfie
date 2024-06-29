@@ -44,6 +44,7 @@ const isShowAlign = computed(() => {
           <editor-menu-link-element :editor="editor" class="join-item" />
         </div>
         <div class="join">
+          <EditorMenuCodeBlockElement :editor="editor" class="join-item" />
           <EditorMenuBlockquoteElement :editor="editor" class="join-item" />
         </div>
         <!-- TODO: 一旦機能初期リリースの機能から外す。 -->
