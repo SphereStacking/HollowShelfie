@@ -49,21 +49,25 @@ const getEventShow = (event) => {
                 {{ element.title }}
               </h1>
               <!-- category -->
-              <div v-if="element.category_names.length > 0" class="flex flex-wrap items-center gap-1">
-                <IconTypeMapper type="category" class="text-xl" />
-                <BtnEventSearchItem
-                  v-for="category in element.category_names" :key="category" :value="category"
-                  type="category" is-navigate />
+              <div v-if="element.category_names.length > 0" class="flex flex-row items-start gap-1">
+                <IconTypeMapper type="category" class="mt-0.5 shrink-0 text-xl" />
+                <div class="flex flex-wrap gap-1">
+                  <BtnEventSearchItem
+                    v-for="category in element.category_names" :key="category" :value="category"
+                    type="category" is-navigate />
+                </div>
               </div>
               <!-- tag -->
-              <div v-if="element.tags.length > 0" class="flex flex-wrap items-center gap-1">
-                <IconTypeMapper type="tag" class="text-xl" />
-                <BtnEventSearchItem
-                  v-for="tag in element.tags" :key="tag" :value="tag"
-                  type="tag" is-navigate />
+              <div v-if="element.tags.length > 0" class="flex flex-row items-start gap-1">
+                <IconTypeMapper type="tag" class="mt-0.5 shrink-0 text-xl" />
+                <div class="flex flex-wrap gap-1">
+                  <BtnEventSearchItem
+                    v-for="tag in element.tags" :key="tag" :value="tag"
+                    type="tag" is-navigate />
+                </div>
               </div>
               <!-- organizers -->
-              <div v-if="element.organizers.length > 0" class="flex w-full flex-col justify-center gap-1">
+              <div v-if="element.organizers.length > 0" class="flex w-full flex-col justify-start gap-1">
                 <div class="flex flex-row items-center gap-1">
                   <IconTypeMapper type="organizer" class="text-md" />
                   <div>organizers</div>

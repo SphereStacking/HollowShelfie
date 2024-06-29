@@ -34,7 +34,7 @@ const formatDate = computed(() => {
 
     <div class="grid h-full gap-4 md:grid-cols-2">
       <CarouselGallery :images="event.files.map(file => file.public_url)" />
-      <div class="flex flex-col justify-between gap-2">
+      <div class="flex flex-col justify-between gap-2 overflow-hidden">
         <div class="flex grow flex-col gap-2">
           <div class="flex flex-row items-center gap-1">
             <div class="mr-auto flex items-center gap-1  rounded-md">
