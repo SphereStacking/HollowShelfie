@@ -44,6 +44,14 @@ export default {
         'slide-infinite': 'slide 40s linear infinite',
         'wiggle-pulse': 'wiggleAndPulse 3s ease-in-out infinite',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'blockquote p:first-of-type::before': false,
+            'blockquote p:first-of-type::after': false,
+          },
+        },
+      },
     },
   },
 

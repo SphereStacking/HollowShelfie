@@ -281,6 +281,9 @@ export const ItemsConfig = {
   link: {
     icon: 'mdi:link',
   },
+  quote: {
+    icon: 'mdi:format-quote-open',
+  },
   formatItalic: {
     icon: 'mdi:format-italic',
   },
