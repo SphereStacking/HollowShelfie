@@ -40,7 +40,7 @@ onBeforeUnmount(() => {
       <div class="flex flex-wrap gap-2">
         <BtnEventSearchItem
           v-for="item in items.statuses " :key="item" type="status"
-          :value="item"
+          :value="$t(item)"
           @click="addConditionFunc({ type: 'status', value: item })" />
       </div>
       <div class="divider divider-start my-0 mt-2 w-full">
