@@ -13,9 +13,9 @@ trait EventGetters
     /**
      * イベントのオーガナイザー名を取得
      */
-    public function getCreatedUserAttribute(): string
+    public function getCreatedUserAttribute(): ?string
     {
-        return $this->event_create_user->name;
+        return $this->event_create_user?->name ?? null;
     }
 
 
