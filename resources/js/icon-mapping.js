@@ -281,6 +281,12 @@ export const ItemsConfig = {
   link: {
     icon: 'mdi:link',
   },
+  codeBlock: {
+    icon: 'mdi:code-block-tags',
+  },
+  quote: {
+    icon: 'mdi:format-quote-open',
+  },
   formatItalic: {
     icon: 'mdi:format-italic',
   },

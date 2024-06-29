@@ -21,6 +21,7 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import { Color } from '@tiptap/extension-color'
+import Dropcursor from '@tiptap/extension-dropcursor'
 
 import suggestionMention from './EditorPartials/SuggestionPartials/suggestionMention.js'
 import suggestionTag from './EditorPartials/SuggestionPartials/suggestionTag.js'
@@ -65,11 +66,11 @@ const emit =defineEmits(['update:modelValue'])
 const editor = new Editor({
   content: props.modelValue,
   extensions: [
+    StarterKit,
     Image,
     Link.configure({
       openOnClick: false,
     }),
-    StarterKit,
     Table.configure({
       resizable: true,
     }),
@@ -114,10 +115,11 @@ const editor = new Editor({
     TaskItem.configure({
       nested: true,
     }),
+    Dropcursor,
   ],
   editorProps: {
     attributes: {
-      class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-48 '
+      class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none min-h-48'
     },
   },
 })
@@ -140,7 +142,7 @@ onBeforeUnmount(() => {
     :label="label" :help="help" :error="error"
     :label-icon-type="labelIconType">
     <div class="w-full rounded-md bg-base-100  ">
-      <editor-menu :editor="editor" />
+      <EditorMenu :editor="editor" />
       <EditorContent :editor="editor" class="mx-2 mb-2" />
     </div>
   </Wrapper>
