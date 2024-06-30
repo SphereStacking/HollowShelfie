@@ -41,17 +41,19 @@ const confirm = ref(false)
 <template>
   <DialogModal :show="IsOpenModal" @close="onBtnCloseModal">
     <template #title>
-      <div class="mx-auto w-3/4 text-left ">
+      <p class="mx-auto w-3/4 text-left">
         削除しますか？
-      </div>
+      </p>
     </template>
 
     <template #content>
       <div class="mx-auto w-3/4 text-left text-lg">
-        この操作を実行すると、<span class="text-lg font-bold">{{ item.title }}</span>は完全に削除され、<br>
-        後から復元することはできません。<br>
-        <br>
-        <div class="flex flex-row items-center gap-2">
+        <p>
+          <span class="font-bold">「<span class="text-error">{{ item.title }}</span>」</span>は完全に削除され、<br>
+          後から復元することはできません。
+        </p>
+
+        <div class="mt-5 flex flex-row items-center gap-2">
           <input
             id="confirm"
             v-model="confirm" type="checkbox" checked="checked"
