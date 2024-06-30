@@ -19,6 +19,7 @@ use App\Http\Controllers\Event\GetIndexEventController;
 use App\Http\Controllers\EventGood\StoreGoodController;
 use App\Http\Controllers\Follow\GetFollowingController;
 use App\Http\Controllers\Profile\EditProfileController;
+use App\Http\Controllers\Event\DuplicateEventController;
 use App\Http\Controllers\Event\GetCreateEventController;
 use App\Http\Controllers\Event\GetEventSearchController;
 use App\Http\Controllers\Event\GetManageEventController;
@@ -119,6 +120,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/event/create', GetCreateEventController::class)->name('event.create');
     Route::get('/event/{alias}/edit', GetEditEventController::class)->name('event.edit');
     Route::put('/event/{alias}', UpdateEventController::class)->name('event.update');
+    Route::post('/event/{alias}/duplicate', DuplicateEventController::class)->name('event.duplicate');
     Route::delete('/event/{alias}', DestroyEventController::class)->name('event.destroy');
     Route::put('/event/{alias}/fryer', StoreEventFryerController::class)->name('event.fryer.store');
 
