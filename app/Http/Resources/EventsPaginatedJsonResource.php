@@ -34,6 +34,7 @@ class EventsPaginatedJsonResource extends JsonResource
                     'id' => $item->id,
                     'alias' => $item->alias,
                     'created_at' => $item->created_at,
+                    'published_at' => $item->published_at,
                     'title' => $item->title,
                     'description' => $item->description,
                     'category_names' => $item->categories->pluck('name')->toArray(),

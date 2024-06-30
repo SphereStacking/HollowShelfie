@@ -128,6 +128,15 @@ export const ItemsConfig = {
   delete: {
     icon: 'mdi:close',
   },
+  duplicate: {
+    icon: 'mdi:content-duplicate',
+  },
+  edit: {
+    icon: 'mdi:note-edit-outline',
+  },
+  public: {
+    icon: 'mdi:public',
+  },
   trashBox: {
     icon: 'mdi:delete-outline',
   },

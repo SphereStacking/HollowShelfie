@@ -21,6 +21,7 @@ defineProps({
 })
 
 const modalEventDestroy =ref(null)
+const modalEventDuplicate =ref(null)
 const text = ref('')
 const conditions = ref([])
 const order = ref('')
@@ -88,11 +89,13 @@ onMounted(() => {
           <ManageEventCard
             v-for="event in events.data" :key="event"
             :event="event"
-            @delete="modalEventDestroy.onBtnOpenModal(event)" />
+            @delete="modalEventDestroy.onBtnOpenModal(event)"
+            @duplicate="modalEventDuplicate.onBtnOpenModal(event)" />
         </transition-group>
       </div>
     </PaginationLayout>
     <ModalEventDestroyConfirm ref="modalEventDestroy" />
+    <ModalEventDuplicateConfirm ref="modalEventDuplicate" />
   </AppLayout>
 </template>
 

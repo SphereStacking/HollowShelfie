@@ -43,6 +43,7 @@ const addFormatData = (item) => {
   return { id: item.id, type: item.type, name: item.name, image_url: item.image_url, screen_name: item.screen_name}
 }
 import { generateUniqueId } from '@/Utils'
+import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 const draggableGroupId = generateUniqueId('grid')
 const columDefs = [
   { template: RowDragIndicatorGridElement, headerName: '', width: '30px'},
@@ -139,7 +140,17 @@ const updateEndDate = () => {
 <template>
   <FormCard ref="formCard">
     <template #title>
-      イベント作成！
+      <div class="flex w-full items-center justify-between">
+        <div>
+          イベント作成！
+        </div>
+        <div>
+          <a class="btn btn-neutral btn-sm" :href="route('event.manage')">
+            管理画面に戻る
+            <IconTypeMapper type="arrowRight" class="shrink-0 text-xl" />
+          </a>
+        </div>
+      </div>
     </template>
     <TextElement
       v-model="form.title"
