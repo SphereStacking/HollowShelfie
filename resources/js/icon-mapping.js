@@ -245,6 +245,15 @@ export const ItemsConfig = {
   formatHeader3: {
     icon: 'mdi:format-header-3',
   },
+  formatHeader4: {
+    icon: 'mdi:format-header-4',
+  },
+  formatHeader5: {
+    icon: 'mdi:format-header-5',
+  },
+  formatHeader6: {
+    icon: 'mdi:format-header-6',
+  },
   formatAlignRight: {
     icon: 'mdi:format-align-right',
   },
