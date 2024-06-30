@@ -383,16 +383,15 @@ class Event extends Model
         $duplicatedEvent->published_at = null;
         $duplicatedEvent->alias = Str::lower(Str::ulid());
         $duplicatedEvent->save();
+
         $duplicatedEvent->instances()->createMany($this->instances->toArray());
         $duplicatedEvent->categories()->attach($this->categories->pluck('id'));
         $duplicatedEvent->tags()->attach($this->tags->pluck('id'));
-        $duplicatedEvent->event_time_tables()->createMany($this->event_time_tables->toArray());
-        $duplicatedEvent->event_time_tables->each(function ($timeTable) {
-            $timeTable->performers()->createMany($timeTable->performers->toArray());
-        });
         $duplicatedEvent->organizers()->createMany($this->organizers->toArray());
-        $duplicatedEvent->published_at = null;
-        $duplicatedEvent->save();
+        $this->event_time_tables->each(function ($eventTimeTable) use ($duplicatedEvent) {
+            $duplicatedEventTimeTable = $duplicatedEvent->event_time_tables()->create($eventTimeTable->toArray());
+            $duplicatedEventTimeTable->performers()->createMany($eventTimeTable->performers->toArray());
+        });
         return $duplicatedEvent;
     }
 
