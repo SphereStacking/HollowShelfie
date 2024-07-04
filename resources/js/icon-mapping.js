@@ -348,8 +348,19 @@ export const ItemsConfig = {
     icon: 'mdi:microsoft-outlook',
     color: '#0087e7'
   },
+  share: {
+    icon: 'mdi:share-variant',
+  },
   twitter: {
     icon: 'ri:twitter-x-fill',
+  },
+  x: {
+    icon: 'ri:twitter-x-fill',
+    color: '#ffff'
+  },
+  misskey: {
+    icon: 'simple-icons:misskey',
+    color: '#9EC23F'
   },
   notification: {
     icon: 'mdi:bell',
