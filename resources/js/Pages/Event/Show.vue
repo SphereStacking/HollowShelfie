@@ -1,6 +1,6 @@
 <script setup>
-import { decomposeDate, getDurationBetweenDates } from '@/Utils/Date'
 import { GetEventDetailMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
+import { _eventPeriod } from '@/Utils/domain/event'
 
 const props = defineProps({
   event: {
@@ -19,32 +19,11 @@ const props = defineProps({
 defineEmits(
   ['click']
 )
-
+const modalEventShare = ref(null)
 const supportings = props.config.supportings ?? []
 
-const formattedStartDate = computed(() => {
-  if (!props.event.start_date) {
-    return { weekday: '', hour: '', minute: '', second: '' }
-  }
-  return decomposeDate(props.event.start_date)
-})
 const eventPeriod = computed(() => {
-  if (!props.event.start_date || !props.event.end_date) {
-    return '日時が入力されていません'
-  }
-  let durationString = ''
-  const duration = getDurationBetweenDates(props.event.start_date, props.event.end_date)
-  // duration オブジェクトのキーをチェックして、存在するものだけ文字列に追加
-  if (duration.hours) durationString += duration.hours + 'h '
-  if (duration.minutes) durationString += duration.minutes + 'm '
-  if (duration.seconds) durationString += duration.seconds + 's '
-
-  // 末尾の空白を削除し、必要に応じて ' - ' を追加
-  durationString = durationString.trim()
-  if (durationString) {
-    durationString = ' - ' + durationString
-  }
-  return `[${formattedStartDate.value.weekday}] ${formattedStartDate.value.hour}:${formattedStartDate.value.minute}:${formattedStartDate.value.second} ${durationString}`
+  return _eventPeriod(props.event.start_date, props.event.end_date)
 })
 
 const hasCategory = computed(() => {
@@ -54,22 +33,12 @@ const hasTag = computed(() => {
   return props.event.tags.length > 0
 })
 
-const snsShare = {
-  title: props.event.title,
-  period: eventPeriod.value,
-  route: route('event.show', props.event.alias),
-  instances: props.event.instances.map((instance) => instance.display_name),
-  organizers: props.event.organizers.map((organizer) => organizer.name),
-  performers: props.event.performers.map((performer) => performer.name),
-  categoryNames: props.event.category_names,
-  tags: props.event.tags.map((tag) => '#'+tag),
-}
-
 const metaTags = GetEventDetailMetaTags()
 
 </script>
 <template>
   <AppLayout title="Event Detail" :meta-tags="metaTags">
+    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
     <!-- <MetaTagEventDetail /> -->
     <template #header>
       <h2 class="text-xl font-semibold leading-tight">
@@ -82,7 +51,7 @@ const metaTags = GetEventDetailMetaTags()
         <div class="flex grow flex-col ">
           <div class="flex flex-col justify-between gap-2 md:flex-row">
             <span class="font-mono text-xl italic">
-              {{ formattedStartDate.year }}/{{ formattedStartDate.month }}/{{ formattedStartDate.day }}   {{ eventPeriod }}
+              {{ eventPeriod }}
             </span>
             <div class="flex grow items-center justify-between gap-2">
               <BadgeEventStatus
@@ -93,10 +62,9 @@ const metaTags = GetEventDetailMetaTags()
                 <BtnSwapEventGood
                   :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
                   show-count />
-                <BtnSnsShareEventToX
-                  :title="snsShare.title" :period="snsShare.period" :instance-names="snsShare.instances"
-                  :organizer-names="snsShare.organizers" :performer-names="snsShare.performers"
-                  :category-names="snsShare.categoryNames" :tags="snsShare.tags" :url="snsShare.route" />
+                <button class="btn btn-xs" @click="modalEventShare.onBtnOpenModal(event)">
+                  <IconTypeMapper type="share" class="text-xl" />
+                </button>
               </div>
             </div>
           </div>

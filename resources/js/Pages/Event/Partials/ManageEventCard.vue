@@ -8,7 +8,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['delete', 'duplicate'])
+const emit = defineEmits(['delete', 'duplicate', 'share'])
 
 const formatDate = computed(() => {
   if (!props.event.start_date || !props.event.end_date) {
@@ -41,6 +41,11 @@ const formatDate = computed(() => {
         <div class="tooltip tooltip-error" data-tip="削除">
           <button class="btn btn-square btn-outline btn-error btn-sm  border-0" @click="emit('delete', event)">
             <IconTypeMapper type="delete" class="shrink-0 text-2xl" />
+          </button>
+        </div>
+        <div class="tooltip-neutral tooltip" data-tip="シェア">
+          <button class="btn btn-square btn-outline btn-neutral btn-sm  border-0" @click="emit('share', event)">
+            <IconTypeMapper type="share" class="shrink-0 text-2xl" />
           </button>
         </div>
       </div>

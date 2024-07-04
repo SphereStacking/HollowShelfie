@@ -62,7 +62,8 @@ const errors = computed(() => parseErrors(form.errors))
       label-icon-type="wysiwygEditor"
       label="プロフィール"
       :error="form.errors.bio"
-      help="プロフィールを記入してください。" />
+      help="プロフィールを記入してください。"
+      auto-resize />
 
     <GridElement
       v-model="form.links"
