@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { differenceInMinutes } from 'date-fns'
-import { getEventPeriod } from '@/Utils/Event'
 import { parseToBrowserTz } from '@/Utils/Date'
 import type { TimeLineItem } from '../EventTimeLineTypes'
-import { Good, SnsShare, Bookmark } from '../../EventOtherBtn/BtnDropDownOtherTypes'
+import { Good, Bookmark } from '../../EventOtherBtn/BtnDropDownOtherTypes'
 import { Link } from '@inertiajs/vue3'
 
 type Props = {
@@ -44,19 +43,11 @@ const good: Good = {
   isGood: props.timeLineItem.authUser.isGood,
   goodCount: props.timeLineItem.shortGoodCount,
 }
-const sns: SnsShare = {
-  title: props.timeLineItem.title,
-  period: getEventPeriod(props.timeLineItem.startDate, props.timeLineItem.endDate),
-  route: route('event.show', props.timeLineItem.alias),
-  // instances: props.timeLineItem.instances.map((instance) => instance.display_name),
-  // organizers: props.timeLineItem.organizers.map((organizer) => organizer.name),
-  // performers: props.timeLineItem.performers.map((performer) => performer.name),
-  categoryNames: props.timeLineItem.categoryNames,
-  tags: props.timeLineItem.tags.map((tag) => '#'+tag),
-}
 const bookmark: Bookmark = {
   isBookmark: props.timeLineItem.authUser.isBookmark,
 }
+
+const emit = defineEmits(['share'])
 </script>
 
 <template>
@@ -72,8 +63,9 @@ const bookmark: Bookmark = {
       </Link>
       <div>
         <BtnDropDownOther
-          :event-alias="timeLineItem.alias" :good="good" :sns-share="sns"
-          :bookmark="bookmark" />
+          :event-alias="timeLineItem.alias"
+          :good="good" :bookmark="bookmark"
+          @share="emit('share')" />
       </div>
     </div>
     <div

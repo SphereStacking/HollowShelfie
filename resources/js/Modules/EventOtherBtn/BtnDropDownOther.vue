@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { SnsShare, Good, Bookmark } from './BtnDropDownOtherTypes'
+import { Good, Bookmark } from './BtnDropDownOtherTypes'
 
 defineProps<{
   eventAlias: string,
-  snsShare: SnsShare,
   good: Good,
   bookmark: Bookmark
 }>()
 
+const emit = defineEmits(['share'])
 </script>
 
 <template>
@@ -29,10 +29,9 @@ defineProps<{
           <BtnSwapEventBookmark :event-id="eventAlias" :check="!bookmark.isBookmark" />
         </li>
         <li>
-          <BtnSnsShareEventToX
-            :title="snsShare.title" :period="snsShare.period" :instance-names="snsShare.instances"
-            :organizer-names="snsShare.organizers" :performer-names="snsShare.performers"
-            :category-names="snsShare.categoryNames" :tags="snsShare.tags" :url="snsShare.route" />
+          <button class="btn btn-xs" @click="emit('share')">
+            <IconTypeMapper type="share" class="text-xl" />
+          </button>
         </li>
       </ul>
     </div>

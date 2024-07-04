@@ -22,6 +22,7 @@ const startX = ref(0)
 const startY = ref(0)
 const scrollLeft = ref(0)
 const scrollTop = ref(0)
+const modalEventShare = ref(null)
 
 const startDragging = (event) => {
   isDragging.value = true
@@ -101,6 +102,11 @@ const timeLineItems = computed<TimeLineItem[]>(() => {
 const getGridColumnSpan = (startDate, endDate) => {
   return `gridColumn: ${calculateGridPosition(startDate, endDate).start} / span ${calculateGridPosition(startDate, endDate).span}`
 }
+
+const shareEvent = (event) => {
+  const targetEvent = props.events.find((e) => e.alias === event.alias)
+  modalEventShare.value.onBtnOpenModal(targetEvent)
+}
 </script>
 
 <template>
@@ -111,11 +117,13 @@ const getGridColumnSpan = (startDate, endDate) => {
     @mouseup="stopDragging"
     @mouseleave="stopDragging"
     @mousemove="handleMouseMove">
+    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
     <TimeLineHeader :columns-per-hour="COLUMNS_PER_HOUR" :start-date="startDate" :end-date="endDate" />
     <TimeLineItem
-      v-for="event in timeLineItems" :key="event"
-      :style="getGridColumnSpan(event.startDate, event.endDate)"
-      :time-line-item="event" />
+      v-for="event in timeLineItems"
+      :key="event" :style="getGridColumnSpan(event.startDate, event.endDate)"
+      :time-line-item="event"
+      @share="shareEvent(event)" />
   </div>
 </template>
 

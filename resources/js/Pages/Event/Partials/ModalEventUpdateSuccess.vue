@@ -20,14 +20,15 @@ const onBtnOpenModal = (newItem) => {
     status: newItem.status,
     period: getEventPeriod(newItem.start_date, newItem.end_date),
     url: route('event.show', newItem.alias),
-    instances: newItem.instances.map((instance) => instance.display_name),
-    organizers: newItem.organizers.map((organizer) => organizer.name),
-    performers: newItem.performers.map((performer) => performer.name),
+    instances: newItem.instances,
+    organizers: newItem.organizers,
+    performers: newItem.performers,
     category_names: newItem.category_names,
-    tags: newItem.tags.map((tag) => '#'+tag),
+    tags: newItem.tags,
   }
 }
 
+const emit = defineEmits(['share'])
 const linklabel = computed(() => {
   return item.value.status === 'draft' ? 'プレビューページ' : '公開ページ'
 })
@@ -50,10 +51,9 @@ defineExpose({
         <p>{{ item.title }} </p>
         <a class="btn btn-link" :href="route('event.show', item.alias)">{{ linklabel }}</a>
         <div v-if="item.status !== 'draft'">
-          <BtnSnsShareEventToX
-            :title="item.title" :period="item.period" :instance-names="item.instances"
-            :organizer-names="item.organizers" :performer-names="item.performers" :category-names="item.category_names"
-            :tags="item.tags" :url="item.url" />
+          <button class="btn btn-xs" @click="emit('share', item)">
+            <IconTypeMapper type="share" class="text-xl" />
+          </button>
         </div>
       </div>
     </template>
