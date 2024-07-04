@@ -37,9 +37,6 @@ const generateShareText = (newItem) => {
     return generateEventParticipantShareText({
       title: newItem.title || '',
       period: _eventPeriod(newItem.start_date, newItem.end_date),
-      instanceNames: newItem.instances.map((instance) => instance.display_name) || [],
-      organizerNames: newItem.organizers.map((organizer) => organizer.name) || [],
-      performerNames: newItem.performers.map((performer) => performer.name) || [],
       categoryNames: newItem.category_names || [],
       tags: newItem.tags || [],
       url: route('event.show', newItem.alias) || ''

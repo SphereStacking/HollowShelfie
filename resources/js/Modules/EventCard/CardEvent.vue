@@ -1,7 +1,6 @@
 
 <script setup>
 import { Link, router} from '@inertiajs/vue3'
-import { getEventPeriod } from '@/Utils/Event'
 import { decomposeDate } from '@/Utils/Date'
 import { getYear } from 'date-fns'
 const props = defineProps({
@@ -12,24 +11,7 @@ const props = defineProps({
 })
 const currentImageIndex = ref(0)
 
-const incrementImageIndex = () => {
-  if (props.event.files.length > 0) {
-    currentImageIndex.value = (currentImageIndex.value + 1) % props.event.files.length
-  }
-}
-
-const shareData = computed(() => {
-  return {
-    title: props.event.title,
-    period: getEventPeriod(props.event.start_date, props.event.end_date),
-    instances: props.event.instances.map((instance) => instance.instance_type_name),
-    organizers: props.event.organizers.map((organizer) => organizer.name),
-    performers: props.event.performers.map((performer) => performer.name),
-    category_names: props.event.category_names,
-    tags: props.event.tags.map((tag) => tag),
-    route: route('event.show', props.event.alias),
-  }
-})
+const emit = defineEmits(['share'])
 
 const navigateToType = (searchValue, type) => {
   const value = [
@@ -103,10 +85,9 @@ const isCurrentYear = computed(() => {
                 <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
               </li>
               <li>
-                <BtnSnsShareEventToX
-                  :title="shareData.title" :period="shareData.period" :instance-names="shareData.instances"
-                  :organizer-names="shareData.organizers" :performer-names="shareData.performers" :category-names="shareData.category_names"
-                  :tags="shareData.tags" :url="shareData.route" />
+                <button class="btn btn-xs" @click="emit('share')">
+                  <IconTypeMapper type="share" class="text-xl" />
+                </button>
               </li>
             </ul>
           </div>

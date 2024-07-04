@@ -1,4 +1,7 @@
 <script setup>
+
+const modalEventShare = ref(null)
+
 const props = defineProps({
   events: {
     type: Array,
@@ -10,6 +13,7 @@ const props = defineProps({
 
 <template>
   <AppLayout title="Dashboard">
+    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
         Bookmark
@@ -28,8 +32,9 @@ const props = defineProps({
       </div>
       <div class="my-2 grid w-full grid-cols-2  gap-6 sm:grid-cols-3  md:grid-cols-4 xl:grid-cols-6">
         <CardEvent
-          v-for="(item, index) in props.events.data" :key="index" :event="item"
-          scroll-region />
+          v-for="(item, index) in props.events.data"
+          :key="index" :event="item" scroll-region
+          @share="modalEventShare.onBtnOpenModal(item)" />
       </div>
       <div class="flex flex-row justify-center">
         <BtnPagination

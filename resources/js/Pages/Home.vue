@@ -50,6 +50,9 @@ const props = defineProps({
 const getButtonText = (event) => {
   return `${event.name} (${event.count})`
 }
+
+const modalEventShare = ref(null)
+
 const querySetter = (value, type) => {
   return [
     { include: 'and', type: type, value: value.name },
@@ -64,6 +67,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
 <template>
   <AppLayout title="Dashboard">
+    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
         Home
@@ -127,8 +131,9 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           <CarouselEventHero :events="items.events" />
           <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4  md:gap-6 xl:grid-cols-5">
             <CardEvent
-              v-for="(event, index) in items.events" :key="index" :event="event"
-              class="my-2" />
+              v-for="(event, index) in items.events"
+              :key="index" :event="event" class="my-2"
+              @share="modalEventShare.onBtnOpenModal(event)" />
           </div>
           <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
             show more!

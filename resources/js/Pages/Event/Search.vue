@@ -30,6 +30,7 @@ const props = defineProps({
 const text = ref('')
 const conditions = ref([])
 const order = ref('')
+const modalEventShare = ref(null)
 
 const orderMaps = [
   { type: 'new', icon: 'new', label: 'new' },
@@ -56,6 +57,7 @@ const RawSearchForm = markRaw(SearchForm)
 
 <template>
   <AppLayout title="Event Search">
+    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
         Event Search
@@ -88,9 +90,11 @@ const RawSearchForm = markRaw(SearchForm)
       </template>
       <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
         <CardEvent
-          v-for="(item, index) in props.events.data" :key="index" :event="item"
+          v-for="(item, index) in props.events.data"
+          :key="index" :event="item"
           class="my-2"
-          scroll-region />
+          scroll-region
+          @share="modalEventShare.onBtnOpenModal(item)" />
       </div>
     </PaginationLayout>
   </AppLayout>
