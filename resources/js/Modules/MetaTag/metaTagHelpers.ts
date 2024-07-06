@@ -68,9 +68,9 @@ export function GetEventDetailMetaTags(): MetaTag[] {
     { property: 'article:published_time', content: DOMPurify.sanitize(usePage().props.event.start_date, { ALLOWED_TAGS: [] }) },
     { property: 'article:modified_time', content: DOMPurify.sanitize(usePage().props.event.end_date, { ALLOWED_TAGS: [] }) },
   ]
-  usePage().props.event.files.map((file) => {
-    eventMetaTags.push({ property: 'og:image', content: file.public_url })
-  })
+  if (usePage().props.event.files.length > 0) {
+    eventMetaTags.push({ property: 'og:image', content: usePage().props.event.files[0].public_url })
+  }
   usePage().props.event.category_names.map((category_name) => {
     eventMetaTags.push({ property: 'article:section', content: DOMPurify.sanitize(category_name, { ALLOWED_TAGS: [] }) })
   })
