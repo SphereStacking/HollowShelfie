@@ -49,10 +49,19 @@ export default {
           css: {
             'blockquote p:first-of-type::before': false,
             'blockquote p:first-of-type::after': false,
-            p: {
-              marginTop: '0 !important',
-              marginBottom: '0 !important',
+            'ol, ul, blockquote, td, th': {
+              '> p': {
+                marginTop: '0 !important',
+                marginBottom: '0 !important',
+              },
             },
+            // リストの前の要素のマージンを設定
+            'p, h1, h2, h3, h4, h5, h6': {
+              '&:not(:last-child)': {
+                marginBottom: '0 !important',
+              },
+            },
+            // リスト自体の要素にマージンを設定
             'ol, ul': {
               li: {
                 '&, &::before': {
@@ -61,7 +70,13 @@ export default {
                   paddingTop: '0',
                   paddingBottom: '0',
                 },
+                // リスト内のpタグにのみ適用
+                '> p': {
+                  marginTop: '0 !important',
+                  marginBottom: '0 !important',
+                },
               },
+              marginTop: '0 !important',
             },
           },
         },
