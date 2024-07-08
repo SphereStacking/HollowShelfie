@@ -57,7 +57,7 @@ export default {
             },
             // リストの前の要素のマージンを設定
             'p, h1, h2, h3, h4, h5, h6': {
-              '&:not(:last-child)': {
+              '&:has(+ ul), &:has(+ ol)': {
                 marginBottom: '0 !important',
               },
             },
