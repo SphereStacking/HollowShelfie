@@ -68,7 +68,7 @@ const metaTags = GetEventDetailMetaTags()
               </div>
             </div>
           </div>
-          <h1 class="text-7xl font-bold">
+          <h1 class="break-words text-5xl font-bold lg:text-6xl">
             {{ event.title }}
           </h1>
         </div>
