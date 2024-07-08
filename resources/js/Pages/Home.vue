@@ -139,7 +139,9 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
             show more!
             <IconTypeMapper type="arrowRight" class="size-8" />
           </Link>
-          <AreaAdvertisementRecruitment class="col-span-12 h-40 shadow-xl shadow-base-200" />
+          <div class="col-span-12">
+            <AreaAdvertisementRecruitment class="size-full h-24" />
+          </div>
         </template>
       </div>
       <div class="col-span-12 flex flex-col items-center justify-center py-20">

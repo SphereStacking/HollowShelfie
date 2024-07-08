@@ -113,7 +113,7 @@ const metaTags = GetEventDetailMetaTags()
       <!-- Main -->
       <!-- RightSide -->
       <div class="lg:col-start-10 lg:col-end-13 lg:row-span-2 lg:row-start-1 ">
-        <AreaAdvertisementRecruitment class="size-full" />
+        <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
       </div>
       <div class="mx-auto w-full  lg:col-start-10 lg:col-end-13  lg:row-span-3 lg:row-start-3">
         <aside class="sticky top-12" aria-labelledby="sidebar-right">
@@ -131,9 +131,9 @@ const metaTags = GetEventDetailMetaTags()
                 </template>
               </div>
             </Card>
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
+            <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
+            <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
+            <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
             <!-- コミュニティスポンサー -->
             <Card class="w-full">
               <template #title>
