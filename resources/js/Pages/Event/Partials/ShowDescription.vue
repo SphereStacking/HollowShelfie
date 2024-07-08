@@ -21,7 +21,7 @@ onMounted(() => {
   <div class="flex w-full flex-col  justify-center">
     <div class="rounded-xl bg-base-200 p-5">
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <article class="prose prose-sm h-full sm:prose lg:prose-lg xl:prose-2xl" v-html="sanitizedDescription"></article>
+      <article class="prose h-full lg:prose-lg xl:prose-2xl" v-html="sanitizedDescription"></article>
     </div>
   </div>
 </template>
