@@ -1,5 +1,4 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
 import { format } from 'date-fns'
 
 defineProps({
@@ -9,14 +8,6 @@ defineProps({
     required: true
   },
 })
-
-const getEventShow = (event) => {
-  router.visit(route('event.show', event.alias), {
-    method: 'get',
-    preserveState: false,
-    preserveScroll: true,
-  })
-}
 
 </script>
 
@@ -33,7 +24,7 @@ const getEventShow = (event) => {
       <template #item="{element}">
         <div class="w-full  px-2">
           <div class="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <CardEventImages class="w-2/6" :url="route('event.show', element.alias)" :images="element.files" />
+            <CardEventImages class="w-full sm:w-2/6" :url="route('event.show', element.alias)" :images="element.files" />
             <div class="flex w-full flex-col items-start gap-2 overflow-hidden sm:w-4/6">
               <div class="flex w-full flex-row justify-between">
                 <div> {{ format(new Date(element.start_date), 'yyyy/MM/dd HH:mm') }}</div>
@@ -45,9 +36,9 @@ const getEventShow = (event) => {
                 </div>
               </div>
 
-              <h1 class="text-5xl font-bold">
+              <h2 class="break-words text-5xl font-bold lg:text-6xl">
                 {{ element.title }}
-              </h1>
+              </h2>
               <!-- category -->
               <div v-if="element.category_names.length > 0" class="flex flex-row items-start gap-1">
                 <IconTypeMapper type="category" class="mt-0.5 shrink-0 text-xl" />
