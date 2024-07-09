@@ -15,7 +15,6 @@ class FollowablePaginatedResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'debug' => $this->resource,
             'pagination' => [
                 'current_page' => $this->resource->currentPage(),
                 'first_page_url' => $this->resource->url(1),
