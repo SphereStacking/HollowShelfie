@@ -5,6 +5,7 @@ namespace App\Models\Traits;
 use App\Models\Tag;
 use App\Models\Link;
 use App\Models\Event;
+use App\Models\Pickup;
 use App\Models\SocialAccount;
 use App\Models\EventOrganizer;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -73,4 +74,8 @@ trait UserRelations
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    public function pickups()
+    {
+        return $this->morphMany(Pickup::class, 'pickupable');
+    }
 }
