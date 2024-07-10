@@ -2,18 +2,19 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Category;
-use App\Models\EventOrganizer;
-use App\Models\EventTimeTable;
-use App\Models\Instance;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\View;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Models\Pickup;
+use App\Models\Category;
+use App\Models\Instance;
+use App\Models\EventOrganizer;
+use App\Models\EventTimeTable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * イベント関連のトレイト
@@ -90,5 +91,10 @@ trait EventRelations
     public function view(): MorphOne
     {
         return $this->morphOne(View::class, 'viewable');
+    }
+
+    public function pickups()
+    {
+        return $this->morphMany(Pickup::class, 'pickupable');
     }
 }

@@ -242,6 +242,10 @@ export const ItemsConfig = {
   at: {
     icon: 'mdi:at',
   },
+  pickup: {
+    icon: 'mdi:pin',
+    class: 'rotate-12'
+  },
   formatText: {
     icon: 'mdi:format-text',
   },

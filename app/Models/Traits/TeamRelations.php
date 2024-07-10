@@ -5,6 +5,7 @@ namespace App\Models\Traits;
 use App\Models\Tag;
 use App\Models\Link;
 use App\Models\User;
+use App\Models\Pickup;
 use App\Models\EventOrganizer;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -54,5 +55,10 @@ trait TeamRelations
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function pickups()
+    {
+        return $this->morphMany(Pickup::class, 'pickupable');
     }
 }
