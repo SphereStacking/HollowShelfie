@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Event;
+use App\Models\Pickup;
 use App\Enums\EventStatus;
 use App\Services\TagService;
 use App\Services\EventService;
 use App\Services\CategoryService;
 use App\Http\Resources\EventsJsonResource;
+use App\Http\Resources\PickupsJsonResource;
 use App\Http\Resources\TagWithCountJsonResource;
 use App\Http\Resources\CategoryWithCountJsonResource;
 use App\Services\DynamicSearch\Meilisearch\SearchParams;
@@ -65,9 +69,15 @@ class GetHomeController extends Controller
             ->searchPublishedEvents($upcomingParams);
         $newEvents = $this->eventMeilisearchService
             ->searchPublishedEvents($newParams);
+
+            $pickups = Pickup::with('pickupable')
+                ->ofTypes([User::class, Team::class])
+                ->paginate(10);
+
         return Inertia::render(
             'Home',
             [
+                'pickups' => fn () => new PickupsJsonResource($pickups),
                 'trendCategories' => fn () => new CategoryWithCountJsonResource($this->categoryService->getTrendCategories(10)),
                 'trendTags' => fn () => new TagWithCountJsonResource($this->tagService->getTrendTag(10)),
                 'ongoingEvents' => fn () => new EventsJsonResource($ongoingEvents),
