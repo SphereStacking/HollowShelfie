@@ -45,6 +45,10 @@ const props = defineProps({
     type: Number,
     required: true
   },
+  pickups: {
+    type: Array,
+    required: true
+  }
 })
 
 const getButtonText = (event) => {
@@ -63,6 +67,7 @@ eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents
 eventItems.value.push({ url: props.upcomingEventsUrl, events: props.upcomingEvents, title: 'upcoming', icon: 'eventUpcoming' })
 eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'New', icon: 'new' })
 
+const pickupItems = props.pickups
 </script>
 
 <template>
@@ -80,6 +85,18 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
       <AreaAdvertisementRecruitment as="a" link="https://sainakey.booth.pm/items/4876171" class=" col-span-12  shadow-xl shadow-base-200 md:col-span-4">
         <img src="storage/images/Advertisement/01_SynapseRack_VJ_Tool.png" alt="SynapseRack VJ Tool" class=" max-h-40">
       </AreaAdvertisementRecruitment>
+
+      <div v-if="pickupItems.data.length > 0" class="col-span-12 flex flex-col gap-2 ">
+        <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
+          <IconTypeMapper type="pickup" class="text-4xl" />
+          Pickup Eventer
+        </div>
+        <div class="flex flex-wrap gap-2 ">
+          <Link v-for="(pickup) in pickupItems.data" :key="pickup.id" :href="pickup.profile_url">
+            <HoverEventerBadge :performer="pickup" is-hover-hideing-animation />
+          </Link>
+        </div>
+      </div>
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
