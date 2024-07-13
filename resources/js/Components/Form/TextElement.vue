@@ -16,6 +16,10 @@ defineProps({
     type: String,
     default: ''
   },
+  isRequired: {
+    type: Boolean,
+    default: false
+  },
   placeholder: {
     type: String,
     default: ''
@@ -44,7 +48,7 @@ const updateValue = (e) => {
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
-    :label-icon-type="labelIconType">
+    :label-icon-type="labelIconType" :is-required="isRequired">
     <InputFormBase
       :id="id"
       :type="InputType"

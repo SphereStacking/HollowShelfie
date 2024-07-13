@@ -26,6 +26,10 @@ export const ItemsConfig = {
     icon: 'mdi:location-radius',
     buttonClass: 'btn-info'
   },
+  directions: {
+    icon: 'mdi:directions',
+    buttonClass: 'btn-info'
+  },
   date: {
     icon: 'mdi:calendar',
     buttonClass: 'btn-info'
