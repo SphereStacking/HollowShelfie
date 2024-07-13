@@ -88,7 +88,7 @@ const pickupItems = props.pickups
 
       <div v-if="pickupItems.data.length > 0" class="col-span-12 flex flex-col gap-2 ">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper type="pickup" class="text-4xl" />
+          <IconTypeMapper type="pickup" class="shrink-0 text-4xl" />
           Pickup Eventer
         </div>
         <div class="flex flex-wrap gap-2 ">
@@ -100,7 +100,7 @@ const pickupItems = props.pickups
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper type="category" class="text-4xl" />
+          <IconTypeMapper type="category" class="shrink-0 text-4xl" />
           Category
         </div>
         <div class="flex flex-wrap gap-2">
@@ -113,7 +113,7 @@ const pickupItems = props.pickups
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start mt-5 w-full text-3xl font-bold  ">
-          <IconTypeMapper type="tag" class="text-4xl" />
+          <IconTypeMapper type="tag" class="shrink-0 text-4xl" />
           tag
         </div>
         <div class="flex flex-wrap gap-2">
@@ -126,7 +126,7 @@ const pickupItems = props.pickups
 
       <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper :type="items.icon" class="text-4xl" />
+          <IconTypeMapper :type="items.icon" class="shrink-0 text-4xl" />
           <h3 class="font-bold">
             {{ $t(items.title) }}
           </h3>
@@ -139,7 +139,7 @@ const pickupItems = props.pickups
               </p>
               <Link class="btn btn-neutral" :href="route('event.create')">
                 イベントを掲載する！
-                <IconTypeMapper type="arrowRight" class="text-2xl" />
+                <IconTypeMapper type="arrowRight" class="shrink-0 text-2xl" />
               </Link>
             </div>
           </div>
@@ -154,7 +154,7 @@ const pickupItems = props.pickups
           </div>
           <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
             show more!
-            <IconTypeMapper type="arrowRight" class="size-8" />
+            <IconTypeMapper type="arrowRight" class="size-8 shrink-0" />
           </Link>
           <div class="col-span-12">
             <AreaAdvertisementRecruitment class="size-full h-24" />
@@ -169,7 +169,7 @@ const pickupItems = props.pickups
           </p>
           <Link class="btn btn-neutral" :href="route('event.create')">
             イベントを掲載する！
-            <IconTypeMapper type="arrowRight" class="size-8" />
+            <IconTypeMapper type="arrowRight" class="size-8 shrink-0" />
           </Link>
         </div>
       </div>
