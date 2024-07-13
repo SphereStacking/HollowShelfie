@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-  <button class="handle btn btn-square btn-neutral btn-sm items-center justify-center">
+  <button class="handle btn btn-square btn-neutral btn-xs items-center justify-center">
     <IconTypeMapper type="drag" class="text-xl" />
   </button>
 </template>

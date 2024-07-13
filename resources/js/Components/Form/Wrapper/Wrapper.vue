@@ -27,6 +27,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  isRequired: {
+    type: Boolean,
+    default: false
+  },
   error: {
     type: String,
     default: null
@@ -49,10 +53,12 @@ const hasLabelIconType = computed(() => props.labelIconType === '')
 
 <template>
   <div class="flex flex-col gap-0.5">
-    <div class="flex flex-row items-center justify-between gap-0.5">
+    <div class="flex flex-col items-start justify-start gap-0.5 md:flex-row md:items-center md:justify-between">
       <div class="flex gap-2">
         <IconTypeMapper v-if="!hasLabelIconType" :type="labelIconType" class="text-xl" />
-        <label for="input" class="label-text font-bold">{{ label }}</label>
+        <label for="input" class="label-text text-nowrap font-bold">{{ label }}
+          <span v-if="isRequired" class="text-error">*</span>
+        </label>
       </div>
       <small v-if="help !== null" id="input-help" class="label-text-alt">{{ help }}</small>
     </div>

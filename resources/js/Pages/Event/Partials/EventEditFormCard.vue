@@ -46,15 +46,16 @@ import { generateUniqueId } from '@/Utils'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 const draggableGroupId = generateUniqueId('grid')
 const columDefs = [
-  { template: RowDragIndicatorGridElement, headerName: '', width: '30px'},
-  { template: RowDeleteGridElement, headerName: '', width: '30px' },
-  { field: 'duration', headerName: '出演時間(分)', width: '100px', template: 'input',
+  { template: RowDragIndicatorGridElement, headerTitle: '', headerSubTitle: '', width: '30px'},
+  { template: RowDeleteGridElement, headerTitle: '', headerSubTitle: '', width: '30px' },
+  { field: 'duration', headerTitle: '出演時間', headerSubTitle: '(分)', width: '100px', template: 'input',
     getNewRowValue: () => { return 60 },
     templateOptions: {
       type: 'number',
     }
   },
-  { field: 'performers', headerName: 'パフォーマー', width: '250px', template: SearchPerformersGridElement,
+  { field: 'description', headerTitle: '内容', headerSubTitle: '演目/項目/未登録ユーザ', width: 'auto', minWidth: '300px', template: 'input' },
+  { field: 'performers', headerTitle: '演者/応対者/スタッフ', headerSubTitle: '未登録ユーザーは内容に記載してください', width: '202px', template: SearchPerformersGridElement,
     templateOptions: {
       route: route('mention.suggestion'),
       getFilteredDataFunc: getFilteredDataFunc,
@@ -62,9 +63,9 @@ const columDefs = [
     },
     options: {
       group: draggableGroupId,
+      placeholder: 'ユーザーID,ユーザー名'
     }
   },
-  { field: 'description', headerName: '備考', width: 'auto', minWidth: '300px', template: 'input'},
 ]
 
 const emit = defineEmits(['success', 'error'])
@@ -152,45 +153,53 @@ const updateEndDate = () => {
         </div>
       </div>
     </template>
-    <TextElement
-      v-model="form.title"
-      label="タイトル"
-      label-icon-type="title"
-      help=""
-      :error="form.errors.title" />
 
-    <SelectElement
-      v-model="form.instances[0].instance_type_id"
-      label="インスタンス"
-      label-icon-type="instance"
-      help="開催場所を記載してください。(URLが入力された場合、タイトルが'link'形式になります)"
-      class=""
-      id-key="id"
-      label-key="name"
-      :error="{
-        selectError: form.errors['instances.0.instance_type_id'],
-        wrapperError: form.errors['instances'],
-      }"
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-4">
+      <SelectElement
+        v-model="form.instances[0].instance_type_id"
+        label="プラットフォーム"
+        label-icon-type="instance"
+        class="w-full"
+        id-key="id"
+        label-key="name"
+        :error="form.errors['instances.0.instance_type_id']"
+        is-required
+        :selectable-items="instanceTypeNames" />
+      <TextElement
+        v-model="form.title"
+        class="col-span-3"
+        label="タイトル"
+        label-icon-type="title"
+        help=""
+        is-required
+        :error="form.errors.title" />
+    </div>
 
-      :selectable-items="instanceTypeNames">
-      <template #joinRight>
+    <Wrapper
+      label="アクセス"
+      is-required
+      help="urlを入力するとlabelが'link'形式になります。"
+      :error="form.errors['instances.0.display_name']"
+      label-icon-type="directions">
+      <div class="grid w-full grid-cols-1 gap-2 sm:grid-cols-5">
         <input
           v-model="form.instances[0].display_name"
           :class="{ 'input-error': form.errors['instances.0.display_name'] }"
-          class="input input-sm join-item w-1/2"
-          placeholder="表示">
+          class="input input-sm col-span-2"
+          placeholder="label (例 グループにJoin)">
         <input
           v-model="form.instances[0].access_url"
-          class="input input-sm join-item w-full"
-          placeholder="https://">
-      </template>
-    </SelectElement>
+          class="input input-sm  col-span-3"
+          placeholder="url (例 https://...)">
+      </div>
+    </Wrapper>
 
     <MultiSelectElement
       v-model="form.categories"
       label="カテゴリ"
       label-icon-type="category"
       item-type="category"
+      is-required
       help="メインとなるカテゴリをはじめに選択してください。"
       :error="form.errors.categories"
       :selectable-items="categoryNames">
@@ -241,6 +250,7 @@ const updateEndDate = () => {
       label="オーガナイザー"
       label-icon-type="organizer"
       help="主催者を選択してください"
+      placeholder="ユーザーID,ユーザー名"
       :error="form.errors.organizers"
       item-type="organizer"
       :route="route('mention.suggestion')"
@@ -264,12 +274,14 @@ const updateEndDate = () => {
         v-model="form.start_date"
         :error="form.errors.start_date"
         label-icon-type="date"
+        is-required
         label="開始日時" />
       <PickerDateElement
         v-model="form.end_date"
         :error="form.errors.end_date"
         label="終了日時"
         help="タイムテーブルを入力したら自動で入力されます。"
+        is-required
         disabled />
     </div>
 
@@ -278,7 +290,7 @@ const updateEndDate = () => {
       label="タイムテーブル"
       label-icon-type="timeline"
       :error="form.errors.time_tables"
-      help="本サービスに登録してないユーザーは備考へ記入してください。"
+      help="未登録ユーザーHollowShelfieを紹介してみてください！"
       :colum-defs="columDefs" />
 
     <EditorElement
@@ -286,6 +298,7 @@ const updateEndDate = () => {
       label-icon-type="wysiwygEditor"
       label="こんなイベントを開催する！"
       :error="form.errors.description"
+      is-required
       help="イベントの概要などを詳しく記入してください。" />
 
     <FileInputElement
