@@ -15,10 +15,10 @@ const form = useForm({
 })
 
 const columDefs = [
-  { template: RowDragIndicatorGridElement, headerName: '', width: '30px' },
-  { template: RowDeleteGridElement, headerName: '', width: '30px' },
-  { field: 'link', headerName: 'リンク', width: 'auto', minWidth: '200px', template: 'input', options: { placeholder: 'https://', required: true } },
-  { field: 'label', headerName: 'ラベル', width: 'auto', minWidth: '200px', template: 'input', options: { placeholder: '表示', required: true } },
+  { template: RowDragIndicatorGridElement, headerTitle: '', width: '30px' },
+  { template: RowDeleteGridElement, headerTitle: '', width: '30px' },
+  { field: 'link', headerTitle: 'リンク', width: 'auto', minWidth: '200px', template: 'input', options: { placeholder: 'https://', required: true } },
+  { field: 'label', headerTitle: 'ラベル', width: 'auto', minWidth: '200px', template: 'input', options: { placeholder: '表示', required: true } },
 ]
 onBeforeMount(() => {
   form.bio = profile.bio ?? ''
