@@ -245,9 +245,10 @@ const updateEndDate = () => {
         </div>
       </template>
     </MultiSearchableElement>
+
     <MultiSearchableElement
       v-model="form.organizers"
-      label="オーガナイザー"
+      label="主催者/関係者"
       label-icon-type="organizer"
       help="主催者を選択してください"
       placeholder="ユーザーID,ユーザー名"
@@ -280,7 +281,7 @@ const updateEndDate = () => {
         v-model="form.end_date"
         :error="form.errors.end_date"
         label="終了日時"
-        help="タイムテーブルを入力したら自動で入力されます。"
+        help="タイムテーブルを入力すると自動で計算されます。"
         is-required
         disabled />
     </div>
@@ -290,20 +291,20 @@ const updateEndDate = () => {
       label="タイムテーブル"
       label-icon-type="timeline"
       :error="form.errors.time_tables"
-      help="未登録ユーザーHollowShelfieを紹介してみてください！"
+      help="未登録ユーザの演者へHollowShelfieを紹介してみてください！"
       :colum-defs="columDefs" />
 
     <EditorElement
       v-model="form.description"
       label-icon-type="wysiwygEditor"
-      label="こんなイベントを開催する！"
+      label="詳細"
       :error="form.errors.description"
       is-required
-      help="イベントの概要などを詳しく記入してください。" />
+      help="イベントの情報などを詳しく記入してください。" />
 
     <FileInputElement
       v-model="event.files"
-      label="フライヤー"
+      label="フライヤー/ポスター"
       label-icon-type="fryer"
       :upload-route="route('event.fryer.store', event.alias)"
       :delete-route="route('event.fryer.destroy')"
