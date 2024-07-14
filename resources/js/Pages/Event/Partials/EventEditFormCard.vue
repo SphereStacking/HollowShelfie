@@ -330,15 +330,19 @@ const updateEndDate = () => {
           <div class="flex flex-col gap-2 rounded-md border border-info bg-base-300 p-2">
             <div>
               <div class="flex flex-row items-center gap-0.5">
-                <IconTypeMapper type="info" inline class="text-sm text-info" />
-                <p class="text-sm">
-                  テンプレート
+                <p class="flex flex-row items-center gap-1 text-sm">
+                  <span class="text-sm">
+                    <IconTypeMapper type="info" inline class="text-sm text-info" />
+                  </span>
+                  <span class="text-sm">
+                    テンプレート
+                  </span>
                 </p>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <button class="btn btn-neutral btn-xs" @click="editorElement.setContent()">
+                <button class="btn btn-neutral btn-xs tooltip " data-tip="テンプレートをクリア" @click="editorElement.setContent()">
                   <IconTypeMapper type="clear" class="text-sm text-base-content" />
                 </button>
+              </div>
+              <div class="flex flex-wrap gap-2">
                 <button
                   v-for="(template, key) in descriptionTemplates" :key="key" class="btn btn-neutral btn-xs"
                   @click="editorElement.setContent(template.content)">
