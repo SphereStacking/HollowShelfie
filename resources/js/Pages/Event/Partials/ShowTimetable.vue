@@ -35,16 +35,16 @@ defineProps({
             {{ formattedToBrowserTz(item.end_date, 'HH:mm') }}
           </div>
 
-          <div class="flex w-11/12 flex-row items-center gap-0.5">
-            <div class="flex w-9/12 flex-row items-center justify-center gap-5">
+          <div class="flex w-10/12 flex-col items-center gap-0.5">
+            <span v-if="item.performers.length > 0" class="flex w-full flex-row items-center justify-center gap-5">
               <AvatarLink
                 v-for="(performer, index ) in item.performers" :key="index" :href="performer.profile_url"
                 class="tooltip transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name"
                 :image-url="performer.image_url" :name="performer.name" />
-            </div>
-            <div class="w-3/12 text-left text-xs">
+            </span>
+            <small class="w-full text-wrap break-words text-center text-xs">
               {{ item.description }}
-            </div>
+            </small>
           </div>
           <div class="w-1/12"></div>
         </div>

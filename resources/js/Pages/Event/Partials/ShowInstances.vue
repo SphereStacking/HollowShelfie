@@ -12,7 +12,7 @@ defineProps({
   <div v-if="instances.length > 0" class="flex w-full flex-col  justify-center">
     <div class="flex flex-row items-center gap-1">
       <IconTypeMapper type="instance" />
-      <div>instance</div>
+      <div>access</div>
     </div>
     <div class="flex w-full flex-col rounded-xl bg-base-200">
       <template v-for="(instance, index) in instances" :key="index">
