@@ -65,6 +65,7 @@ const emit =defineEmits(['update:modelValue'])
 
 const editor = new Editor({
   content: props.modelValue,
+  injectCSS: false,
   extensions: [
     StarterKit,
     Image,
@@ -134,6 +135,14 @@ watch(innerValue, (v) => {
 
 onBeforeUnmount(() => {
   editor.destroy()
+})
+
+const setContent = (value) => {
+  editor.commands.setContent(value)
+}
+
+defineExpose({
+  setContent,
 })
 
 </script>
