@@ -36,10 +36,10 @@ defineProps({
           </div>
 
           <div class="flex w-10/12 flex-col items-center gap-0.5">
-            <span v-if="item.performers.length > 0" class="flex w-full flex-row items-center justify-center gap-5">
+            <span v-if="item.performers.length > 0" class="flex w-full flex-row flex-wrap items-center justify-center gap-2">
               <AvatarLink
                 v-for="(performer, index ) in item.performers" :key="index" :href="performer.profile_url"
-                class="tooltip transition-all duration-200 hover:-translate-y-1" :data-tip="performer.name"
+                :data-tip="performer.name"
                 :image-url="performer.image_url" :name="performer.name" />
             </span>
             <small class="w-full text-wrap break-words text-center text-xs">

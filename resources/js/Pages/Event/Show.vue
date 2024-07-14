@@ -99,15 +99,17 @@ const metaTags = GetEventDetailMetaTags()
       <div class=" lg:col-span-3 lg:row-start-3">
         <div class="sticky top-24 w-full rounded-md bg-base-300 p-4">
           <CarouselGallery :images="event.files.map(file => file.public_url)" zoomble />
+          <div class="divider mb-0"></div>
+          <ShowInstances :instances="event.instances" />
+          <ShowOrganizers :organizers="event.organizers" />
+          <ShowPerformers :performers="event.performers" />
         </div>
       </div>
       <!-- leftside -->
       <!-- Main -->
       <div class="mx-auto flex w-full flex-col gap-2 lg:col-span-6">
         <ShowDescription :description="event.description" />
-        <ShowOrganizers :organizers="event.organizers" />
-        <ShowPerformers :performers="event.performers" />
-        <ShowInstances :instances="event.instances" />
+
         <ShowTimetable :time-table="event.time_table" />
       </div>
       <!-- Main -->
