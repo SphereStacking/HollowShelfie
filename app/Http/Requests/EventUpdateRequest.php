@@ -47,6 +47,8 @@ class EventUpdateRequest extends FormRequest
             'instances.*.instance_type_id' => 'プラットフォーム',
             'instances.*.display_name' => '表示ラベル',
             'published_at' => '公開日',
+            'start_date' => '開始日',
+            'end_date' => '終了日',
         ];
     }
 
@@ -67,7 +69,7 @@ class EventUpdateRequest extends FormRequest
             'title' => 'required|string',
             'published_at' => 'nullable|date',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'end_date' => 'required|date|after:start_date',
             'description' => 'required|string',
             'categories' => 'required|array|min:1|max:4',
             'tags' => 'array|max:8',
