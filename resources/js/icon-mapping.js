@@ -38,7 +38,9 @@ export const ItemsConfig = {
     icon: 'mdi:dots-hexagon',
     buttonClass: 'btn-info'
   },
-
+  template: {
+    icon: 'mdi:file-document-outline',
+  },
   bookmarks: {
     icon: 'mdi:bookmark-multiple',
   },
@@ -194,6 +196,15 @@ export const ItemsConfig = {
   },
   info: {
     icon: 'mdi:information-outline',
+  },
+  clear: {
+    icon: 'mdi:broom',
+  },
+  help: {
+    icon: 'mdi:help-circle-outline',
+  },
+  hint: {
+    icon: 'mdi:lightbulb-filament-outline',
   },
   intersect: {
     icon: 'fluent:shape-intersect-24-filled'

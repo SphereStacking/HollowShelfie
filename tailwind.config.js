@@ -57,9 +57,9 @@ export default {
             },
             // リストの前の要素のマージンを設定
             'p, h1, h2, h3, h4, h5, h6': {
-              '&:has(+ ul), &:has(+ ol)': {
-                marginBottom: '0 !important',
-              },
+              marginBottom: '0 !important',
+              marginTop: '0 !important',
+              minHeight: '20px !important',
             },
             // リスト自体の要素にマージンを設定
             'ol, ul': {
