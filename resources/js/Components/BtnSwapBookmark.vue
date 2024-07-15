@@ -16,6 +16,7 @@ const props = defineProps({
 </script>
 <template>
   <BtnSwapBase off-icon="offBookmark" on-icon="onBookmark" :check="props.check">
+    <slot></slot>
     <template #after>
       <div v-if="showCount" class="badge badge-xs">
         {{ count }}

@@ -71,22 +71,22 @@ const RawSearchForm = markRaw(SearchForm)
     </div>
     <PaginationLayout :pagination="events.pagination">
       <template #TopPaginationRight>
-        <div class="dropdown dropdown-end ">
-          <div tabindex="0" class=" btn indicator btn-sm w-16 px-2">
-            <IconTypeMapper type="sort" class="text-xl transition-all" />
-            <div v-if="order.icon" class="badge indicator-item badge-info">
-              <IconTypeMapper :type="order.icon" class=" text-sm " />
-            </div>
-          </div>
-          <ul tabindex="0" class="menu dropdown-content z-[1] w-28 rounded-box bg-base-200 p-2 shadow">
-            <li v-for="(orderItem, index) in orderMaps" :key="index" @click="order = orderItem; executeSearch()">
-              <div>
-                <IconTypeMapper :type="orderItem.icon" />
-                {{ orderItem.label }}
+        <BtnDropdown class="dropdown-end" width="w-28">
+          <template #trigger>
+            <div class=" btn indicator  btn-sm w-16 px-2">
+              <IconTypeMapper type="sort" class="text-xl transition-all" />
+              <div v-if="order.icon" class="badge indicator-item badge-info">
+                <IconTypeMapper :type="order.icon" class="text-sm" />
               </div>
-            </li>
-          </ul>
-        </div>
+            </div>
+          </template>
+          <template v-for="(orderItem, index) in orderMaps" #[`item-${index}`] :key="index">
+            <div @click="order = orderItem; executeSearch()">
+              <IconTypeMapper :type="orderItem.icon" class="text-xl transition-all" />
+              {{ orderItem.label }}
+            </div>
+          </template>
+        </BtnDropdown>
       </template>
       <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
         <CardEvent
