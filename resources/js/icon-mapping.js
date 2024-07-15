@@ -360,6 +360,12 @@ export const ItemsConfig = {
   strikethrough: {
     icon: 'mdi:format-strikethrough-variant',
   },
+  iCalendar: {
+    icon: 'flat-color-icons:calendar',
+  },
+  calendarAdd: {
+    icon: 'mdi:calendar-edit',
+  },
   googleCalendar: {
     icon: 'logos:google-calendar',
   },
