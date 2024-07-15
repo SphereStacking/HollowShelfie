@@ -1,6 +1,7 @@
 <script setup>
 import { GetEventDetailMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
 import { _eventPeriod } from '@/Utils/domain/event'
+import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   event: {
@@ -35,11 +36,16 @@ const hasTag = computed(() => {
 
 const metaTags = GetEventDetailMetaTags()
 
+const calendarLinks = computed(() => {
+  return [{ label: '[👻HollowShelfie] ' + props.event.title, url: usePage().props.ziggy.location }]
+})
+const calendarLocation = computed(() => {
+  return props.event.instances[0]?.instance_type ?? ''
+})
 </script>
 <template>
   <AppLayout title="Event Detail" :meta-tags="metaTags">
     <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
-    <!-- <MetaTagEventDetail /> -->
     <template #header>
       <h2 class="text-xl font-semibold leading-tight">
         Event Detail
@@ -49,19 +55,25 @@ const metaTags = GetEventDetailMetaTags()
       <!-- header -->
       <div class="flex flex-col items-center gap-1 lg:col-start-1 lg:col-end-10">
         <div class="flex w-full flex-col justify-between  md:flex-row ">
-          <span class="font-mono text-xl italic">
-            {{ eventPeriod }}
-          </span>
-          <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
             <BadgeEventStatus
               class="badge-md" :status="event.status"
               :label="$t(event.status)" />
+            <p class="font-mono text-xl italic">
+              {{ eventPeriod }}
+            </p>
+          </div>
+
+          <div class="flex items-center justify-between gap-2">
+            <DropdownCalendarEvent
+              :title="event.title" :dates="event.dates" :description="event.description"
+              :location="calendarLocation" :links="calendarLinks" />
             <div class="flex items-center justify-center gap-2">
               <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
               <BtnSwapEventGood
                 :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
                 show-count />
-              <button class="btn btn-xs" @click="modalEventShare.onBtnOpenModal(event)">
+              <button class="btn btn-xs px-1" @click="modalEventShare.onBtnOpenModal(event)">
                 <IconTypeMapper type="share" class="text-xl" />
               </button>
             </div>
