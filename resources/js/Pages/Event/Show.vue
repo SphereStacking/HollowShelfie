@@ -42,6 +42,9 @@ const calendarLinks = computed(() => {
 const calendarLocation = computed(() => {
   return props.event.instances[0]?.instance_type ?? ''
 })
+const calendarDates = computed(() => {
+  return props.event.start_date && props.event.end_date ? [props.event.start_date, props.event.end_date] : []
+})
 </script>
 <template>
   <AppLayout title="Event Detail" :meta-tags="metaTags">
@@ -70,7 +73,7 @@ const calendarLocation = computed(() => {
               :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
               show-count />
             <DropdownCalendarEvent
-              :title="event.title" :dates="event.dates" :description="event.description"
+              :title="event.title" :dates="calendarDates" :description="event.description"
               :location="calendarLocation" :links="calendarLinks" />
             <button class="btn btn-xs px-1" @click="modalEventShare.onBtnOpenModal(event)">
               <IconTypeMapper type="share" class="text-xl" />
