@@ -11,31 +11,23 @@ const emit = defineEmits(['share'])
 </script>
 
 <template>
-  <div class="flex flex-row gap-1">
-    <!-- <BtnSwapEventGood
-      :event-id="eventDetails.alias" :check="eventDetails.authUser?.isGood" :count="eventDetails.shortGoodCount"
-      show-count /> -->
-    <div class="dropdown dropdown-end dropdown-bottom">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-xs p-0">
+  <BtnDropdown>
+    <template #trigger>
+      <button class="btn btn-ghost btn-xs p-0">
         <IconTypeMapper type="overflowMenu" class="text-xl" />
-      </div>
-      <ul tabindex="0" class="menu dropdown-content z-[1] w-auto rounded-box bg-base-200 p-2 shadow">
-        <li>
-          <BtnSwapEventGood
-            :event-id="eventAlias" :check="!good.isGood"
-            show-count />
-        </li>
-        <li>
-          <BtnSwapEventBookmark :event-id="eventAlias" :check="!bookmark.isBookmark" />
-        </li>
-        <li>
-          <button class="btn btn-xs" @click="emit('share')">
-            <IconTypeMapper type="share" class="text-xl" />
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
+      </button>
+    </template>
+    <template #item-0>
+      <BtnSwapEventGood
+        :event-id="eventAlias" :check="!good.isGood"
+        show-count />
+    </template>
+    <template #item-1>
+      <button class="btn btn-xs" @click="emit('share')">
+        <IconTypeMapper type="share" class="text-xl" />
+      </button>
+    </template>
+  </BtnDropdown>
 </template>
 
 <style scoped>

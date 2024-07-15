@@ -51,7 +51,9 @@ const toggle = () => {
 <template>
   <BtnSwapBookmark
     :check="isCheck"
-    @click="toggle" />
+    @click="toggle">
+    <slot></slot>
+  </BtnSwapBookmark>
 </template>
 <style lang="">
 

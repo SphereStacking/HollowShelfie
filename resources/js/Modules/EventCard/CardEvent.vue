@@ -60,37 +60,37 @@ const isCurrentYear = computed(() => {
             <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
           </div>
         </template>
-        <!-- <div class="absolute bottom-0 left-1 flex w-full justify-start gap-1">
-          <div v-for="(instance, index) in event.files" :key="index">
-            <div class="select-none">
-              {{ index === currentImageIndex ? '•' : '-' }}
-            </div>
-          </div>
-        </div> -->
       </Link>
-      <div class="mt-0.5 flex flex-row justify-between">
-        <Link :href="route('event.show', event.alias)" class=" mx-2 truncate whitespace-nowrap text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
+      <div class="mx-2 mt-0.5 flex flex-row  justify-between ">
+        <Link :href="route('event.show', event.alias)" class="truncate whitespace-nowrap text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
           {{ event.title }}
         </Link>
         <div class="flex flex-row gap-1">
-          <BtnSwapEventGood
-            :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
-            show-count />
-          <div class="dropdown dropdown-end dropdown-bottom">
-            <div tabindex="0" role="button" class="btn btn-ghost btn-xs p-0">
-              <IconTypeMapper type="overflowMenu" class="text-xl" />
-            </div>
-            <ul tabindex="0" class="menu dropdown-content z-[1] w-auto rounded-box bg-base-200 p-2 shadow">
-              <li>
-                <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
-              </li>
-              <li>
-                <button class="btn btn-xs" @click="emit('share')">
-                  <IconTypeMapper type="share" class="text-xl" />
-                </button>
-              </li>
-            </ul>
-          </div>
+          <BtnDropdown width="w-32" class="dropdown-end">
+            <template #trigger>
+              <button class="btn btn-ghost btn-xs p-0">
+                <IconTypeMapper type="overflowMenu" class="text-xl" />
+              </button>
+            </template>
+            <template #item-0>
+              <BtnSwapEventGood
+                class="btn justify-start"
+                :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count">
+                Good
+              </BtnSwapEventGood>
+            </template>
+            <template #item-1>
+              <BtnSwapEventBookmark class="btn justify-start" :event-id="event.alias" :check="event.auth_user?.is_bookmark">
+                Bookmark
+              </BtnSwapEventBookmark>
+            </template>
+            <template #item-2>
+              <button class="btn btn-xs justify-start px-1" @click="emit('share')">
+                <IconTypeMapper type="share" class="text-lg" />
+                Share
+              </button>
+            </template>
+          </BtnDropdown>
         </div>
       </div>
 
