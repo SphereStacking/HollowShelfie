@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 // 共通の型定義
 interface CalendarEvent {
   title: string;
@@ -24,8 +26,10 @@ export function createCalendarEvent(
   }
 }
 
-// グーグルcalendarに予定を追加する。
-// datesが一つしか入っていない場合は終日イベントとなる
+function formatDate(date: string, isAllDay: boolean = false): string {
+  return isAllDay ? format(new Date(date), 'yyyyMMdd') : format(new Date(date), 'yyyyMMdd\'T\'HHmmss\'Z\'')
+}
+
 function createGoogleCalendarUrl(event: CalendarEvent): string {
   const { title, dates = [], description, location, links = [] } = event
   const base = 'https://www.google.com/calendar/render?action=TEMPLATE'
@@ -39,12 +43,12 @@ function createGoogleCalendarUrl(event: CalendarEvent): string {
   let dateParam = ''
   if (dates.length === 1) {
     // 終日イベント
-    dateParam = `&dates=${dates[0]}/${dates[0]}`
+    dateParam = `&dates=${formatDate(dates[0], true)}/${formatDate(dates[0], true)}`
   } else if (dates.length === 2) {
     // 期間イベント
-    dateParam = `&dates=${dates[0]}/${dates[1]}`
+    dateParam = `&dates=${formatDate(dates[0])}/${formatDate(dates[1])}`
   }
-
+  console.log(dateParam)
   return `${base}${_title}${dateParam}${_description}${_location}`
 }
 
@@ -88,12 +92,12 @@ function createICalendarFile(event) {
 
   if (dates.length === 1) {
     // 終日イベント
-    icsData += `DTSTART;VALUE=DATE:${dates[0]}\n`
-    icsData += `DTEND;VALUE=DATE:${dates[0]}\n`
+    icsData += `DTSTART;VALUE=DATE:${formatDate(dates[0], true)}\n`
+    icsData += `DTEND;VALUE=DATE:${formatDate(dates[0], true)}\n`
   } else if (dates.length === 2) {
     // 期間イベント
-    icsData += `DTSTART:${dates[0]}\n`
-    icsData += `DTEND:${dates[1]}\n`
+    icsData += `DTSTART:${formatDate(dates[0])}\n`
+    icsData += `DTEND:${formatDate(dates[1])}\n`
   }
 
   // iCalendar フォーマットの終了
