@@ -53,33 +53,31 @@ const calendarLocation = computed(() => {
     </template>
     <div class="mx-auto grid max-w-7xl auto-rows-min gap-2 pt-4 lg:grid-cols-12 lg:gap-4">
       <!-- header -->
-      <div class="flex flex-col items-center gap-1 lg:col-start-1 lg:col-end-10">
-        <div class="flex w-full flex-col justify-between  md:flex-row ">
-          <div class="flex items-center gap-2">
+      <div class="flex flex-col items-center gap-1 md:items-start lg:col-start-1 lg:col-end-10">
+        <div class="flex w-full flex-col justify-between gap-2 md:flex-row ">
+          <div class="flex flex-col items-center gap-2 md:flex-row">
             <BadgeEventStatus
               class="badge-md" :status="event.status"
               :label="$t(event.status)" />
-            <p class="font-mono text-xl italic">
+            <p class="text-wrap break-all font-mono text-lg italic md:text-xl">
               {{ eventPeriod }}
             </p>
           </div>
 
-          <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center justify-center gap-2">
+            <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
+            <BtnSwapEventGood
+              :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
+              show-count />
             <DropdownCalendarEvent
               :title="event.title" :dates="event.dates" :description="event.description"
               :location="calendarLocation" :links="calendarLinks" />
-            <div class="flex items-center justify-center gap-2">
-              <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
-              <BtnSwapEventGood
-                :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
-                show-count />
-              <button class="btn btn-xs px-1" @click="modalEventShare.onBtnOpenModal(event)">
-                <IconTypeMapper type="share" class="text-xl" />
-              </button>
-            </div>
+            <button class="btn btn-xs px-1" @click="modalEventShare.onBtnOpenModal(event)">
+              <IconTypeMapper type="share" class="text-xl" />
+            </button>
           </div>
         </div>
-        <h1 class="w-full break-words text-5xl font-bold lg:text-6xl">
+        <h1 class="my-4 break-all text-4xl font-bold md:my-0 md:text-5xl lg:text-6xl">
           {{ event.title }}
         </h1>
       </div>
