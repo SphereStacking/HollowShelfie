@@ -26,6 +26,10 @@ export const ItemsConfig = {
     icon: 'mdi:location-radius',
     buttonClass: 'btn-info'
   },
+  directions: {
+    icon: 'mdi:directions',
+    buttonClass: 'btn-info'
+  },
   date: {
     icon: 'mdi:calendar',
     buttonClass: 'btn-info'
@@ -34,7 +38,9 @@ export const ItemsConfig = {
     icon: 'mdi:dots-hexagon',
     buttonClass: 'btn-info'
   },
-
+  template: {
+    icon: 'mdi:file-document-outline',
+  },
   bookmarks: {
     icon: 'mdi:bookmark-multiple',
   },
@@ -191,6 +197,15 @@ export const ItemsConfig = {
   info: {
     icon: 'mdi:information-outline',
   },
+  clear: {
+    icon: 'mdi:broom',
+  },
+  help: {
+    icon: 'mdi:help-circle-outline',
+  },
+  hint: {
+    icon: 'mdi:lightbulb-filament-outline',
+  },
   intersect: {
     icon: 'fluent:shape-intersect-24-filled'
   },
@@ -241,6 +256,10 @@ export const ItemsConfig = {
   },
   at: {
     icon: 'mdi:at',
+  },
+  pickup: {
+    icon: 'mdi:pin',
+    class: 'rotate-12'
   },
   formatText: {
     icon: 'mdi:format-text',
@@ -340,6 +359,12 @@ export const ItemsConfig = {
   },
   strikethrough: {
     icon: 'mdi:format-strikethrough-variant',
+  },
+  iCalendar: {
+    icon: 'flat-color-icons:calendar',
+  },
+  calendarAdd: {
+    icon: 'mdi:calendar-edit',
   },
   googleCalendar: {
     icon: 'logos:google-calendar',

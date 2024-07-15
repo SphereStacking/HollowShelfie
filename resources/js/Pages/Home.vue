@@ -45,6 +45,10 @@ const props = defineProps({
     type: Number,
     required: true
   },
+  pickups: {
+    type: Array,
+    required: true
+  }
 })
 
 const getButtonText = (event) => {
@@ -63,6 +67,7 @@ eventItems.value.push({ url: props.ongoingEventsUrl, events: props.ongoingEvents
 eventItems.value.push({ url: props.upcomingEventsUrl, events: props.upcomingEvents, title: 'upcoming', icon: 'eventUpcoming' })
 eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title: 'New', icon: 'new' })
 
+const pickupItems = props.pickups
 </script>
 
 <template>
@@ -81,9 +86,21 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
         <img src="storage/images/Advertisement/01_SynapseRack_VJ_Tool.png" alt="SynapseRack VJ Tool" class=" max-h-40">
       </AreaAdvertisementRecruitment>
 
+      <div v-if="pickupItems.data.length > 0" class="col-span-12 flex flex-col gap-2 ">
+        <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
+          <IconTypeMapper type="pickup" class="shrink-0 text-4xl" />
+          Pickup Eventer
+        </div>
+        <div class="flex flex-wrap gap-2 ">
+          <Link v-for="(pickup) in pickupItems.data" :key="pickup.id" :href="pickup.profile_url">
+            <HoverEventerBadge :performer="pickup" is-hover-hideing-animation />
+          </Link>
+        </div>
+      </div>
+
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper type="category" class="text-4xl" />
+          <IconTypeMapper type="category" class="shrink-0 text-4xl" />
           Category
         </div>
         <div class="flex flex-wrap gap-2">
@@ -96,7 +113,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
       <div class="col-span-12 flex flex-col gap-2 md:col-span-6">
         <div class="divider divider-start mt-5 w-full text-3xl font-bold  ">
-          <IconTypeMapper type="tag" class="text-4xl" />
+          <IconTypeMapper type="tag" class="shrink-0 text-4xl" />
           tag
         </div>
         <div class="flex flex-wrap gap-2">
@@ -109,7 +126,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
 
       <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
-          <IconTypeMapper :type="items.icon" class="text-4xl" />
+          <IconTypeMapper :type="items.icon" class="shrink-0 text-4xl" />
           <h3 class="font-bold">
             {{ $t(items.title) }}
           </h3>
@@ -122,7 +139,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
               </p>
               <Link class="btn btn-neutral" :href="route('event.create')">
                 イベントを掲載する！
-                <IconTypeMapper type="arrowRight" class="text-2xl" />
+                <IconTypeMapper type="arrowRight" class="shrink-0 text-2xl" />
               </Link>
             </div>
           </div>
@@ -137,9 +154,11 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           </div>
           <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
             show more!
-            <IconTypeMapper type="arrowRight" class="size-8" />
+            <IconTypeMapper type="arrowRight" class="size-8 shrink-0" />
           </Link>
-          <AreaAdvertisementRecruitment class="col-span-12 h-40 shadow-xl shadow-base-200" />
+          <div class="col-span-12">
+            <AreaAdvertisementRecruitment class="size-full h-24" />
+          </div>
         </template>
       </div>
       <div class="col-span-12 flex flex-col items-center justify-center py-20">
@@ -150,7 +169,7 @@ eventItems.value.push({ url: props.newEventsUrl, events: props.newEvents, title:
           </p>
           <Link class="btn btn-neutral" :href="route('event.create')">
             イベントを掲載する！
-            <IconTypeMapper type="arrowRight" class="size-8" />
+            <IconTypeMapper type="arrowRight" class="size-8 shrink-0" />
           </Link>
         </div>
       </div>

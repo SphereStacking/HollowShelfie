@@ -60,7 +60,9 @@ const toggle = () => {
     :check="isCheck"
     :count="count"
     :show-count="showCount"
-    @click="toggle" />
+    @click="toggle">
+    <slot></slot>
+  </BtnSwapGood>
 </template>
 <style lang="">
 

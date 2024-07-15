@@ -44,9 +44,11 @@ class EventUpdateRequest extends FormRequest
             'images.*' => '画像',
             'categories' => 'カテゴリー',
             'instances' => 'インスタンス',
-            'instances.*.instance_type_id' => 'インスタンスのタイプ',
+            'instances.*.instance_type_id' => 'プラットフォーム',
             'instances.*.display_name' => '表示ラベル',
             'published_at' => '公開日',
+            'start_date' => '開始日',
+            'end_date' => '終了日',
         ];
     }
 
@@ -67,7 +69,7 @@ class EventUpdateRequest extends FormRequest
             'title' => 'required|string',
             'published_at' => 'nullable|date',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+            'end_date' => 'required|date|after:start_date',
             'description' => 'required|string',
             'categories' => 'required|array|min:1|max:4',
             'tags' => 'array|max:8',
@@ -77,24 +79,4 @@ class EventUpdateRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-
-        $errorsPerRow = [];
-        foreach ($validator->errors()->getMessages() as $field => $messages) {
-            // 'instances.*'にマッチするフィールド名の場合、エラーを集約する
-            if (mb_strpos($field, 'instances.') === 0) {
-                $errorsPerRow['instances'][] = $messages[0];
-            } else {
-                $errorsPerRow[$field] = $messages;
-            }
-        }
-
-        // 'instances'に関連するエラーメッセージを一つにまとめる
-        if (isset($errorsPerRow['instances'])) {
-            $validator->errors()->add('instances', implode(' ', $errorsPerRow['instances']));
-        }
-
-        parent::failedValidation($validator);
-    }
 }

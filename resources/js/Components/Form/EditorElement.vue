@@ -65,6 +65,7 @@ const emit =defineEmits(['update:modelValue'])
 
 const editor = new Editor({
   content: props.modelValue,
+  injectCSS: false,
   extensions: [
     StarterKit,
     Image,
@@ -136,13 +137,21 @@ onBeforeUnmount(() => {
   editor.destroy()
 })
 
+const setContent = (value) => {
+  editor.commands.setContent(value)
+}
+
+defineExpose({
+  setContent,
+})
+
 </script>
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
     :label-icon-type="labelIconType">
     <div class="w-full rounded-md bg-base-100  ">
-      <EditorMenu :editor="editor" class="sticky top-16 z-50 rounded-md bg-base-100" />
+      <EditorMenu :editor="editor" class="sticky top-16 z-20 rounded-md bg-base-100" />
       <EditorContent :editor="editor" class="mx-2 mb-2" />
     </div>
   </Wrapper>

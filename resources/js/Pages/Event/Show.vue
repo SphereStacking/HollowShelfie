@@ -1,6 +1,7 @@
 <script setup>
 import { GetEventDetailMetaTags } from '@/Modules/MetaTag/metaTagHelpers'
 import { _eventPeriod } from '@/Utils/domain/event'
+import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   event: {
@@ -35,11 +36,19 @@ const hasTag = computed(() => {
 
 const metaTags = GetEventDetailMetaTags()
 
+const calendarLinks = computed(() => {
+  return [{ label: '[👻HollowShelfie] ' + props.event.title, url: usePage().props.ziggy.location }]
+})
+const calendarLocation = computed(() => {
+  return props.event.instances[0]?.instance_type ?? ''
+})
+const calendarDates = computed(() => {
+  return props.event.start_date && props.event.end_date ? [props.event.start_date, props.event.end_date] : []
+})
 </script>
 <template>
   <AppLayout title="Event Detail" :meta-tags="metaTags">
     <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
-    <!-- <MetaTagEventDetail /> -->
     <template #header>
       <h2 class="text-xl font-semibold leading-tight">
         Event Detail
@@ -47,31 +56,33 @@ const metaTags = GetEventDetailMetaTags()
     </template>
     <div class="mx-auto grid max-w-7xl auto-rows-min gap-2 pt-4 lg:grid-cols-12 lg:gap-4">
       <!-- header -->
-      <div class="flex flex-row items-center lg:col-start-1 lg:col-end-10">
-        <div class="flex grow flex-col ">
-          <div class="flex flex-col justify-between gap-2 md:flex-row">
-            <span class="font-mono text-xl italic">
+      <div class="flex flex-col items-center gap-1 md:items-start lg:col-start-1 lg:col-end-10">
+        <div class="flex w-full flex-col justify-between gap-2 md:flex-row ">
+          <div class="flex flex-col items-center gap-2 md:flex-row">
+            <BadgeEventStatus
+              class="badge-md" :status="event.status"
+              :label="$t(event.status)" />
+            <p class="text-wrap break-all font-mono text-lg italic md:text-xl">
               {{ eventPeriod }}
-            </span>
-            <div class="flex grow items-center justify-between gap-2">
-              <BadgeEventStatus
-                class="badge-md" :status="event.status"
-                :label="$t(event.status)" />
-              <div class="flex items-center justify-center gap-2">
-                <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
-                <BtnSwapEventGood
-                  :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
-                  show-count />
-                <button class="btn btn-xs" @click="modalEventShare.onBtnOpenModal(event)">
-                  <IconTypeMapper type="share" class="text-xl" />
-                </button>
-              </div>
-            </div>
+            </p>
           </div>
-          <h1 class="text-7xl font-bold">
-            {{ event.title }}
-          </h1>
+
+          <div class="flex items-center justify-center gap-2">
+            <BtnSwapEventBookmark :event-id="event.alias" :check="event.auth_user?.is_bookmark" />
+            <BtnSwapEventGood
+              :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count"
+              show-count />
+            <DropdownCalendarEvent
+              :title="event.title" :dates="calendarDates" :description="event.description"
+              :location="calendarLocation" :links="calendarLinks" />
+            <button class="btn btn-xs px-1" @click="modalEventShare.onBtnOpenModal(event)">
+              <IconTypeMapper type="share" class="text-xl" />
+            </button>
+          </div>
         </div>
+        <h1 class="my-4 break-all text-4xl font-bold md:my-0 md:text-5xl lg:text-6xl">
+          {{ event.title }}
+        </h1>
       </div>
 
       <div class="flex w-full flex-col flex-wrap gap-1 md:flex-row lg:col-span-9 lg:col-start-1 lg:row-start-2">
@@ -99,21 +110,23 @@ const metaTags = GetEventDetailMetaTags()
       <div class=" lg:col-span-3 lg:row-start-3">
         <div class="sticky top-24 w-full rounded-md bg-base-300 p-4">
           <CarouselGallery :images="event.files.map(file => file.public_url)" zoomble />
+          <div class="divider mb-0"></div>
+          <ShowInstances :instances="event.instances" />
+          <ShowOrganizers :organizers="event.organizers" />
+          <ShowPerformers :performers="event.performers" />
         </div>
       </div>
       <!-- leftside -->
       <!-- Main -->
       <div class="mx-auto flex w-full flex-col gap-2 lg:col-span-6">
         <ShowDescription :description="event.description" />
-        <ShowOrganizers :organizers="event.organizers" />
-        <ShowPerformers :performers="event.performers" />
-        <ShowInstances :instances="event.instances" />
+
         <ShowTimetable :time-table="event.time_table" />
       </div>
       <!-- Main -->
       <!-- RightSide -->
       <div class="lg:col-start-10 lg:col-end-13 lg:row-span-2 lg:row-start-1 ">
-        <AreaAdvertisementRecruitment class="size-full" />
+        <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
       </div>
       <div class="mx-auto w-full  lg:col-start-10 lg:col-end-13  lg:row-span-3 lg:row-start-3">
         <aside class="sticky top-12" aria-labelledby="sidebar-right">
@@ -131,9 +144,9 @@ const metaTags = GetEventDetailMetaTags()
                 </template>
               </div>
             </Card>
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
-            <AreaAdvertisementRecruitment class="h-32 w-full" />
+            <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
+            <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
+            <AreaAdvertisementRecruitment class="aspect-[4/3] size-full" />
             <!-- コミュニティスポンサー -->
             <Card class="w-full">
               <template #title>

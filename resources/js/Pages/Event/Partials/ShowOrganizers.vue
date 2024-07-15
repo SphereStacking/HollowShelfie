@@ -17,7 +17,7 @@ defineProps({
     <div class="flex w-full flex-wrap  justify-center gap-2 rounded-xl bg-base-200 p-2">
       <AvatarLink
         v-for="(organizer, index ) in organizers" :key="index" :href="organizer.profile_url"
-        class="tooltip transition-all duration-200 hover:-translate-y-1" :data-tip="organizer.name"
+        :data-tip="organizer.name" size="size-10"
         :image-url="organizer.image_url" :name="organizer.name" />
     </div>
   </div>

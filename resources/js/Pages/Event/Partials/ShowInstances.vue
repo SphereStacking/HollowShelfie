@@ -12,18 +12,18 @@ defineProps({
   <div v-if="instances.length > 0" class="flex w-full flex-col  justify-center">
     <div class="flex flex-row items-center gap-1">
       <IconTypeMapper type="instance" />
-      <div>instance</div>
+      <div>access</div>
     </div>
-    <div class="flex w-full flex-col rounded-xl bg-base-200">
+    <div class="flex w-full flex-col  rounded-xl bg-base-200">
       <template v-for="(instance, index) in instances" :key="index">
-        <div class="flex flex-row gap-2 overflow-hidden p-2">
-          <div class="badge badge-primary">
-            {{ instance.instance_type }}
-          </div>
+        <div
+          class="indicator mr-2 flex w-full flex-row items-center gap-2 p-2">
+          <span class="badge indicator-item badge-primary badge-xs right-5"> {{ instance.instance_type }}</span>
           <component
-            :is="instance.access_url ? 'a' : 'div'"
+            :is="instance.access_url ? 'a' : 'p'"
             :href="instance.access_url || undefined"
-            class=" whitespace-nowra truncate"
+            class="mt-1 break-all text-left text-xs"
+
             :class="{ 'link': instance.access_url }">
             {{ instance.display_name }}
           </component>

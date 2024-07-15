@@ -86,8 +86,14 @@ watch(rowData, () => {
       <!-- head -->
       <thead class="">
         <tr>
-          <td v-for="(col, colIndex) in columDefs" :key="'col-head-' + colIndex" :style="{ width: col['width'] || 'auto', minWidth: col['minWidth'] || 'auto' }">
-            {{ col['headerName'] }}
+          <td
+            v-for="(col, colIndex) in columDefs" :key="'col-head-' + colIndex" class="text-wrap"
+            :style="{ width: col['width'] || 'auto', minWidth: col['minWidth'] || 'auto' }">
+            {{ col['headerTitle'] }}
+            <template v-if="col['headerSubTitle']">
+              <br>
+              <small>{{ col['headerSubTitle'] }}</small>
+            </template>
           </td>
         </tr>
       </thead>
