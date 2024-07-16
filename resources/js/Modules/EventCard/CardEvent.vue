@@ -61,9 +61,13 @@ const isCurrentYear = computed(() => {
           </div>
         </template>
       </Link>
-      <div class="mx-2 mt-0.5 flex flex-row  justify-between ">
-        <Link :href="route('event.show', event.alias)" class="truncate whitespace-nowrap text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
-          {{ event.title }}
+      <div class=" mx-2 mt-0.5  flex flex-row justify-between">
+        <Link
+          :href="route('event.show', event.alias)" :data-tip="event.title"
+          class="tooltip tooltip-top tooltip-accent  whitespace-nowrap text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
+          <p class="truncate">
+            {{ event.title }}
+          </p>
         </Link>
         <div class="flex flex-row gap-1">
           <BtnDropdown width="w-32" class="dropdown-end">
