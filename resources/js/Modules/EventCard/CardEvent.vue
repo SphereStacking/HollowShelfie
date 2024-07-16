@@ -61,41 +61,38 @@ const isCurrentYear = computed(() => {
           </div>
         </template>
       </Link>
-      <div class=" mx-2 mt-0.5  flex flex-row justify-between">
+      <div class="tooltip tooltip-top tooltip-accent mx-2 mt-0.5 flex flex-row justify-between" :data-tip="event.title">
         <Link
-          :href="route('event.show', event.alias)" :data-tip="event.title"
-          class="tooltip tooltip-top tooltip-accent  whitespace-nowrap text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
-          <p class="truncate">
-            {{ event.title }}
-          </p>
+          :href="route('event.show', event.alias)"
+          class="truncate whitespace-nowrap text-left text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
+          {{ event.title }}
         </Link>
-        <div class="flex flex-row gap-1">
-          <BtnDropdown width="w-32" class="dropdown-end">
-            <template #trigger>
-              <button class="btn btn-ghost btn-xs p-0">
-                <IconTypeMapper type="overflowMenu" class="text-xl" />
-              </button>
-            </template>
-            <template #item-0>
-              <BtnSwapEventGood
-                class="btn justify-start"
-                :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count">
-                Good
-              </BtnSwapEventGood>
-            </template>
-            <template #item-1>
-              <BtnSwapEventBookmark class="btn justify-start" :event-id="event.alias" :check="event.auth_user?.is_bookmark">
-                Bookmark
-              </BtnSwapEventBookmark>
-            </template>
-            <template #item-2>
-              <button class="btn btn-xs justify-start px-1" @click="emit('share')">
-                <IconTypeMapper type="share" class="text-lg" />
-                Share
-              </button>
-            </template>
-          </BtnDropdown>
-        </div>
+
+        <BtnDropdown width="w-32" class="dropdown-end">
+          <template #trigger>
+            <button class="btn btn-ghost btn-xs p-0">
+              <IconTypeMapper type="overflowMenu" class="text-xl" />
+            </button>
+          </template>
+          <template #item-0>
+            <BtnSwapEventGood
+              class="btn justify-start"
+              :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count">
+              Good
+            </BtnSwapEventGood>
+          </template>
+          <template #item-1>
+            <BtnSwapEventBookmark class="btn justify-start" :event-id="event.alias" :check="event.auth_user?.is_bookmark">
+              Bookmark
+            </BtnSwapEventBookmark>
+          </template>
+          <template #item-2>
+            <button class="btn btn-xs justify-start px-1" @click="emit('share')">
+              <IconTypeMapper type="share" class="text-lg" />
+              Share
+            </button>
+          </template>
+        </BtnDropdown>
       </div>
 
       <div class="mx-2 flex items-center justify-between gap-1 text-xs font-thin">
