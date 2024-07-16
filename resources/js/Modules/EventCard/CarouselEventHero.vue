@@ -1,5 +1,6 @@
 <script setup>
 import { format } from 'date-fns'
+import { Link } from '@inertiajs/vue3'
 
 defineProps({
   events: {
@@ -35,9 +36,12 @@ defineProps({
                     show-count />
                 </div>
               </div>
-
-              <h2 class="break-words text-5xl font-bold lg:text-6xl">
-                {{ element.title }}
+              <h2>
+                <Link
+                  :href="route('event.show', element.alias)"
+                  class="break-words text-5xl font-bold transition-all duration-200 hover:text-accent hover:underline lg:text-6xl">
+                  {{ element.title }}
+                </Link>
               </h2>
               <!-- category -->
               <div v-if="element.category_names.length > 0" class="flex flex-row items-start gap-1">
