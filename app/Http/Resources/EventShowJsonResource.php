@@ -24,7 +24,12 @@ class EventShowJsonResource extends JsonResource
             'category_names' => $this->resource->categories->pluck('name')->toArray(),
             'tags' => $this->resource->tags->pluck('name')->toArray(),
             'status' => $this->resource->status,
-            'create_user' => $this->resource->event_create_user,
+            'create_user' => [
+                'id' => $this->resource->event_create_user->id,
+                'profile_url' => $this->resource->event_create_user->profile_url,
+                'name' => $this->resource->event_create_user->name,
+                'image_url' => $this->resource->event_create_user->profile_photo_url,
+            ],
             'start_date' => $this->resource->start_date,
             'end_date' => $this->resource->end_date,
             'good_count' => $this->resource->good_count,
