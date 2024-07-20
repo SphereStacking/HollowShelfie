@@ -8,11 +8,15 @@ const props = defineProps({
     required: true,
   },
   startDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   endDate: {
-    type: Date,
+    type: String,
+    required: true,
+  },
+  columnWidthRem: {
+    type: Number,
     required: true,
   },
 })
@@ -24,6 +28,9 @@ const scrollLeft = ref(0)
 const scrollTop = ref(0)
 const modalEventShare = ref(null)
 
+/**
+ * ドラッグ開始時の処理
+ */
 const startDragging = (event) => {
   isDragging.value = true
   startX.value = event.pageX - event.currentTarget.offsetLeft
@@ -32,10 +39,16 @@ const startDragging = (event) => {
   scrollTop.value = event.currentTarget.scrollTop
 }
 
+/**
+ * ドラッグ終了時の処理
+ */
 const stopDragging = () => {
   isDragging.value = false
 }
 
+/**
+ * マウス移動時の処理
+ */
 const handleMouseMove = (event) => {
   if (!isDragging.value) return
   const x = event.pageX - event.currentTarget.offsetLeft
@@ -60,6 +73,9 @@ const hoursBetween = computed(() => {
   return differenceInMinutes(endDate.value, startDate.value) / EVENT_ITEM_MINUTE_SPAN + 1
 })
 
+/**
+ * グリッドの位置を計算する
+ */
 const calculateGridPosition = (eventStartDate, eventEndDate) => {
   const baseStartDate = new Date(props.startDate)
   const eventStartDateTime = new Date(eventStartDate)
@@ -75,6 +91,9 @@ const calculateGridPosition = (eventStartDate, eventEndDate) => {
   return output
 }
 
+/**
+ * タイムラインアイテムを計算する
+ */
 const timeLineItems = computed<TimeLineItem[]>(() => {
   return props.events.map((event:any) => {
     return {
@@ -99,10 +118,16 @@ const timeLineItems = computed<TimeLineItem[]>(() => {
   })
 })
 
+/**
+ * グリッドのカラムスパンを取得する
+ */
 const getGridColumnSpan = (startDate, endDate) => {
   return `gridColumn: ${calculateGridPosition(startDate, endDate).start} / span ${calculateGridPosition(startDate, endDate).span}`
 }
 
+/**
+ * イベントを共有する
+ */
 const shareEvent = (event) => {
   const targetEvent = props.events.find((e) => e.alias === event.alias)
   modalEventShare.value.onBtnOpenModal(targetEvent)
@@ -111,8 +136,8 @@ const shareEvent = (event) => {
 
 <template>
   <div
-    :style="`grid-template-columns: repeat(${hoursBetween},1rem);`"
-    class="grid select-none grid-flow-dense gap-1 overflow-y-auto p-4 scrollbar-hide"
+    :style="`grid-template-columns: repeat(${hoursBetween}, ${columnWidthRem}rem); grid-template-rows: repeat(auto-fill, 2rem);`"
+    class="grid h-screen select-none grid-flow-dense gap-1 overflow-y-auto scrollbar-hide"
     @mousedown="startDragging"
     @mouseup="stopDragging"
     @mouseleave="stopDragging"
@@ -121,7 +146,7 @@ const shareEvent = (event) => {
     <TimeLineHeader :columns-per-hour="COLUMNS_PER_HOUR" :start-date="startDate" :end-date="endDate" />
     <TimeLineItem
       v-for="event in timeLineItems"
-      :key="event" :style="getGridColumnSpan(event.startDate, event.endDate)"
+      :key="event" :style="getGridColumnSpan(event.startDate, event.endDate)" class=" row-span-3"
       :time-line-item="event"
       @share="shareEvent(event)" />
   </div>

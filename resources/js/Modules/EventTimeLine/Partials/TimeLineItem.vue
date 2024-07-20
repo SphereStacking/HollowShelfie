@@ -51,33 +51,36 @@ const emit = defineEmits(['share'])
 </script>
 
 <template>
-  <div class="rounded-md bg-base-200 p-2 text-base-content" @click="console.debug(timeLineItem)">
-    <div class="flex flex-row justify-between">
-      <div class="flex flex-row gap-2">
-        <Link v-for="organizer in timeLineItem.organizers" :key="organizer.id" :href="organizer.profile_url">
-          <img :src="organizer.image_url" class="h-6 rounded-md">
-        </Link>
-      </div>
-      <Link :href="timeLineItem.route" class="transition-all duration-200 hover:text-accent hover:underline ">
+  <div class="flex flex-col justify-between gap-1 rounded-xl border border-neutral bg-base-200 p-2 text-base-content" @click="console.debug(timeLineItem)">
+    <div class="w-full">
+      <span class="sticky left-1">
+        <AvatarLink
+          v-for="(organizer, index ) in timeLineItem.organizers"
+          :key="index"
+          class="mr-1"
+          :href="organizer.profile_url"
+          :data-tip="organizer.name"
+          size="size-6"
+          rounded="rounded-lg"
+          :image-url="organizer.image_url" :name="organizer.name" />
+      </span>
+    </div>
+    <div class="tooltip flex flex-row items-center justify-between" :data-tip="timeLineItem.title">
+      <Link :href="timeLineItem.route" class="sticky left-1 truncate transition-all duration-200 hover:text-accent hover:underline ">
         {{ timeLineItem.title }}
       </Link>
-      <div>
-        <BtnDropDownOther
-          :event-alias="timeLineItem.alias"
-          :good="good" :bookmark="bookmark"
-          @share="emit('share')" />
-      </div>
     </div>
     <div
       class="grid select-none grid-flow-dense gap-1"
       :style="`grid-template-columns: repeat(${calculateTotalColumns(timeLineItem.startDate, timeLineItem.endDate)}, minmax(0, 1fr));`">
-      <template v-for="item in timeLineItem.timeTable" :key="item.id">
-        <TimeLineItemPerformers
-          v-if="item.performers.length > 0"
-          :style="calculateGridSpan(item.start_date, item.end_date)"
-          :performers="item.performers"
-          @click="console.debug(item.start_date,item.end_date)" />
-      </template>
+      <div
+        v-for="(item, index) in timeLineItem.timeTable" :key="index"
+        :style="calculateGridSpan(item.start_date, item.end_date)"
+        class="tooltip rounded-lg bg-neutral p-1" :data-tip="item.description">
+        <p class="truncate text-xs">
+          {{ item.description }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

@@ -18,6 +18,10 @@ defineProps({
     type: String,
     default: 'size-20',
   },
+  rounded: {
+    type: String,
+    default: 'rounded-xl',
+  },
 })
 
 </script>
@@ -26,7 +30,7 @@ defineProps({
     :href="href"
     class="avatar tooltip transition-all duration-200 hover:-translate-y-1"
     :data-tip="name">
-    <div class="rounded-xl" :class="size">
+    <div :class="[rounded, size]">
       <img :src="imageUrl" class="">
     </div>
   </Link>
