@@ -96,7 +96,7 @@ onMounted(() => {
         </transition-group>
       </div>
     </PaginationLayout>
-    <ModalEventShareConfirm ref="modalEventShare" mode="admin" />
+    <ModalEventShareConfirm ref="modalEventShare" />
     <ModalEventDestroyConfirm ref="modalEventDestroy" />
     <ModalEventDuplicateConfirm ref="modalEventDuplicate" />
   </AppLayout>

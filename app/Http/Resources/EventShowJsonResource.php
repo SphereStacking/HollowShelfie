@@ -114,8 +114,8 @@ class EventShowJsonResource extends JsonResource
             'auth_user' => [
                 'is_good' => $this->resource->is_good ?? false,
                 'is_bookmark' => $this->resource->is_bookmark ?? false,
+                'is_owner' => $this->resource->is_owner ?? false,
             ],
-
         ];
     }
 }

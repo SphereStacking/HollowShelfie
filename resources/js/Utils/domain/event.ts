@@ -31,12 +31,39 @@ export const _eventPeriod = (startDate: string, endDate: string) => {
 type EventShareTextProps = {
   title: string
   period: string
+  platformNames: string[]
   instanceNames: string[]
   organizerNames: string[]
   performerNames: string[]
   categoryNames: string[]
   tags: string[]
   url: string
+}
+
+export const generateEventAdminShareText = (props: EventShareTextProps) => {
+  const appName = import.meta.env.VITE_APP_NAME || 'HollowShelfie'
+  const formattedCategories = props.categoryNames.map(category =>
+    category.startsWith('#') ? category : `#${category}`
+  ).join(' ')
+  const formattedTags = props.tags.map(tag =>
+    tag.startsWith('#') ? tag : `#${tag}`
+  ).join(' ')
+  const platformNames = props.platformNames.map(platform =>
+    platform.startsWith('#') ? platform : `#${platform}`
+  ).join(' ')
+  return '🎉 新しいイベントが公開されました！ 🎉\n' +
+   '\n' +
+   `✨ : ${props.title}\n` +
+   `📅 : ${props.period}\n` +
+   `🌐 : ${platformNames}\n` +
+   `📍 : ${props.instanceNames.join(' ')}\n` +
+   `👥 : ${props.organizerNames.join(' ')}\n` +
+   `🎤 : ${props.performerNames.join(' ')}\n` +
+   `🎨 : ${formattedCategories}\n` +
+   `🏷 : ${formattedTags}\n` +
+   '\n' +
+   '詳細は 👻#' + appName + ' で！ 👇\n' +
+   `${props.url}`
 }
 
 export const generateEventOrganizerShareText = (props: EventShareTextProps) => {
@@ -47,13 +74,17 @@ export const generateEventOrganizerShareText = (props: EventShareTextProps) => {
   const formattedTags = props.tags.map(tag =>
     tag.startsWith('#') ? tag : `#${tag}`
   ).join(' ')
+  const platformNames = props.platformNames.map(platform =>
+    platform.startsWith('#') ? platform : `#${platform}`
+  ).join(' ')
   return `[ --- 👻 #${appName} --- ] \n` +
    `✨ ${props.title}\n` +
-   `🗓 ${props.period}\n` +
+   `📅 ${props.period}\n` +
+   `🌐 ${platformNames}\n` +
    `📍 ${props.instanceNames.join(' ')}\n` +
    `👥 ${props.organizerNames.join(' ')}\n` +
    `🎤 ${props.performerNames.join(' ')}\n` +
-   `🧺 ${formattedCategories}\n` +
+   `🎨 ${formattedCategories}\n` +
    `🏷 ${formattedTags}\n` +
    '\n' +
    `${props.url}`
@@ -61,20 +92,21 @@ export const generateEventOrganizerShareText = (props: EventShareTextProps) => {
 
 export const generateEventParticipantShareText = (props: EventShareTextProps) => {
   const appName = import.meta.env.VITE_APP_NAME || 'HollowShelfie'
-
   const formattedCategories = props.categoryNames.map(category =>
     category.startsWith('#') ? category : `#${category}`
   ).join(' ')
-
   const formattedTags = props.tags.map(tag =>
     tag.startsWith('#') ? tag : `#${tag}`
   ).join(' ')
-
+  const platformNames = props.platformNames.map(platform =>
+    platform.startsWith('#') ? platform : `#${platform}`
+  ).join(' ')
   return `${props.title}  に参加します！\n` +
    '一緒に参加しませんか？\n' +
    '\n' +
-   `🗓 ${props.period}\n` +
-   `🧺 ${formattedCategories}\n` +
+   `📅 ${props.period}\n` +
+   `🌐 ${platformNames}\n` +
+   `🎨 ${formattedCategories}\n` +
    `🏷 ${formattedTags}\n` +
    '\n' +
    '詳細は 👻#' + appName + ' で！ 👇\n' +

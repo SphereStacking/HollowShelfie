@@ -1,8 +1,9 @@
 <script setup>
 import { openShareWindow } from '@/Utils/share'
-import { generateEventOrganizerShareText, generateEventParticipantShareText } from '@/Utils/domain/event'
+import {generateEventAdminShareText, generateEventOrganizerShareText, generateEventParticipantShareText } from '@/Utils/domain/event'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 import { _eventPeriod } from '@/Utils/domain/event'
+import { userHasPermission } from '@/Utils/domain/user'
 
 const IsOpenModal = ref(false)
 const item = ref({})
@@ -11,20 +12,26 @@ const modalConfig = ref({
   text: ''
 })
 
-const props = defineProps({
-  mode: {
-    type: String,
-    required: true,
-    validator: (value) => ['admin', 'participant'].includes(value)
-  }
-})
-
 const generateShareText = (newItem) => {
-  if (props.mode === 'admin') {
-    modalConfig.value.title = ' SNSへ告知を投稿しますか？'
+  if (userHasPermission('event-announcement-publisher')){
+    modalConfig.value.title = '告知用のPostを投稿しますか?'
+    return generateEventAdminShareText({
+      title: newItem.title || '',
+      period: _eventPeriod(newItem.start_date, newItem.end_date),
+      platformNames: newItem.instances.map((instance) => instance.instance_type) || [],
+      instanceNames: newItem.instances.map((instance) => instance.display_name) || [],
+      organizerNames: newItem.organizers.map((organizer) => organizer.name) || [],
+      performerNames: newItem.performers.map((performer) => performer.name) || [],
+      categoryNames: newItem.category_names || [],
+      tags: newItem.tags || [],
+      url: route('event.show', newItem.alias) || ''
+    })
+  } else if (newItem.auth_user.is_owner){
+    modalConfig.value.title = '告知用のPostを投稿しますか?'
     return generateEventOrganizerShareText({
       title: newItem.title || '',
       period: _eventPeriod(newItem.start_date, newItem.end_date),
+      platformNames: newItem.instances.map((instance) => instance.instance_type) || [],
       instanceNames: newItem.instances.map((instance) => instance.display_name) || [],
       organizerNames: newItem.organizers.map((organizer) => organizer.name) || [],
       performerNames: newItem.performers.map((performer) => performer.name) || [],
@@ -36,6 +43,8 @@ const generateShareText = (newItem) => {
     modalConfig.value.title = 'イベントへの参加を表明しますか？'
     return generateEventParticipantShareText({
       title: newItem.title || '',
+      platformNames: newItem.instances.map((instance) => instance.instance_type) || [],
+      instanceNames: newItem.instances.map((instance) => instance.display_name) || [],
       period: _eventPeriod(newItem.start_date, newItem.end_date),
       categoryNames: newItem.category_names || [],
       tags: newItem.tags || [],

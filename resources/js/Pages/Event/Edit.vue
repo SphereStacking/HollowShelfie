@@ -12,7 +12,7 @@ const openModal = (value) => { modal.value.onBtnOpenModal(value) }
 
 <template>
   <AppLayout title="Event Edit">
-    <ModalEventShareConfirm ref="modalEventShare" mode="admin" />
+    <ModalEventShareConfirm ref="modalEventShare" />
     <template #header>
       <h2 class="text-xl font-semibold  leading-tight text-base-content">
         Event Edit

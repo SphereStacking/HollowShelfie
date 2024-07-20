@@ -57,7 +57,7 @@ const RawSearchForm = markRaw(SearchForm)
 
 <template>
   <AppLayout title="Event Search">
-    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
+    <ModalEventShareConfirm ref="modalEventShare" />
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
         Event Search
