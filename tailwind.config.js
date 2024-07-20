@@ -55,8 +55,12 @@ export default {
                 marginBottom: '0 !important',
               },
             },
-            // リストの前の要素のマージンを設定
-            'p, h1, h2, h3, h4, h5, h6': {
+            'h1, h2, h3, h4': {
+              marginBottom: '0.5rem !important',
+              marginTop: '1rem !important',
+              minHeight: '20px !important',
+            },
+            'p, h5, h6': {
               marginBottom: '0 !important',
               marginTop: '0 !important',
               minHeight: '20px !important',
