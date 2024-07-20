@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers\Markdown;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
 
 class MarkdownPageBaseController extends Controller
 {
     protected function getPage($category, $page)
     {
-        if (! File::exists(resource_path("markdown/{$category}/{$page}.md"))) {
+        $viewPath = "markdown.{$category}.{$page}";
+
+        if (! View::exists($viewPath)) {
             abort(404);
         }
 
-        $content = File::get(resource_path("markdown/{$category}/{$page}.md"));
+        // Bladeテンプレートをコンパイルして内容を取得
+        $content = view($viewPath)->render();
 
         return Inertia::render('Markdown/Index', [
             'title' => $page,
