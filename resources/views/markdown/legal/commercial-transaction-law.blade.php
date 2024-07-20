@@ -5,7 +5,7 @@
 
 請求を頂ければ遅滞なく開示いたします。
 
-<a href="mailto:hollowshelfie@gmail.com">hollowshelfie@gmail.com</a>
+<a href="mailto:{{ config('app.contact') }}">{{ config('app.contact') }}</a>
 
 ## 役務の対価
 
@@ -33,4 +33,6 @@
 
 ## 対応機種
 
-Chrome/Safari/FireFox/Edge/iOS Safari/Android Chromeの各最新版
+- Chromeの各新版
+
+なお、上記以外のブラウザでも動作する可能性がありますが、完全な動作保証はいたしかねますのでご了承ください。

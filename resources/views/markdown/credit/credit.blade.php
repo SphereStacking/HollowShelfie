@@ -1,23 +1,23 @@
 # Credit
 
-多数の方々のおかげで私のプロジェクトを進めることができました。  
+多数の方々のおかげで私のプロジェクトを進めることができました。
 心より感謝申し上げます。
 
 ---
 
 ## 特別な感謝
 
-- **[Saina](https://x.com/SainaKey)さん**  
+- **[Saina](https://x.com/SainaKey)さん**
   早期からの支援と多くのフィードバックありがとうございます！
-- **[Coma](https://x.com/ComaPre)さん**  
+- **[Coma](https://x.com/ComaPre)さん**
   早期からの支援ありがとうございます！
 - **[ROCKsolidJP](https://x.com/ROCKsolidJP)さん**
   デモ用にfryer画像お貸しいただきありがとうございました！
-- **TOさん**  
+- **TOさん**
   ドキュメントレビューありがとうございます！
-- **[SAWARATSUKI](https://github.com/SAWARATSUKI)さん**  
+- **[SAWARATSUKI](https://github.com/SAWARATSUKI)さん**
   レスポンスコードお借りします！
-- **下記すべてのライブラリの作成者様**  
+- **下記すべてのライブラリの作成者様**
   素晴らしいリソースを提供していただき、ありがとうございます！
 
 ### ライブラリ

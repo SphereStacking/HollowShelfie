@@ -12,7 +12,8 @@ const pages = {
   About: [
     { component: Link, url: route('about', 'app'), label: appName, target: '_self' },
     { component: Link, url: route('about', 'operation'), label: '運営', target: '_self' },
-    { component: Link, url: route('about', 'advertisement'), label: '広告掲載', target: '_self' }
+    { component: Link, url: route('about', 'advertisement'), label: '広告掲載', target: '_self' },
+    { component: Link, url: route('about', 'patron'), label: '支援', target: '_self' }
   ],
   // しばらくは必要ないためコメントアウト
   // Guides: [
