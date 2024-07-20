@@ -16,7 +16,7 @@ const hasEvents = computed(() => {
 </script>
 <template>
   <div v-if="hasEvents">
-    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
+    <ModalEventShareConfirm ref="modalEventShare" />
     <div class="divider divider-end mt-5 w-full text-2xl font-bold">
       <div>
         <IconTypeMapper type="event" />

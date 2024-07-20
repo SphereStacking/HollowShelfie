@@ -13,7 +13,7 @@ const props = defineProps({
 
 <template>
   <AppLayout title="Dashboard">
-    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
+    <ModalEventShareConfirm ref="modalEventShare" />
     <template #header>
       <h2 class="text-xl font-semibold leading-tight ">
         Bookmark

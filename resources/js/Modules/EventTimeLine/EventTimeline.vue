@@ -117,7 +117,7 @@ const shareEvent = (event) => {
     @mouseup="stopDragging"
     @mouseleave="stopDragging"
     @mousemove="handleMouseMove">
-    <ModalEventShareConfirm ref="modalEventShare" mode="participant" />
+    <ModalEventShareConfirm ref="modalEventShare" />
     <TimeLineHeader :columns-per-hour="COLUMNS_PER_HOUR" :start-date="startDate" :end-date="endDate" />
     <TimeLineItem
       v-for="event in timeLineItems"

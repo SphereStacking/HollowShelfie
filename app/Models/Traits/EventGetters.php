@@ -41,6 +41,16 @@ trait EventGetters
     }
 
     /**
+     * ユーザーがイベントを"good"しているか確認
+     */
+    public function getIsOwnerAttribute(): bool
+    {
+        $user = Auth::user();
+
+        return $user ? $user->id === $this->event_create_user_id : false;
+    }
+
+    /**
      * 関連付けられているカテゴリの中から最初の名前を返す
      */
     public function getCategoryNameAttribute(): ?string
