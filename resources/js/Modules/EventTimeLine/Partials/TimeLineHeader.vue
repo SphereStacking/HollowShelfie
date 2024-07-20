@@ -51,7 +51,7 @@ const timeRanges = computed(() => {
         {{ timeRange.date }}
       </div>
     </div>
-    <div v-for="hour in timeRange.hours" :key="hour" class="sticky top-auto col-span-4 row-start-2 rounded-md bg-base-300 py-1 text-center">
+    <div v-for="hour in timeRange.hours" :key="hour" class="sticky top-auto col-span-4 row-start-2 rounded-lg border border-neutral bg-base-300 py-1 text-center">
       {{ hour }}
     </div>
   </template>

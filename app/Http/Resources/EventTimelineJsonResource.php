@@ -32,6 +32,21 @@ class EventTimelineJsonResource extends JsonResource
                         'public_url' => $file->public_url,
                     ];
                 }),
+                'performers' => $item->event_time_tables->flatMap(function ($time_table) {
+                    return $time_table->performers;
+                })->unique(function ($performer) {
+                    return $performer->performable_type.$performer->performable_id;
+                })->map(function ($performer) {
+                    return [
+                        'id' => $performer->performable_id,
+                        'profile_url' => $performer->performable->profile_url,
+                        'name' => $performer->performable->name,
+                        'type' => $performer->performable_type,
+                        'image_url' => $performer->performable_type === User::class
+                            ? $performer->performable->profile_photo_url
+                            : $performer->performable->team_logo_url,
+                    ];
+                }),
                 'organizers' => $item->organizers->map(function ($organizeble) {
                     return [
                         'profile_url' => $organizeble->event_organizeble->profile_url,
