@@ -34,6 +34,9 @@ export const ItemsConfig = {
     icon: 'mdi:calendar',
     buttonClass: 'btn-info'
   },
+  admin: {
+    icon: 'mdi:administrator',
+  },
   calendar: {
     icon: 'mdi:calendar',
     buttonClass: 'btn-info'
