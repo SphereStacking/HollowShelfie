@@ -20,6 +20,8 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Resources\UserResource\Widgets\UserCountStatsOverview;
+use App\Filament\Resources\UserResource\Widgets\EventCountStatsOverview;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -42,6 +44,8 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                UserCountStatsOverview::class,
+                EventCountStatsOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
