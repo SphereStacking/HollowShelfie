@@ -5,6 +5,10 @@ const props = defineProps({
     type: String,
     default: 'w-52',
   },
+  zIndex: {
+    type: String,
+    default: 'z-10',
+  },
 })
 </script>
 
@@ -18,11 +22,8 @@ const props = defineProps({
       </slot>
     </div>
 
-    <ul tabindex="0" class="menu dropdown-content z-[1] rounded-box border border-neutral bg-base-200 p-2 shadow" :class="[width]">
-      <!-- slot名 item-0, item-1, item-2, ... -->
-      <li v-for="(item, index) in Object.keys($slots).filter(slotName => slotName.startsWith('item-'))" :key="index">
-        <slot :name="item"></slot>
-      </li>
+    <ul tabindex="0" class="menu dropdown-content rounded-box border border-neutral bg-base-200 p-2 shadow" :class="[width, zIndex]">
+      <slot></slot>
     </ul>
   </div>
 </template>

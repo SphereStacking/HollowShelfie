@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { format, addHours, eachDayOfInterval} from 'date-fns'
-import { parseToBrowserTz } from '@/Utils/Date'
 
 const props = defineProps({
   columnsPerHour: {
@@ -46,12 +45,14 @@ const timeRanges = computed(() => {
 
 <template>
   <template v-for="timeRange in timeRanges" :key="timeRange">
-    <div class="row-start-1 w-full" :style="` grid-column: span ${timeRange.hours.length * columnsPerHour} / span ${timeRange.hours.length * columnsPerHour}; `">
-      <div class="sticky left-0 mr-2 inline text-nowrap text-xl">
+    <div :id="`date-${timeRange.date}`" class="row-start-1 w-full" :style="` grid-column: span ${timeRange.hours.length * columnsPerHour} / span ${timeRange.hours.length * columnsPerHour}; `">
+      <div class="sticky left-2 mr-5 inline text-nowrap text-xl">
         {{ timeRange.date }}
       </div>
     </div>
-    <div v-for="hour in timeRange.hours" :key="hour" class="sticky top-auto col-span-4 row-start-2 rounded-lg border border-neutral bg-base-300 py-1 text-center">
+    <div
+      v-for="hour in timeRange.hours" :id="`date-${timeRange.date}-${hour}`" :key="hour"
+      class="sticky top-auto col-span-4 row-start-2 rounded-lg border border-neutral bg-base-300 py-1 text-center">
       {{ hour }}
     </div>
   </template>

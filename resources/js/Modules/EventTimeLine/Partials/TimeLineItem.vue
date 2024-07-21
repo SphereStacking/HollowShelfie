@@ -2,7 +2,6 @@
 import { differenceInMinutes } from 'date-fns'
 import { parseToBrowserTz } from '@/Utils/Date'
 import type { TimeLineItem } from '../EventTimeLineTypes'
-import { Good, Bookmark } from '../../EventOtherBtn/BtnDropDownOtherTypes'
 import { Link } from '@inertiajs/vue3'
 
 type Props = {
@@ -39,15 +38,6 @@ const calculateGridSpan = (startDate, endDate) => {
   return `grid-column: ${startColumn} / ${endColumn};`
 }
 
-const good: Good = {
-  isGood: props.timeLineItem.authUser.isGood,
-  goodCount: props.timeLineItem.shortGoodCount,
-}
-const bookmark: Bookmark = {
-  isBookmark: props.timeLineItem.authUser.isBookmark,
-}
-
-const emit = defineEmits(['share'])
 </script>
 
 <template>

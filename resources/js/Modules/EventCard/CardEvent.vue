@@ -74,24 +74,24 @@ const isCurrentYear = computed(() => {
               <IconTypeMapper type="overflowMenu" class="text-xl" />
             </button>
           </template>
-          <template #item-0>
+          <BtnDropdownItem>
             <BtnSwapEventGood
               class="btn justify-start"
               :event-id="event.alias" :check="event.auth_user?.is_good" :count="event.short_good_count">
               Good
             </BtnSwapEventGood>
-          </template>
-          <template #item-1>
+          </BtnDropdownItem>
+          <BtnDropdownItem>
             <BtnSwapEventBookmark class="btn justify-start" :event-id="event.alias" :check="event.auth_user?.is_bookmark">
               Bookmark
             </BtnSwapEventBookmark>
-          </template>
-          <template #item-2>
+          </BtnDropdownItem>
+          <BtnDropdownItem>
             <button class="btn btn-xs justify-start px-1" @click="emit('share')">
               <IconTypeMapper type="share" class="text-lg" />
               Share
             </button>
-          </template>
+          </BtnDropdownItem>
         </BtnDropdown>
       </div>
 
