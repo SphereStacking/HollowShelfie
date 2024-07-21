@@ -50,8 +50,8 @@ const headerButtons = [
     label: 'Dashboard',
   },
   {
-    href: route('event.timeline.show'),
-    active: route().current('event.timeline.show'),
+    href: route('event.timeline.index'),
+    active: route().current('event.timeline.index'),
     icon: 'timeline',
     label: 'Timeline',
   },
