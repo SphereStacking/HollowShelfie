@@ -21,43 +21,7 @@ const props = defineProps({
   },
 })
 
-const isDragging = ref(false)
-const startX = ref(0)
-const startY = ref(0)
-const scrollLeft = ref(0)
-const scrollTop = ref(0)
 const modalEventShare = ref(null)
-
-/**
- * ドラッグ開始時の処理
- */
-const startDragging = (event) => {
-  isDragging.value = true
-  startX.value = event.pageX - event.currentTarget.offsetLeft
-  startY.value = event.pageY - event.currentTarget.offsetTop
-  scrollLeft.value = event.currentTarget.scrollLeft
-  scrollTop.value = event.currentTarget.scrollTop
-}
-
-/**
- * ドラッグ終了時の処理
- */
-const stopDragging = () => {
-  isDragging.value = false
-}
-
-/**
- * マウス移動時の処理
- */
-const handleMouseMove = (event) => {
-  if (!isDragging.value) return
-  const x = event.pageX - event.currentTarget.offsetLeft
-  const y = event.pageY - event.currentTarget.offsetTop
-  const walkX = (x - startX.value) * 2 // 横スクロール速度を調整
-  const walkY = (y - startY.value) * 2 // 縦スクロール速度を調整
-  event.currentTarget.scrollLeft = scrollLeft.value - walkX
-  event.currentTarget.scrollTop = scrollTop.value - walkY
-}
 
 //-----------------------------------------------
 const EVENT_ITEM_MINUTE_SPAN = 15
@@ -135,20 +99,23 @@ const shareEvent = (event) => {
 </script>
 
 <template>
-  <div
-    :style="`grid-template-columns: repeat(${hoursBetween}, ${columnWidthRem}rem); grid-template-rows: repeat(auto-fill, 2rem);`"
-    class="grid h-screen select-none grid-flow-dense gap-1 overflow-y-auto scrollbar-hide"
-    @mousedown="startDragging"
-    @mouseup="stopDragging"
-    @mouseleave="stopDragging"
-    @mousemove="handleMouseMove">
-    <ModalEventShareConfirm ref="modalEventShare" />
-    <TimeLineHeader :columns-per-hour="COLUMNS_PER_HOUR" :start-date="startDate" :end-date="endDate" />
-    <TimeLineItem
-      v-for="event in timeLineItems"
-      :key="event" :style="getGridColumnSpan(event.startDate, event.endDate)" class=" row-span-3"
-      :time-line-item="event"
-      @share="shareEvent(event)" />
+  <div class="h-full">
+    <div
+      :style="`grid-template-columns: repeat(${hoursBetween}, ${columnWidthRem}rem); grid-template-rows: repeat(auto-fill, 2rem);`"
+      class="sticky top-0 z-20 grid w-fit select-none grid-flow-dense gap-1 rounded-md bg-base-300 px-1 pb-1">
+      <TimeLineHeader :columns-per-hour="COLUMNS_PER_HOUR" :start-date="startDate" :end-date="endDate" />
+    </div>
+
+    <div
+      :style="`grid-template-columns: repeat(${hoursBetween}, ${columnWidthRem}rem); grid-template-rows: repeat(auto-fill, 2rem);`"
+      class="mt-1 grid h-full select-none  grid-flow-dense gap-1 px-1">
+      <ModalEventShareConfirm ref="modalEventShare" />
+      <TimeLineItem
+        v-for="event in timeLineItems"
+        :key="event" :style="getGridColumnSpan(event.startDate, event.endDate)" class="row-span-3"
+        :time-line-item="event"
+        @share="shareEvent(event)" />
+    </div>
   </div>
 </template>
 

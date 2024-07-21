@@ -36,18 +36,18 @@ const props = defineProps({
         <IconTypeMapper type="calendarAdd" class="text-xl" />
       </button>
     </template>
-    <template #item-0>
+    <BtnDropdownItem>
       <CalendarEventCreateGoogle
         :title="title" :dates="dates" :description="description"
         :links="links"
         :location="location" />
-    </template>
-    <template #item-1>
+    </BtnDropdownItem>
+    <BtnDropdownItem>
       <CalendarEventCreateIcalendar
         :title="title" :dates="dates" :description="description"
         :links="links"
         :location="location" />
-    </template>
+    </BtnDropdownItem>
   </BtnDropdown>
 </template>
 

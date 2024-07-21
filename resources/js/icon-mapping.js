@@ -34,9 +34,16 @@ export const ItemsConfig = {
     icon: 'mdi:calendar',
     buttonClass: 'btn-info'
   },
+  calendar: {
+    icon: 'mdi:calendar',
+    buttonClass: 'btn-info'
+  },
   other: {
     icon: 'mdi:dots-hexagon',
     buttonClass: 'btn-info'
+  },
+  timelineToCurrentTime: {
+    icon: 'mdi:format-horizontal-align-center',
   },
   template: {
     icon: 'mdi:file-document-outline',
@@ -198,6 +205,9 @@ export const ItemsConfig = {
     icon: 'mdi:information-outline',
   },
   clear: {
+    icon: 'mdi:broom',
+  },
+  reset: {
     icon: 'mdi:broom',
   },
   help: {

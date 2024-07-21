@@ -80,12 +80,12 @@ const RawSearchForm = markRaw(SearchForm)
               </div>
             </div>
           </template>
-          <template v-for="(orderItem, index) in orderMaps" #[`item-${index}`] :key="index">
+          <BtnDropdownItem v-for="(orderItem, index) in orderMaps" :key="index">
             <div @click="order = orderItem; executeSearch()">
               <IconTypeMapper :type="orderItem.icon" class="text-xl transition-all" />
               {{ orderItem.label }}
             </div>
-          </template>
+          </BtnDropdownItem>
         </BtnDropdown>
       </template>
       <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">

@@ -93,7 +93,7 @@ Route::get('/tag/suggestion', GetTagSuggestionController::class)->name('tag.sugg
 Route::get('/mention/search', GetMentionSuggestionController::class)->name('mention.suggestion');
 
 Route::get('/event/{alias}/show', ShowEventController::class)->name('event.show');
-Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.show');
+Route::get('/event/timeline', GetTimeLineEventController::class)->name('event.timeline.index');
 
 
 Route::get('/about/{about}', GetAboutPageController::class)->name('about');

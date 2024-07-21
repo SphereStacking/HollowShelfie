@@ -16,7 +16,7 @@ class GetTimeLineEventController extends Controller
     {
         // リクエストから開始日と終了日を取得、もしくはデフォルト値を設定
         $startDate = $request->has('start_date') ? Carbon::parse($request->input('start_date')) : Carbon::now()->subHours(3);
-        $endDate = $request->has('end_date') ? Carbon::parse($request->input('end_date')) : Carbon::now()->addHours(24);
+        $endDate = $request->has('end_date') ? Carbon::parse($request->input('end_date')) : Carbon::now()->addDays(7);
 
         // 指定された日付範囲でイベントを取得
         $events = Event::with(['event_time_tables.performers.performable'])

@@ -17,16 +17,16 @@ const emit = defineEmits(['share'])
         <IconTypeMapper type="overflowMenu" class="text-xl" />
       </button>
     </template>
-    <template #item-0>
+    <BtnDropdownItem>
       <BtnSwapEventGood
         :event-id="eventAlias" :check="!good.isGood"
         show-count />
-    </template>
-    <template #item-1>
+    </BtnDropdownItem>
+    <BtnDropdownItem>
       <button class="btn btn-xs" @click="emit('share')">
         <IconTypeMapper type="share" class="text-xl" />
       </button>
-    </template>
+    </BtnDropdownItem>
   </BtnDropdown>
 </template>
 

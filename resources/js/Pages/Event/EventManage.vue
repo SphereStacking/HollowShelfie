@@ -77,12 +77,12 @@ onMounted(() => {
               </div>
             </div>
           </template>
-          <template v-for="(orderItem, index) in orderMaps" #[`item-${index}`] :key="index">
+          <BtnDropdownItem v-for="(orderItem, index) in orderMaps" :key="index">
             <div @click="order = orderItem; executeSearch()">
               <IconTypeMapper :type="orderItem.icon" class="text-xl transition-all" />
               {{ orderItem.label }}
             </div>
-          </template>
+          </BtnDropdownItem>
         </BtnDropdown>
       </template>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
