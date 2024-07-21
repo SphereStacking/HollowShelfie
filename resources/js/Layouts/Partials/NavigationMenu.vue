@@ -6,6 +6,7 @@ import Dropdown from '@/Jetstream/Dropdown.vue'
 import DropdownLink from '@/Jetstream/DropdownLink.vue'
 import ResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
+import { userHasPermission } from '@/Utils/domain/user'
 
 const form = useForm({})
 
@@ -173,6 +174,12 @@ const headerButtons = [
               </template>
 
               <template #content>
+                <a
+                  v-if="userHasPermission('access-admin-dashboard')"
+                  :href="route('filament.admin.pages.dashboard')"
+                  class="btn btn-ghost no-animation btn-sm btn-block justify-start rounded-none">
+                  管理画面
+                </a>
                 <DropdownLink :href="route('event.manage')">
                   イベント管理
                 </DropdownLink>
@@ -253,6 +260,13 @@ const headerButtons = [
           </div>
 
           <div class="mt-3">
+            <a
+              :href="route('filament.admin.pages.dashboard')"
+              class="btn btn-ghost no-animation btn-sm btn-block ml-2 justify-start rounded-none  rounded-l-md"
+              :class="{ 'btn-active': active }">
+              管理画面
+            </a>
+
             <ResponsiveNavLink class="ml-2 rounded-l-md" :href="route('event.manage')" :active="route().current('event.manage')">
               イベント管理
             </ResponsiveNavLink>
