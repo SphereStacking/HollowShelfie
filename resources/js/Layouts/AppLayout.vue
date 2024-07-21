@@ -17,6 +17,10 @@ defineProps({
     type: Array,
     default: () => GetAppMetaTags(),
   },
+  mainClass: {
+    type: String,
+    default: () => 'px-6 sm:px-12 mt-10',
+  },
 })
 
 </script>
@@ -33,18 +37,18 @@ defineProps({
       <!-- Navigation Menu -->
       <NavigationMenu class=" sticky top-0 z-30 " />
       <!-- Page Heading -->
-      <header v-if="$slots.header" class="sticky top-0 z-20 mb-10 bg-base-300 shadow-2xl shadow-emerald-200 ">
+      <header v-if="$slots.header" class="sticky top-0 z-20 bg-base-300 shadow-2xl shadow-emerald-200 ">
         <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8 ">
           <slot name="header"></slot>
         </div>
       </header>
-      <header v-if="$slots.fixedHeader" class="sticky top-14 z-20 mb-10 bg-base-300 shadow-2xl shadow-emerald-200 ">
+      <header v-if="$slots.fixedHeader" class="sticky top-14 z-20 bg-base-300 shadow-2xl shadow-emerald-200 ">
         <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8 ">
           <slot name="fixedHeader"></slot>
         </div>
       </header>
       <!-- Page Content -->
-      <main class="px-6 sm:px-12">
+      <main :class="mainClass">
         <slot></slot>
       </main>
     </div>
