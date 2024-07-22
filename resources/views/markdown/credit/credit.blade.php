@@ -24,12 +24,8 @@
 
 - バックエンド
   - [laravel](https://github.com/laravel/laravel)
-  - [laravel jetstream](https://github.com/laravel/jetstream)
   - [laravel filament](https://github.com/filamentphp/filament)
-  - [laravel sanctum](https://github.com/laravel/sanctum)
   - [laravel scout](https://github.com/laravel/scout)
-  - [laravel socialite](https://github.com/laravel/socialite)
-  - [joelbutcher/socialstream](https://github.com/joelbutcher/socialstream)
 
 - フロントエンド
   - [javascript](https://www.javascript.com/)
