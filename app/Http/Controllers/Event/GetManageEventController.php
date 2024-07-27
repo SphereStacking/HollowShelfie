@@ -30,7 +30,8 @@ class GetManageEventController extends Controller
             $request->input('t', null),
             $request->input('q', null),
             $request->input('paginate', 12),
-            $request->input('o', null),
+            $request->input('o', 'created_at'),
+            $request->input('d', null),
         );
 
         $events = $this->eventMeilisearchService->searchManageableEvents($eventSearchParams);

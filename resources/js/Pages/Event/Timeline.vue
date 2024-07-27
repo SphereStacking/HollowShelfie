@@ -171,7 +171,7 @@ const scrollToToday = () => {
               {{ timeRange.date }}
             </button>
           </div>
-          <BtnDropdown class="dropdown-end">
+          <BtnDropdown class="dropdown-end" width="w-52">
             <template #trigger>
               <button class="btn btn-ghost btn-xs tooltip tooltip-left p-0" data-tip="Timeline Setting">
                 <IconTypeMapper type="setting" class="text-xl" />

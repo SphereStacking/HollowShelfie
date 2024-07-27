@@ -30,25 +30,32 @@ const props = defineProps({
 const text = ref('')
 const conditions = ref([])
 const order = ref('')
+const direction = ref('')
 const modalEventShare = ref(null)
 
-const orderMaps = [
-  { type: 'new', icon: 'new', label: 'new' },
-  { type: 'good', icon: 'good', label: 'good' },
-]
+const searchTimeoutId = ref(null)
 const executeSearch = () => {
-  router.visit(
-    route('event.search.index',
-      { t: text.value, q: conditions.value, o: order.value.type, }
+  clearTimeout(searchTimeoutId.value)
+  searchTimeoutId.value = setTimeout(() => {
+    router.visit(
+      route('event.search.index',
+        {
+          d: direction.value,
+          o: order.value,
+          q: conditions.value,
+          t: text.value,
+        }
+      )
     )
-  )
+  }, 500)
 }
 
 onMounted(() => {
   const queryParams = usePage().props.ziggy.query
-  if (queryParams.o) {
-    order.value = orderMaps.find(orderItem => orderItem.type === queryParams.o)
-  }
+  order.value = queryParams.o
+  direction.value = queryParams.d
+  conditions.value = queryParams.q
+  text.value = queryParams.t
 })
 
 const RawSearchForm = markRaw(SearchForm)
@@ -71,22 +78,8 @@ const RawSearchForm = markRaw(SearchForm)
     </div>
     <PaginationLayout :pagination="events.pagination">
       <template #TopPaginationRight>
-        <BtnDropdown class="dropdown-end" width="w-28">
-          <template #trigger>
-            <div class=" btn indicator  btn-sm w-16 px-2">
-              <IconTypeMapper type="sort" class="text-xl transition-all" />
-              <div v-if="order.icon" class="badge indicator-item badge-info">
-                <IconTypeMapper :type="order.icon" class="text-sm" />
-              </div>
-            </div>
-          </template>
-          <BtnDropdownItem v-for="(orderItem, index) in orderMaps" :key="index">
-            <div @click="order = orderItem; executeSearch()">
-              <IconTypeMapper :type="orderItem.icon" class="text-xl transition-all" />
-              {{ orderItem.label }}
-            </div>
-          </BtnDropdownItem>
-        </BtnDropdown>
+        <OrderSelection v-model="order" @update:model-value="executeSearch" />
+        <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
       </template>
       <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
         <CardEvent
