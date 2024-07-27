@@ -8,6 +8,7 @@ use App\Services\EventService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EventDuplicateRequest;
 
 class DuplicateEventController extends Controller
 {
@@ -16,13 +17,14 @@ class DuplicateEventController extends Controller
     ) {
     }
 
-    public function __invoke($alias)
+    public function __invoke(EventDuplicateRequest $request,$alias)
     {
         try{
+            $attributes = $request->getAttributes();
             DB::beginTransaction();
             $event = $this->eventService->getEventDetailByAlias($alias);
             $event->canUserOperate(Auth::user());
-            $duplicatedEvent = $event->duplicateEvent();
+            $duplicatedEvent = $event->duplicateEvent($attributes['title']);
             DB::commit();
             return redirect()->route('event.edit', $duplicatedEvent->alias);
         }catch(Exception $e){

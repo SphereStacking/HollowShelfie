@@ -2,17 +2,20 @@
 import {router } from '@inertiajs/vue3'
 
 const IsOpenModal = ref(false)
+const item = ref({})
+const confirm = ref(false)
+const confirmTitle = ref('')
 
 //Modal閉じる。
 const onBtnCloseModal = () => {
   IsOpenModal.value = false
   confirm.value = false
 }
-const item = ref({})
 
 //Modal表示する。
 const onBtnOpenModal = (newItem) => {
   IsOpenModal.value = true
+  confirmTitle.value = '[COPY] ' + newItem.title
   item.value = {
     id: newItem.id,
     alias: newItem.alias,
@@ -22,6 +25,7 @@ const onBtnOpenModal = (newItem) => {
 
 const duplicateEvent = (id) => {
   router.post(route('event.duplicate', id), {
+    title: confirmTitle.value,
     preserveScroll: true,
     onFinish: () => {
       onBtnCloseModal()
@@ -34,8 +38,12 @@ defineExpose({
   onBtnOpenModal
 })
 
-const confirm = ref(false)
-
+const warningTitle = computed(() => {
+  if (confirmTitle.value.toLowerCase().includes('copy')) {
+    return 'タイトルに「copy」が含まれています。適切か確認してください。'
+  }
+  return ''
+})
 </script>
 
 <template>
@@ -47,18 +55,28 @@ const confirm = ref(false)
     </template>
 
     <template #content>
-      <div class="mx-auto w-3/4 text-left text-lg">
-        <p>
-          <span class="font-bold">「<span class="text-warning">{{ item.title }}</span></span>」を複製します。<br>
-          注意：フライヤー画像は複製されません。<br>
-          複製後、必要に応じてフライヤー画像を再設定してください。
+      <div class="mx-auto flex w-3/4 flex-col gap-2 text-left text-lg">
+        <p><strong class="font-bold">「<span class="text-warning">{{ item.title }}</span></strong>」</p>
+        <p class="">
+          <strong class="text-warning">注意</strong>
+          <ul class="ml-4 list-outside list-disc text-sm">
+            <li>下書きで複製されます。</li>
+            <li>フライヤー画像は複製されません。<br>必要に応じてフライヤー画像を再設定してください。</li>
+          </ul>
         </p>
-        <div class="mt-5 flex flex-row items-center gap-2">
-          <input
-            id="confirm"
-            v-model="confirm" type="checkbox" checked="checked"
-            class="checkbox-warning checkbox  bg-transparent">
-          <label for="confirm" class="text-sm">確認しました</label>
+        <TextElement
+          v-model="confirmTitle"
+          class="mt-2"
+          label="新しいイベントのタイトル"
+          :warning="warningTitle" />
+        <div class="mt-5 flex flex-col gap-2">
+          <div class="flex flex-row items-center gap-2">
+            <input
+              id="confirm"
+              v-model="confirm" type="checkbox" checked="checked"
+              class="checkbox-warning checkbox  bg-transparent">
+            <label for="confirm" class="text-sm">確認しました</label>
+          </div>
         </div>
       </div>
     </template>
