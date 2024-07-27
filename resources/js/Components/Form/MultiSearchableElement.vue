@@ -1,7 +1,6 @@
 <script setup>
 
-const props = defineProps({
-  //Wrapper用
+defineProps({
   label: {
     type: String,
     default: ''
@@ -18,6 +17,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  warning: {
+    type: String,
+    default: null
+  },
 })
 
 </script>
@@ -25,7 +28,7 @@ const props = defineProps({
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
-    :label-icon-type="labelIconType">
+    :warning="warning" :label-icon-type="labelIconType">
     <MultiSearchable v-bind="$attrs">
       <template #viewItem="{ element, handleDelete }">
         <slot :element="element" :handle-delete="handleDelete" name="viewItem"></slot>

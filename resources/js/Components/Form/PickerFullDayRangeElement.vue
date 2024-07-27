@@ -28,6 +28,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  warning: { // 警告メッセージ
+    type: String,
+    default: null
+  },
 })
 // ステップのオプションを定義
 const stepOptions = [1, 5, 15, 60, 120]
@@ -113,7 +117,9 @@ watch(dates, (newDates) => {
 </script>
 
 <template>
-  <Wrapper :label="label" :help="help" :error="error">
+  <Wrapper
+    :label="label" :help="help" :error="error"
+    :warning="warning">
     <DatePickerWrapper
       v-model="dates"
       :format="formatDate"

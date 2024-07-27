@@ -32,6 +32,11 @@ const props = defineProps({
     type: [String, Object],
     default: null
   },
+  //TODO: 必要になったらObjectの処理を追加する
+  warning: {
+    type: String,
+    default: null
+  },
   selectableItems: { // 選択肢
     type: Array,
     default: ()=>[]
@@ -60,11 +65,13 @@ const errorMessages = computed(() => {
     wrapperError: props.error
   }
 })
+
 </script>
 
 <template>
   <Wrapper
     :label="label" :help="help" :error="errorMessages.wrapperError"
+    :warning="warning"
     :label-icon-type="labelIconType">
     <div class="join grow">
       <slot name="joinLeft"></slot>

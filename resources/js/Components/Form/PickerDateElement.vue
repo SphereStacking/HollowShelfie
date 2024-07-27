@@ -28,6 +28,10 @@ defineProps({
     type: String,
     default: null
   },
+  warning: {
+    type: String,
+    default: null
+  },
 
 })
 
@@ -40,6 +44,7 @@ const updateModelValue = (newDate) => {
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
+    :warning="warning"
     :label-icon-type="labelIconType">
     <DatePickerWrapper
       v-bind="$attrs"

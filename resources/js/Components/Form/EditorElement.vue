@@ -13,7 +13,7 @@ import TextAlign from '@tiptap/extension-text-align'
 import Focus from '@tiptap/extension-focus'
 import Image from '@tiptap/extension-image'
 import Youtube from '@tiptap/extension-youtube'
-import Mention from '@tiptap/extension-mention'
+// import Mention from '@tiptap/extension-mention'
 import TaskItem from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'
 import Table from '@tiptap/extension-table'
@@ -23,8 +23,8 @@ import TableRow from '@tiptap/extension-table-row'
 import { Color } from '@tiptap/extension-color'
 import Dropcursor from '@tiptap/extension-dropcursor'
 
-import suggestionMention from './EditorPartials/SuggestionPartials/suggestionMention.js'
-import suggestionTag from './EditorPartials/SuggestionPartials/suggestionTag.js'
+// import suggestionMention from './EditorPartials/SuggestionPartials/suggestionMention.js'
+// import suggestionTag from './EditorPartials/SuggestionPartials/suggestionTag.js'
 
 const props = defineProps({
   id: {
@@ -52,6 +52,10 @@ const props = defineProps({
     default: null
   },
   error: {
+    type: String,
+    default: null
+  },
+  warning: {
     type: String,
     default: null
   },
@@ -149,7 +153,7 @@ defineExpose({
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
-    :label-icon-type="labelIconType">
+    :warning="warning" :label-icon-type="labelIconType">
     <div class="w-full rounded-md bg-base-100  ">
       <EditorMenu :editor="editor" class="sticky top-16 z-20 rounded-md bg-base-100" />
       <EditorContent :editor="editor" class="mx-2 mb-2" />

@@ -35,6 +35,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  warning: {
+    type: String,
+    default: null
+  },
   type: {
     type: String,
     default: 'text'
@@ -69,7 +73,16 @@ const hasLabelIconType = computed(() => props.labelIconType === '')
       <slot name="right"></slot>
     </div>
     <slot name="bottom">
-      <InputError :message="error" />
+      <div v-show="error">
+        <p class="text-sm text-error">
+          {{ error }}
+        </p>
+      </div>
+      <div v-show="warning">
+        <p class="text-sm text-warning">
+          {{ warning }}
+        </p>
+      </div>
     </slot>
   </div>
 </template>

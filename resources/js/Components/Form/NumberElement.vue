@@ -24,7 +24,10 @@ defineProps({
     type: String,
     default: null
   },
-
+  warning: {
+    type: String,
+    default: null
+  },
 })
 
 const InputType = 'number'
@@ -38,7 +41,9 @@ const updateValue = (e) => {
 </script>
 
 <template>
-  <Wrapper :label="label" :help="help" :error="error">
+  <Wrapper
+    :label="label" :help="help" :error="error"
+    :warning="warning">
     <InputFormBase
       :id="id"
       :type="InputType"

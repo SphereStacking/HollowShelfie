@@ -29,6 +29,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  warning: {
+    type: String,
+    default: null
+  },
   type: {
     type: String,
     default: 'text'
@@ -50,7 +54,9 @@ watch(() => props.modelValue, (newVal) => {
 </script>
 
 <template>
-  <Wrapper :label="label" :help="help" :error="error">
+  <Wrapper
+    :label="label" :help="help" :error="error"
+    :warning="warning">
     <textarea
       :id="id"
       :ref="textareaRef"

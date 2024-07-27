@@ -16,7 +16,11 @@ defineProps({
     type: String,
     default: null
   },
-
+  //TODO:必要になったら処理を追加する。
+  warnings: {
+    type: String,
+    default: null
+  },
 })
 
 </script>
