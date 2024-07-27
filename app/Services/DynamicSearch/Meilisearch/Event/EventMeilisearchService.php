@@ -63,7 +63,6 @@ class EventMeilisearchService
     private const ORDER_DIRECTIONS = [
         'asc' => 'ASC',
         'desc' => 'DESC',
-        'default' => 'DESC',
     ];
 
     /** デフォルトの並び順設定 */
