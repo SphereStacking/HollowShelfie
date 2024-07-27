@@ -70,7 +70,7 @@ class EventMeilisearchService
         'good' => ['column' => 'good_count', 'direction' => 'DESC'],
         'new' => ['column' => 'published_at', 'direction' => 'DESC'],
         'old' => ['column' => 'published_at', 'direction' => 'ASC'],
-        'start_date' => ['column' => 'start_date', 'direction' => 'DESC'],
+        'start_date' => ['column' => 'start_date', 'direction' => 'ASC'],
         'created_at' => ['column' => 'created_at', 'direction' => 'DESC'],
         'default' => ['column' => 'published_at', 'direction' => 'DESC'],
     ];
