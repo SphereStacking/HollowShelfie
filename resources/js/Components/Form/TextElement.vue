@@ -48,6 +48,7 @@ const updateValue = (e) => {
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
+    :warning="warning"
     :label-icon-type="labelIconType" :is-required="isRequired">
     <InputFormBase
       :id="id"

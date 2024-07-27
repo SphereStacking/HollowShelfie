@@ -23,6 +23,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  warning: {
+    type: String,
+    default: null
+  },
   //このコンポーネント用
   modelValue: {
     type: Array,
@@ -136,7 +140,7 @@ const onClickOutsideHandler= ()=>{
 <template>
   <Wrapper
     v-on-click-outside="onClickOutsideHandler" :label="label" :help="help"
-    :error="error" :label-icon-type="labelIconType">
+    :error="error" :warning="warning" :label-icon-type="labelIconType">
     <div class="w-full">
       <!-- タグ入力ボックス -->
       <div class="input input-sm flex size-full flex-wrap items-center gap-2 py-0.5">

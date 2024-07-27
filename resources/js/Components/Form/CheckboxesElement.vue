@@ -28,7 +28,10 @@ defineProps({
     type: String,
     default: null
   },
-
+  warning: {
+    type: String,
+    default: null
+  },
 })
 
 const InputType = 'checkbox'
@@ -41,7 +44,9 @@ const updateValue = (e) => {
 </script>
 
 <template>
-  <Wrapper :label="label" :help="help" :error="error">
+  <Wrapper
+    :label="label" :help="help" :error="error"
+    :warning="warning">
     <div class="grid w-full grid-cols-2 gap-2">
       <label
         v-for="item in items" :key="item.id" class=" cursor-pointer">

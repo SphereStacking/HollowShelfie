@@ -1,5 +1,4 @@
 <script setup>
-import { ref, defineProps, defineEmits, watch, computed } from 'vue'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 import { useForm } from '@inertiajs/vue3'
 
@@ -54,6 +53,10 @@ const props = defineProps({
   error: {
     type: String,
     required: true
+  },
+  warning: {
+    type: String,
+    default: null
   },
   note: {
     type: String,
@@ -143,7 +146,7 @@ const handleRemoveFile = (id) => {
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
-    :label-icon-type="labelIconType">
+    :warning="warning" :label-icon-type="labelIconType">
     <div class="grid w-full grid-cols-1 gap-2">
       <div
         class="flex w-full items-center justify-center "

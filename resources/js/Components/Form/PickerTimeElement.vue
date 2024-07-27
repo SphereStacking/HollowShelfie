@@ -28,7 +28,10 @@ const props=defineProps({
     type: String,
     default: null
   },
-
+  warning: { // 警告メッセージ
+    type: String,
+    default: null
+  },
 })
 
 const modelValue= ref(props.modelValue)
@@ -38,6 +41,7 @@ const modelValue= ref(props.modelValue)
 <template>
   <Wrapper
     :label="label" :help="help" :error="error"
+    :warning="warning"
     :label-icon-type="labelIconType">
     <DatePickerWrapper v-model="modelValue" time-picker text-input />
   </Wrapper>

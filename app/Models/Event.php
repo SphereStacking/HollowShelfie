@@ -376,10 +376,10 @@ class Event extends Model
     }
 
     /** イベントを複製する。*/
-    public function duplicateEvent(): Event
+    public function duplicateEvent(string $title): Event
     {
         $duplicatedEvent = $this->replicate();
-        $duplicatedEvent->title = $this->title . ' - copy';
+        $duplicatedEvent->title = $title;
         $duplicatedEvent->published_at = null;
         $duplicatedEvent->alias = Str::lower(Str::ulid());
         $duplicatedEvent->save();

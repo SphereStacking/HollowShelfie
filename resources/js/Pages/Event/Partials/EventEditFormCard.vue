@@ -158,6 +158,13 @@ const updateEndDate = () => {
   }
 }
 
+const warningTitle = computed(() => {
+  if (form.title.toLowerCase().includes('copy')) {
+    return 'タイトルに「copy」が含まれています。適切か確認してください。'
+  }
+  return ''
+})
+
 </script>
 
 <template>
@@ -194,7 +201,8 @@ const updateEndDate = () => {
         label-icon-type="title"
         help=""
         is-required
-        :error="form.errors.title" />
+        :error="form.errors.title"
+        :warning="warningTitle" />
     </div>
 
     <Wrapper
