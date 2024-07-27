@@ -21,6 +21,10 @@ defineProps({
     type: String,
     default: null
   },
+  modelValue: {
+    type: Array,
+    default: () => []
+  }
 })
 
 </script>
@@ -29,7 +33,7 @@ defineProps({
   <Wrapper
     :label="label" :help="help"
     :label-icon-type="labelIconType">
-    <Grid v-bind="$attrs" :errors="errors" />
+    <Grid v-bind="$attrs" :errors="errors" :model-value="modelValue" />
   </Wrapper>
 </template>
 

@@ -123,8 +123,8 @@ const handleDate = (newValue) => {
   console.log(newValue)
   router.visit(
     route('event.timeline.index', {
-      start_date: newValue[0],
-      end_date: newValue[1]
+      start_date: newValue[0].toISOString(),
+      end_date: newValue[1].toISOString()
     }),
   )
 }
@@ -146,7 +146,7 @@ const scrollToToday = () => {
         </h2>
         <div class="mb-1 flex flex-col items-start justify-end gap-1 bg-base-200 md:flex-row md:items-center">
           <div class="join">
-            <div class="dropdown dropdown-end">
+            <div class="dropdown dropdown-hover">
               <div tabindex="0" class="flex items-center justify-center">
                 <button
                   class="btn btn-outline join-item btn-active btn-xs">
@@ -154,7 +154,7 @@ const scrollToToday = () => {
                 </button>
               </div>
 
-              <ul tabindex="0" class="menu dropdown-content" :class="[width]">
+              <ul tabindex="0" class="menu dropdown-content">
                 <DatePickerInlineWrapper
                   :enable-time-picker="false"
                   :model-value="dates" placeholder="yyyy/MM/dd HH:mm"
@@ -171,7 +171,7 @@ const scrollToToday = () => {
               {{ timeRange.date }}
             </button>
           </div>
-          <BtnDropdown class="dropdown-end" width="w-52">
+          <BtnDropdown class="dropdown-end dropdown-hover" width="w-52">
             <template #trigger>
               <button class="btn btn-ghost btn-xs tooltip tooltip-left p-0" data-tip="Timeline Setting">
                 <IconTypeMapper type="setting" class="text-xl" />
@@ -234,7 +234,9 @@ const scrollToToday = () => {
       @mouseleave="stopDragging"
       @mousemove="handleMouseMove">
       <EventTimeline
-        :events="events" :start-date="startDate" :end-date="endDate"
+        :events="events"
+        :start-date="props.startDate"
+        :end-date="props.endDate"
         :column-width-rem="columnWidthRem"
         :style="{ transform: `scale(${zoom})`, transformOrigin: 'top center' }" />
     </div>

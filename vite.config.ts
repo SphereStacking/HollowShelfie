@@ -18,6 +18,10 @@ export default defineConfig(({mode})=> {
             base: null,
             includeAbsolute: false,
           },
+          compilerOptions: {
+            // swiperjsの要素をカスタム要素として扱いWARNログの出力を抑制
+            isCustomElement: tag => tag.startsWith('swiper-')
+          }
         },
       }),
       AutoImport({

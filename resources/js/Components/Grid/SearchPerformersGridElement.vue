@@ -10,7 +10,7 @@ const props = defineProps({
     type: Array,
     default: ()=>[],
   },
-  route: {
+  url: {
     type: String,
     default: ''
   },
@@ -38,7 +38,7 @@ const emits = defineEmits(['update:modelValue'])
 const performers= ref(props.modelValue?props.modelValue:[])
 const getFilteredDataFunc = props.templateOptions['getFilteredDataFunc'] ?? ((item) => item)
 const addFormatDataFunc = props.templateOptions['addFormatDataFunc'] ?? ((item) => item)
-const route = props.templateOptions['route']
+const url = props.templateOptions['url']
 
 watch(performers, (value) => {
   emits('update:modelValue', value)
@@ -51,7 +51,7 @@ watch(performers, (value) => {
     v-model="performers"
     class="input input-bordered h-full"
     item-type="performer"
-    :route="route"
+    :url="url"
     label-key="name"
     :get-filtered-data-func="getFilteredDataFunc">
     <template #viewItem="{ element, handleDelete }">

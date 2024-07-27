@@ -8,7 +8,7 @@ const props = defineProps({
     type: Array,
     default: ()=>[],
   },
-  route: {
+  url: {
     type: String,
     default: ''
   },
@@ -115,7 +115,7 @@ watch(inputText, (newValue) => {
 })
 
 const fetchFilteredItems = async (searchValue) => {
-  const url = props.route
+  const url = props.url
   const method = 'get'
   try {
     const response = await axios({method: method, url: url, params: {q: searchValue} })

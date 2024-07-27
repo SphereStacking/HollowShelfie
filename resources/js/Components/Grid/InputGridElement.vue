@@ -1,7 +1,7 @@
 <script setup>
 const props=defineProps({
   modelValue: {
-    type: String,
+    type: [String, Number],
     default: ''
   },
   templateOptions: {
@@ -23,7 +23,7 @@ watch(modelValue, ()=>{
   <input
     v-model="modelValue"
     v-bind="templateOptions"
-    class=" input input-bordered h-full w-full">
+    class="input input-bordered size-full">
 </template>
 
 <style lang="">

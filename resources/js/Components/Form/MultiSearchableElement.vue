@@ -21,6 +21,10 @@ defineProps({
     type: String,
     default: null
   },
+  modelValue: {
+    type: Array,
+    default: () => []
+  }
 })
 
 </script>
@@ -29,7 +33,7 @@ defineProps({
   <Wrapper
     :label="label" :help="help" :error="error"
     :warning="warning" :label-icon-type="labelIconType">
-    <MultiSearchable v-bind="$attrs">
+    <MultiSearchable v-bind="$attrs" :model-value="modelValue">
       <template #viewItem="{ element, handleDelete }">
         <slot :element="element" :handle-delete="handleDelete" name="viewItem"></slot>
       </template>

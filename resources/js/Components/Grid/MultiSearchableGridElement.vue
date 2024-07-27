@@ -7,7 +7,7 @@ const props = defineProps({
     type: Array,
     default: ()=>[],
   },
-  route: {
+  url: {
     type: String,
     default: ''
   },
@@ -38,7 +38,7 @@ const route = props.templateOptions['route']
 <template>
   <MultiSearchable
     item-type="performer"
-    :route="route"
+    :url="route"
     :get-filtered-data-func="getFilteredDataFunc">
     <template #searchItem="{ item, handleAdd}">
       <div class="btn btn-md flex w-full flex-row  items-center justify-start gap-2 py-1 text-sm" @click="handleAdd(item.name)">

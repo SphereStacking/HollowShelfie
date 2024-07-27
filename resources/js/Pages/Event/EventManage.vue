@@ -15,7 +15,7 @@ defineProps({
     required: true
   },
   events: {
-    type: Array,
+    type: Object,
     required: true
   }
 })
@@ -47,10 +47,10 @@ const executeSearch = () => {
 
 onMounted(() => {
   const queryParams = usePage().props.ziggy.query
-  order.value = queryParams.o
-  direction.value = queryParams.d
-  conditions.value = queryParams.q
-  text.value = queryParams.t
+  order.value = queryParams.o || ''
+  direction.value = queryParams.d || ''
+  conditions.value = queryParams.q || []
+  text.value = queryParams.t || ''
 })
 </script>
 

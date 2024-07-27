@@ -1,5 +1,4 @@
 <script setup>
-import SwiperWrapper from './Swiper/SwiperWrapper.vue'
 
 defineProps({
   images: {
@@ -39,10 +38,10 @@ const prev = () => {
     <slot name="header"></slot>
     <SwiperWrapper
       ref="swiper1"
-      loop="true"
-      space-between="2"
-      scrollbar="true"
-      autoplay-delay="2500"
+      :loop="images.length > 1"
+      :space-between="2"
+      :scrollbar="true"
+      :autoplay-delay="2500"
       slide-class="mb-4"
       :thumbs-swiper="`#${uniqueId}`"
       :model-value="images">
@@ -58,10 +57,10 @@ const prev = () => {
       <SwiperWrapper
         :id="uniqueId"
         class="mx-2 grow "
-        loop="true"
-        space-between="2"
-        slides-per-view="4"
-        hide-no-image="true"
+        :loop="images.length > 1"
+        :space-between="2"
+        :slides-per-view="4"
+        :hide-no-image="true"
         :model-value="images">
         <template #item="{element}">
           <FryerImg class="w-10" :src="element" />

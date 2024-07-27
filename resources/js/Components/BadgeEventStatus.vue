@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   status: {
-    type: Array,
+    type: String,
     required: true
   },
   label: {

@@ -81,7 +81,7 @@ const errors = computed(() => parseErrors(form.errors))
       help="複数選択可能です。"
       :error="form.errors.tags"
       item-icon-type="tag"
-      :route="route('tag.suggestion')"
+      :url="route('tag.suggestion')"
       label-key="name"
       enable-enter-to-add
       :get-filtered-data-func="getFilteredDataFunc">

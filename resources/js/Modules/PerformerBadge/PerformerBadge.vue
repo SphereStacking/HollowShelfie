@@ -4,7 +4,7 @@ import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 
 type Props = {
   performer: Performer
-  isSearching: boolean
+  isSearching?: boolean
 }
 
 defineProps<Props>()

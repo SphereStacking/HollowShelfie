@@ -15,12 +15,12 @@ defineProps({
 <template>
   <div class="w-full">
     <SwiperWrapper
-      loop="true"
-      slides-per-view="1"
+      :loop="events.length > 1"
+      :slides-per-view="1"
       :model-value="events"
       watch-slides-progress="true"
-      scrollbar="true"
-      autoplay-delay="5000"
+      :scrollbar="true"
+      :autoplay-delay="5000"
       slide-class="mb-4">
       <template #item="{element}">
         <div class="w-full  px-2">

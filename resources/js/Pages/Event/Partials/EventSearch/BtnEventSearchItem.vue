@@ -3,7 +3,7 @@ import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   value: {
-    type: String,
+    type: [String, Object],
     required: true
   },
   type: {

@@ -7,7 +7,7 @@ defineProps({
     default: () => route('about', 'advertisement'),
   },
   as: {
-    type: String,
+    type: [String, Object],
     default: Link,
   },
 })
