@@ -78,8 +78,8 @@ const RawSearchForm = markRaw(SearchForm)
     </div>
     <PaginationLayout :pagination="events.pagination">
       <template #TopPaginationRight>
-        <OrderSelection v-model="order" @update:model-value="executeSearch()" />
-        <DirectionSelection v-model="direction" @update:model-value="executeSearch()" />
+        <OrderSelection v-model="order" @update:model-value="executeSearch" />
+        <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
       </template>
       <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
         <CardEvent

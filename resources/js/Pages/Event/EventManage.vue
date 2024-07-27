@@ -75,8 +75,8 @@ onMounted(() => {
     </div>
     <PaginationLayout :pagination="events.pagination">
       <template #TopPaginationRight>
-        <OrderSelection v-model="order" @update:model-value="executeSearch()" />
-        <DirectionSelection v-model="direction" @update:model-value="executeSearch()" />
+        <OrderSelection v-model="order" @update:model-value="executeSearch" />
+        <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
       </template>
       <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <transition-group name="list">
