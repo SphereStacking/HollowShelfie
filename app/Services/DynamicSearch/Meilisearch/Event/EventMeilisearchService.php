@@ -49,13 +49,33 @@ class EventMeilisearchService
         'instance' => EventFilterInstance::class,
     ];
 
-    /** オーダーオプション */
-    private const ORDER_BY_OPTIONS = [
+    /** 並び順のカラムオプション */
+    private const ORDER_BY_COLUMNS = [
+        'good' => 'good_count',
+        'new' => 'published_at',
+        'old' => 'published_at',
+        'start_date' => 'start_date',
+        'created_at' => 'created_at',
+        'default' => 'published_at',
+    ];
+
+    /** 並び順の方向オプション */
+    private const ORDER_DIRECTIONS = [
+        'asc' => 'ASC',
+        'desc' => 'DESC',
+        'default' => 'DESC',
+    ];
+
+    /** デフォルトの並び順設定 */
+    private const DEFAULT_ORDER_SETTINGS = [
         'good' => ['column' => 'good_count', 'direction' => 'DESC'],
         'new' => ['column' => 'published_at', 'direction' => 'DESC'],
         'old' => ['column' => 'published_at', 'direction' => 'ASC'],
+        'start_date' => ['column' => 'start_date', 'direction' => 'ASC'],
+        'created_at' => ['column' => 'created_at', 'direction' => 'DESC'],
         'default' => ['column' => 'published_at', 'direction' => 'DESC'],
     ];
+
 
     /** 公開されたイベントを検索する */
     public function searchPublishedEvents(SearchParams $params): LengthAwarePaginator
@@ -75,7 +95,7 @@ class EventMeilisearchService
     /** イベントを検索する共通メソッド */
     private function searchEvents(string $optionsFilter,SearchParams $params): LengthAwarePaginator
     {
-        $orderBy = $this->parseOrderBy($params->order);
+        $orderBy = $this->getOrderSettings($params->order, $params->direction);
         $queryfilterString = $this->createMakeFilter($params->queryParams);
         $filterString = "(".$optionsFilter.") " . ($queryfilterString ? "AND (".$queryfilterString.")" : "");
 
@@ -110,24 +130,32 @@ class EventMeilisearchService
         return $filterString;
     }
 
-    // NOTE: フロントから悪意あるクエリパラメータが来てもエラーが出ないようにするためのparse処理
-
-    /** オーダーを取得する */
-    private function parseOrderBy(string $order): array
+    /**
+     * 並び順の設定を取得する
+     * フロントから悪意あるクエリパラメータが来てもエラーが出ないようにするためのparse処理
+     *
+     * @param string $order 並び順
+     * @param string $direction 並び順の方向
+     * @return array<string, string> カラム名と方向を含む連想配列を返す
+     */
+    private function getOrderSettings(string $order = 'default', string $direction = 'default'): array
     {
-        return self::ORDER_BY_OPTIONS[$order] ?? self::ORDER_BY_OPTIONS['default'];
+        // 指定された order に対応するカラム名を取得
+        $orderByColumn = self::ORDER_BY_COLUMNS[$order] ?? self::DEFAULT_ORDER_SETTINGS['default']['column'];
+        // 指定された direction に対応する方向を取得
+        $orderDirection = self::ORDER_DIRECTIONS[$direction] ?? self::DEFAULT_ORDER_SETTINGS['default']['direction'];
+        return ['column' => $orderByColumn, 'direction' => $orderDirection];
     }
 
-    /** オーダーを取得する */
+    /**
+     * クエリパラメータクラスを取得する
+     * フロントから悪意あるクエリパラメータが来てもエラーが出ないようにするためのparse処理
+     *
+     * @param string $type クエリパラメータのタイプ
+     * @return class-string|null クエリパラメータクラス
+     */
     private function parseQueryParamClass(string $type)
     {
-        return self::QUERY_PARAM_CLASSES[$type] ?? self::QUERY_PARAM_CLASSES['default'];
+        return self::QUERY_PARAM_CLASSES[$type] ?? null;
     }
 }
-
-
-
-
-
-
-

@@ -155,6 +155,8 @@ return [
                 'sortableAttributes' => [
                     'good_count',
                     'published_at',
+                    'start_date',
+                    'created_at',
                 ],
             ],
         ],

@@ -228,8 +228,17 @@ export const ItemsConfig = {
   exclude: {
     icon: 'fluent:shape-exclude-20-filled'
   },
-  sort: {
+  sortItem: {
+    icon: 'mdi:format-list-bulleted-type',
+  },
+  orderDefault: {
     icon: 'mdi:sort',
+  },
+  orderAsc: {
+    icon: 'mdi:sort-ascending',
+  },
+  orderDesc: {
+    icon: 'mdi:sort-descending',
   },
   eventOpen: {
     icon: 'mdi:door-open',
@@ -239,6 +248,9 @@ export const ItemsConfig = {
   },
   eventUpcoming: {
     icon: 'mdi:calendar-month',
+  },
+  eventCreated: {
+    icon: 'mdi:event-add',
   },
   image: {
     icon: 'mdi:image',

@@ -33,6 +33,7 @@ class GetEventSearchController extends Controller
             $request->input('q', null),
             $request->input('paginate', null),
             $request->input('o', null),
+            $request->input('d', null),
         );
 
         return Inertia::render(

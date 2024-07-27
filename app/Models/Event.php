@@ -102,6 +102,7 @@ class Event extends Model
                 'good_count',
                 'is_forced_hidden',
                 'created_user_id',
+                'created_at',
             ]
         );
         $array['published_at'] = $this->published_at ? Carbon::parse($this->published_at)->getTimestamp() : null;

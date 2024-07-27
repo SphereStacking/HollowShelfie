@@ -46,14 +46,14 @@ class GetHomeController extends Controller
             '',
             [['include' => 'and', 'type' => 'status', 'value' => EventStatus::ONGOING->value]],
             12,
-            null,
+            'start_date',
         );
 
         $upcomingParams = new SearchParams(
             '',
             [['include' => 'and', 'type' => 'status', 'value' => EventStatus::UPCOMING->value]],
             12,
-            null,
+            'start_date',
         );
 
         $newParams = new SearchParams(

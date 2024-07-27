@@ -1,9 +1,9 @@
 <script setup>
 
-const props = defineProps({
+defineProps({
   width: {
     type: String,
-    default: 'w-52',
+    default: 'w-fit',
   },
   zIndex: {
     type: String,
