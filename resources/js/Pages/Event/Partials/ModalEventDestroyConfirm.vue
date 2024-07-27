@@ -49,10 +49,14 @@ const confirm = ref(false)
     <template #content>
       <div class="mx-auto w-3/4 text-left text-lg">
         <p>
-          <span class="font-bold">「<span class="text-error">{{ item.title }}</span>」</span>は完全に削除され、<br>
-          後から復元することはできません。
+          <span class="font-bold">「<span class="text-error">{{ item.title }}</span>」</span>
         </p>
-
+        <p class="mt-2">
+          <strong class="text-error">注意</strong>
+          <ul class="ml-4 list-outside list-disc">
+            <li>完全に削除され、後から復元することはできません。</li>
+          </ul>
+        </p>
         <div class="mt-5 flex flex-row items-center gap-2">
           <input
             id="confirm"
