@@ -142,7 +142,7 @@ class EventMeilisearchService
         // 指定された order に対応するカラム名を取得
         $orderByColumn = self::ORDER_BY_COLUMNS[$order] ?? self::DEFAULT_ORDER_SETTINGS['default']['column'];
         // 指定された direction に対応する方向を取得
-        $orderDirection = self::ORDER_DIRECTIONS[$direction] ?? self::DEFAULT_ORDER_SETTINGS['default']['direction'];
+        $orderDirection = self::ORDER_DIRECTIONS[$direction] ?? self::DEFAULT_ORDER_SETTINGS[$order]['direction'] ?? self::DEFAULT_ORDER_SETTINGS['default']['direction'];
         return ['column' => $orderByColumn, 'direction' => $orderDirection];
     }
 
