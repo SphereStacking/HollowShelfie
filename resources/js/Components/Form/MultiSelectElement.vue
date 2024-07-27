@@ -36,10 +36,6 @@ const props = defineProps({
     type: Array,
     default: ()=>[],
   },
-  route: {
-    type: String,
-    default: ''
-  },
   searchDelay: {
     type: Number,
     default: 200

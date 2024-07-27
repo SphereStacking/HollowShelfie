@@ -5,7 +5,7 @@ import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   event: {
-    type: String,
+    type: Object,
     required: true
   },
   trendTags: {

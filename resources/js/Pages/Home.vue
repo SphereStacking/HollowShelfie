@@ -46,7 +46,7 @@ const props = defineProps({
     required: true
   },
   pickups: {
-    type: Array,
+    type: Object,
     required: true
   }
 })

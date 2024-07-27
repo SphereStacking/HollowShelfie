@@ -17,7 +17,7 @@ const props = defineProps({
     default: ''
   },
   modelValue: { // v-modelの値
-    type: String,
+    type: [String, Number],
     default: ''
   },
   placeholder: { // プレースホルダー

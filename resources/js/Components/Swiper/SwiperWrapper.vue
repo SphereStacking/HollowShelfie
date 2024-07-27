@@ -19,6 +19,9 @@ const props = defineProps({
   hideNoImage: {
     type: Boolean,
   },
+  loop: {
+    type: Boolean,
+  },
 })
 
 const swiperEl = ref(null)
@@ -44,6 +47,7 @@ watch(() => props.modelValue, () => {
 defineExpose({
   swiperApi, swiperEl
 })
+
 </script>
 
 <template>

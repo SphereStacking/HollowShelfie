@@ -32,7 +32,10 @@ defineProps({
     type: String,
     default: null
   },
-
+  warning: {
+    type: String,
+    default: null
+  }
 })
 
 const InputType = 'text'

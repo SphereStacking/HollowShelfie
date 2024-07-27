@@ -7,7 +7,7 @@ const props = defineProps({
     required: true
   },
   url: {
-    type: Object,
+    type: String,
     required: true
   }
 })
@@ -21,7 +21,7 @@ const imageUrls = computed(() => {
 </script>
 <template>
   <div class="group relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md transition-all duration-300 hover:cursor-pointer hover:shadow-lg hover:shadow-neutral-500">
-    <ModalImagesViewer :images="imageUrls" zoomble="true" />
+    <ModalImagesViewer :images="imageUrls" :zoomble="true" />
     <template v-if="images.length>0">
       <TransitionGroup
         enter-active-class="transition-all duration-300"

@@ -26,10 +26,6 @@ const convertSizeToBytes = (size) => {
 }
 
 const props = defineProps({
-  id: {
-    type: String,
-    required: true
-  },
   label: {
     type: String,
     required: true
@@ -42,17 +38,13 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  placeholder: {
-    type: String,
-    required: true
-  },
   help: {
     type: String,
-    required: true
+    default: null
   },
   error: {
     type: String,
-    required: true
+    default: null
   },
   warning: {
     type: String,
@@ -172,10 +164,10 @@ const handleRemoveFile = (id) => {
       <div v-if="files.length > 0" class=" rounded-md bg-base-200 p-2">
         <SwiperWrapper
           v-model="files"
-          slides-per-view="3"
-          pagination="true"
-          loop="true"
-          space-between="10">
+          :slides-per-view="3"
+          :pagination="true"
+          :loop="files.length > 1"
+          :space-between="10">
           <template #item="{element, index}">
             <div class="relative mx-0.5">
               <button

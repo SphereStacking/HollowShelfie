@@ -57,7 +57,7 @@ const columDefs = [
   { field: 'description', headerTitle: '内容', headerSubTitle: '演目/項目/未登録ユーザ', width: 'auto', minWidth: '300px', template: 'input' },
   { field: 'performers', headerTitle: '演者/応対者/スタッフ', headerSubTitle: '未登録ユーザーは内容に記載してください', width: '202px', template: SearchPerformersGridElement,
     templateOptions: {
-      route: route('mention.suggestion'),
+      url: route('mention.suggestion'),
       getFilteredDataFunc: getFilteredDataFunc,
       addFormatDataFunc: addFormatData,
     },
@@ -248,7 +248,7 @@ const warningTitle = computed(() => {
       help="複数選択可能です。数の多いタグを使用することで見つかりやすくなります。"
       :error="form.errors.tags"
       item-icon-type="tag"
-      :route="route('tag.suggestion')"
+      :url="route('tag.suggestion')"
       label-key="name"
       enable-enter-to-add
       :get-filtered-data-func="getFilteredDataFunc">
@@ -284,7 +284,7 @@ const warningTitle = computed(() => {
       placeholder="ユーザーID,ユーザー名"
       :error="form.errors.organizers"
       item-type="organizer"
-      :route="route('mention.suggestion')"
+      :url="route('mention.suggestion')"
       label-key="name"
       :get-filtered-data-func="getFilteredDataFunc">
       <template #viewItem="{ element, handleDelete }">
@@ -411,7 +411,6 @@ const warningTitle = computed(() => {
       label-icon-type="fryer"
       :upload-route="route('event.fryer.store', event.alias)"
       :delete-route="route('event.fryer.destroy')"
-      :error="form.errors.images"
       help="縦A4サイズ推奨"
       max-file-size="2MB" />
     <template #actions>

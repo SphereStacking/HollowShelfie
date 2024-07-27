@@ -1,9 +1,10 @@
 <script setup>
-import { usePage, Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 
 defineProps({
 })
 
+const count = ref(0)
 const title = 'Event search'
 const iconType = 'search'
 const routeUrl = route('event.search.index')

@@ -117,7 +117,7 @@ watch(rowData, () => {
                   :row-index="index"
                   :model-value="getNestedValue(element, col.field)"
                   :template-options="col['templateOptions']"
-                  :data="row"
+                  :data="rowData[index]"
                   v-bind="col.options"
                   @update:model-value="(value) => setNestedValue(element, col.field, value)"
                   @row-delete="rowDelete" />

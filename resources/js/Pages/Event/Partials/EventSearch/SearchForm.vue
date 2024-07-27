@@ -40,7 +40,7 @@ const props = defineProps({
   },
   tags: {
     type: Array,
-    required: true
+    default: () => []
   },
   statuses: {
     type: Object,
