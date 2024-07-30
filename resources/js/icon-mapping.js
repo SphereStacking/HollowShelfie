@@ -408,9 +408,16 @@ export const ItemsConfig = {
     icon: 'ri:twitter-x-fill',
     color: '#ffff'
   },
+  discord: {
+    icon: 'ri:discord-fill',
+    color: '#7289da'
+  },
   misskey: {
     icon: 'simple-icons:misskey',
     color: '#9EC23F'
+  },
+  vrchat: {
+    icon: 'tabler:badge-vr',
   },
   notification: {
     icon: 'mdi:bell',

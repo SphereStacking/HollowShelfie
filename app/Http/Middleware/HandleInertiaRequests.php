@@ -43,6 +43,7 @@ class HandleInertiaRequests extends Middleware
                 'twitter' => fn () => config('app.twitter'),
                 'github' => fn () => config('app.github'),
                 'discordInvite' => fn () => config('app.discord_invite'),
+                'VRChatGroup' => fn () => config('app.VRChatGroup'),
                 'credit' => fn () => config('app.credit'),
                 'issueForms' => [
                     'bug_report' => fn () => config('external_services.issue_forms.bug_report.url'),
