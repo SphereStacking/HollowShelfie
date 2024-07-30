@@ -1,9 +1,10 @@
 <script setup>
 import { openShareWindow } from '@/Utils/share'
-import {generateEventAdminShareText, generateEventOrganizerShareText, generateEventParticipantShareText } from '@/Utils/domain/event'
+import { generateEventAdminShareText, generateEventOrganizerShareText, generateEventParticipantShareText } from '@/Utils/domain/event'
 import IconTypeMapper from '@/Components/IconTypeMapper.vue'
 import { _eventPeriod } from '@/Utils/domain/event'
 import { userHasPermission } from '@/Utils/domain/user'
+import { useClipboard } from '@vueuse/core'
 
 const IsOpenModal = ref(false)
 const item = ref({})
@@ -52,6 +53,7 @@ const generateShareText = (newItem) => {
     })
   }
 }
+
 //Modal表示する。
 const onBtnOpenModal = (newItem) => {
   IsOpenModal.value = true
@@ -81,6 +83,16 @@ const shareOnMisskey = () => {
     text: item.value
   })
 }
+
+const isCopied = ref(false)
+const { copy } = useClipboard()
+const copyToClipboard = () => {
+  copy(item.value)
+  isCopied.value = true
+  setTimeout(() => {
+    isCopied.value = false
+  }, 2000)
+}
 </script>
 
 <template>
@@ -103,18 +115,22 @@ const shareOnMisskey = () => {
     </template>
 
     <template #footer>
-      <div class="grid w-full grid-cols-4 gap-2">
-        <button class="btn btn-outline btn-neutral btn-sm col-span-1 col-start-2" @click="onBtnCloseModal()">
+      <div class=" mx-auto flex flex-row gap-2">
+        <button class="btn btn-outline btn-neutral btn-sm" @click="onBtnCloseModal()">
           キャンセル
         </button>
-        <div class="flex flex-row gap-2">
-          <button class="btn btn-neutral btn-sm" @click="shareOnX">
-            <IconTypeMapper type="x" class="size-5" />へ投稿
-          </button>
-          <button class="btn btn-neutral btn-sm" @click="shareOnMisskey">
-            <IconTypeMapper type="misskey" class="size-5" />へ投稿
-          </button>
-        </div>
+        <button class="btn btn-neutral btn-sm" @click="shareOnX">
+          <IconTypeMapper type="x" class="size-5" />へ投稿
+        </button>
+        <button class="btn btn-neutral btn-sm" @click="shareOnMisskey">
+          <IconTypeMapper type="misskey" class="size-5" />へ投稿
+        </button>
+        <button class="btn btn-neutral btn-sm transition-all" :class="[isCopied ? 'text-success' : '']" @click="copyToClipboard">
+          <IconTypeMapper type="copy" class="size-5" />
+          <p class="text-sm ">
+            {{ isCopied ? 'Copied' : 'Copy' }}
+          </p>
+        </button>
       </div>
     </template>
   </DialogModal>
