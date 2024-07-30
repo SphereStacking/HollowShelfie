@@ -147,6 +147,9 @@ export const ItemsConfig = {
   duplicate: {
     icon: 'mdi:content-duplicate',
   },
+  copy: {
+    icon: 'mdi:content-copy',
+  },
   edit: {
     icon: 'mdi:note-edit-outline',
   },
