@@ -78,13 +78,20 @@ const pickupItems = props.pickups
         Home
       </h2>
     </template>
-    <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6 ">
-      <WidgetOngoingEventCount class="col-span-12 md:col-span-4" />
-      <WidgetPlanningEventCount class="col-span-12 md:col-span-4" />
-
-      <AreaAdvertisementRecruitment as="a" link="https://sainakey.booth.pm/items/4876171" class=" col-span-12  shadow-xl shadow-base-200 md:col-span-4">
-        <img src="storage/images/Advertisement/01_SynapseRack_VJ_Tool.png" alt="SynapseRack VJ Tool" class=" max-h-40">
-      </AreaAdvertisementRecruitment>
+    <div class="mx-auto mt-5 grid max-w-7xl grid-cols-12 gap-3 md:gap-6">
+      <WidgetHollowShelfieLinkVRChatGroup class="col-span-12 h-20 md:col-span-6 lg:col-span-3" />
+      <WidgetHollowShelfieLinkX class="col-span-12 h-20 md:col-span-6 lg:col-span-3" />
+      <WidgetHollowShelfieLinkDiscord class="col-span-12 h-20 md:col-span-6 lg:col-span-3" />
+      <WidgetOngoingEventCount class="col-span-12 h-20 md:col-span-6 lg:col-span-3" />
+      <WidgetPlanningEventCount class="col-span-12 h-20 md:col-span-6 lg:col-span-3" />
+      <div class="relative col-span-3 hidden size-full lg:block">
+        <ApplicationMark class="absolute right-0 top-0 size-24" />
+      </div>
+      <div class="col-span-12 col-start-1 row-span-2 flex justify-end md:col-span-6 md:col-start-7 md:row-span-1 md:row-start-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-1">
+        <AreaAdvertisementRecruitment as="a" link="https://sainakey.booth.pm/items/4876171" class="w-1/2 md:w-1/3 lg:w-full">
+          <img src="storage/images/Advertisement/01_SynapseRack_VJ_Tool.png" alt="SynapseRack VJ Tool" class="image-full">
+        </AreaAdvertisementRecruitment>
+      </div>
 
       <div v-if="pickupItems.data.length > 0" class="col-span-12 flex flex-col gap-2 ">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
