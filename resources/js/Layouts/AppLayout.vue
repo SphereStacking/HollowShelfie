@@ -53,6 +53,6 @@ defineProps({
       </main>
     </div>
     <!-- Footer -->
-    <Footer />
+    <Footer class="mt-10" />
   </div>
 </template>

@@ -33,7 +33,11 @@ defineProps({
   <Wrapper
     :label="label" :help="help"
     :label-icon-type="labelIconType">
-    <Grid v-bind="$attrs" :errors="errors" :model-value="modelValue" />
+    <Grid v-bind="$attrs" :errors="errors" :model-value="modelValue">
+      <template #add-row-button="{ createNewRow }">
+        <slot name="add-row-button" :create-new-row="createNewRow"></slot>
+      </template>
+    </Grid>
   </Wrapper>
 </template>
 
