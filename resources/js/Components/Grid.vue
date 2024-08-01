@@ -139,9 +139,11 @@ watch(rowData, () => {
     <div class="rounded-b-lg p-2">
       <slot name="footer" :create-new-row="createNewRow">
         <div class="flex w-full flex-row gap-2 py-1">
-          <button class="btn btn-primary btn-sm" @click="createNewRow()">
-            ADD row
-          </button>
+          <slot name="add-row-button" :create-new-row="createNewRow">
+            <button class="btn btn-primary btn-sm" @click="createNewRow()">
+              ADD row
+            </button>
+          </slot>
         </div>
       </slot>
     </div>
