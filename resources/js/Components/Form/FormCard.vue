@@ -1,4 +1,5 @@
 <script setup>
+// NOTE:FormContainerを今後使用する。
 
 const hasTitle = computed(() => !!useSlots().title)
 const hasActions = computed(() => !!useSlots().actions)
