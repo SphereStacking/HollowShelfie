@@ -53,6 +53,9 @@ const updateValue = (e) => {
 }
 
 const hasLabelIconType = computed(() => props.labelIconType === '')
+
+//NOTE: FormStepContainerでerror-message-とwarning-message-のidを生成
+const randomId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 </script>
 
 <template>
@@ -72,18 +75,15 @@ const hasLabelIconType = computed(() => props.labelIconType === '')
       <slot></slot>
       <slot name="right"></slot>
     </div>
-    <slot name="bottom">
-      <div v-show="error">
-        <p class="text-sm text-error">
-          {{ error }}
-        </p>
-      </div>
-      <div v-show="warning">
-        <p class="text-sm text-warning">
-          {{ warning }}
-        </p>
-      </div>
-    </slot>
+    <slot name="bottom"></slot>
+    <div v-if="error || warning">
+      <p :id="'error-message-' + randomId" class="text-sm text-error">
+        {{ error }}
+      </p>
+      <p :id="'warning-message-' + randomId" class="text-sm text-warning">
+        {{ warning }}
+      </p>
+    </div>
   </div>
 </template>
 
