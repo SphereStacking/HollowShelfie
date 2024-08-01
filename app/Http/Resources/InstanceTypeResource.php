@@ -17,6 +17,7 @@ class InstanceTypeResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
+            'logo_path' => $this->resource->logo_path,
         ];
     }
 }
