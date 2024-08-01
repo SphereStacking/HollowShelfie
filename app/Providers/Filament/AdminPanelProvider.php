@@ -9,6 +9,7 @@ use Filament\PanelProvider;
 use Filament\Enums\ThemeMode;
 use Filament\Support\Colors\Color;
 use Filament\Navigation\NavigationItem;
+use App\Filament\Widgets\HomeLinkWidget;
 use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
@@ -68,6 +69,11 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Emerald,
                 'success' => Color::Green,
                 'warning' => Color::Amber,
+            ])->navigationItems([
+                NavigationItem::make('User Home')
+                    ->url('/')
+                    ->icon('heroicon-o-home')
+                    ->sort(0),
             ]);
     }
 }

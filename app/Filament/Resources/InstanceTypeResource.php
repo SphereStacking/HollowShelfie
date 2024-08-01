@@ -28,6 +28,8 @@ class InstanceTypeResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('logo_path')
+                    ->maxLength(255),
             ]);
     }
 
@@ -45,6 +47,10 @@ class InstanceTypeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('logo_path')
+                    ->disk('public')
+                    ->defaultImageUrl(asset('images/Logs/reality.svg'))
+                    ,
             ])
             ->filters([
                 //
