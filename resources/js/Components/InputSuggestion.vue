@@ -58,7 +58,7 @@ watch(suggestions, (newValue) => {
 })
 
 const fetchFilteredItems = async (searchValue) => {
-  const response = await axios({method: 'get', url: props.route, params: {q: searchValue} })
+  const response = await axios({method: 'get', url: props.url, params: {q: searchValue} })
   if (response.status >= 200 && response.status < 300) {
     suggestions.value = props.getSuggestions(response)
     responseLength.value = suggestions.value.length
