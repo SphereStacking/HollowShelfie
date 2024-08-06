@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from '@inertiajs/vue3'
 import { getEventPeriod } from '@/Utils/Event'
 
 const props = defineProps({
@@ -29,9 +30,9 @@ const formatDate = computed(() => {
       </div>
       <div class="flex w-3/12 flex-row justify-end">
         <div class="tooltip tooltip-primary" data-tip="編集">
-          <a class="btn btn-square btn-outline btn-primary btn-sm border-0" :href="route('event.edit',event.alias)">
+          <Link class="btn btn-square btn-outline btn-primary btn-sm border-0" :href="route('event.edit',event.alias)">
             <IconTypeMapper type="edit" class="shrink-0 text-2xl" />
-          </a>
+          </Link>
         </div>
         <div class="tooltip tooltip-warning" data-tip="複製">
           <button class="btn btn-square btn-outline btn-warning btn-sm  border-0" @click="emit('duplicate', event)">

@@ -25,6 +25,7 @@ const deleteEvent = (id) => {
     preserveScroll: true,
     onFinish: () => {
       onBtnCloseModal()
+      router.reload({ preserveScroll: true })
     }
   })
 }
