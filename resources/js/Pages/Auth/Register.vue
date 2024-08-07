@@ -2,11 +2,11 @@
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import AuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
 import AuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
-import Checkbox from '@/Jetstream/Checkbox.vue'
-import InputError from '@/Jetstream/InputError.vue'
-import InputLabel from '@/Jetstream/InputLabel.vue'
-import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
-import TextInput from '@/Jetstream/TextInput.vue'
+// import Checkbox from '@/Jetstream/Checkbox.vue'
+// import InputError from '@/Jetstream/InputError.vue'
+// import InputLabel from '@/Jetstream/InputLabel.vue'
+// import PrimaryButton from '@/Jetstream/PrimaryButton.vue'
+// import TextInput from '@/Jetstream/TextInput.vue'
 import Socialstream from '@/Components/Socialstream.vue'
 
 const form = useForm({
@@ -17,11 +17,11 @@ const form = useForm({
   terms: false,
 })
 
-const submit = () => {
-  form.post(route('register'), {
-    onFinish: () => form.reset('password', 'password_confirmation'),
-  })
-}
+// const submit = () => {
+//   form.post(route('register'), {
+//     onFinish: () => form.reset('password', 'password_confirmation'),
+//   })
+// }
 </script>
 
 <template>
@@ -29,10 +29,11 @@ const submit = () => {
 
   <AuthenticationCard>
     <template #logo>
-      <AuthenticationCardLogo />
+      <AuthenticationCardLogo class="size-24" />
     </template>
 
-    <form @submit.prevent="submit">
+    <!-- パスワードをserviceで持たないように -->
+    <!-- <form @submit.prevent="submit">
       <div>
         <InputLabel for="name" :value="$t('Name')" />
         <TextInput
@@ -105,11 +106,15 @@ const submit = () => {
           {{ $t('Register') }}
         </PrimaryButton>
       </div>
-    </form>
-
+    </form> -->
+    <div class="flex flex-col items-center justify-center ">
+      <p class="text-4xl font-black">
+        <AppName />
+      </p>
+    </div>
     <Socialstream
       v-if="$page.props.socialstream.show && $page.props.socialstream.providers.length"
-      :error="$page.props.errors.socialstream" :prompt="$page.props.socialstream.prompt"
+      :error="$page.props.errors.socialstream" prompt="Register"
       :labels="$page.props.socialstream.labels" :providers="$page.props.socialstream.providers" />
     <div class="mt-2 flex flex-col justify-center">
       <div class="mt-2">

@@ -45,7 +45,7 @@ const onAnimate = () => {
 
   <AuthenticationCard>
     <template #logo>
-      <AuthenticationCardLogo class=" h-20 w-20 " />
+      <AuthenticationCardLogo class=" size-20 " />
     </template>
     <div v-if="status" class="mb-4 text-sm font-medium text-success">
       {{ status }}
@@ -90,7 +90,7 @@ const onAnimate = () => {
     </form>
     <Socialstream
       v-if="$page.props.socialstream.show && $page.props.socialstream.providers.length"
-      :error="$page.props.errors.socialstream" :prompt="$page.props.socialstream.prompt"
+      :error="$page.props.errors.socialstream" prompt="OR"
       :labels="$page.props.socialstream.labels" :providers="$page.props.socialstream.providers" />
     <div class="mt-2 flex flex-col justify-center">
       <div class="mt-2">

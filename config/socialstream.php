@@ -5,14 +5,14 @@ use JoelButcher\Socialstream\Providers;
 
 return [
     'middleware' => ['web'],
-    'prompt' => 'OR',
+    'prompt' => '',
     'providers' => [
         // Providers::github(),
-        Providers::google(),
+        Providers::google('Login with Google'),
         [
             'id' => 'discord',
             'name' => 'Discord',
-            'label' => 'Discord',
+            'label' => 'Login with Discord',
         ],
     ],
     'features' => [
