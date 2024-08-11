@@ -46,6 +46,12 @@ class TagResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('events_count')
+                    ->label('Events')
+                    ->counts('events'),
+                Tables\Columns\TextColumn::make('users_count')
+                    ->label('Users')
+                    ->counts('users')
             ])
             ->filters([
                 //
