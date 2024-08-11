@@ -97,29 +97,37 @@ class EventResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('is_forced_hidden')
-                    ->falseIcon('heroicon-o-eye')
-                    ->falseColor('success')
-                    ->trueIcon('heroicon-o-eye-slash')
-                    ->trueColor('danger')
-                    ->boolean(),
+                    ->dateTime('y/m/d H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('event_create_user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('start_date')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('alias')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('tags.name')
                     ->label('Tags')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\IconColumn::make('is_forced_hidden')
+                    ->label('強制非公開')
+                    ->falseIcon('heroicon-o-eye')
+                    ->falseColor('success')
+                    ->trueIcon('heroicon-o-eye-slash')
+                    ->trueColor('danger')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('alias')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('start_date')
+                    ->dateTime('y/m/d H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
+                Tables\Columns\TextColumn::make('end_date')
+                    ->dateTime('y/m/d H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //
