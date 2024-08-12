@@ -56,13 +56,12 @@ class File extends Model
         $folderName = mb_strtolower(class_basename($fileable)).'/'.$fileable->id;
         $filename = $uploadedFile->hashName();
         $savePath = Storage::disk(config('filesystems.default'))->putFileAs($folderName, $uploadedFile, $filename);
-
         if (! $savePath) {
             throw new \Exception('ファイルの保存に失敗しました。');
         }
 
         return $fileable->files()->create([
-            'path' => $savePath,
+            'path' => $folderName,
             'name' => $filename,
             'original_name' => $uploadedFile->getClientOriginalName(),
             'type' => $uploadedFile->getClientMimeType(),
