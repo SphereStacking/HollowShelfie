@@ -37,12 +37,12 @@ class MigrateFilesStep1ToDefaultStorage extends Command
 
         File::chunk(50, function ($files) use ($publicDisk, $defaultDisk) {
             foreach ($files as $file) {
-                if ($publicDisk->exists($file->path)) {
-                    $fileContents = $publicDisk->get($file->path);
-                    $defaultDisk->put($file->path, $fileContents);
-                    $this->info("Migrating: {$file->path}");
+                if ($publicDisk->exists($file->path . '/' . $file->filename)) {
+                    $fileContents = $publicDisk->get($file->path . '/' . $file->filename);
+                    $defaultDisk->put($file->path . '/' . $file->filename, $fileContents);
+                    $this->info("Migrating: {$file->path} / {$file->filename}");
                 } else {
-                    $this->warn("File not found: {$file->path}");
+                    $this->warn("File not found: {$file->path} / {$file->filename}");
                 }
             };
         });
