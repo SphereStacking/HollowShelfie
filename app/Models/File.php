@@ -28,7 +28,7 @@ class File extends Model
      */
     public function getPublicUrlAttribute(): string
     {
-        return Storage::disk(config('filesystems.default'))->url($this->path);
+        return Storage::disk(config('filesystems.default'))->url($this->path).'/'.$this->name;
     }
 
     /**
@@ -36,7 +36,7 @@ class File extends Model
      */
     public function deleteFile(): void
     {
-        Storage::disk(config('filesystems.default'))->delete($this->path);
+        Storage::disk(config('filesystems.default'))->delete($this->path.'/'.$this->name);
     }
 
     /**

@@ -32,7 +32,7 @@ class FileFactory extends Factory
         $fileName = basename($randomFile); // ファイル名のみを取得
         Storage::disk(config('filesystems.default'))->put($randomFile, Storage::disk('public')->get($randomFile));
         return [
-            'path' => $randomFile,
+            'path' => 'dummy',
             'name' => $fileName,
             'original_name' => $fileName,
             'type' => 'image/jpeg',
