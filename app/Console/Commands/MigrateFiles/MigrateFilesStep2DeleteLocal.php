@@ -42,11 +42,11 @@ class MigrateFilesStep2DeleteLocal extends Command
 
         File::chunk(50, function ($files) use ($publicDisk, $defaultDisk) {
             foreach ($files as $file) {
-                if ($defaultDisk->exists($file->path) && $publicDisk->exists($file->path . '/' . $file->filename)) {
-                    $publicDisk->delete($file->path . '/' . $file->filename);
-                    $this->info("Deleted local file: {$file->path} / {$file->filename}");
+                if ($defaultDisk->exists($file->path) && $publicDisk->exists($file->path . '/' . $file->name)) {
+                    $publicDisk->delete($file->path . '/' . $file->name);
+                    $this->info("Deleted local file: {$file->path}/{$file->name}");
                 } else {
-                    $this->warn("File not found in local or not migrated: {$file->path} / {$file->filename}");
+                    $this->warn("File not found in local or not migrated: {$file->path}/{$file->name}");
                 }
             };
         });
