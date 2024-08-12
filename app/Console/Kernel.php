@@ -10,6 +10,12 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\GenerateMermaidERD::class,
         \App\Console\Commands\ImportScoutModels::class,
+
+        /* 一時コマンド */
+        // ファイル移行用のコマンド 1
+        \App\Console\Commands\MigrateFiles\MigrateFilesStep1ToDefaultStorage::class,
+        // ファイル移行用のコマンド 2
+        \App\Console\Commands\MigrateFiles\MigrateFilesStep2DeleteLocal::class,
     ];
 
     /**
@@ -30,3 +36,4 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+
