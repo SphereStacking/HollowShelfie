@@ -38,6 +38,7 @@ class Event extends Model
     protected $fillable = [
         'published_at',
         'is_forced_hidden',
+        'is_owner',
         'title',
         'created_user_id',
         'start_date',
