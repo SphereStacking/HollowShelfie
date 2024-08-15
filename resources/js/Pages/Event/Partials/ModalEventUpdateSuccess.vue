@@ -25,6 +25,8 @@ const onBtnOpenModal = (newItem) => {
     performers: newItem.performers,
     category_names: newItem.category_names,
     tags: newItem.tags,
+    //イベントを更新できるのはオーナーだけなので固定でtrueにする
+    auth_user: {is_owner: true}
   }
 }
 
