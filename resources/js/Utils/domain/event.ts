@@ -25,7 +25,7 @@ export const _eventPeriod = (startDate: string, endDate: string) => {
   if (durationString) {
     durationString = ' - ' + durationString
   }
-  return `${formattedStartDate.year}/${formattedStartDate.month}/${formattedStartDate.day} [${formattedStartDate.weekday}] ${formattedStartDate.hour}:${formattedStartDate.minute}:${formattedStartDate.second} ${durationString}`
+  return `${formattedStartDate.year}/${formattedStartDate.month}/${formattedStartDate.day} [${formattedStartDate.weekday}] ${formattedStartDate.hour}:${formattedStartDate.minute} ${durationString}`
 }
 
 type EventShareTextProps = {
@@ -53,14 +53,14 @@ export const generateEventAdminShareText = (props: EventShareTextProps) => {
   ).join(' ')
   return '🎉 新しいイベントが公開されました！ 🎉\n' +
    '\n' +
-   `✨ : ${props.title}\n` +
-   `📅 : ${props.period}\n` +
-   `🌐 : ${platformNames}\n` +
-   `📍 : ${props.instanceNames.join(' ')}\n` +
-   `👥 : ${props.organizerNames.join(' ')}\n` +
-   `🎤 : ${props.performerNames.join(' ')}\n` +
-   `🎨 : ${formattedCategories}\n` +
-   `🏷 : ${formattedTags}\n` +
+   `✨ ${props.title}\n` +
+   `📅 ${props.period}\n` +
+   `🌐 ${platformNames}\n` +
+   `📍 ${props.instanceNames.join(' ')}\n` +
+   `👥 ${props.organizerNames.join(' ')}\n` +
+   `🎤 ${props.performerNames.join(' ')}\n` +
+   `🎨 ${formattedCategories}\n` +
+   `🏷 ${formattedTags}\n` +
    '\n' +
    '詳細は 👻#' + appName + ' で！ 👇\n' +
    `${props.url}`
@@ -77,7 +77,8 @@ export const generateEventOrganizerShareText = (props: EventShareTextProps) => {
   const platformNames = props.platformNames.map(platform =>
     platform.startsWith('#') ? platform : `#${platform}`
   ).join(' ')
-  return `[ --- 👻 #${appName} --- ] \n` +
+  return `🎉イベントを開催します！ 🎉\n` +
+   '\n' +
    `✨ ${props.title}\n` +
    `📅 ${props.period}\n` +
    `🌐 ${platformNames}\n` +
@@ -87,6 +88,7 @@ export const generateEventOrganizerShareText = (props: EventShareTextProps) => {
    `🎨 ${formattedCategories}\n` +
    `🏷 ${formattedTags}\n` +
    '\n' +
+   '詳細は 👻#' + appName + ' で！ 👇\n' +
    `${props.url}`
 }
 

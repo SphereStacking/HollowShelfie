@@ -87,6 +87,7 @@ class EventTimelineJsonResource extends JsonResource
                 'auth_user' => [
                     'is_good' => $item->is_good ?? false,
                     'is_bookmark' => $item->is_bookmark ?? false,
+                    'is_owner' => $item->is_owner ?? false,
                 ],
             ];
         })->toArray();

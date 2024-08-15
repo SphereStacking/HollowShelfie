@@ -41,13 +41,12 @@ trait EventGetters
     }
 
     /**
-     * ユーザーがイベントを"good"しているか確認
+     * ユーザーがイベントの作成者か確認
      */
     public function getIsOwnerAttribute(): bool
     {
         $user = Auth::user();
-
-        return $user ? $user->id === $this->event_create_user_id : false;
+        return $user ? $user->id === $this->created_user_id : false;
     }
 
     /**
