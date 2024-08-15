@@ -153,7 +153,7 @@ const pickupItems = props.pickups
         </template>
         <template v-else>
           <CarouselEventHero :events="items.events" />
-          <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4  md:gap-6 xl:grid-cols-5">
+          <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5">
             <CardEvent
               v-for="(event, index) in items.events"
               :key="index" :event="event" class="my-2"

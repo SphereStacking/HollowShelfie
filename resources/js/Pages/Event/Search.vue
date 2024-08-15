@@ -70,26 +70,26 @@ const RawSearchForm = markRaw(SearchForm)
         Event Search
       </h2>
     </template>
-    <div class="mx-auto flex max-w-6xl flex-col gap-2">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2">
       <RawSearchForm
         v-model="conditions" v-model:text="text" :instance-types="instanceTypes"
         :statuses="statuses"
         :categories="categories" :tags="trendTags" @execute-search="executeSearch()" />
+      <PaginationLayout :pagination="events.pagination">
+        <template #TopPaginationRight>
+          <OrderSelection v-model="order" @update:model-value="executeSearch" />
+          <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
+        </template>
+        <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
+          <CardEvent
+            v-for="(item, index) in props.events.data"
+            :key="index" :event="item"
+            class="my-2"
+            scroll-region
+            @share="modalEventShare.onBtnOpenModal(item)" />
+        </div>
+      </PaginationLayout>
     </div>
-    <PaginationLayout :pagination="events.pagination">
-      <template #TopPaginationRight>
-        <OrderSelection v-model="order" @update:model-value="executeSearch" />
-        <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
-      </template>
-      <div class="my-2 grid w-full grid-cols-2  gap-2 sm:grid-cols-2  md:grid-cols-3 xl:grid-cols-4">
-        <CardEvent
-          v-for="(item, index) in props.events.data"
-          :key="index" :event="item"
-          class="my-2"
-          scroll-region
-          @share="modalEventShare.onBtnOpenModal(item)" />
-      </div>
-    </PaginationLayout>
   </AppLayout>
 </template>
 

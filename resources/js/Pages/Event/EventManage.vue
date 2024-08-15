@@ -61,34 +61,39 @@ onMounted(() => {
         Event Management
       </h2>
     </template>
-    <Link class="btn btn-info btn-sm" :href="route('event.create')">
-      <span class="flex items-center">
-        イベントを主催する！
-        <IconTypeMapper type="arrowRight" class="text-xl" />
-      </span>
-    </Link>
+
     <div class="mx-auto flex max-w-6xl flex-col gap-2">
+      <div>
+        <Link class="btn btn-info btn-sm" :href="route('event.create')">
+          <span class="flex items-center">
+            イベントを主催する！
+            <IconTypeMapper type="arrowRight" class="text-xl" />
+          </span>
+        </Link>
+      </div>
+
       <SearchForm
         v-model="conditions" v-model:text="text" :instance-types="instanceTypes"
         :statuses="statuses"
         :categories="categories" @execute-search="executeSearch()" />
-    </div>
-    <PaginationLayout :pagination="events.pagination">
-      <template #TopPaginationRight>
-        <OrderSelection v-model="order" @update:model-value="executeSearch" />
-        <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
-      </template>
-      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <transition-group name="list">
-          <ManageEventCard
-            v-for="event in events.data" :key="event"
-            :event="event"
-            @share="modalEventShare.onBtnOpenModal(event)"
-            @delete="modalEventDestroy.onBtnOpenModal(event)"
-            @duplicate="modalEventDuplicate.onBtnOpenModal(event)" />
-        </transition-group>
-      </div>
-    </PaginationLayout>
+      <PaginationLayout :pagination="events.pagination">
+        <template #TopPaginationRight>
+          <OrderSelection v-model="order" @update:model-value="executeSearch" />
+          <DirectionSelection v-model="direction" @update:model-value="executeSearch" />
+        </template>
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <transition-group name="list">
+            <ManageEventCard
+              v-for="event in events.data" :key="event"
+              :event="event"
+              @share="modalEventShare.onBtnOpenModal(event)"
+              @delete="modalEventDestroy.onBtnOpenModal(event)"
+              @duplicate="modalEventDuplicate.onBtnOpenModal(event)" />
+          </transition-group>
+        </div>
+      </PaginationLayout>
+  </div>
+
     <ModalEventShareConfirm ref="modalEventShare" />
     <ModalEventDestroyConfirm ref="modalEventDestroy" />
     <ModalEventDuplicateConfirm ref="modalEventDuplicate" />

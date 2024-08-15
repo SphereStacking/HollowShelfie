@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="mx-auto flex max-w-7xl flex-col gap-5">
+  <div class="flex flex-col gap-5">
     <div class="flex flex-row  justify-between">
       <div class="">
         {{ pagination.to }} / {{ pagination.total }}

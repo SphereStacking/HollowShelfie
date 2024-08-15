@@ -68,10 +68,10 @@ const hasTags = computed(() => {
         {{ detail.bio }}
       </div>
       <div class="flex w-full flex-col gap-2 md:flex-row">
-        <div v-if="hasLinks" class="flex w-1/2 flex-wrap items-center gap-3">
+        <div v-if="hasLinks" class="flex w-full lg:w-1/2 flex-wrap items-center gap-3">
           <LinkWithFavicon v-for="item in detail.links" :key="item.id" :link="item" />
         </div>
-        <div v-if="hasTags" class="flex w-1/2 flex-wrap items-center gap-1">
+        <div v-if="hasTags" class="flex w-full lg:w-1/2 flex-wrap items-center gap-1">
           <IconTypeMapper type="tag" class="text-xl" />
           <template v-for="(tag, index) in detail.tags" :key="index">
             <BtnEventSearchItem
