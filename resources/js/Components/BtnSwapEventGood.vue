@@ -12,6 +12,7 @@ const props = defineProps({
   },
   count: {
     type: String,
+    default: null
   },
   showCount: {
     type: Boolean,
@@ -35,6 +36,7 @@ const toggle = () => {
       {
         method: 'delete',
         preserveScroll: true,
+        preserveState: true,
         onFinish: () => {
           isLock.value = false
         }
@@ -46,6 +48,7 @@ const toggle = () => {
       {
         method: 'post',
         preserveScroll: true,
+        preserveState: true,
         onFinish: () => {
           isLock.value = false
         }
