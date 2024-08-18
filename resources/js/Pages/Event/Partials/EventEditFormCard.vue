@@ -54,7 +54,7 @@ const columDefs = [
     }
   },
   { field: 'description', headerTitle: '内容', headerSubTitle: '演目/項目/未登録ユーザ', width: 'auto', minWidth: '300px', template: 'input' },
-  { field: 'performers', headerTitle: '演者/応対者/スタッフ', headerSubTitle: '未登録ユーザーは内容に記載してください', width: '202px', template: SearchPerformersGridElement,
+  { field: 'performers', headerTitle: '演者/応対者/スタッフ/キャスト', headerSubTitle: '未登録ユーザーは内容に記載してください', width: '202px', template: SearchPerformersGridElement,
     templateOptions: {
       url: route('mention.suggestion'),
       getFilteredDataFunc: getFilteredDataFunc,
