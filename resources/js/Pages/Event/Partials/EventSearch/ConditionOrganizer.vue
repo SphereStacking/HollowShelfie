@@ -31,7 +31,7 @@ onBeforeUnmount(() => {
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
     <div v-if="isVisible" class="flex flex-col gap-2">
-      <AddConditionSuggestion
+      <BaseConditionSuggestion
         v-if="isVisible"
         :items="items"
         type="organizer"
@@ -44,7 +44,7 @@ onBeforeUnmount(() => {
             class="tooltip transition-all duration-200 hover:-translate-y-1"
             @click="addConditionFunc({ type: 'organizer', value: item.screen_name })" />
         </template>
-      </AddConditionSuggestion>
+      </BaseConditionSuggestion>
     </div>
   </Transition>
 </template>
