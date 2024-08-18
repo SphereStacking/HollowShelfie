@@ -76,9 +76,8 @@ const isExits = computed(() => {
 <template>
   <label class="input input-sm input-bordered flex w-full items-center gap-2">
     <input
-      v-model="inputText" type="text" class="input m-0 grow border-none p-0"
+      v-model="inputText" type="text" class="input input-sm m-0 grow border-none p-0"
       :placeholder="placeholder">
-
     <div v-if="searching">
       <slot name="searching" v-bind="{ inputText}">
         <div class="badge badge-info w-full">

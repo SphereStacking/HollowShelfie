@@ -40,13 +40,12 @@ const computedItems = computed(() => {
 
 <template>
   <div class="flex flex-wrap gap-2">
-    <div class="join w-full  ">
-      <InputSuggestion
-        v-model="searchText"
-        :placeholder="placeholder"
-        :get-suggestions="(res) => {return res.data.suggestions.data}"
-        :url="url" @suggestions="suggestions = $event" />
-    </div>
+    <InputSuggestion
+      v-model="searchText"
+      :placeholder="placeholder"
+      :get-suggestions="(res) => {return res.data.suggestions.data}"
+      :url="url" @suggestions="suggestions = $event" />
+
     <div class="divider divider-start my-0 w-full">
       <div class="flex flex-row items-center  gap-1">
         <IconTypeMapper type="search" class="text-xl" />
