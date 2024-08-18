@@ -33,7 +33,7 @@ const imageUrls = computed(() => {
         <Link
           v-for="(image, index) in images" v-show="index === currentImageIndex" :key="index"
           :href="url">
-          <FryerImg
+          <FlyerImg
             :key="index"
             class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 cursor-pointer select-none"
             :src="image.public_url" />

@@ -47,6 +47,7 @@ class EventMeilisearchService
         'organizer' => EventFilterOrganizer::class,
         'performer' => EventFilterPerformer::class,
         'instance' => EventFilterInstance::class,
+        'follow' => EventFilterFollow::class,
     ];
 
     /** 並び順のカラムオプション */

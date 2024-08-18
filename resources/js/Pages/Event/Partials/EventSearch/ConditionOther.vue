@@ -55,6 +55,22 @@ onBeforeUnmount(() => {
           :value="item"
           @click="addConditionFunc({ type: 'instance', value: item })" />
       </div>
+      <div class="divider divider-start my-0 mt-2 w-full">
+        <div class="flex flex-row items-center  gap-1">
+          <IconTypeMapper type="follow" class="text-xl" />
+          follow
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <BtnEventSearchItem
+          type="follow"
+          value="フォロー(演者)"
+          @click="addConditionFunc({ type: 'follow', value: 'performers' })" />
+        <BtnEventSearchItem
+          type="follow"
+          value="フォロー(主催者)"
+          @click="addConditionFunc({ type: 'follow', value: 'organizers' })" />
+      </div>
     </div>
   </Transition>
 </template>

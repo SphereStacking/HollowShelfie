@@ -1,6 +1,5 @@
 <script setup>
 import { ref, watch, defineProps, defineEmits } from 'vue'
-import { markRaw } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import ConditionDate from './ConditionDate.vue'
 import ConditionCategory from './ConditionCategory.vue'
@@ -16,13 +15,7 @@ import FilterItemOrganizer from './FilterItemOrganizer.vue'
 import FilterItemPerformer from './FilterItemPerformer.vue'
 import FilterItemInstance from './FilterItemInstance.vue'
 import FilterItemStatus from './FilterItemStatus.vue'
-
-const RawConditionDate = markRaw(ConditionDate)
-const RawConditionCategory = markRaw(ConditionCategory)
-const RawConditionTag = markRaw(ConditionTag)
-const RawConditionOrganizer = markRaw(ConditionOrganizer)
-const RawConditionPerformer = markRaw(ConditionPerformer)
-const RawConditionOther = markRaw(ConditionOther)
+import FilterItemFollow from './FilterItemFollow.vue'
 
 const props = defineProps({
   text: {
@@ -66,18 +59,18 @@ const text = ref(props.text)
 const history = ref([]) // Added this line
 const currentPosition = ref(-1) // Added this line
 const categories = ref(props.categories ? props.categories.map(v => v.name) : [])
-const selectFilterType = ref('other')
+const selectFilterType = ref({})
 const isOpenFilter = ref(false)
 
 const includesOrder = ['and', 'or', 'not']
 
 const filterMaps = [
-  { type: 'other', label: 'other', component: RawConditionOther, items: { 'statuses': props.statuses, 'instanceTypes': props.instanceTypes } },
-  { type: 'category', label: 'category', component: RawConditionCategory, items: categories },
-  { type: 'tag', label: 'tags', component: RawConditionTag, items: props.tags },
-  { type: 'date', label: 'date', component: RawConditionDate, items: [] },
-  { type: 'organizer', label: 'organizer', component: RawConditionOrganizer, items: props.organizers },
-  { type: 'performer', label: 'performer', component: RawConditionPerformer, items: props.performers },
+  { type: 'other', label: 'other', component: ConditionOther, items: { 'statuses': props.statuses, 'instanceTypes': props.instanceTypes } },
+  { type: 'category', label: 'category', component: ConditionCategory, items: categories },
+  { type: 'tag', label: 'tags', component: ConditionTag, items: props.tags },
+  { type: 'date', label: 'date', component: ConditionDate, items: [] },
+  { type: 'organizer', label: 'organizer', component: ConditionOrganizer, items: props.organizers },
+  { type: 'performer', label: 'performer', component: ConditionPerformer, items: props.performers },
 ]
 
 const filterItemMap={
@@ -88,6 +81,7 @@ const filterItemMap={
   performer: FilterItemPerformer,
   tag: FilterItemTag,
   instance: FilterItemInstance,
+  follow: FilterItemFollow,
 }
 
 const includeLabels = {
@@ -158,6 +152,7 @@ watch(conditions, () => {
 }, { deep: true })
 
 onMounted(() => {
+  selectFilterType.value = filterMaps.find(v => v.type == 'other')
   queryParams.value = usePage().props.ziggy.query
   if (queryParams.value.q) {
     queryParams.value.q.forEach(condition => {

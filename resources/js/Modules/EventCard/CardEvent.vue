@@ -52,7 +52,7 @@ const isCurrentYear = computed(() => {
               slide-class="px-1 w-full">
               <template #item="{element, index}">
                 <div class="flex size-full items-center justify-center">
-                  <FryerImg
+                  <FlyerImg
                     :key="index"
                     class="cursor-pointer select-none"
                     :src="element.public_url" />

@@ -28,7 +28,7 @@ const incrementImageIndex = () => {
             leave-active-class="transition-all duration-600"
             enter-from-class="translate-y-10 opacity-0"
             leave-to-class="-translate-y-10 opacity-0">
-            <FryerImg
+            <FlyerImg
               v-for="(image, index) in event.files" v-show="index === currentImageIndex"
               :key="index"
               class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 cursor-pointer select-none"

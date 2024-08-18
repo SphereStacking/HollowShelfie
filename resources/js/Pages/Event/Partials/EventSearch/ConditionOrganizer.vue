@@ -30,19 +30,22 @@ onBeforeUnmount(() => {
     leave-active-class=""
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
-    <AddConditionSuggestion
-      v-if="isVisible"
-      :items="items"
-      placeholder="オーガナイザーid検索"
-      :url="route('mention.suggestion')">
-      <template #items="{ suggestions }">
-        <PerformerBadge
-          v-for="(item, index ) in suggestions"
-          :key="index" :performer="item"
-          class="tooltip transition-all duration-200 hover:-translate-y-1"
-          @click="addConditionFunc({ type: 'organizer', value: item.screen_name })" />
-      </template>
-    </AddConditionSuggestion>
+    <div v-if="isVisible" class="flex flex-col gap-2">
+      <AddConditionSuggestion
+        v-if="isVisible"
+        :items="items"
+        type="organizer"
+        placeholder="オーガナイザーid検索"
+        :url="route('mention.suggestion')">
+        <template #items="{ suggestions }">
+          <PerformerBadge
+            v-for="(item, index ) in suggestions"
+            :key="index" :performer="item"
+            class="tooltip transition-all duration-200 hover:-translate-y-1"
+            @click="addConditionFunc({ type: 'organizer', value: item.screen_name })" />
+        </template>
+      </AddConditionSuggestion>
+    </div>
   </Transition>
 </template>
 <style lang="">

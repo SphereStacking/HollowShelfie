@@ -46,7 +46,7 @@ const prev = () => {
       :thumbs-swiper="`#${uniqueId}`"
       :model-value="images">
       <template #item="{element}">
-        <FryerImg :src="element" />
+        <FlyerImg :src="element" />
       </template>
     </SwiperWrapper>
 
@@ -63,7 +63,7 @@ const prev = () => {
         :hide-no-image="true"
         :model-value="images">
         <template #item="{element}">
-          <FryerImg class="w-10" :src="element" />
+          <FlyerImg class="w-10" :src="element" />
         </template>
       </SwiperWrapper>
       <button class="btn btn-square btn-sm" @click="next">

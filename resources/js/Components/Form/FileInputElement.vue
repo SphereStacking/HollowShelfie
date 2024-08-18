@@ -175,7 +175,7 @@ const handleRemoveFile = (id) => {
                 @click="handleRemoveFile(element.id)">
                 <IconTypeMapper type="delete" />
               </button>
-              <FryerImg
+              <FlyerImg
                 :src="element.public_url" :alt="`File preview ${index}`"
                 class="rounded-lg " />
             </div>
