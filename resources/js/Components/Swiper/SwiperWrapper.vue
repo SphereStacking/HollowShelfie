@@ -64,11 +64,13 @@ defineExpose({
       <slot name="after"></slot>
     </div>
     <template v-for="(element, index) in modelValue" :key="index">
+      <!-- swiper bug fix class for min-w-0 -->
       <swiper-slide :class="slideClass" class="min-w-0">
         <slot name="item" :element="element" :index="index"></slot>
       </swiper-slide>
     </template>
     <template v-if="modelValue.length === 0 && !hideNoImage">
+      <!-- swiper bug fix class for min-w-0 -->
       <swiper-slide :class="slideClass" class="min-w-0">
         <slot name="no-image">
           <div class="size-full min-h-20 rounded-xl bg-base-300">

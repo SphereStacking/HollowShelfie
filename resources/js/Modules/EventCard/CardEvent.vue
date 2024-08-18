@@ -37,34 +37,90 @@ const isCurrentYear = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-start border border-transparent">
+  <div class=" flex flex-col justify-start border border-transparent">
     <div class="flex flex-col justify-start border border-transparent">
-      <Link :href="route('event.show', event.alias)" class="  relative aspect-a4 min-w-40 rounded-md bg-base-300 shadow-md shadow-base-200 transition-all duration-300 hover:cursor-pointer hover:shadow-lg hover:shadow-neutral-500">
+      <div class="group relative aspect-a4 min-w-40 overflow-hidden rounded-md bg-base-300 shadow-md shadow-base-200 transition-all duration-200 hover:cursor-pointer hover:shadow-lg hover:shadow-neutral-500">
         <template v-if="event.files.length>0">
-          <TransitionGroup
-            enter-active-class="transition-all duration-300"
-            leave-active-class="transition-all duration-100"
-            enter-from-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0">
-            <FryerImg
-              v-for="(image, index) in event.files" v-show="index === currentImageIndex"
-              :key="index"
-              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-90 cursor-pointer select-none"
-              :src="image.public_url" />
-          </TransitionGroup>
+          <div class="size-full scale-90">
+            <SwiperWrapper
+              class="absolute left-1/2 top-1/2 size-full -translate-x-1/2 -translate-y-1/2 cursor-pointer select-none transition-all delay-150 duration-200 group-hover:left-2/4 group-hover:top-1/4 group-hover:scale-50"
+              :loop="event.files.length > 1"
+              :slides-per-view="1"
+              :model-value="event.files"
+              watch-slides-progress="true"
+              :scrollbar="false"
+              slide-class="px-1 w-full">
+              <template #item="{element, index}">
+                <div class="flex size-full items-center justify-center">
+                  <FryerImg
+                    :key="index"
+                    class="cursor-pointer select-none"
+                    :src="element.public_url" />
+                </div>
+              </template>
+            </SwiperWrapper>
+            <div class="absolute right-1 top-1 z-50 hidden flex-col items-center justify-center gap-0.5 group-hover:flex">
+              <div class="tooltip tooltip-left" data-tip="link">
+                <Link :href="route('event.show', event.alias)" class="btn btn-square btn-neutral btn-sm">
+                  <IconTypeMapper type="link" class="size-8 p-1" />
+                </Link>
+              </div>
+            </div>
+            <div class="absolute bottom-0 left-1/2 h-1/2 w-full -translate-x-1/2  translate-y-1/2 overflow-hidden opacity-0 transition-all delay-150 duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+              <!-- organizers -->
+              <div v-if="event.organizers.length > 0" class="flex w-full flex-col justify-start gap-1">
+                <div class="flex flex-row items-center gap-1">
+                  <IconTypeMapper type="organizer" class="text-md" />
+                  <div>organizers</div>
+                </div>
+                <SwiperWrapper
+                  :loop="event.organizers.length > 1"
+                  :model-value="event.organizers"
+                  slides-per-view="auto"
+                  watch-slides-progress="true"
+                  :scrollbar="true"
+                  slide-class="px-0.5 py-1 w-fit">
+                  <template #item="{element, index}">
+                    <AvatarLink
+                      :key="index"
+                      size="size-10" :href="element.profile_url"
+                      :image-url="element.image_url" :name="element.name" />
+                  </template>
+                </SwiperWrapper>
+              </div>
+              <!-- performers -->
+              <div v-if="event.performers.length > 0" class="flex flex-col justify-center gap-1">
+                <div class="flex flex-row items-center gap-1">
+                  <IconTypeMapper type="performer" class="text-md" />
+                  <div>performers</div>
+                </div>
+                <SwiperWrapper
+                  :loop="event.performers.length > 1"
+                  :model-value="event.performers"
+                  slides-per-view="auto"
+                  watch-slides-progress="true"
+                  :scrollbar="true"
+                  slide-class="px-0.5 py-1 w-fit">
+                  <template #item="{element, index}">
+                    <AvatarLink
+                      :key="index" size="size-10" :href="element.profile_url"
+                      :image-url="element.image_url" :name="element.name" />
+                  </template>
+                </SwiperWrapper>
+              </div>
+            </div>
+          </div>
         </template>
         <template v-else>
           <div class="size-full bg-base-300">
             <IconTypeMapper type="imageOff" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-6xl" />
           </div>
         </template>
-      </Link>
+      </div>
       <div class="tooltip tooltip-top tooltip-accent mx-2 mt-0.5 flex flex-row justify-between" :data-tip="event.title">
         <Link
           :href="route('event.show', event.alias)"
-          class="truncate whitespace-nowrap text-left text-lg font-bold transition-all duration-200 hover:text-accent hover:underline">
+          class="truncate whitespace-nowrap text-left text-lg font-bold transition-all delay-150 duration-200 hover:text-accent hover:underline">
           {{ event.title }}
         </Link>
 
