@@ -28,6 +28,7 @@ const toggle = () => {
       {
         method: 'delete',
         preserveScroll: true,
+        preserveState: true,
         onFinish: () => {
           isLock.value = false
         }
@@ -39,6 +40,7 @@ const toggle = () => {
       {
         method: 'post',
         preserveScroll: true,
+        preserveState: true,
         onFinish: () => {
           isLock.value = false
         }
