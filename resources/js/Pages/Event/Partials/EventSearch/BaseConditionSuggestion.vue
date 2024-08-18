@@ -1,13 +1,5 @@
 <script setup>
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true
-  },
-  type: {
-    type: String,
-    required: true
-  },
+defineProps({
   placeholder: {
     type: String,
     required: true
@@ -26,16 +18,6 @@ defineEmits(['addCondition'])
 const suggestions = ref([])
 const searchText = ref('')
 
-const items = ref(props.items ? props.items.map(v => v) : [])
-
-const computedItems = computed(() => {
-  if (suggestions.value.length > 0) {
-    return suggestions.value.map(v => v.screen_name)
-  } else {
-    return items.value
-  }
-})
-
 </script>
 
 <template>
@@ -45,9 +27,8 @@ const computedItems = computed(() => {
       :placeholder="placeholder"
       :get-suggestions="(res) => {return res.data.suggestions.data}"
       :url="url" @suggestions="suggestions = $event" />
-
     <div class="divider divider-start my-0 w-full">
-      <div class="flex flex-row items-center  gap-1">
+      <div class="flex flex-row items-center gap-1">
         <IconTypeMapper type="search" class="text-xl" />
         Searched
       </div>
@@ -58,10 +39,6 @@ const computedItems = computed(() => {
         leave-from-class="transform opacity-100"
         leave-to-class="transform opacity-0">
         <slot name="items" :suggestions="suggestions">
-          <BtnEventSearchItem
-            v-for="item in computedItems" :key="item" :type="type"
-            :value="item"
-            @click="addConditionFunc({ type: type, value: item })" />
         </slot>
       </transition-group>
     </div>

@@ -32,11 +32,16 @@ onBeforeUnmount(() => {
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
     <div v-if="isVisible">
-      <AddConditionSuggestion
+      <BaseConditionSuggestion
         placeholder="タグを検索"
         :url="route('tag.suggestion')"
-        type="tag"
         :add-condition-func="addConditionFunc">
+        <template #items="{ suggestions }">
+          <BtnEventSearchItem
+            v-for="item in suggestions" :key="item" type="tag"
+            :value="item.name"
+            @click="addConditionFunc({ type: 'tag', value: item.name })" />
+        </template>
         <div class="divider divider-start my-0 w-full">
           <div class="flex flex-row items-center  gap-1">
             <IconTypeMapper type="trend" class="text-xl" />
@@ -47,7 +52,7 @@ onBeforeUnmount(() => {
           v-for="item in items" :key="item" type="tag"
           :value="item.name"
           @click="addConditionFunc({ type: 'tag', value: item.name })" />
-      </AddConditionSuggestion>
+      </BaseConditionSuggestion>
     </div>
   </Transition>
 </template>

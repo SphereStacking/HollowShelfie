@@ -64,12 +64,12 @@ onBeforeUnmount(() => {
       <div class="flex flex-wrap gap-2">
         <BtnEventSearchItem
           type="follow"
-          value="フォロー(演者)"
-          @click="addConditionFunc({ type: 'follow', value: 'performers' })" />
-        <BtnEventSearchItem
-          type="follow"
           value="フォロー(主催者)"
           @click="addConditionFunc({ type: 'follow', value: 'organizers' })" />
+        <BtnEventSearchItem
+          type="follow"
+          value="フォロー(演者)"
+          @click="addConditionFunc({ type: 'follow', value: 'performers' })" />
       </div>
     </div>
   </Transition>

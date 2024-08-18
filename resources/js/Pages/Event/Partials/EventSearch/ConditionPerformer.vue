@@ -31,9 +31,7 @@ onBeforeUnmount(() => {
     leave-from-class="opacity-100"
     leave-to-class="opacity-0 translate-y-2">
     <div v-if="isVisible" class="flex flex-col gap-2">
-      <AddConditionSuggestion
-        :items="items"
-        type="performer"
+      <BaseConditionSuggestion
         placeholder="パフォーマーid検索"
         :url="route('mention.suggestion')"
         :add-condition-func="addConditionFunc">
@@ -44,7 +42,7 @@ onBeforeUnmount(() => {
             class="tooltip transition-all duration-200 hover:-translate-y-1"
             @click="addConditionFunc({ type: 'performer', value: item.screen_name })" />
         </template>
-      </AddConditionSuggestion>
+      </BaseConditionSuggestion>
     </div>
   </Transition>
 </template>
