@@ -89,6 +89,7 @@ export const ItemsConfig = {
   },
   follow: {
     icon: 'mdi:account-arrow-right',
+    buttonClass: 'btn-warning'
   },
   followNeutral: {
     icon: 'mdi:user',
@@ -345,6 +346,9 @@ export const ItemsConfig = {
   },
   link: {
     icon: 'mdi:link',
+  },
+  externalLink: {
+    icon: 'mdi:external-link',
   },
   codeBlock: {
     icon: 'mdi:code-block-tags',

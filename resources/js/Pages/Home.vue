@@ -131,7 +131,7 @@ const pickupItems = props.pickups
         </div>
       </div>
 
-      <div v-for="(items, index) in eventItems" :key="index" class="col-span-12 flex flex-col gap-5">
+      <div v-for="(items, sectionIndex) in eventItems" :key="sectionIndex" class="col-span-12 flex flex-col gap-5">
         <div class="divider divider-start  mt-5 w-full text-3xl font-bold">
           <IconTypeMapper :type="items.icon" class="shrink-0 text-4xl" />
           <h3 class="font-bold">
@@ -156,7 +156,7 @@ const pickupItems = props.pickups
           <div class="my-2 grid w-full grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5">
             <CardEvent
               v-for="(event, index) in items.events"
-              :key="index" :event="event" class="my-2"
+              :key="sectionIndex+'-'+index" :event="event" class="my-2"
               @share="modalEventShare.onBtnOpenModal(event)" />
           </div>
           <Link class=" btn btn-neutral mx-auto my-10 w-40" :href="items.url">
