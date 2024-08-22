@@ -15,9 +15,9 @@ class TeamPublicProfileJsonResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'team',
             'detail' => [
                 'id' => $this->resource->id,
+                'type' => $this->resource->screenName->screen_nameable_type,
                 'screen_name' => $this->resource->screenName->screen_name,
                 'name' => $this->resource->name,
                 'photo_url' => $this->resource->team_logo_url,

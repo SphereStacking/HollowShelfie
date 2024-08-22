@@ -17,10 +17,10 @@ class UserPublicProfileJsonResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'user',
             'detail' => [
                 'id' => $this->resource->id,
                 'bio' => $this->resource->bio,
+                'type' => $this->resource->screenName->screen_nameable_type,
                 'screen_name' => $this->resource->screenName->screen_name,
                 'teams' => $this->resource->allTeams(),
                 'name' => $this->resource->name,

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Profile;
 
 use Inertia\Inertia;
+use App\Enums\EventStatus;
 use App\Models\ScreenName;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ProfileGetRequeset;
 use App\Http\Resources\EventsPaginatedJsonResource;
 use App\Http\Resources\TeamPublicProfileJsonResource;
 use App\Http\Resources\UserPublicProfileJsonResource;
@@ -21,17 +23,32 @@ class GetProfileController extends Controller
     /**
      * ユーザーのプロファイルを表示します。
      */
-    public function __invoke($screen_name)
+    public function __invoke(ProfileGetRequeset $request, $screen_name)
     {
+
+        $filter = $request->input('filter', []);
         $screenNameable = ScreenName::findScreenNameable($screen_name);
-        $EventSearchParams = new SearchParams(
-            '',
-            [
+
+        $filterCount = count($filter);
+        if (in_array($filterCount, [0, 2])) {
+            $queryParams = [
                 ['include' => 'and', 'type' => 'organizer', 'value' => $screenNameable->screen_name],
                 ['include' => 'or', 'type' => 'performer', 'value' => $screenNameable->screen_name],
-            ],
-            12,
-            'new',
+            ];
+        } else {
+            $queryParams = array_map(fn($filter) => [
+                'include' => 'and',
+                'type' => $filter,
+                'value' => $screenNameable->screen_name
+            ], $filter);
+        }
+
+        // 検索パラメータの設定
+        $EventSearchParams = new SearchParams(
+            '',
+            $queryParams,
+            24,
+            'new'
         );
 
         return Inertia::render('Profile/Index', [
@@ -50,6 +67,8 @@ class GetProfileController extends Controller
                 'paginate' => $EventSearchParams->getDefaultPaginate(),
                 'o' => $EventSearchParams->order,
             ]),
+        ])->with([
+            'query' => $request->query()
         ]);
     }
 }
