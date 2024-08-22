@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <li>
+  <li class="w-full">
     <slot></slot>
   </li>
 </template>

@@ -33,8 +33,11 @@ authUser.value = props.profile.auth_user
       <ProfileHeader />
       <ProfileTeamMenbers :profile="props.profile" />
       <ProfileUserJoinedTeams :profile="props.profile" :joined-teams="props.profile.detail.teams" />
-      <ProfileEvents :events="props.events" />
-
+      <ProfileEvents
+        :events="props.events"
+        :screen-name="props.profile.detail.screen_name"
+        :profile-id="props.profile.detail.id"
+        :profile-type="props.profile.detail.type" />
       <div class=" flex justify-center py-10">
         <Link :href="url" method="get" class=" btn btn-primary btn-md px-10">
           show more!
