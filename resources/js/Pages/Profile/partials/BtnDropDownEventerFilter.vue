@@ -55,7 +55,6 @@ onMounted(() => {
   <BtnDropdown>
     <template #trigger>
       <button class="btn btn-neutral btn-sm">
-        {{ modelValue }}
         <IconTypeMapper type="filter" class="text-xl" />
       </button>
     </template>
