@@ -14,43 +14,14 @@
 
 
 ## about
-VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [resonite](https://resonite.com/))の情報共有serviceの構築する。  
-現在のVR界隈は情報のまとまっているところがない  
-イベントやコミュニティの情報を一元的にまとめることで活性化を図りたい。  
+
+VR界隈の情報共有serviceの構築する。  
+イベントやコミュニティの情報を一元的にまとめたい。  
 まずは日々開催されているイベントの情報をより見やすくユーザーに届ける。  
-
-## 結局は車輪の再発明だが。。
-
-- [vrchatイベントカレンダー](https://vrceve.com/)
-  - グーグルカレンダーベースのイベント情報掲載サイト
-- [vrcタイムライン](https://vrc.tl/)
-  - 海外Userのタイムライン形式のイベント情報掲載サイト
-- [twipla](https://twipla.jp/)
-  - 有名どころのイベント共有
-- [connpass](https://connpass.com)
-  - 有名どころのイベント共有
-- [PlanetVRC](https://planetvrchat.net/)
-  - 特定ユーザーによるVR界隈記事投稿
-- [メタカル最前線](https://metacul-frontier.com/)
-  - 特定ユーザーによるR界隈記事投稿
-- Qiita Note Zennなど
-  - ユーザーにようる記事投稿
-
-
-このwebサービスの目指すところは上記サイトのいいとこどりを目指す。
+結局は車輪の再発明だが。。
 
 ユーザーがイベントを掲載できて
 演者の募集や打診によるオーガナイザーのマッチング
-記事投稿もできてVR界隈のナレッジの共有ができる(かなりニッチで技術に疎い人はアバターアップロードや改変すらままならないため)
-
-ドメインは  hollowshelfie.com
-
-イベントのfryerやチラシを掲示する棚をイメージしてこの名称
-
-## その他
-- [github PJ](https://github.com/orgs/ShakeSpheres/projects/1)
-- [slack](https://join.slack.com/t/shake-spheres/shared_invite/zt-2asmw8mhg-nAHGk4Ub88NzvyKveZDcAg)
-- [notion](https://www.notion.so/invite/b9dcd6b1ec909bf0c03498f20b2ede15fa2c3c59)
 
 ## 目標
 
@@ -83,12 +54,6 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 - イベント管理機能
 
 - qiitaやzennのような記事投稿機能
-
-最終的にはチケットを販売できるようになると嬉しいかも。
-
-## 課題
-
-- インフラ全く分からん。
 
 ## 技術スタック
 
@@ -149,13 +114,6 @@ VR界隈([vrchat](https://vrchat.com/home), [cluster](https://cluster.mu/), [res
 3. `npm run dev` 開発サーバ起動
 
 
-
-
-## links
-
-OAuth2.0用
-- [Google Cloud Console](https://console.cloud.google.com/welcome?authuser=1&hl=ja&project=pj-sphere)
-- [Discord Developer](https://discord.com/developers/applications/1172881212809936916/information)
 
 ## gitの運用ワークフロー
 
